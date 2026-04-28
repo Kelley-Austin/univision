@@ -1,0 +1,11 @@
+{
+  "packageDirectories": [
+    {
+      "path": "force-app",
+      "default": true
+    }
+  ],
+  "name": "univision",
+  "namespace": "",
+  "sourceApiVersion": "62.0"
+}
