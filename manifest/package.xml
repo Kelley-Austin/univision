@@ -302,7 +302,7 @@
 
     <!-- ── Quick Actions ─────────────────────────────────────────────────── -->
     <types>
-        <members>Account.Link_Agency</members>
+        <members>Account.Link_Agency_To_Advertiser</members>
         <members>Advertising_Opportunity__c.Import_Counterpoint_Data</members>
         <members>Budget_Line__c.Traffic_Copy_Entry</members>
         <members>New_Advertiser</members>
