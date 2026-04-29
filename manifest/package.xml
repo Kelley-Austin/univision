@@ -76,6 +76,23 @@
         <members>TrafficOrderTransmitQueueableTest</members>
         <members>TrafficOrderCallbackController</members>
         <members>TrafficOrderCallbackControllerTest</members>
+        <members>PitchProjectUnitCodeLinker</members>
+        <members>PitchProjectUnitCodeLinkerTest</members>
+        <members>PitchProjectController</members>
+        <members>PitchProjectControllerTest</members>
+        <members>DashboardEmailScheduler</members>
+        <members>DashboardEmailSchedulerTest</members>
+        <!-- Period Close state machine & snapshot -->
+        <members>PeriodCloseTriggerHandler</members>
+        <members>PeriodCloseTriggerHandlerTest</members>
+        <members>PeriodCloseService</members>
+        <members>PeriodCloseServiceTest</members>
+        <members>PeriodCloseBatch</members>
+        <members>PeriodCloseBatchTest</members>
+        <members>PeriodCloseController</members>
+        <members>PeriodCloseControllerTest</members>
+        <members>LateActualsController</members>
+        <members>LateActualsControllerTest</members>
         <name>ApexClass</name>
     </types>
 
@@ -86,8 +103,11 @@
         <members>Budget_Line__c</members>
         <members>Inbound_Staging__c</members>
         <members>Period_Close__c</members>
+        <members>Period_Snapshot__c</members>
         <members>Load_Batch__c</members>
         <members>Mapping_Rule__c</members>
+        <members>Pitch_Project__c</members>
+        <members>Pitch_Project_Outlet__c</members>
         <members>Revenue_Code_Mapping__mdt</members>
         <members>Source_System__c</members>
         <name>CustomObject</name>
@@ -106,14 +126,30 @@
         <!-- Actual_Revenue__c -->
         <members>Actual_Revenue__c.Category_Snapshot__c</members>
         <members>Actual_Revenue__c.Is_Late__c</members>
+        <members>Actual_Revenue__c.Late_Disposition__c</members>
         <!-- Inbound_Staging__c — new reconciliation field -->
         <members>Inbound_Staging__c.Raw_Advertiser_Code__c</members>
         <!-- Period_Close__c -->
         <members>Period_Close__c.Close_Date__c</members>
+        <members>Period_Close__c.Closed_At__c</members>
         <members>Period_Close__c.Composite_Key__c</members>
         <members>Period_Close__c.Period_Month__c</members>
         <members>Period_Close__c.Period_Year__c</members>
+        <members>Period_Close__c.Reopen_Count__c</members>
         <members>Period_Close__c.Status__c</members>
+        <!-- Period_Snapshot__c -->
+        <members>Period_Snapshot__c.Account__c</members>
+        <members>Period_Snapshot__c.Actual_At_Close__c</members>
+        <members>Period_Snapshot__c.Category__c</members>
+        <members>Period_Snapshot__c.Period_Close__c</members>
+        <members>Period_Snapshot__c.Period_Month__c</members>
+        <members>Period_Snapshot__c.Period_Year__c</members>
+        <members>Period_Snapshot__c.Projected_At_Close__c</members>
+        <members>Period_Snapshot__c.Projection__c</members>
+        <members>Period_Snapshot__c.Revenue_Type__c</members>
+        <members>Period_Snapshot__c.Snapshot_Composite_Key__c</members>
+        <members>Period_Snapshot__c.Variance_Amount__c</members>
+        <members>Period_Snapshot__c.Variance_Pct__c</members>
         <!-- Projection__c -->
         <members>Projection__c.Actual_Amount__c</members>
         <!-- User -->
@@ -145,6 +181,25 @@
         <members>Budget_Line__c.Traffic_Status__c</members>
         <members>Budget_Line__c.Traffic_Order_ID__c</members>
         <members>Budget_Line__c.Traffic_Error_Message__c</members>
+        <!-- Advertising_Opportunity__c — pitch project link -->
+        <members>Advertising_Opportunity__c.Pitch_Project__c</members>
+        <!-- Actual_Revenue__c — pitch project link + unit code -->
+        <members>Actual_Revenue__c.Pitch_Project__c</members>
+        <members>Actual_Revenue__c.Unit_Code__c</members>
+        <!-- Pitch_Project__c -->
+        <members>Pitch_Project__c.Description__c</members>
+        <members>Pitch_Project__c.End_Date__c</members>
+        <members>Pitch_Project__c.Goal__c</members>
+        <members>Pitch_Project__c.Owner_Type__c</members>
+        <members>Pitch_Project__c.Owning_Market__c</members>
+        <members>Pitch_Project__c.Project_Name__c</members>
+        <members>Pitch_Project__c.Start_Date__c</members>
+        <members>Pitch_Project__c.Status__c</members>
+        <members>Pitch_Project__c.Time_Frame__c</members>
+        <!-- Pitch_Project_Outlet__c -->
+        <members>Pitch_Project_Outlet__c.Outlet__c</members>
+        <members>Pitch_Project_Outlet__c.Pitch_Project__c</members>
+        <members>Pitch_Project_Outlet__c.Unit_Code__c</members>
         <!-- Advertising_Contract__c — traffic status fields (new) -->
         <members>Advertising_Contract__c.Traffic_Status__c</members>
         <members>Advertising_Contract__c.Traffic_Order_ID__c</members>
@@ -252,14 +307,20 @@
         <members>loadBatchDashboard</members>
         <members>mappingRuleEditor</members>
         <members>mdmKpiTiles</members>
+        <members>pitchProjectCreator</members>
+        <members>pitchProjectPacing</members>
         <members>salesOpsReconciliationWorklist</members>
         <members>sourceFileUpload</members>
+        <members>periodCloseActions</members>
+        <members>lateActualsWorklist</members>
+        <members>periodCloseDashboard</members>
         <name>LightningComponentBundle</name>
     </types>
 
     <!-- ── Flows ─────────────────────────────────────────────────────────── -->
     <types>
         <members>Counterpoint_CSV_Import</members>
+        <members>Pitch_Project_Creator</members>
         <members>Traffic_Copy_Entry</members>
         <name>Flow</name>
     </types>
@@ -268,12 +329,14 @@
     <types>
         <members>Advertising_Opportunity__c.Import_Counterpoint_Data</members>
         <members>Budget_Line__c.Traffic_Copy_Entry</members>
+        <members>Pitch_Project__c.Create_Pitch_Project</members>
         <name>QuickAction</name>
     </types>
 
     <!-- ── Apex Triggers ──────────────────────────────────────────────────── -->
     <types>
         <members>ActualRevenueTrigger</members>
+        <members>PeriodCloseTrigger</members>
         <name>ApexTrigger</name>
     </types>
 
@@ -281,6 +344,47 @@
     <types>
         <members>Advertising_Opportunity__c-Advertising Opportunity Layout</members>
         <name>Layout</name>
+    </types>
+
+    <!-- ── Custom Report Types ──────────────────────────────────────────────── -->
+    <types>
+        <members>Period_Snapshot_Forecast_Accuracy</members>
+        <name>ReportType</name>
+    </types>
+
+    <!-- ── Report Folders ───────────────────────────────────────────────────── -->
+    <types>
+        <members>Advertising_Analytics</members>
+        <name>ReportFolder</name>
+    </types>
+
+    <!-- ── Reports ──────────────────────────────────────────────────────────── -->
+    <types>
+        <members>Advertising_Analytics/Pipeline_30_60_90_Day</members>
+        <members>Advertising_Analytics/Pipeline_by_Market</members>
+        <members>Advertising_Analytics/Current_Month_Pacing</members>
+        <members>Advertising_Analytics/Rep_Productivity</members>
+        <members>Advertising_Analytics/Deal_Aging</members>
+        <members>Advertising_Analytics/Revenue_by_Market</members>
+        <members>Advertising_Analytics/Revenue_by_Vehicle</members>
+        <members>Advertising_Analytics/Order_Pacing</members>
+        <members>Advertising_Analytics/Forecast_Accuracy_by_Period</members>
+        <members>Advertising_Analytics/Forecast_Accuracy_Detail</members>
+        <name>Report</name>
+    </types>
+
+    <!-- ── Dashboard Folders ────────────────────────────────────────────────── -->
+    <types>
+        <members>MediaCloud</members>
+        <members>Advertising_Analytics</members>
+        <name>DashboardFolder</name>
+    </types>
+
+    <!-- ── Dashboards ───────────────────────────────────────────────────────── -->
+    <types>
+        <members>MediaCloud/Sales_Manager_Dashboard</members>
+        <members>Advertising_Analytics/Weekly_Analytics_Dashboard</members>
+        <name>Dashboard</name>
     </types>
 
     <version>62.0</version>

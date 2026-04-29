@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Account__c</field>
+    </columns>
+    <columns>
+        <field>Start_Date__c</field>
+    </columns>
+    <columns>
+        <field>End_Date__c</field>
+    </columns>
+    <columns>
+        <field>Total_Contract_Value__c</field>
+    </columns>
+    <aggregates>
+        <calculatedFormula>Total_Contract_Value__c:SUM</calculatedFormula>
+        <datatype>currency</datatype>
+        <developerName>CONTRACT_VALUE_SUM</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <label>Sum of Contract Value</label>
+        <reportType>Advertising_Contract__c</reportType>
+        <scale>2</scale>
+    </aggregates>
+    <aggregates>
+        <calculatedFormula>RowCount</calculatedFormula>
+        <datatype>number</datatype>
+        <developerName>ROWCOUNT</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <label>Order Count</label>
+        <reportType>Advertising_Contract__c</reportType>
+        <scale>0</scale>
+    </aggregates>
+    <description>Active contracts grouped by traffic status and market — surfaces orders awaiting confirmation or blocked on traffic copy.</description>
+    <filter>
+        <criterias>
+            <column>Contract_Status__c</column>
+            <isFilteringDisabled>false</isFilteringDisabled>
+            <operator>excludes</operator>
+            <value>Cancelled;Completed</value>
+        </criterias>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <field>Traffic_Status__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <field>Market__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Order Pacing</name>
+    <reportType>Advertising_Contract__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Start_Date__c</dateColumn>
+        <interval>INTERVAL_CURRENT_FY</interval>
+    </timeFrameFilter>
+</Report>

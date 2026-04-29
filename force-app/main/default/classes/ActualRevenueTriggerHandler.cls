@@ -75,5 +75,19 @@ public with sharing class ActualRevenueTriggerHandler {
                 }
             }
         }
+
+        // ── Pitch Project auto-link ───────────────────────────────────────────
+        // Runs on insert for any record with a Unit_Code__c, or on update when
+        // Unit_Code__c changes (e.g. a correction applied by the ingestion team).
+        List<Actual_Revenue__c> toLink = new List<Actual_Revenue__c>();
+        for (Actual_Revenue__c a : newList) {
+            if (String.isBlank(a.Unit_Code__c)) continue;
+            if (isInsert) {
+                toLink.add(a);
+            } else if (oldMap != null && a.Unit_Code__c != oldMap.get(a.Id).Unit_Code__c) {
+                toLink.add(a);
+            }
+        }
+        if (!toLink.isEmpty()) PitchProjectUnitCodeLinker.linkActuals(toLink);
     }
 }

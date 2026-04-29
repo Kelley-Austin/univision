@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Account__c</field>
+    </columns>
+    <columns>
+        <field>Status__c</field>
+    </columns>
+    <columns>
+        <field>Total_Budget__c</field>
+    </columns>
+    <columns>
+        <field>Total_Planned_Amount__c</field>
+    </columns>
+    <aggregates>
+        <calculatedFormula>Total_Budget__c:SUM</calculatedFormula>
+        <datatype>currency</datatype>
+        <developerName>TOTAL_BUDGET_SUM</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <label>Sum of Total Budget</label>
+        <reportType>Advertising_Opportunity__c</reportType>
+        <scale>2</scale>
+    </aggregates>
+    <aggregates>
+        <calculatedFormula>Total_Planned_Amount__c:SUM</calculatedFormula>
+        <datatype>currency</datatype>
+        <developerName>TOTAL_PLANNED_SUM</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <label>Sum of Total Planned Amount</label>
+        <reportType>Advertising_Opportunity__c</reportType>
+        <scale>2</scale>
+    </aggregates>
+    <aggregates>
+        <calculatedFormula>RowCount</calculatedFormula>
+        <datatype>number</datatype>
+        <developerName>ROWCOUNT</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <label>Opportunity Count</label>
+        <reportType>Advertising_Opportunity__c</reportType>
+        <scale>0</scale>
+    </aggregates>
+    <description>Active pipeline value by market and sales rep — primary input for the Sales Manager Dashboard pipeline tile.</description>
+    <filter>
+        <criterias>
+            <column>Status__c</column>
+            <isFilteringDisabled>false</isFilteringDisabled>
+            <operator>excludes</operator>
+            <value>Cancelled;Closed</value>
+        </criterias>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <field>Market__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <field>OWNER</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Pipeline by Market</name>
+    <reportType>Advertising_Opportunity__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>End_Date__c</dateColumn>
+        <interval>INTERVAL_CURRENT_FY</interval>
+    </timeFrameFilter>
+</Report>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <name>Forecast Accuracy Detail</name>
+    <description>Row-level Projection snapshot detail. Each row is one Projection captured at period close. Shows Projected_At_Close, Actual_At_Close, and computed variance. Useful for AE-level drill-down on forecast accuracy.</description>
+    <reportType>Period_Snapshot_Forecast_Accuracy</reportType>
+    <format>Tabular</format>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <rowLimit>2000</rowLimit>
+
+    <!-- Default sort: newest period first -->
+    <columns>
+        <field>Period_Year__c</field>
+        <sortOrder>Desc</sortOrder>
+        <sortIndex>0</sortIndex>
+    </columns>
+    <columns>
+        <field>Period_Month__c</field>
+    </columns>
+    <columns>
+        <field>Period_Close__c</field>
+    </columns>
+    <columns>
+        <field>Account__c</field>
+    </columns>
+    <columns>
+        <field>Category__c</field>
+    </columns>
+    <columns>
+        <field>Revenue_Type__c</field>
+    </columns>
+    <columns>
+        <field>Projected_At_Close__c</field>
+    </columns>
+    <columns>
+        <field>Actual_At_Close__c</field>
+    </columns>
+    <columns>
+        <field>Variance_Amount__c</field>
+    </columns>
+    <columns>
+        <field>Variance_Pct__c</field>
+    </columns>
+</Report>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Account__c</field>
+    </columns>
+    <columns>
+        <field>Market__c</field>
+    </columns>
+    <columns>
+        <field>Status__c</field>
+    </columns>
+    <columns>
+        <field>Total_Budget__c</field>
+    </columns>
+    <aggregates>
+        <calculatedFormula>Total_Budget__c:SUM</calculatedFormula>
+        <datatype>currency</datatype>
+        <developerName>TOTAL_BUDGET_SUM</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <label>Sum of Total Budget</label>
+        <reportType>Advertising_Opportunity__c</reportType>
+        <scale>2</scale>
+    </aggregates>
+    <aggregates>
+        <calculatedFormula>RowCount</calculatedFormula>
+        <datatype>number</datatype>
+        <developerName>ROWCOUNT</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <label>Record Count</label>
+        <reportType>Advertising_Opportunity__c</reportType>
+        <scale>0</scale>
+    </aggregates>
+    <description>Open pipeline grouped by close month — use groupings to read 30/60/90-day buckets at a glance.</description>
+    <filter>
+        <criterias>
+            <column>Status__c</column>
+            <isFilteringDisabled>false</isFilteringDisabled>
+            <operator>excludes</operator>
+            <value>Cancelled;Closed</value>
+        </criterias>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Month</dateGranularity>
+        <field>End_Date__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <field>Market__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Pipeline 30-60-90 Day</name>
+    <reportType>Advertising_Opportunity__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>End_Date__c</dateColumn>
+        <interval>INTERVAL_CURRENT_FY</interval>
+    </timeFrameFilter>
+</Report>

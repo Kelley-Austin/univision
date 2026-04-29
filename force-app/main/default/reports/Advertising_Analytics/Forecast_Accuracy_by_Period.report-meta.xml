@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <name>Forecast Accuracy by Period</name>
+    <description>Summary of Projected vs Actual revenue per period close. Variance_Pct__c = (Actual_At_Close − Projected_At_Close) / Projected_At_Close. Grouped by Period Year then Period Month.</description>
+    <reportType>Period_Snapshot_Forecast_Accuracy</reportType>
+    <format>Summary</format>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+
+    <!-- Groupings -->
+    <groupingsDown>
+        <field>Period_Year__c</field>
+        <sortOrder>Desc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <field>Period_Month__c</field>
+        <sortOrder>Desc</sortOrder>
+    </groupingsDown>
+
+    <!-- Columns -->
+    <columns>
+        <field>Period_Close__c</field>
+    </columns>
+    <columns>
+        <field>Revenue_Type__c</field>
+    </columns>
+    <columns>
+        <field>Projected_At_Close__c</field>
+    </columns>
+    <columns>
+        <field>Actual_At_Close__c</field>
+    </columns>
+    <columns>
+        <field>Variance_Amount__c</field>
+    </columns>
+    <columns>
+        <field>Variance_Pct__c</field>
+    </columns>
+
+    <!-- Aggregates -->
+    <aggregates>
+        <calculatedFormula>Projected_At_Close__c:SUM</calculatedFormula>
+        <datatype>currency</datatype>
+        <developerName>PROJ_SUM</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <label>Total Projected</label>
+        <reportType>Period_Snapshot_Forecast_Accuracy</reportType>
+        <scale>2</scale>
+    </aggregates>
+    <aggregates>
+        <calculatedFormula>Actual_At_Close__c:SUM</calculatedFormula>
+        <datatype>currency</datatype>
+        <developerName>ACT_SUM</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <label>Total Actual</label>
+        <reportType>Period_Snapshot_Forecast_Accuracy</reportType>
+        <scale>2</scale>
+    </aggregates>
+    <aggregates>
+        <calculatedFormula>Variance_Amount__c:SUM</calculatedFormula>
+        <datatype>currency</datatype>
+        <developerName>VAR_SUM</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <label>Total Variance $</label>
+        <reportType>Period_Snapshot_Forecast_Accuracy</reportType>
+        <scale>2</scale>
+    </aggregates>
+    <aggregates>
+        <calculatedFormula>Variance_Pct__c:AVG</calculatedFormula>
+        <datatype>percent</datatype>
+        <developerName>VAR_PCT_AVG</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <label>Avg Variance %</label>
+        <reportType>Period_Snapshot_Forecast_Accuracy</reportType>
+        <scale>1</scale>
+    </aggregates>
+</Report>

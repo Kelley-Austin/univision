@@ -1,0 +1,251 @@
+<template>
+    <lightning-card>
+        <div slot="title">
+            <span class="slds-text-heading_small">New Pitch Project &mdash; Step {currentStep} of 4: {stepLabel}</span>
+        </div>
+
+        <!-- Step progress indicator -->
+        <div slot="actions">
+            <lightning-progress-indicator
+                current-step={currentStepStr}
+                type="base"
+                variant="shaded">
+                <lightning-progress-step label="Basic Info"  value="1"></lightning-progress-step>
+                <lightning-progress-step label="Outlets"     value="2"></lightning-progress-step>
+                <lightning-progress-step label="Unit Codes"  value="3"></lightning-progress-step>
+                <lightning-progress-step label="Confirm"     value="4"></lightning-progress-step>
+            </lightning-progress-indicator>
+        </div>
+
+        <div class="slds-m-around_medium">
+
+            <!-- ── Step 1: Basic Info ─────────────────────────────────── -->
+            <template lwc:if={isStep1}>
+                <div class="slds-grid slds-wrap slds-gutters">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                        <lightning-input
+                            label="Project Name"
+                            value={form.projectName}
+                            data-field="projectName"
+                            onchange={handleFieldChange}
+                            required
+                            class="slds-m-bottom_small">
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                        <lightning-combobox
+                            label="Owner Type"
+                            value={form.ownerType}
+                            options={ownerTypeOptions}
+                            data-field="ownerType"
+                            onchange={handleFieldChange}
+                            required
+                            class="slds-m-bottom_small">
+                        </lightning-combobox>
+                    </div>
+                    <template lwc:if={isMarketOwner}>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <lightning-record-picker
+                                label="Owning Market"
+                                placeholder="Search accounts..."
+                                object-api-name="Account"
+                                value={form.owningMarketId}
+                                onchange={handleMarketChange}
+                                class="slds-m-bottom_small">
+                            </lightning-record-picker>
+                        </div>
+                    </template>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                        <lightning-input
+                            label="Time Frame"
+                            placeholder="e.g. Q3 2026"
+                            value={form.timeFrame}
+                            data-field="timeFrame"
+                            onchange={handleFieldChange}
+                            class="slds-m-bottom_small">
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                        <lightning-input
+                            type="number"
+                            label="Goal ($)"
+                            value={form.goal}
+                            formatter="currency"
+                            step="1"
+                            data-field="goal"
+                            onchange={handleFieldChange}
+                            required
+                            class="slds-m-bottom_small">
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                        <lightning-input
+                            type="date"
+                            label="Start Date"
+                            value={form.startDate}
+                            data-field="startDate"
+                            onchange={handleFieldChange}
+                            class="slds-m-bottom_small">
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                        <lightning-input
+                            type="date"
+                            label="End Date"
+                            value={form.endDate}
+                            data-field="endDate"
+                            onchange={handleFieldChange}
+                            class="slds-m-bottom_small">
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1">
+                        <lightning-textarea
+                            label="Description"
+                            value={form.description}
+                            data-field="description"
+                            onchange={handleFieldChange}
+                            class="slds-m-bottom_small">
+                        </lightning-textarea>
+                    </div>
+                </div>
+            </template>
+
+            <!-- ── Step 2: Participating Outlets ─────────────────────── -->
+            <template lwc:if={isStep2}>
+                <p class="slds-text-body_regular slds-m-bottom_medium">
+                    Select the outlets that will participate in this pitch.
+                </p>
+                <template lwc:if={outletsLoading}>
+                    <lightning-spinner alternative-text="Loading outlets..."></lightning-spinner>
+                </template>
+                <template lwc:if={outletsError}>
+                    <p class="slds-text-color_error">Failed to load outlets. Please go back and try again.</p>
+                </template>
+                <template lwc:if={hasOutlets}>
+                    <div class="outlet-list">
+                        <template for:each={outletOptions} for:item="outlet">
+                            <div key={outlet.id} class="slds-m-bottom_x-small outlet-row">
+                                <lightning-input
+                                    type="checkbox"
+                                    label={outlet.label}
+                                    checked={outlet.checked}
+                                    data-id={outlet.id}
+                                    onchange={handleOutletToggle}>
+                                </lightning-input>
+                            </div>
+                        </template>
+                    </div>
+                    <p class="slds-text-body_small slds-m-top_small slds-text-color_weak">
+                        {selectedCount} outlet(s) selected
+                    </p>
+                </template>
+            </template>
+
+            <!-- ── Step 3: Unit Codes ─────────────────────────────────── -->
+            <template lwc:if={isStep3}>
+                <p class="slds-text-body_regular slds-m-bottom_medium">
+                    Enter the unit code each outlet reports actuals under. These codes will auto-link incoming revenue records to this project.
+                </p>
+                <template for:each={selectedOutlets} for:item="outlet">
+                    <div key={outlet.id} class="slds-m-bottom_small">
+                        <lightning-input
+                            label={outlet.label}
+                            placeholder="Unit Code"
+                            value={outlet.unitCode}
+                            data-id={outlet.id}
+                            onchange={handleUnitCodeChange}
+                            required>
+                        </lightning-input>
+                    </div>
+                </template>
+            </template>
+
+            <!-- ── Step 4: Confirmation ───────────────────────────────── -->
+            <template lwc:if={isStep4}>
+                <div class="slds-box slds-theme_shade slds-m-bottom_medium">
+                    <h3 class="slds-text-heading_small slds-m-bottom_small">Project Details</h3>
+                    <dl class="slds-dl_horizontal">
+                        <dt class="slds-dl_horizontal__label slds-text-color_weak">Name</dt>
+                        <dd class="slds-dl_horizontal__detail">{form.projectName}</dd>
+                        <dt class="slds-dl_horizontal__label slds-text-color_weak">Owner Type</dt>
+                        <dd class="slds-dl_horizontal__detail">{form.ownerType}</dd>
+                        <dt class="slds-dl_horizontal__label slds-text-color_weak">Time Frame</dt>
+                        <dd class="slds-dl_horizontal__detail">{form.timeFrame}</dd>
+                        <dt class="slds-dl_horizontal__label slds-text-color_weak">Goal</dt>
+                        <dd class="slds-dl_horizontal__detail">{formattedGoal}</dd>
+                        <template lwc:if={form.startDate}>
+                            <dt class="slds-dl_horizontal__label slds-text-color_weak">Start</dt>
+                            <dd class="slds-dl_horizontal__detail">{form.startDate}</dd>
+                        </template>
+                        <template lwc:if={form.endDate}>
+                            <dt class="slds-dl_horizontal__label slds-text-color_weak">End</dt>
+                            <dd class="slds-dl_horizontal__detail">{form.endDate}</dd>
+                        </template>
+                    </dl>
+                </div>
+                <div class="slds-box slds-theme_shade">
+                    <h3 class="slds-text-heading_small slds-m-bottom_small">Participating Outlets ({selectedCount})</h3>
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                        <thead>
+                            <tr>
+                                <th>Outlet</th>
+                                <th>Unit Code</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={selectedOutlets} for:item="outlet">
+                                <tr key={outlet.id}>
+                                    <td>{outlet.label}</td>
+                                    <td>{outlet.unitCode}</td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+                <template lwc:if={saveError}>
+                    <p class="slds-text-color_error slds-m-top_small">{saveError}</p>
+                </template>
+            </template>
+
+            <!-- ── Error banner ───────────────────────────────────────── -->
+            <template lwc:if={validationError}>
+                <div class="slds-notify slds-notify_alert slds-alert_error slds-m-top_small" role="alert">
+                    <span class="slds-assistive-text">Error</span>
+                    {validationError}
+                </div>
+            </template>
+
+        </div>
+
+        <!-- ── Navigation buttons ─────────────────────────────────────── -->
+        <div slot="footer" class="slds-grid slds-grid_align-spread">
+            <div>
+                <template lwc:if={showBack}>
+                    <lightning-button
+                        label="Back"
+                        onclick={handleBack}
+                        disabled={isSaving}>
+                    </lightning-button>
+                </template>
+            </div>
+            <div>
+                <template lwc:if={isLastStep}>
+                    <lightning-button
+                        variant="brand"
+                        label="Create Pitch Project"
+                        onclick={handleSubmit}
+                        disabled={isSaving}>
+                    </lightning-button>
+                </template>
+                <template lwc:else>
+                    <lightning-button
+                        variant="brand"
+                        label="Next"
+                        onclick={handleNext}>
+                    </lightning-button>
+                </template>
+            </div>
+        </div>
+
+    </lightning-card>
+</template>
