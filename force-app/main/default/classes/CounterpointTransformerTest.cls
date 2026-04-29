@@ -1,83 +1,79 @@
 @IsTest
 private class CounterpointTransformerTest {
 
-    @TestSetup
-    static void setup() {
-        TransformerTestHelper.makeSource('COUNTERPOINT', 'CounterpointTransformer', 'CP1252');
-    }
+    private static final String CALENDAR_CSV =
+        'Advertiser_Name,Agency_Name,Sales_Rep,Month,Year,Net_Amount,Unit_Code,Outlet_Code,Revenue_Type\n' +
+        'Kraft Heinz,Wavemaker,DAVIS_B,3,2025,60000,CP-2025-001,KMEX,Linear TV\n' +
+        'General Mills,Hearts & Science,PATEL_N,3,2025,35000,CP-2025-002,KUVN,Linear TV\n';
 
-    private static Source_System__c getSource() {
-        return [SELECT Id FROM Source_System__c WHERE Source_Code__c = 'COUNTERPOINT' LIMIT 1];
+    private static final String EMPTY_CSV =
+        'Advertiser_Name,Agency_Name,Sales_Rep,Month,Year,Net_Amount,Unit_Code,Outlet_Code,Revenue_Type\n';
+
+    private static final String MALFORMED_CSV =
+        'Advertiser_Name,Agency_Name\n' +
+        'TooShort\n';
+
+    private static Id makeSourceSystem(String code) {
+        Source_System__c ss = new Source_System__c(Name = code, Code__c = code, Is_Active__c = true);
+        insert ss;
+        Load_Batch__c lb = new Load_Batch__c(Source_System__c = ss.Id, Status__c = 'Processing');
+        insert lb;
+        return lb.Id;
     }
 
     @IsTest
-    static void happyPath_parsesTwoDataRows() {
-        Source_System__c ss = getSource();
-        Blob b = Blob.valueOf(TransformerTestHelper.counterpointCsvHappyPath());
+    static void calendarSourceCode_calendarTypeCalendar_unitCodePopulated() {
+        Id lbId = makeSourceSystem('COUNTERPOINT_CALENDAR');
+        Id ssId = [SELECT Source_System__c FROM Load_Batch__c WHERE Id = :lbId].Source_System__c;
+
         Test.startTest();
-        CounterpointTransformer t = new CounterpointTransformer();
-        List<Inbound_Staging__c> rows = t.transform(b, ss.Id, false);
+        List<Inbound_Staging__c> rows = new CounterpointTransformer().transform(CALENDAR_CSV, lbId, ssId, 'COUNTERPOINT_CALENDAR');
         Test.stopTest();
+
         System.assertEquals(2, rows.size());
-        System.assertEquals('Pending', rows[0].Status__c);
-        System.assertEquals('Acme Corp', rows[0].Advertiser_Name__c);
-        System.assertEquals('JD', rows[0].AE_Code__c);
-        System.assertEquals(12500.00, rows[0].Revenue_Amount__c);
+        System.assertEquals('Calendar', rows[0].Calendar_Type__c);
+        System.assertEquals('CP-2025-001', rows[0].Unit_Code__c);
+        System.assertEquals('Kraft Heinz', rows[0].Raw_Advertiser_Name__c);
+        System.assertEquals(3, rows[0].Period_Month__c);
+        System.assertEquals(2025, rows[0].Period_Year__c);
     }
 
     @IsTest
-    static void emptyFile_returnsEmpty() {
-        Source_System__c ss = getSource();
+    static void broadcastSourceCode_calendarTypeBroadcast() {
+        Id lbId = makeSourceSystem('COUNTERPOINT_BROADCAST');
+        Id ssId = [SELECT Source_System__c FROM Load_Batch__c WHERE Id = :lbId].Source_System__c;
+
         Test.startTest();
-        CounterpointTransformer t = new CounterpointTransformer();
-        List<Inbound_Staging__c> rows = t.transform(Blob.valueOf(''), ss.Id, false);
+        List<Inbound_Staging__c> rows = new CounterpointTransformer().transform(CALENDAR_CSV, lbId, ssId, 'COUNTERPOINT_BROADCAST');
         Test.stopTest();
+
+        System.assertEquals(2, rows.size());
+        System.assertEquals('Broadcast', rows[0].Calendar_Type__c);
+    }
+
+    @IsTest
+    static void emptyCsv_zeroResults() {
+        Id lbId = makeSourceSystem('COUNTERPOINT_CALENDAR');
+        Id ssId = [SELECT Source_System__c FROM Load_Batch__c WHERE Id = :lbId].Source_System__c;
+
+        Test.startTest();
+        List<Inbound_Staging__c> rows = new CounterpointTransformer().transform(EMPTY_CSV, lbId, ssId, 'COUNTERPOINT_CALENDAR');
+        Test.stopTest();
+
         System.assertEquals(0, rows.size());
     }
 
     @IsTest
-    static void malformedRow_isExcluded() {
-        Source_System__c ss = getSource();
-        String csv = 'advertiser,agency,station,type,amount,ae,period\nTooShort\n';
-        Test.startTest();
-        CounterpointTransformer t = new CounterpointTransformer();
-        List<Inbound_Staging__c> rows = t.transform(Blob.valueOf(csv), ss.Id, false);
-        Test.stopTest();
-        System.assertEquals('MALFORMED_ROW', rows[0].Excluding_Rule__c);
-    }
+    static void malformedCsv_errorRow() {
+        Id lbId = makeSourceSystem('COUNTERPOINT_CALENDAR');
+        Id ssId = [SELECT Source_System__c FROM Load_Batch__c WHERE Id = :lbId].Source_System__c;
 
-    @IsTest
-    static void blankAdvertiser_isExcluded() {
-        Source_System__c ss = getSource();
-        String csv = 'advertiser,agency,station,type,amount,ae,period\n,Agency,KTVW,Local,1000,AE,2026-03\n';
         Test.startTest();
-        CounterpointTransformer t = new CounterpointTransformer();
-        List<Inbound_Staging__c> rows = t.transform(Blob.valueOf(csv), ss.Id, false);
+        List<Inbound_Staging__c> rows = new CounterpointTransformer().transform(MALFORMED_CSV, lbId, ssId, 'COUNTERPOINT_CALENDAR');
         Test.stopTest();
-        System.assertEquals('BLANK_ADVERTISER', rows[0].Excluding_Rule__c);
-    }
 
-    @IsTest
-    static void idempotency_sameRowSameKey() {
-        Source_System__c ss = getSource();
-        String csv = TransformerTestHelper.counterpointCsvHappyPath();
-        CounterpointTransformer t = new CounterpointTransformer();
-        List<Inbound_Staging__c> r1 = t.transform(Blob.valueOf(csv), ss.Id, false);
-        List<Inbound_Staging__c> r2 = t.transform(Blob.valueOf(csv), ss.Id, false);
-        System.assertEquals(r1[0].External_Key__c, r2[0].External_Key__c);
-    }
-
-    @IsTest
-    static void cp1252SpecialChars_doNotThrow() {
-        Source_System__c ss = getSource();
-        // Em-dash and smart quotes in advertiser name (common in CP1252 files)
-        String csv = 'advertiser,agency,station,type,amount,ae,period\n'
-                   + 'Café Media,Agency,KTVW,Local,500,AE,2026-03\n';
-        Test.startTest();
-        CounterpointTransformer t = new CounterpointTransformer();
-        List<Inbound_Staging__c> rows = t.transform(Blob.valueOf(csv), ss.Id, false);
-        Test.stopTest();
         System.assertEquals(1, rows.size());
-        System.assertEquals('Pending', rows[0].Status__c);
+        System.assertEquals('Error', rows[0].Status__c);
+        System.assertEquals('MALFORMED_ROW', rows[0].Excluding_Rule__c);
     }
 }

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <description>Screen Flow launched from the Link Agency quick action on an Advertiser or Direct Buy Advertiser account. Allows the rep to set or update the Primary_Agency__c lookup. The lookup field is pre-populated with the existing agency if one is already set.</description>
+    <interviewLabel>Link Agency To Advertiser {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Link Agency To Advertiser</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <runInMode>DefaultMode</runInMode>
+    <status>Active</status>
+
+    <!-- ═══════════════════════════ VARIABLES ═══════════════════════════════ -->
+
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <variables>
+        <name>var_advertiserName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <variables>
+        <name>var_currentAgencyId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <variables>
+        <name>var_selectedAgencyId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <!-- ═══════════════════════════ FLOW ELEMENTS ════════════════════════════ -->
+
+    <start>
+        <locationX>176</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Get_Advertiser</targetReference>
+        </connector>
+    </start>
+
+    <!-- 1. Get the current advertiser account to read Name and Primary_Agency__c -->
+    <recordLookups>
+        <name>Get_Advertiser</name>
+        <label>Get Advertiser Account</label>
+        <locationX>176</locationX>
+        <locationY>168</locationY>
+        <connector>
+            <targetReference>Screen_SelectAgency</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <outputAssignments>
+            <assignToReference>var_advertiserName</assignToReference>
+            <field>Name</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>var_currentAgencyId</assignToReference>
+            <field>Primary_Agency__c</field>
+        </outputAssignments>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>Primary_Agency__c</queriedFields>
+        <storeOutputAutomatically>false</storeOutputAutomatically>
+    </recordLookups>
+
+    <!-- 2. Screen: select or update the primary agency -->
+    <screens>
+        <name>Screen_SelectAgency</name>
+        <label>Set Primary Agency</label>
+        <locationX>176</locationX>
+        <locationY>288</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Update_AdvertiserAccount</targetReference>
+        </connector>
+        <fields>
+            <name>fi_Header</name>
+            <fieldText>&lt;p&gt;Select the agency that represents &lt;strong&gt;{!var_advertiserName}&lt;/strong&gt;. Only accounts with the Agency record type are shown.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>fi_Agency</name>
+            <extensionName>flowruntime:lookupField</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>fieldApiName</name>
+                <value>
+                    <stringValue>Primary_Agency__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Primary Agency</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectApiName</name>
+                <value>
+                    <stringValue>Account</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>value</name>
+                <value>
+                    <elementReference>var_currentAgencyId</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>var_selectedAgencyId</assignToReference>
+                <name>value</name>
+            </outputParameters>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <!-- 3. Update the advertiser account with the selected agency -->
+    <recordUpdates>
+        <name>Update_AdvertiserAccount</name>
+        <label>Update Advertiser Account</label>
+        <locationX>176</locationX>
+        <locationY>408</locationY>
+        <connector>
+            <targetReference>Screen_Success</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Primary_Agency__c</field>
+            <value>
+                <elementReference>var_selectedAgencyId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
+
+    <!-- 4. Success screen -->
+    <screens>
+        <name>Screen_Success</name>
+        <label>Agency Linked</label>
+        <locationX>176</locationX>
+        <locationY>528</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>fi_SuccessMessage</name>
+            <fieldText>&lt;p&gt;The Primary Agency for &lt;strong&gt;{!var_advertiserName}&lt;/strong&gt; has been updated. The agency-advertiser relationship is now reflected on both records.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+</Flow>

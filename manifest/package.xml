@@ -23,12 +23,15 @@
         <members>Projection__c</members>
         <members>Budget__c</members>
         <members>Budget_Lock__c</members>
-        <members>Actual_Revenue__c</members>
         <members>Vehicle__c</members>
         <members>Advertising_Opportunity__c</members>
         <members>Advertising_Contract__c</members>
         <members>Matrix_Sync_Log__c</members>
         <members>Matrix_Sync_Config__mdt</members>
+        <members>Inbound_Staging__c</members>
+        <members>Source_System__c</members>
+        <members>Mapping_Rule__c</members>
+        <members>Actual_Revenue__c</members>
         <name>CustomObject</name>
     </types>
     <types>
@@ -87,6 +90,89 @@
         <members>Advertising_Contract__c.Approved_By__c</members>
         <members>Advertising_Contract__c.Approved_Date__c</members>
         <members>Advertising_Contract__c.Notes__c</members>
+        <members>Inbound_Staging__c.Source_System__c</members>
+        <members>Inbound_Staging__c.Status__c</members>
+        <members>Inbound_Staging__c.Excluding_Rule__c</members>
+        <members>Inbound_Staging__c.Raw_Record__c</members>
+        <members>Inbound_Staging__c.Advertiser_Name__c</members>
+        <members>Inbound_Staging__c.Agency_Name__c</members>
+        <members>Inbound_Staging__c.Station_Code__c</members>
+        <members>Inbound_Staging__c.Revenue_Type__c</members>
+        <members>Inbound_Staging__c.Revenue_Amount__c</members>
+        <members>Inbound_Staging__c.AE_Code__c</members>
+        <members>Inbound_Staging__c.Broadcast_Period__c</members>
+        <members>Inbound_Staging__c.External_Key__c</members>
+        <members>Inbound_Staging__c.Batch_Job_Id__c</members>
+        <members>Source_System__c.Source_Code__c</members>
+        <members>Source_System__c.Transformer_Class__c</members>
+        <members>Source_System__c.File_Encoding__c</members>
+        <members>Source_System__c.Is_Active__c</members>
+        <members>Source_System__c.Description__c</members>
+        <members>Source_System__c.Last_Load_Date__c</members>
+        <members>Mapping_Rule__c.Source_System__c</members>
+        <members>Mapping_Rule__c.Source_Field__c</members>
+        <members>Mapping_Rule__c.Target_Field__c</members>
+        <members>Mapping_Rule__c.Transform_Logic__c</members>
+        <members>Mapping_Rule__c.Is_Active__c</members>
+        <members>Mapping_Rule__c.Sort_Order__c</members>
+        <members>Mapping_Rule__c.Default_Value__c</members>
+        <members>Actual_Revenue__c.External_Key__c</members>
+        <members>Actual_Revenue__c.Advertiser__c</members>
+        <members>Actual_Revenue__c.Revenue_Amount__c</members>
+        <members>Actual_Revenue__c.Revenue_Type__c</members>
+        <members>Actual_Revenue__c.Station_Code__c</members>
+        <members>Actual_Revenue__c.AE_Code__c</members>
+        <members>Actual_Revenue__c.Broadcast_Period__c</members>
+        <members>Actual_Revenue__c.Source_System__c</members>
+        <members>Actual_Revenue__c.Inbound_Staging__c</members>
+        <members>Actual_Revenue__c.Account__c</members>
+        <members>Actual_Revenue__c.Category__c</members>
+        <members>Actual_Revenue__c.Period_Year__c</members>
+        <members>Actual_Revenue__c.Period_Month__c</members>
+        <members>Actual_Revenue__c.Amount__c</members>
+        <members>Actual_Revenue__c.Source__c</members>
+        <members>Actual_Revenue__c.External_Id__c</members>
+        <members>Projection__c.Account__c</members>
+        <members>Projection__c.Category__c</members>
+        <members>Projection__c.Revenue_Type__c</members>
+        <members>Projection__c.Period_Year__c</members>
+        <members>Projection__c.Period_Month__c</members>
+        <members>Projection__c.Amount__c</members>
+        <members>Projection__c.Stage__c</members>
+        <members>Projection__c.Opportunity__c</members>
+        <members>Projection__c.Pitch_Project__c</members>
+        <members>Projection__c.Composite_Key__c</members>
+        <members>Budget__c.Account__c</members>
+        <members>Budget__c.Category__c</members>
+        <members>Budget__c.Revenue_Type__c</members>
+        <members>Budget__c.Period_Year__c</members>
+        <members>Budget__c.Jan_Budget__c</members>
+        <members>Budget__c.Feb_Budget__c</members>
+        <members>Budget__c.Mar_Budget__c</members>
+        <members>Budget__c.Apr_Budget__c</members>
+        <members>Budget__c.May_Budget__c</members>
+        <members>Budget__c.Jun_Budget__c</members>
+        <members>Budget__c.Jul_Budget__c</members>
+        <members>Budget__c.Aug_Budget__c</members>
+        <members>Budget__c.Sep_Budget__c</members>
+        <members>Budget__c.Oct_Budget__c</members>
+        <members>Budget__c.Nov_Budget__c</members>
+        <members>Budget__c.Dec_Budget__c</members>
+        <members>Budget__c.Total_Budget__c</members>
+        <members>Budget__c.Notes__c</members>
+        <members>Budget_Lock__c.Scope_Level__c</members>
+        <members>Budget_Lock__c.Period_Year__c</members>
+        <members>Budget_Lock__c.Account__c</members>
+        <members>Budget_Lock__c.Category__c</members>
+        <members>Budget_Lock__c.Office__c</members>
+        <members>Budget_Lock__c.Revenue_Type__c</members>
+        <members>Budget_Lock__c.Is_Active__c</members>
+        <members>Budget_Lock__c.Lock_Message__c</members>
+        <members>Budget_Lock__c.Locked_By__c</members>
+        <members>Budget_Lock__c.Locked_Date__c</members>
+        <members>Opportunity.Primary_Category__c</members>
+        <members>Opportunity.Revenue_Type__c</members>
+        <members>Opportunity.Fiscal_Year__c</members>
         <name>CustomField</name>
     </types>
     <types>
@@ -124,20 +210,49 @@
         <members>MatrixSyncControllerTest</members>
         <members>MatrixSyncInvocable</members>
         <members>MatrixSyncInvocableTest</members>
-        <members>CancellationPolicyService</members>
-        <members>CancellationPolicyServiceTest</members>
+        <members>ITransformer</members>
+        <members>TransformerBase</members>
+        <members>IngestService</members>
+        <members>IngestBatch</members>
+        <members>IngestController</members>
+        <members>WideOrbitTransformer</members>
+        <members>StrataTransformer</members>
+        <members>CoxRepsTransformer</members>
+        <members>OperativeTransformer</members>
+        <members>CounterpointTransformer</members>
+        <members>TransformerTestHelper</members>
+        <members>WideOrbitTransformerTest</members>
+        <members>StrataTransformerTest</members>
+        <members>CoxRepsTransformerTest</members>
+        <members>OperativeTransformerTest</members>
+        <members>CounterpointTransformerTest</members>
+        <members>IngestServiceTest</members>
+        <members>IngestControllerTest</members>
+        <members>ProjectionTriggerHandler</members>
+        <members>ProjectionService</members>
+        <members>ProjectionServiceTest</members>
+        <members>BudgetLockService</members>
+        <members>BudgetLockServiceTest</members>
         <name>ApexClass</name>
     </types>
     <types>
         <members>categoryTreeManager</members>
         <members>mdmKpiTiles</members>
+        <members>aeProjectionGrid</members>
+        <members>accountBudgetGrid</members>
+        <members>sourceFileUpload</members>
+        <members>mappingRuleEditor</members>
+        <members>loadBatchDashboard</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
         <members>Retire_Category_With_Successor</members>
         <members>Matrix_Inventory_Admin_Sync</members>
-        <members>Makegood_Or_Cancellation</members>
         <name>Flow</name>
+    </types>
+    <types>
+        <members>ProjectionTrigger</members>
+        <name>ApexTrigger</name>
     </types>
     <types>
         <members>MDM_Workspace_Home</members>
@@ -148,11 +263,9 @@
         <members>Medium__c</members>
         <members>Outlet__c</members>
         <members>Office__c</members>
+        <members>Source_System__c</members>
+        <members>Inbound_Staging__c</members>
         <name>CustomTab</name>
-    </types>
-    <types>
-        <members>Advertising_Contract__c.Makegood_Or_Cancellation</members>
-        <name>QuickAction</name>
     </types>
     <version>62.0</version>
 </Package>

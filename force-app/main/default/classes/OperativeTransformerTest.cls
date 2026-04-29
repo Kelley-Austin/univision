@@ -1,82 +1,70 @@
 @IsTest
 private class OperativeTransformerTest {
 
-    @TestSetup
-    static void setup() {
-        TransformerTestHelper.makeSource('OPERATIVE', 'OperativeTransformer', 'UTF-8');
-    }
+    private static final String HAPPY_PATH_CSV =
+        'Advertiser_Name,Agency_Name,Rep_Code,Cal_Month,Cal_Year,Cal_Net,Broadcast_Month,Broadcast_Year,Broadcast_Net,Revenue_Type,Outlet_Code\n' +
+        'Verizon,GroupM,TORRES_R,1,2025,100000,1,2025,95000,Linear TV,KMEX\n';
 
-    private static Source_System__c getSource() {
-        return [SELECT Id FROM Source_System__c WHERE Source_Code__c = 'OPERATIVE' LIMIT 1];
-    }
+    private static final String EMPTY_CSV =
+        'Advertiser_Name,Agency_Name,Rep_Code,Cal_Month,Cal_Year,Cal_Net,Broadcast_Month,Broadcast_Year,Broadcast_Net,Revenue_Type,Outlet_Code\n';
 
-    @IsTest
-    static void happyPath_producesCalendarAndBroadcastRows() {
-        Source_System__c ss = getSource();
-        Blob b = Blob.valueOf(TransformerTestHelper.operativeCsvHappyPath());
-        Test.startTest();
-        OperativeTransformer t = new OperativeTransformer();
-        List<Inbound_Staging__c> rows = t.transform(b, ss.Id, false);
-        Test.stopTest();
-        // Row 1: periods differ → 2 rows. Row 2: same period → 1 row (no duplicate)
-        System.assertEquals(3, rows.size(), 'Row1→2 rows; Row2→1 row (same period)');
-        // Check row 1 calendar
-        System.assertEquals('Digital - Calendar', rows[0].Revenue_Type__c);
-        System.assertEquals('2026-03', rows[0].Broadcast_Period__c);
-        // Check row 1 broadcast
-        System.assertEquals('Digital - Broadcast', rows[1].Revenue_Type__c);
-        System.assertEquals('2026-04', rows[1].Broadcast_Period__c);
-        // Row 2 — only calendar (same period)
-        System.assertEquals('TV - Calendar', rows[2].Revenue_Type__c);
-        System.assertEquals('2026-03', rows[2].Broadcast_Period__c);
+    private static final String MALFORMED_CSV =
+        'Advertiser_Name,Agency_Name\n' +
+        'OnlyTwo\n';
+
+    private static Id makeSourceSystem() {
+        Source_System__c ss = new Source_System__c(Name = 'Operative', Code__c = 'OPERATIVE', Is_Active__c = true);
+        insert ss;
+        Load_Batch__c lb = new Load_Batch__c(Source_System__c = ss.Id, Status__c = 'Processing');
+        insert lb;
+        return lb.Id;
     }
 
     @IsTest
-    static void emptyFile_returnsEmpty() {
-        Source_System__c ss = getSource();
+    static void happyPath_oneInputRow_twoOutputRows() {
+        Id lbId = makeSourceSystem();
+        Id ssId = [SELECT Source_System__c FROM Load_Batch__c WHERE Id = :lbId].Source_System__c;
+
         Test.startTest();
-        OperativeTransformer t = new OperativeTransformer();
-        List<Inbound_Staging__c> rows = t.transform(Blob.valueOf(''), ss.Id, false);
+        List<Inbound_Staging__c> rows = new OperativeTransformer().transform(HAPPY_PATH_CSV, lbId, ssId, 'OPERATIVE');
         Test.stopTest();
+
+        System.assertEquals(2, rows.size(), 'One input row produces Calendar + Broadcast rows');
+        System.assertEquals('Calendar', rows[0].Calendar_Type__c);
+        System.assertEquals('Broadcast', rows[1].Calendar_Type__c);
+        System.assertEquals(100000, rows[0].Revenue_Amount__c);
+        System.assertEquals(95000, rows[1].Revenue_Amount__c);
+        System.assertEquals(1, rows[0].Period_Month__c);
+        System.assertEquals(2025, rows[0].Period_Year__c);
+        System.assertEquals(1, rows[1].Period_Month__c);
+        System.assertEquals(2025, rows[1].Period_Year__c);
+        System.assertEquals('Linear TV', rows[0].Revenue_Type__c);
+        System.assertEquals('Linear TV', rows[1].Revenue_Type__c);
+    }
+
+    @IsTest
+    static void emptyCsv_zeroResults() {
+        Id lbId = makeSourceSystem();
+        Id ssId = [SELECT Source_System__c FROM Load_Batch__c WHERE Id = :lbId].Source_System__c;
+
+        Test.startTest();
+        List<Inbound_Staging__c> rows = new OperativeTransformer().transform(EMPTY_CSV, lbId, ssId, 'OPERATIVE');
+        Test.stopTest();
+
         System.assertEquals(0, rows.size());
     }
 
     @IsTest
-    static void malformedRow_isExcluded() {
-        Source_System__c ss = getSource();
-        String csv = 'advertiser_name,agency_name,station,product_type,gross_revenue,sales_rep_id,calendar_month,broadcast_month\n'
-                   + 'OnlyOne\n';
+    static void malformedCsv_errorRow() {
+        Id lbId = makeSourceSystem();
+        Id ssId = [SELECT Source_System__c FROM Load_Batch__c WHERE Id = :lbId].Source_System__c;
+
         Test.startTest();
-        OperativeTransformer t = new OperativeTransformer();
-        List<Inbound_Staging__c> rows = t.transform(Blob.valueOf(csv), ss.Id, false);
+        List<Inbound_Staging__c> rows = new OperativeTransformer().transform(MALFORMED_CSV, lbId, ssId, 'OPERATIVE');
         Test.stopTest();
+
+        System.assertEquals(1, rows.size());
+        System.assertEquals('Error', rows[0].Status__c);
         System.assertEquals('MALFORMED_ROW', rows[0].Excluding_Rule__c);
-    }
-
-    @IsTest
-    static void blankAdvertiser_isExcluded() {
-        Source_System__c ss = getSource();
-        String csv = 'advertiser_name,agency_name,station,product_type,gross_revenue,sales_rep_id,calendar_month,broadcast_month\n'
-                   + ',Agency,KTVW,TV,1000,R1,2026-03,2026-03\n';
-        Test.startTest();
-        OperativeTransformer t = new OperativeTransformer();
-        List<Inbound_Staging__c> rows = t.transform(Blob.valueOf(csv), ss.Id, false);
-        Test.stopTest();
-        System.assertEquals('BLANK_ADVERTISER', rows[0].Excluding_Rule__c);
-    }
-
-    @IsTest
-    static void idempotency_calAndBcastHaveDifferentKeys() {
-        Source_System__c ss = getSource();
-        String csv = 'advertiser_name,agency_name,station,product_type,gross_revenue,sales_rep_id,calendar_month,broadcast_month\n'
-                   + 'Acme Corp,Agency,KTVW,TV,5000,R1,2026-03,2026-04\n';
-        OperativeTransformer t = new OperativeTransformer();
-        List<Inbound_Staging__c> rows = t.transform(Blob.valueOf(csv), ss.Id, false);
-        System.assertEquals(2, rows.size());
-        System.assertNotEquals(rows[0].External_Key__c, rows[1].External_Key__c,
-            'Calendar and broadcast rows must have different external keys');
-        // Re-run: keys must be stable
-        List<Inbound_Staging__c> rows2 = t.transform(Blob.valueOf(csv), ss.Id, false);
-        System.assertEquals(rows[0].External_Key__c, rows2[0].External_Key__c);
     }
 }

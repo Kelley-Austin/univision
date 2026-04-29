@@ -1,82 +1,64 @@
 @IsTest
 private class CoxRepsTransformerTest {
 
-    @TestSetup
-    static void setup() {
-        TransformerTestHelper.makeSource('COXREPS', 'CoxRepsTransformer', 'UTF-8');
-    }
+    private static final String HAPPY_PATH_CSV =
+        'Advertiser_Name,Agency_Name,AE_Email,Month,Year,Net_Amount,Revenue_Type,Outlet_Code\n' +
+        'Home Depot,Initiative,sarah.johnson@coxreps.com,2,2025,45000,Linear TV,WLTV\n' +
+        'Target,Havas,mike.chen@coxreps.com,2,2025,22000,Radio,WNFT\n';
 
-    private static Source_System__c getSource() {
-        return [SELECT Id FROM Source_System__c WHERE Source_Code__c = 'COXREPS' LIMIT 1];
+    private static final String EMPTY_CSV =
+        'Advertiser_Name,Agency_Name,AE_Email,Month,Year,Net_Amount,Revenue_Type,Outlet_Code\n';
+
+    private static final String MALFORMED_CSV =
+        'Advertiser_Name,Agency_Name\n' +
+        'OnlyTwoCols\n';
+
+    private static Id makeSourceSystem() {
+        Source_System__c ss = new Source_System__c(Name = 'CoxReps', Code__c = 'COXREPS', Is_Active__c = true);
+        insert ss;
+        Load_Batch__c lb = new Load_Batch__c(Source_System__c = ss.Id, Status__c = 'Processing');
+        insert lb;
+        return lb.Id;
     }
 
     @IsTest
-    static void happyPath_normalizesEmailAeCode() {
-        Source_System__c ss = getSource();
-        Blob b = Blob.valueOf(TransformerTestHelper.coxRepsCsvHappyPath());
+    static void happyPath_aeEmailStoredAsRawSalespersonCode() {
+        Id lbId = makeSourceSystem();
+        Id ssId = [SELECT Source_System__c FROM Load_Batch__c WHERE Id = :lbId].Source_System__c;
+
         Test.startTest();
-        CoxRepsTransformer t = new CoxRepsTransformer();
-        List<Inbound_Staging__c> rows = t.transform(b, ss.Id, false);
+        List<Inbound_Staging__c> rows = new CoxRepsTransformer().transform(HAPPY_PATH_CSV, lbId, ssId, 'COXREPS');
         Test.stopTest();
+
         System.assertEquals(2, rows.size());
+        System.assertEquals('sarah.johnson@coxreps.com', rows[0].Raw_Salesperson_Code__c);
+        System.assertEquals('mike.chen@coxreps.com', rows[1].Raw_Salesperson_Code__c);
         System.assertEquals('Pending', rows[0].Status__c);
-        System.assertEquals('john.doe', rows[0].AE_Code__c, 'Email prefix should be extracted');
-        System.assertEquals('jane.smith', rows[1].AE_Code__c, 'Email prefix should be extracted');
     }
 
     @IsTest
-    static void aeCodeWithoutAtSign_isPreservedAsIs() {
-        CoxRepsTransformer t = new CoxRepsTransformer();
-        System.assertEquals('PLAINCOD', t.normalizeAeEmail('PLAINCOD'), 'No @ sign — return as-is');
-    }
+    static void emptyCsv_zeroResults() {
+        Id lbId = makeSourceSystem();
+        Id ssId = [SELECT Source_System__c FROM Load_Batch__c WHERE Id = :lbId].Source_System__c;
 
-    @IsTest
-    static void blankAeEmail_isPreserved() {
-        CoxRepsTransformer t = new CoxRepsTransformer();
-        System.assertEquals('', t.normalizeAeEmail(''));
-    }
-
-    @IsTest
-    static void emptyFile_returnsEmpty() {
-        Source_System__c ss = getSource();
-        CoxRepsTransformer t = new CoxRepsTransformer();
         Test.startTest();
-        List<Inbound_Staging__c> rows = t.transform(Blob.valueOf(''), ss.Id, false);
+        List<Inbound_Staging__c> rows = new CoxRepsTransformer().transform(EMPTY_CSV, lbId, ssId, 'COXREPS');
         Test.stopTest();
+
         System.assertEquals(0, rows.size());
     }
 
     @IsTest
-    static void malformedRow_isExcluded() {
-        Source_System__c ss = getSource();
-        String csv = 'advertiser,agency,market_station,revenue_type,net_revenue,ae_email,period\n'
-                   + 'JustOneColumn\n';
+    static void malformedCsv_errorRow() {
+        Id lbId = makeSourceSystem();
+        Id ssId = [SELECT Source_System__c FROM Load_Batch__c WHERE Id = :lbId].Source_System__c;
+
         Test.startTest();
-        CoxRepsTransformer t = new CoxRepsTransformer();
-        List<Inbound_Staging__c> rows = t.transform(Blob.valueOf(csv), ss.Id, false);
+        List<Inbound_Staging__c> rows = new CoxRepsTransformer().transform(MALFORMED_CSV, lbId, ssId, 'COXREPS');
         Test.stopTest();
+
+        System.assertEquals(1, rows.size());
+        System.assertEquals('Error', rows[0].Status__c);
         System.assertEquals('MALFORMED_ROW', rows[0].Excluding_Rule__c);
-    }
-
-    @IsTest
-    static void blankAdvertiser_isExcluded() {
-        Source_System__c ss = getSource();
-        String csv = 'advertiser,agency,market_station,revenue_type,net_revenue,ae_email,period\n'
-                   + ',MediaCom,KTVW,Local,1000,ae@coxreps.com,2026-03\n';
-        Test.startTest();
-        CoxRepsTransformer t = new CoxRepsTransformer();
-        List<Inbound_Staging__c> rows = t.transform(Blob.valueOf(csv), ss.Id, false);
-        Test.stopTest();
-        System.assertEquals('BLANK_ADVERTISER', rows[0].Excluding_Rule__c);
-    }
-
-    @IsTest
-    static void idempotency_sameRowSameKey() {
-        Source_System__c ss = getSource();
-        String csv = TransformerTestHelper.coxRepsCsvHappyPath();
-        CoxRepsTransformer t = new CoxRepsTransformer();
-        List<Inbound_Staging__c> r1 = t.transform(Blob.valueOf(csv), ss.Id, false);
-        List<Inbound_Staging__c> r2 = t.transform(Blob.valueOf(csv), ss.Id, false);
-        System.assertEquals(r1[0].External_Key__c, r2[0].External_Key__c);
     }
 }

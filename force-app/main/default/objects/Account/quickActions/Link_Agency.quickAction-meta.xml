@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionSubtype>ScreenAction</actionSubtype>
+    <description>Sets or updates the Primary Agency on an Advertiser or Direct Buy Advertiser account. Launches the Link Agency To Advertiser screen flow with the current record ID.</description>
+    <flow>Link_Agency_To_Advertiser</flow>
+    <label>Link Agency</label>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <type>Flow</type>
+</QuickAction>

@@ -102,6 +102,35 @@
         <object>Matrix_Sync_Log__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
+    <!-- Field-level security: new Account fields for advertiser/agency management -->
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.Market__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.Media_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.Primary_Agency__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+
+    <!-- Record type visibility: Direct Buy Advertiser access for AEs -->
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Account.Direct_Buy</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Account.Agency</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+
     <userPermissions>
         <enabled>true</enabled>
         <name>ApiEnabled</name>
