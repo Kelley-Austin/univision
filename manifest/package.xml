@@ -22,8 +22,11 @@
         <members>Office__c</members>
         <members>Projection__c</members>
         <members>Budget__c</members>
+        <members>Budget_Lock__c</members>
+        <members>Actual_Revenue__c</members>
         <members>Vehicle__c</members>
         <members>Advertising_Opportunity__c</members>
+        <members>Advertising_Contract__c</members>
         <members>Matrix_Sync_Log__c</members>
         <members>Matrix_Sync_Config__mdt</members>
         <name>CustomObject</name>
@@ -58,6 +61,32 @@
         <members>Matrix_Sync_Log__c.Sync_Type__c</members>
         <members>Matrix_Sync_Config__mdt.Named_Credential__c</members>
         <members>Matrix_Sync_Config__mdt.Schedule_Hour__c</members>
+        <members>Advertising_Contract__c.Advertising_Opportunity__c</members>
+        <members>Advertising_Contract__c.Account__c</members>
+        <members>Advertising_Contract__c.Agency_Account__c</members>
+        <members>Advertising_Contract__c.Contract_Status__c</members>
+        <members>Advertising_Contract__c.Start_Date__c</members>
+        <members>Advertising_Contract__c.End_Date__c</members>
+        <members>Advertising_Contract__c.Total_Contract_Value__c</members>
+        <members>Advertising_Contract__c.Market__c</members>
+        <members>Advertising_Contract__c.Signatory_Name__c</members>
+        <members>Advertising_Contract__c.Signatory_Title__c</members>
+        <members>Advertising_Contract__c.Signatory_Email__c</members>
+        <members>Advertising_Contract__c.Contract_Terms__c</members>
+        <members>Advertising_Contract__c.Cancellation_Policy__c</members>
+        <members>Advertising_Contract__c.Cancellation_Notice_Days__c</members>
+        <members>Advertising_Contract__c.Cancellation_Fee_Percent__c</members>
+        <members>Advertising_Contract__c.Cancellation_Reason__c</members>
+        <members>Advertising_Contract__c.Cancellation_Request_Date__c</members>
+        <members>Advertising_Contract__c.Cancellation_Fee_Amount__c</members>
+        <members>Advertising_Contract__c.Make_Good_Policy__c</members>
+        <members>Advertising_Contract__c.Make_Good_Credits__c</members>
+        <members>Advertising_Contract__c.E_Signature_Status__c</members>
+        <members>Advertising_Contract__c.E_Signature_Date__c</members>
+        <members>Advertising_Contract__c.E_Signature_Document_URL__c</members>
+        <members>Advertising_Contract__c.Approved_By__c</members>
+        <members>Advertising_Contract__c.Approved_Date__c</members>
+        <members>Advertising_Contract__c.Notes__c</members>
         <name>CustomField</name>
     </types>
     <types>
@@ -95,6 +124,8 @@
         <members>MatrixSyncControllerTest</members>
         <members>MatrixSyncInvocable</members>
         <members>MatrixSyncInvocableTest</members>
+        <members>CancellationPolicyService</members>
+        <members>CancellationPolicyServiceTest</members>
         <name>ApexClass</name>
     </types>
     <types>
@@ -105,6 +136,7 @@
     <types>
         <members>Retire_Category_With_Successor</members>
         <members>Matrix_Inventory_Admin_Sync</members>
+        <members>Makegood_Or_Cancellation</members>
         <name>Flow</name>
     </types>
     <types>
@@ -117,6 +149,10 @@
         <members>Outlet__c</members>
         <members>Office__c</members>
         <name>CustomTab</name>
+    </types>
+    <types>
+        <members>Advertising_Contract__c.Makegood_Or_Cancellation</members>
+        <name>QuickAction</name>
     </types>
     <version>62.0</version>
 </Package>

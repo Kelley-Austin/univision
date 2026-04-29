@@ -25,6 +25,31 @@
     </variables>
 
     <variables>
+        <name>varRequestType</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <variables>
+        <name>varReason</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <variables>
+        <name>varRequestedCreditAmount</name>
+        <dataType>Currency</dataType>
+        <scale>2</scale>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <variables>
         <name>varResultSuccess</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
