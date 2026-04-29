@@ -5,6 +5,7 @@
     <referenceTo>Category__c</referenceTo>
     <relationshipLabel>Actual Revenues</relationshipLabel>
     <relationshipName>Actual_Revenues</relationshipName>
+    <deleteConstraint>SetNull</deleteConstraint>
     <required>false</required>
     <type>Lookup</type>
 </CustomField>

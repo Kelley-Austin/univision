@@ -1,77 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-
-    <!-- ── Lightning Apps ───────────────────────────────────────────────────── -->
     <types>
-        <members>MediaCloud.app</members>
-        <members>Sales_Operations_Console.app</members>
-        <name>CustomApplication</name>
-    </types>
-
-    <!-- ── Custom Object ────────────────────────────────────────────────────── -->
-    <types>
-        <members>Pacing_Snapshot__c</members>
-        <name>CustomObject</name>
-    </types>
-
-    <!-- ── Custom Tabs ──────────────────────────────────────────────────────── -->
-    <types>
-        <members>Actual_Revenue__c.tab</members>
-        <members>Advertising_Contract__c.tab</members>
-        <members>Advertising_Opportunity__c.tab</members>
-        <members>Budget_Line__c.tab</members>
-        <members>Pacing_Snapshot__c.tab</members>
-        <members>Period_Close__c.tab</members>
-        <members>Pitch_Project__c.tab</members>
-        <members>Sales_Ops_Console.tab</members>
-        <name>CustomTab</name>
-    </types>
-
-    <!-- ── FlexiPages ───────────────────────────────────────────────────────── -->
-    <types>
-        <members>Account_Advertising_Budget.flexipage</members>
-        <members>Advertising_Contract_Record_Page.flexipage</members>
-        <members>Advertising_Opportunity_Record_Page.flexipage</members>
-        <members>Budget_Line_Record_Page.flexipage</members>
-        <members>Period_Close_Record_Page.flexipage</members>
-        <members>Pitch_Project_Record_Page.flexipage</members>
-        <members>Sales_Operations_Console_App.flexipage</members>
-        <name>FlexiPage</name>
-    </types>
-
-    <!-- ── Apex Classes (this slice) ────────────────────────────────────────── -->
-    <types>
-        <members>BibleExportController</members>
-        <members>BibleExportControllerTest</members>
-        <members>ExclusionLogController</members>
-        <members>ExclusionLogControllerTest</members>
-        <members>FinancialReportController</members>
-        <members>FinancialReportControllerTest</members>
-        <members>PacingSnapshotBatch</members>
-        <members>PacingSnapshotBatchTest</members>
-        <members>PacingSnapshotScheduler</members>
-        <members>SalesOpsKpiController</members>
-        <members>SalesOpsKpiControllerTest</members>
+        <members>MatrixAdminSyncAction</members>
+        <members>MatrixAdminSyncAction.cls</members>
+        <members>MatrixAdminSyncActionTest</members>
+        <members>MatrixAdminSyncActionTest.cls</members>
+        <members>MatrixPromoteToContractAction</members>
+        <members>MatrixRescheduleInvocable</members>
+        <members>MatrixRescheduleInvocable.cls</members>
+        <members>MatrixScheduleInfoInvocable</members>
+        <members>MatrixScheduleInfoInvocable.cls</members>
+        <members>MatrixSyncController</members>
+        <members>MatrixSyncInvocable</members>
+        <members>MatrixSyncInvocableTest</members>
         <name>ApexClass</name>
     </types>
-
-    <!-- ── LWC Components (this slice) ──────────────────────────────────────── -->
     <types>
-        <members>bibleExtract</members>
-        <members>exclusionLogListView</members>
-        <members>financialReportBuilder</members>
-        <members>salesOpsConsole</members>
-        <members>salesOpsKpiDashboard</members>
-        <name>LightningComponentBundle</name>
+        <members>Matrix_Sync_Log__c</members>
+        <name>CustomObject</name>
     </types>
-
-    <!-- ── Custom Report Types ──────────────────────────────────────────────── -->
     <types>
-        <members>Forecast_Stage_Snapshots</members>
-        <members>Pacing_Snapshots</members>
-        <members>Period_Snapshots_Detail</members>
-        <name>ReportType</name>
+        <members>Matrix_Inventory_Admin_Sync.flow</members>
+        <name>Flow</name>
     </types>
-
+    <types>
+        <members>Matrix_API.namedCredential</members>
+        <name>NamedCredential</name>
+    </types>
+    <types>
+        <members>Integration_User.permissionset</members>
+        <members>MatrixCore_AE.permissionset</members>
+        <members>SalesOps_FullAccess.permissionset</members>
+        <name>PermissionSet</name>
+    </types>
     <version>61.0</version>
 </Package>

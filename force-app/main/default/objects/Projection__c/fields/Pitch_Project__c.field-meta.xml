@@ -5,6 +5,7 @@
     <referenceTo>Opportunity</referenceTo>
     <relationshipLabel>Pitch Projections</relationshipLabel>
     <relationshipName>Pitch_Projections</relationshipName>
+    <deleteConstraint>SetNull</deleteConstraint>
     <required>false</required>
     <type>Lookup</type>
 </CustomField>

@@ -185,11 +185,11 @@ private class BudgetLockServiceTest {
     static void testOfficeScopeIsNonBlocking() {
         Account acct = makeAccount();
         Category__c cat = makeCategory();
-        Office__c office = new Office__c(Name = 'Miami', Code__c = 'MIA', Is_Active__c = true);
-        insert office;
 
+        // Office scope lock — Office__c field is deferred to a future slice;
+        // the 'Office' scope level should still be non-blocking.
         insert new Budget_Lock__c(
-            Scope_Level__c = 'Office', Office__c = office.Id,
+            Scope_Level__c = 'Office',
             Period_Year__c = 2026, Is_Active__c = true
         );
 
