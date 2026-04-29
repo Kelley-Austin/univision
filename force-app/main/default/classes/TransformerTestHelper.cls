@@ -7,11 +7,12 @@ public class TransformerTestHelper {
 
     public static Source_System__c makeSource(String code, String transformerClass, String encoding) {
         Source_System__c ss = new Source_System__c(
-            Name                = code,
-            Source_Code__c      = code,
+            Name                 = code,
+            Code__c              = code,
+            Source_Code__c       = code,
             Transformer_Class__c = transformerClass,
-            File_Encoding__c    = encoding,
-            Is_Active__c        = true
+            File_Encoding__c     = encoding,
+            Is_Active__c         = true
         );
         insert ss;
         return ss;

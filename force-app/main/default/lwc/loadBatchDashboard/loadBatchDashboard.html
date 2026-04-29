@@ -1,5 +1,5 @@
 <template>
-    <lightning-card title="Load Batch Dashboard" icon-name="utility:data_streams">
+    <lightning-card title="Load History" icon-name="utility:data_streams">
         <div slot="actions">
             <lightning-button-icon
                 icon-name="utility:refresh"
@@ -7,59 +7,38 @@
                 onclick={handleRefresh}>
             </lightning-button-icon>
         </div>
-        <div class="slds-m-around_medium">
-
-            <!-- Spinner -->
+        <div class="slds-card__body slds-card__body_inner">
             <template if:true={isLoading}>
                 <lightning-spinner alternative-text="Loading..." size="small"></lightning-spinner>
             </template>
-
-            <!-- Per-source tiles -->
-            <template if:true={hasStats}>
-                <div class="slds-grid slds-wrap slds-gutters_small">
-                    <template for:each={sourceBlocks} for:item="block">
-                        <div key={block.sourceName} class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-3 slds-m-bottom_medium">
-                            <div class="tile-card slds-box">
-                                <h3 class="slds-text-heading_small slds-m-bottom_small tile-title">
-                                    {block.sourceName}
-                                </h3>
-                                <div class="slds-grid slds-wrap">
-                                    <template for:each={block.stats} for:item="stat">
-                                        <div key={stat.status} class="slds-col slds-size_1-of-2 slds-m-bottom_x-small">
-                                            <div class={stat.pillClass}>
-                                                <span class="slds-badge__icon">
-                                                    <lightning-icon icon-name={stat.icon}
-                                                        size="xx-small"
-                                                        alternative-text={stat.status}>
-                                                    </lightning-icon>
-                                                </span>
-                                                <span>{stat.status}: {stat.rowCount}</span>
-                                            </div>
-                                        </div>
-                                    </template>
-                                </div>
-                                <div class="slds-m-top_small">
-                                    <lightning-button
-                                        label="Run Batch"
-                                        icon-name="utility:play"
-                                        variant="neutral"
-                                        data-source={block.sourceId}
-                                        onclick={handleRunBatch}
-                                        size="small">
-                                    </lightning-button>
-                                </div>
-                            </div>
+            <template if:true={summary}>
+                <div class="slds-grid slds-gutters slds-m-bottom_medium">
+                    <div class="slds-col">
+                        <div class="slds-box slds-text-align_center">
+                            <p class="slds-text-heading_large">{summary.totalRowsToday}</p>
+                            <p class="slds-text-body_small">Today's Rows</p>
                         </div>
-                    </template>
+                    </div>
+                    <div class="slds-col">
+                        <div class="slds-box slds-text-align_center">
+                            <p class="slds-text-heading_large">{summary.totalErrorsToday}</p>
+                            <p class="slds-text-body_small">Today's Errors</p>
+                        </div>
+                    </div>
+                    <div class="slds-col">
+                        <div class="slds-box slds-text-align_center">
+                            <p class="slds-text-heading_large">{summary.batchCount}</p>
+                            <p class="slds-text-body_small">Batches Today</p>
+                        </div>
+                    </div>
                 </div>
             </template>
-
-            <template if:false={hasStats}>
-                <template if:false={isLoading}>
-                    <p class="slds-text-color_weak">No staging data found. Upload files to populate the dashboard.</p>
-                </template>
-            </template>
-
+            <lightning-datatable
+                key-field="Id"
+                data={batches}
+                columns={columns}
+                hide-checkbox-column>
+            </lightning-datatable>
         </div>
     </lightning-card>
 </template>

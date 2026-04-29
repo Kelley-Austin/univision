@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionSubtype>ScreenAction</actionSubtype>
+    <description>Enter spot-level traffic copy details (copy code, rotation, spot length, weekly spots, spot rate, and instructions) and submit the order to the traffic system. Sets the parent contract Traffic Status to Pending.</description>
+    <flowDefinition>Traffic_Copy_Entry</flowDefinition>
+    <label>Traffic Copy Entry</label>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <type>Flow</type>
+</QuickAction>

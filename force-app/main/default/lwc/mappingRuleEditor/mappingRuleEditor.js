@@ -1,119 +1,124 @@
 import { LightningElement, api, wire, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
-import getMappingRules from '@salesforce/apex/IngestController.getMappingRules';
-import saveMappingRule from '@salesforce/apex/IngestController.saveMappingRule';
-import deleteMappingRule from '@salesforce/apex/IngestController.deleteMappingRule';
-import dryRun from '@salesforce/apex/IngestController.dryRun';
+import getRules from '@salesforce/apex/MappingRuleService.getRules';
+import saveRule from '@salesforce/apex/MappingRuleService.saveRule';
+import deleteRule from '@salesforce/apex/MappingRuleService.deleteRule';
+import activateRule from '@salesforce/apex/MappingRuleService.activateRule';
+import dryRun from '@salesforce/apex/MappingRuleService.dryRun';
 
-export default class MappingRuleEditor extends LightningElement {
-    @api recordId; // Source_System__c Id — set by record page context
-
-    @track rules = [];
-    @track showModal = false;
-    @track editRule = {};
-    @track dryRunResult;
-    @track isEditMode = false;
-
-    _wiredRulesResult;
-    sourceSystemName = '';
-
-    // Tracks the file the user dropped for dry run
-    _pendingDocumentId;
-
-    @wire(getMappingRules, { sourceSystemId: '$recordId' })
-    wiredRules(result) {
-        this._wiredRulesResult = result;
-        if (result.data) {
-            this.rules = result.data;
-        } else if (result.error) {
-            this.showToast('Error loading rules', result.error.body?.message, 'error');
+const COLUMNS = [
+    { label: 'Rule Type', fieldName: 'Rule_Type__c' },
+    { label: 'Field Name', fieldName: 'Field_Name__c' },
+    { label: 'Raw Value', fieldName: 'Raw_Value__c' },
+    { label: 'Mapped Value', fieldName: 'Mapped_Value__c' },
+    { label: 'Active', fieldName: 'Is_Active__c', type: 'boolean' },
+    { label: 'Notes', fieldName: 'Notes__c' },
+    {
+        type: 'action',
+        typeAttributes: {
+            rowActions: [
+                { label: 'Edit', name: 'edit' },
+                { label: 'Delete', name: 'delete' },
+                { label: 'Toggle Active', name: 'toggle' }
+            ]
         }
     }
+];
 
-    get hasRules() {
-        return this.rules?.length > 0;
+export default class MappingRuleEditor extends LightningElement {
+    @api recordId;
+    @track rules = [];
+    @track showModal = false;
+    @track editRecord = {};
+    @track dryRunResult;
+    @track isLoading = false;
+    _wiredResult;
+    columns = COLUMNS;
+
+    ruleTypeOptions = [
+        { label: 'Exclude', value: 'Exclude' },
+        { label: 'Map', value: 'Map' }
+    ];
+
+    @wire(getRules, { sourceSystemId: '$recordId' })
+    wiredRules(result) {
+        this._wiredResult = result;
+        if (result.data) this.rules = result.data;
+        else if (result.error) this.showToast('Error', result.error.body?.message, 'error');
     }
 
     get modalTitle() {
-        return this.isEditMode ? 'Edit Mapping Rule' : 'Add Mapping Rule';
+        return this.editRecord.Id ? 'Edit Rule' : 'New Rule';
     }
 
-    get dryRunHasErrors() {
-        return this.dryRunResult?.errors?.length > 0;
-    }
-
-    get selectedSourceId() {
-        return this.recordId;
-    }
-
-    handleAddRule() {
-        this.editRule = { Source_System__c: this.recordId, Is_Active__c: true };
-        this.isEditMode = false;
+    handleNew() {
+        this.editRecord = { Source_System__c: this.recordId, Is_Active__c: false };
         this.showModal = true;
     }
 
-    handleEditRule(event) {
-        const ruleId = event.currentTarget.dataset.id;
-        this.editRule = { ...this.rules.find(r => r.Id === ruleId) };
-        this.isEditMode = true;
-        this.showModal = true;
-    }
-
-    async handleDeleteRule(event) {
-        const ruleId = event.currentTarget.dataset.id;
-        try {
-            await deleteMappingRule({ ruleId });
-            await refreshApex(this._wiredRulesResult);
-            this.showToast('Deleted', 'Mapping rule removed.', 'success');
-        } catch (error) {
-            this.showToast('Delete failed', error.body?.message, 'error');
+    handleRowAction(event) {
+        const action = event.detail.action.name;
+        const row = event.detail.row;
+        if (action === 'edit') {
+            this.editRecord = Object.assign({}, row);
+            this.showModal = true;
+        } else if (action === 'delete') {
+            deleteRule({ ruleId: row.Id })
+                .then(() => refreshApex(this._wiredResult))
+                .then(() => this.showToast('Deleted', 'Rule removed.', 'success'))
+                .catch(e => this.showToast('Error', e.body?.message, 'error'));
+        } else if (action === 'toggle') {
+            activateRule({ ruleId: row.Id, isActive: !row.Is_Active__c })
+                .then(() => refreshApex(this._wiredResult))
+                .catch(e => this.showToast('Error', e.body?.message, 'error'));
         }
     }
 
     handleFieldChange(event) {
         const field = event.currentTarget.dataset.field;
-        this.editRule = { ...this.editRule, [field]: event.detail.value };
+        this.editRecord = Object.assign({}, this.editRecord, { [field]: event.detail.value });
     }
 
-    handleModalCancel() {
+    handleCheckboxChange(event) {
+        const field = event.currentTarget.dataset.field;
+        this.editRecord = Object.assign({}, this.editRecord, { [field]: event.target.checked });
+    }
+
+    handleModalClose() {
         this.showModal = false;
-        this.editRule = {};
+        this.editRecord = {};
     }
 
-    async handleModalSave() {
-        try {
-            await saveMappingRule({ rule: this.editRule });
-            await refreshApex(this._wiredRulesResult);
-            this.showModal = false;
-            this.showToast('Saved', 'Mapping rule saved successfully.', 'success');
-        } catch (error) {
-            this.showToast('Save failed', error.body?.message, 'error');
-        }
+    handleSave() {
+        saveRule({ rule: this.editRecord })
+            .then(() => refreshApex(this._wiredResult))
+            .then(() => {
+                this.showModal = false;
+                this.showToast('Saved', 'Rule saved.', 'success');
+            })
+            .catch(e => this.showToast('Error', e.body?.message, 'error'));
     }
 
-    async handleDryRun() {
-        if (!this._pendingDocumentId) {
-            this.showToast('No file selected', 'Upload a test file first to run the preview.', 'warning');
-            return;
-        }
-        try {
-            this.dryRunResult = await dryRun({
-                contentDocumentId: this._pendingDocumentId,
-                sourceSystemId: this.recordId
+    handleDryRun() {
+        this.isLoading = true;
+        dryRun({ sourceSystemId: this.recordId })
+            .then(result => {
+                this.dryRunResult = result;
+                this.isLoading = false;
+                this.showToast(
+                    'Dry Run Complete',
+                    `${result.wouldExclude} rows would be excluded, ${result.wouldRemap} remapped.`,
+                    'info'
+                );
+            })
+            .catch(e => {
+                this.isLoading = false;
+                this.showToast('Error', e.body?.message, 'error');
             });
-        } catch (error) {
-            this.showToast('Dry run failed', error.body?.message, 'error');
-        }
-    }
-
-    /** Called by parent or by the sourceFileUpload LWC after a file upload */
-    @api
-    setDryRunDocument(contentDocumentId) {
-        this._pendingDocumentId = contentDocumentId;
     }
 
     showToast(title, message, variant) {
-        this.dispatchEvent(new ShowToastEvent({ title, message: message ?? '', variant }));
+        this.dispatchEvent(new ShowToastEvent({ title, message: message || '', variant }));
     }
 }

@@ -1,0 +1,200 @@
+<template>
+    <lightning-card title="My Unmatched Revenue Rows" icon-name="standard:account">
+        <div class="slds-card__body slds-card__body_inner">
+
+            <!-- Summary bar -->
+            <div class="slds-grid slds-gutters slds-m-bottom_small">
+                <div class="slds-col">
+                    <span class="slds-badge slds-badge_lightest">
+                        {totalCount} unmatched row(s)
+                    </span>
+                </div>
+                <div class="slds-col slds-col_bump-left">
+                    <lightning-button
+                        label="Refresh"
+                        icon-name="utility:refresh"
+                        onclick={handleRefresh}
+                        variant="neutral"
+                        class="slds-m-right_x-small">
+                    </lightning-button>
+                </div>
+            </div>
+
+            <!-- Loading spinner -->
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </template>
+
+            <!-- Error state -->
+            <template if:true={hasError}>
+                <div class="slds-notify slds-notify_alert slds-theme_error">
+                    <span>{errorMessage}</span>
+                </div>
+            </template>
+
+            <!-- Empty state -->
+            <template if:false={hasRows}>
+                <template if:false={isLoading}>
+                    <div class="slds-illustration slds-illustration_small slds-m-top_medium">
+                        <p class="slds-text-body_regular slds-text-color_weak">
+                            No unmatched rows — all clear!
+                        </p>
+                    </div>
+                </template>
+            </template>
+
+            <!-- Worklist table -->
+            <template if:true={hasRows}>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th scope="col">Advertiser (Raw)</th>
+                            <th scope="col">AE Code</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Period</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Source</th>
+                            <th scope="col">Suggestions</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={rows} for:item="row">
+                            <tr key={row.stagingId} class="slds-hint-parent">
+                                <td>
+                                    <span class="slds-truncate" title={row.rawAdvertiserName}>
+                                        {row.rawAdvertiserName}
+                                    </span>
+                                    <template if:true={row.rawAdvertiserCode}>
+                                        <br/>
+                                        <span class="slds-text-color_weak slds-text-body_small">
+                                            Code: {row.rawAdvertiserCode}
+                                        </span>
+                                    </template>
+                                </td>
+                                <td>{row.rawAeCode}</td>
+                                <td>
+                                    <lightning-formatted-number
+                                        value={row.revenueAmount}
+                                        format-style="currency"
+                                        currency-code="USD">
+                                    </lightning-formatted-number>
+                                </td>
+                                <td>{row.periodMonth}/{row.periodYear}</td>
+                                <td>{row.revenueType}</td>
+                                <td>{row.sourceSystem}</td>
+                                <td>
+                                    <template if:true={row.hasSuggestions}>
+                                        <lightning-combobox
+                                            name={row.stagingId}
+                                            label=""
+                                            placeholder="Pick a match..."
+                                            options={row.suggestionOptions}
+                                            data-staging-id={row.stagingId}
+                                            onchange={handleSuggestionSelect}
+                                            variant="label-hidden">
+                                        </lightning-combobox>
+                                    </template>
+                                    <template if:false={row.hasSuggestions}>
+                                        <span class="slds-text-color_weak">No suggestions</span>
+                                    </template>
+                                </td>
+                                <td>
+                                    <lightning-button-group>
+                                        <lightning-button
+                                            label="Accept"
+                                            variant="brand"
+                                            data-staging-id={row.stagingId}
+                                            data-account-id={row.selectedAccountId}
+                                            data-tier={row.selectedTier}
+                                            disabled={row.noSelection}
+                                            onclick={handleAccept}>
+                                        </lightning-button>
+                                        <lightning-button
+                                            label="Search"
+                                            variant="neutral"
+                                            data-staging-id={row.stagingId}
+                                            onclick={handleOpenSearch}>
+                                        </lightning-button>
+                                        <lightning-button
+                                            label="Exclude"
+                                            variant="destructive-text"
+                                            data-staging-id={row.stagingId}
+                                            onclick={handleExclude}>
+                                        </lightning-button>
+                                    </lightning-button-group>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+
+                <!-- Pagination -->
+                <div class="slds-grid slds-grid_align-center slds-m-top_small">
+                    <lightning-button
+                        label="Previous"
+                        icon-name="utility:chevronleft"
+                        disabled={isPrevDisabled}
+                        onclick={handlePrev}>
+                    </lightning-button>
+                    <span class="slds-m-horizontal_small slds-align-middle">
+                        Page {currentPage}
+                    </span>
+                    <lightning-button
+                        label="Next"
+                        icon-name="utility:chevronright"
+                        icon-position="right"
+                        disabled={isNextDisabled}
+                        onclick={handleNext}>
+                    </lightning-button>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+
+    <!-- Manual search modal -->
+    <template if:true={showSearchModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-modal__title">Search for Advertiser Account</h2>
+                    <button class="slds-button slds-button_icon slds-modal__close" onclick={handleCloseSearch}>
+                        <lightning-icon icon-name="utility:close" size="small"></lightning-icon>
+                    </button>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <lightning-input
+                        label="Advertiser Name"
+                        placeholder="Type to search..."
+                        value={searchTerm}
+                        onchange={handleSearchTermChange}>
+                    </lightning-input>
+                    <lightning-button
+                        label="Search"
+                        variant="brand"
+                        class="slds-m-top_small"
+                        onclick={handleSearch}>
+                    </lightning-button>
+                    <template if:true={searchResults.length}>
+                        <ul class="slds-m-top_small">
+                            <template for:each={searchResults} for:item="result">
+                                <li key={result.accountId} class="slds-p-vertical_x-small">
+                                    <lightning-button
+                                        label={result.accountName}
+                                        variant="base"
+                                        data-account-id={result.accountId}
+                                        onclick={handleSearchSelect}>
+                                    </lightning-button>
+                                </li>
+                            </template>
+                        </ul>
+                    </template>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button label="Cancel" onclick={handleCloseSearch}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

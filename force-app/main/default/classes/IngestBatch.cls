@@ -9,17 +9,17 @@ public with sharing class IngestBatch implements Database.Batchable<SObject>, Da
     private Integer processed = 0;
     private Integer promoted  = 0;
     private Integer errors    = 0;
-    private String jobId;
 
     public IngestBatch(Id sourceSystemId) {
         this.sourceSystemId = sourceSystemId;
     }
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
-        this.jobId = bc.getJobId();
-        String query = 'SELECT Id, External_Key__c, Status__c, Advertiser_Name__c, '
-                     + 'Agency_Name__c, Station_Code__c, Revenue_Type__c, Revenue_Amount__c, '
-                     + 'AE_Code__c, Broadcast_Period__c, Source_System__c, Batch_Job_Id__c '
+        String query = 'SELECT Id, Staging_Key__c, Status__c, '
+                     + 'Raw_Advertiser_Name__c, Raw_Agency_Name__c, Outlet_Code__c, '
+                     + 'Revenue_Type__c, Revenue_Amount__c, Raw_Salesperson_Code__c, '
+                     + 'Period_Month__c, Period_Year__c, Calendar_Type__c, '
+                     + 'Source_System__c, Load_Batch__c, Account__c, Batch_Job_Id__c '
                      + 'FROM Inbound_Staging__c '
                      + 'WHERE Status__c = \'Pending\'';
         if (sourceSystemId != null) {
@@ -30,7 +30,7 @@ public with sharing class IngestBatch implements Database.Batchable<SObject>, Da
     }
 
     public void execute(Database.BatchableContext bc, List<Inbound_Staging__c> scope) {
-        // Stamp batch job ID for traceability; keep status Pending during processing
+        // Stamp batch job ID for traceability
         for (Inbound_Staging__c row : scope) {
             row.Batch_Job_Id__c = bc.getJobId();
         }
@@ -41,8 +41,11 @@ public with sharing class IngestBatch implements Database.Batchable<SObject>, Da
         for (Inbound_Staging__c row : scope) {
             processed++;
             try {
-                // Resolve advertiser Account
-                Id advertiserId = resolveAccount(row.Advertiser_Name__c, 'Advertiser');
+                // Use Account__c pre-resolved by MappingRuleExecutor when available
+                Id advertiserId = row.Account__c;
+                if (advertiserId == null) {
+                    advertiserId = resolveAccount(row.Raw_Advertiser_Name__c);
+                }
                 if (advertiserId == null) {
                     row.Status__c = 'Excluded';
                     row.Excluding_Rule__c = 'UNKNOWN_ADVERTISER';
@@ -50,7 +53,6 @@ public with sharing class IngestBatch implements Database.Batchable<SObject>, Da
                     continue;
                 }
 
-                // Promote to Actual_Revenue__c (canonical record)
                 Actual_Revenue__c actual = buildActual(row, advertiserId);
                 upsert actual External_Key__c;
 
@@ -78,15 +80,15 @@ public with sharing class IngestBatch implements Database.Batchable<SObject>, Da
 
     private static Map<String, Id> accountCache = new Map<String, Id>();
 
-    private static Id resolveAccount(String name, String recordTypeName) {
+    private static Id resolveAccount(String name) {
         if (String.isBlank(name)) return null;
-        String key = (name + '|' + recordTypeName).toLowerCase();
+        String key = name.toLowerCase();
         if (accountCache.containsKey(key)) return accountCache.get(key);
 
         List<Account> matches = [
             SELECT Id FROM Account
             WHERE Name = :name
-              AND RecordType.DeveloperName = :recordTypeName
+              AND RecordType.DeveloperName IN ('Direct_Buy', 'Advertiser')
             LIMIT 1
         ];
         Id result = matches.isEmpty() ? null : matches[0].Id;
@@ -94,15 +96,18 @@ public with sharing class IngestBatch implements Database.Batchable<SObject>, Da
         return result;
     }
 
+    @TestVisible
     private static Actual_Revenue__c buildActual(Inbound_Staging__c row, Id advertiserId) {
         Actual_Revenue__c a = new Actual_Revenue__c();
-        a.External_Key__c    = row.External_Key__c;
+        // Staging_Key__c is the MD5 idempotency hash set by IngestService — reuse it
+        // as the External_Key__c on Actual_Revenue__c so re-runs are safe
+        a.External_Key__c    = row.Staging_Key__c;
         a.Advertiser__c      = advertiserId;
         a.Revenue_Amount__c  = row.Revenue_Amount__c;
         a.Revenue_Type__c    = row.Revenue_Type__c;
-        a.Station_Code__c    = row.Station_Code__c;
-        a.AE_Code__c         = row.AE_Code__c;
-        a.Broadcast_Period__c = row.Broadcast_Period__c;
+        a.Station_Code__c    = row.Outlet_Code__c;
+        a.Period_Month__c    = row.Period_Month__c;
+        a.Period_Year__c     = row.Period_Year__c;
         a.Source_System__c   = row.Source_System__c;
         a.Inbound_Staging__c = row.Id;
         return a;
