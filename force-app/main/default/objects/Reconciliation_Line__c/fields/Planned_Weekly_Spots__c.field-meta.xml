@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Planned_Weekly_Spots__c</fullName>
+    <description>Weekly spot count from the Budget Line (Budget_Line__c.Weekly_Spots__c). Compare against Actual Spot Count to check delivery volume.</description>
+    <label>Planned Weekly Spots</label>
+    <precision>4</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+</CustomField>

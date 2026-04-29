@@ -99,6 +99,89 @@
         <field>Advertising_Opportunity__c.Total_Variance_Amount__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Advertising_Opportunity__c.Media_Cloud_Media_Plan_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <!-- CRM fields — reps edit all sales-facing fields -->
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Opportunity__c.Close_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Opportunity__c.Primary_Contact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Opportunity__c.Media_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Opportunity__c.Estimated_Revenue__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Opportunity__c.Lead_Source__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Opportunity__c.Lost_Reason__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Opportunity__c.Competition__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Opportunity__c.Next_Step__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Opportunity__c.Description__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Opportunity__c.Probability__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <!-- Account custom fields — reps can see but not change account-level config -->
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Market__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Media_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Primary_Agency__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <!-- Contact custom fields — reps set contact roles -->
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Contact_Role__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Is_Primary__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 
     <!-- Field Permissions — Budget_Line__c -->
     <fieldPermissions>
@@ -247,6 +330,23 @@
         <readable>true</readable>
     </fieldPermissions>
 
+    <!-- Field Permissions — new Local Ad Sales proposal fields -->
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Opportunity__c.Primary_Demo__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Opportunity__c.Secondary_Demo__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Opportunity__c.Proposal_Notes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+
     <!-- Record Type Visibility — Advertising_Opportunity__c -->
     <recordTypeVisibilities>
         <recordType>Advertising_Opportunity__c.Direct_Buy</recordType>
@@ -254,6 +354,10 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Advertising_Opportunity__c.Agency_Buy</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Advertising_Opportunity__c.Local_Ad_Sales</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
 

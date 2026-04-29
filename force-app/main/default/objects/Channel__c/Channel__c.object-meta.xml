@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>A broadcast or digital station (channel) that carries Univision advertising inventory. Budget Lines are allocated against Channels.</description>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <label>Channel</label>
+    <nameField>
+        <label>Channel Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Channels</pluralLabel>
+    <sharingModel>ReadWrite</sharingModel>
+
+    <listViews>
+        <fullName>Active_Channels</fullName>
+        <columns>NAME</columns>
+        <columns>Channel_Type__c</columns>
+        <columns>Market__c</columns>
+        <columns>Channel_Code__c</columns>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Active</value>
+        </filters>
+        <label>Active Channels</label>
+    </listViews>
+    <listViews>
+        <fullName>All_Channels</fullName>
+        <columns>NAME</columns>
+        <columns>Channel_Type__c</columns>
+        <columns>Status__c</columns>
+        <columns>Market__c</columns>
+        <columns>Channel_Code__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Channels</label>
+    </listViews>
+</CustomObject>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <description>Account record page showing Advertising Opportunity details, Budget Lines, and the New Ad Opportunity quick action.</description>
+    <flexiPageType>RecordPage</flexiPageType>
+    <masterLabel>Account Advertising Budget</masterLabel>
+    <sobjectType>Account</sobjectType>
+    <template>
+        <name>flexipage:recordHomeTemplate3Col2TopRegion</name>
+    </template>
+
+    <!-- Highlights panel (top) -->
+    <regions>
+        <name>top</name>
+        <type>Region</type>
+        <mode>append</mode>
+        <itemInstances>
+            <componentInstance>
+                <componentName>flexipage:highlights4</componentName>
+                <visibilityRule/>
+            </componentInstance>
+        </itemInstances>
+    </regions>
+
+    <!-- Left column: record detail -->
+    <regions>
+        <name>left</name>
+        <type>Region</type>
+        <mode>append</mode>
+        <itemInstances>
+            <componentInstance>
+                <componentName>flexipage:recordDetail</componentName>
+                <visibilityRule/>
+            </componentInstance>
+        </itemInstances>
+    </regions>
+
+    <!-- Right column: Advertising Opportunities + Budget Lines related lists -->
+    <regions>
+        <name>right</name>
+        <type>Region</type>
+        <mode>append</mode>
+        <itemInstances>
+            <componentInstance>
+                <componentName>forceApps:relatedListQuickActionDesktop</componentName>
+                <componentInstanceProperties>
+                    <name>relatedLists</name>
+                    <value>
+                        <stringValue>Advertising_Opportunities__r</stringValue>
+                    </value>
+                </componentInstanceProperties>
+                <visibilityRule/>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>forceApps:relatedListQuickActionDesktop</componentName>
+                <componentInstanceProperties>
+                    <name>relatedLists</name>
+                    <value>
+                        <stringValue>Budget_Lines__r</stringValue>
+                    </value>
+                </componentInstanceProperties>
+                <visibilityRule/>
+            </componentInstance>
+        </itemInstances>
+    </regions>
+
+</FlexiPage>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Reconciliation_Status__c</fullName>
+    <description>Result of matching this Budget Line against Counterpoint actuals. Matched = amounts agree within tolerance. Variance = match found but amounts differ. Unmatched Order = Budget Line has no corresponding actuals. Unmatched Actual = actuals exist with no corresponding Budget Line.</description>
+    <label>Reconciliation Status</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value><fullName>Matched</fullName><default>false</default><label>Matched</label></value>
+            <value><fullName>Variance</fullName><default>false</default><label>Variance</label></value>
+            <value><fullName>Unmatched Order</fullName><default>false</default><label>Unmatched Order</label></value>
+            <value><fullName>Unmatched Actual</fullName><default>false</default><label>Unmatched Actual</label></value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

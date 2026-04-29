@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <description>Quick-action Screen Flow to advance or update the stage of an Advertising Opportunity. Enforces required fields at key stages and surfaces the Lost Reason field when Closed Lost is selected.</description>
+    <label>Update Opportunity Stage</label>
+    <processType>Flow</processType>
+    <status>Active</status>
+
+    <!-- ═══════════════════════════════════════════
+         VARIABLES
+    ═══════════════════════════════════════════ -->
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <description>ID of the Advertising Opportunity being updated. Passed automatically from the quick action.</description>
+    </variables>
+    <variables>
+        <name>varOpportunity</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Advertising_Opportunity__c</objectType>
+    </variables>
+
+    <!-- ═══════════════════════════════════════════
+         DYNAMIC CHOICE SETS
+    ═══════════════════════════════════════════ -->
+    <dynamicChoiceSets>
+        <name>dcs_Status</name>
+        <dataType>Picklist</dataType>
+        <displayField>label</displayField>
+        <object>Advertising_Opportunity__c</object>
+        <picklistField>Status__c</picklistField>
+        <picklistObjectAndField>Advertising_Opportunity__c.Status__c</picklistObjectAndField>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>dcs_LostReason</name>
+        <dataType>Picklist</dataType>
+        <displayField>label</displayField>
+        <object>Advertising_Opportunity__c</object>
+        <picklistField>Lost_Reason__c</picklistField>
+        <picklistObjectAndField>Advertising_Opportunity__c.Lost_Reason__c</picklistObjectAndField>
+    </dynamicChoiceSets>
+
+    <!-- ═══════════════════════════════════════════
+         START → LOAD CURRENT RECORD
+    ═══════════════════════════════════════════ -->
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>lookup_CurrentOpportunity</targetReference>
+        </connector>
+    </start>
+
+    <recordLookups>
+        <name>lookup_CurrentOpportunity</name>
+        <label>Get Current Opportunity</label>
+        <locationX>264</locationX>
+        <locationY>158</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>screen_UpdateStage</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Advertising_Opportunity__c</object>
+        <outputReference>varOpportunity</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>Status__c</queriedFields>
+        <queriedFields>Close_Date__c</queriedFields>
+        <queriedFields>Estimated_Revenue__c</queriedFields>
+        <queriedFields>Primary_Contact__c</queriedFields>
+    </recordLookups>
+
+    <!-- ═══════════════════════════════════════════
+         SCREEN — Update Stage
+    ═══════════════════════════════════════════ -->
+    <screens>
+        <name>screen_UpdateStage</name>
+        <label>Update Stage</label>
+        <locationX>264</locationX>
+        <locationY>398</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>false</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>decision_IsClosedLost</targetReference>
+        </connector>
+        <fields>
+            <name>display_CurrentStage</name>
+            <fieldText>&lt;p&gt;Current stage: &lt;strong&gt;{!varOpportunity.Status__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Select the new stage and confirm any required details below.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>input_NewStage</name>
+            <choiceReferences>dcs_Status</choiceReferences>
+            <dataType>String</dataType>
+            <defaultSelectedChoiceReference>dcs_Status</defaultSelectedChoiceReference>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+            <label>New Stage</label>
+        </fields>
+        <fields>
+            <name>input_CloseDate</name>
+            <dataType>Date</dataType>
+            <defaultValue>
+                <elementReference>varOpportunity.Close_Date__c</elementReference>
+            </defaultValue>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <label>Expected Close Date</label>
+        </fields>
+        <fields>
+            <name>input_EstimatedRevenue</name>
+            <dataType>Currency</dataType>
+            <defaultValue>
+                <elementReference>varOpportunity.Estimated_Revenue__c</elementReference>
+            </defaultValue>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <label>Estimated Revenue</label>
+        </fields>
+        <fields>
+            <name>input_Probability</name>
+            <dataType>Number</dataType>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <label>Probability (%)</label>
+        </fields>
+        <fields>
+            <name>input_LostReason</name>
+            <choiceReferences>dcs_LostReason</choiceReferences>
+            <dataType>String</dataType>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+            <label>Lost Reason</label>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>screen_UpdateStage.input_NewStage</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Closed Lost</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>input_NextStep</name>
+            <dataType>String</dataType>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <label>Next Step</label>
+        </fields>
+    </screens>
+
+    <!-- ═══════════════════════════════════════════
+         DECISION — Closed Lost validation
+    ═══════════════════════════════════════════ -->
+    <decisions>
+        <name>decision_IsClosedLost</name>
+        <label>Is Closed Lost?</label>
+        <locationX>264</locationX>
+        <locationY>638</locationY>
+        <defaultConnector>
+            <targetReference>update_Opportunity</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Other Stage</defaultConnectorLabel>
+        <rules>
+            <name>outcome_ClosedLost</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>screen_UpdateStage.input_NewStage</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed Lost</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>update_OpportunityClosedLost</targetReference>
+            </connector>
+            <label>Closed Lost</label>
+        </rules>
+    </decisions>
+
+    <!-- ═══════════════════════════════════════════
+         RECORD UPDATE — Standard stage advance
+    ═══════════════════════════════════════════ -->
+    <recordUpdates>
+        <name>update_Opportunity</name>
+        <label>Update Opportunity Stage</label>
+        <locationX>132</locationX>
+        <locationY>798</locationY>
+        <connector>
+            <targetReference>screen_StageUpdated</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <elementReference>screen_UpdateStage.input_NewStage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Close_Date__c</field>
+            <value>
+                <elementReference>screen_UpdateStage.input_CloseDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Estimated_Revenue__c</field>
+            <value>
+                <elementReference>screen_UpdateStage.input_EstimatedRevenue</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Probability__c</field>
+            <value>
+                <elementReference>screen_UpdateStage.input_Probability</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Next_Step__c</field>
+            <value>
+                <elementReference>screen_UpdateStage.input_NextStep</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Advertising_Opportunity__c</object>
+    </recordUpdates>
+
+    <!-- ═══════════════════════════════════════════
+         RECORD UPDATE — Closed Lost (includes Lost Reason)
+    ═══════════════════════════════════════════ -->
+    <recordUpdates>
+        <name>update_OpportunityClosedLost</name>
+        <label>Update Opportunity — Closed Lost</label>
+        <locationX>396</locationX>
+        <locationY>798</locationY>
+        <connector>
+            <targetReference>screen_StageUpdated</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <elementReference>screen_UpdateStage.input_NewStage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Close_Date__c</field>
+            <value>
+                <elementReference>screen_UpdateStage.input_CloseDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Estimated_Revenue__c</field>
+            <value>
+                <elementReference>screen_UpdateStage.input_EstimatedRevenue</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Probability__c</field>
+            <value>
+                <elementReference>screen_UpdateStage.input_Probability</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Lost_Reason__c</field>
+            <value>
+                <elementReference>screen_UpdateStage.input_LostReason</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Next_Step__c</field>
+            <value>
+                <elementReference>screen_UpdateStage.input_NextStep</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Advertising_Opportunity__c</object>
+    </recordUpdates>
+
+    <!-- ═══════════════════════════════════════════
+         CONFIRMATION SCREEN
+    ═══════════════════════════════════════════ -->
+    <screens>
+        <name>screen_StageUpdated</name>
+        <label>Stage Updated</label>
+        <locationX>264</locationX>
+        <locationY>1038</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>display_StageUpdatedMsg</name>
+            <fieldText>&lt;p&gt;Stage updated to &lt;strong&gt;{!screen_UpdateStage.input_NewStage}&lt;/strong&gt;.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+    </screens>
+</Flow>

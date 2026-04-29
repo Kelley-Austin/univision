@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Ingestion target for Counterpoint sales order data. Each record represents one order line capturing market, subcategory, station, advertiser, vehicle, revenue, and either a calendar or broadcast date. Supports both Counterpoint file variants via the Date_Type__c field.</description>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <label>Actuals Record</label>
+    <nameField>
+        <displayFormat>AR-{000000}</displayFormat>
+        <label>Actuals Record Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Actuals Records</pluralLabel>
+    <sharingModel>ReadWrite</sharingModel>
+
+    <listViews>
+        <fullName>All_Actuals_Records</fullName>
+        <columns>NAME</columns>
+        <columns>Date_Type__c</columns>
+        <columns>Calendar_Date__c</columns>
+        <columns>Broadcast_Date__c</columns>
+        <columns>Market__c</columns>
+        <columns>Subcategory__c</columns>
+        <columns>Station_Code__c</columns>
+        <columns>Advertiser_Name__c</columns>
+        <columns>Vehicle_Code__c</columns>
+        <columns>Gross_Revenue__c</columns>
+        <columns>Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Actuals Records</label>
+    </listViews>
+</CustomObject>

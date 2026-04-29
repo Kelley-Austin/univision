@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Planned_Amount__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Actual_Amount__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Variance_Amount__c</field>
+    </columns>
+    <description>Month-by-month planned vs. actual spend by market. Rows = markets, columns = calendar months. Run weekly to track pacing against plan for the current fiscal year.</description>
+    <filter>
+        <booleanFilter>1 AND 2</booleanFilter>
+        <criteriaItems>
+            <column>Status__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Cancelled</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Advertising_Opportunity__r.Status__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Cancelled</value>
+        </criteriaItems>
+    </filter>
+    <format>Matrix</format>
+    <groupingsCols>
+        <dateGranularity>Month</dateGranularity>
+        <field>Calendar_Date__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsCols>
+    <groupingsRows>
+        <dateGranularity>None</dateGranularity>
+        <field>Advertising_Opportunity__r.Market__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsRows>
+    <name>Order Pacing</name>
+    <reportType>Budget_Lines_with_Opportunity_and_Vehicle</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Calendar_Date__c</dateColumn>
+        <interval>INTERVAL_CURRENT_FY</interval>
+    </timeFrameFilter>
+</Report>

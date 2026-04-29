@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject>Reconciliation_Line__c</baseObject>
+    <category>other</category>
+    <deployed>true</deployed>
+    <description>Compares planned advertising spend (Budget Lines) against Counterpoint actuals. Rows show Matched, Variance, Unmatched Order, and Unmatched Actual status with dollar and spot-count totals per channel, vehicle, month, and fiscal year.</description>
+    <label>Ad Reconciliation</label>
+    <sections>
+        <columns>
+            <field>NAME</field>
+            <table>Reconciliation_Line__c</table>
+        </columns>
+        <columns>
+            <field>RECONCILIATION_STATUS__C</field>
+            <table>Reconciliation_Line__c</table>
+        </columns>
+        <columns>
+            <field>MONTH__C</field>
+            <table>Reconciliation_Line__c</table>
+        </columns>
+        <columns>
+            <field>FISCAL_YEAR__C</field>
+            <table>Reconciliation_Line__c</table>
+        </columns>
+        <columns>
+            <field>PLANNED_AMOUNT__C</field>
+            <table>Reconciliation_Line__c</table>
+        </columns>
+        <columns>
+            <field>ACTUAL_AMOUNT__C</field>
+            <table>Reconciliation_Line__c</table>
+        </columns>
+        <columns>
+            <field>VARIANCE_AMOUNT__C</field>
+            <table>Reconciliation_Line__c</table>
+        </columns>
+        <columns>
+            <field>PLANNED_WEEKLY_SPOTS__C</field>
+            <table>Reconciliation_Line__c</table>
+        </columns>
+        <columns>
+            <field>ACTUAL_SPOT_COUNT__C</field>
+            <table>Reconciliation_Line__c</table>
+        </columns>
+        <masterLabel>Reconciliation Lines</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <field>NAME</field>
+            <table>Advertising_Opportunity__r</table>
+        </columns>
+        <masterLabel>Advertising Opportunity</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <field>NAME</field>
+            <table>Channel__r</table>
+        </columns>
+        <masterLabel>Channel</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <field>NAME</field>
+            <table>Vehicle__r</table>
+        </columns>
+        <masterLabel>Vehicle</masterLabel>
+    </sections>
+</ReportType>

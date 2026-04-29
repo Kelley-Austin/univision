@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Counterpoint_Order_ID__c</fullName>
+    <description>Unique order identifier from Counterpoint (Order_ID column). Used as the external ID for upsert — re-running the same file does not create duplicates.</description>
+    <externalId>true</externalId>
+    <label>Counterpoint Order ID</label>
+    <length>50</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>true</unique>
+</CustomField>

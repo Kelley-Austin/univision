@@ -1,26 +1,344 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <!-- ─── Apps ─────────────────────────────────────────────────────────── -->
     <types>
         <members>MediaCloud</members>
         <name>CustomApplication</name>
     </types>
+
+    <!-- ─── Custom Objects ───────────────────────────────────────────────── -->
     <types>
+        <members>Advertising_Contract__c</members>
         <members>Advertising_Opportunity__c</members>
         <members>Actuals_Record__c</members>
         <members>Budget_Line__c</members>
         <members>Channel__c</members>
+        <members>Matrix_Order_Sync__e</members>
+        <members>Reconciliation_Line__c</members>
+        <members>Vehicle__c</members>
+        <members>Vehicle_Channel__c</members>
+        <name>CustomObject</name>
+    </types>
+
+    <!-- ─── Custom Fields ────────────────────────────────────────────────── -->
+    <types>
+        <!-- Actuals_Record__c -->
+        <members>Actuals_Record__c.Market__c</members>
+        <members>Actuals_Record__c.Subcategory__c</members>
+        <members>Actuals_Record__c.Station__c</members>
+        <members>Actuals_Record__c.Station_Code__c</members>
+        <members>Actuals_Record__c.Advertiser__c</members>
+        <members>Actuals_Record__c.Advertiser_Name__c</members>
+        <members>Actuals_Record__c.Vehicle__c</members>
+        <members>Actuals_Record__c.Vehicle_Code__c</members>
+        <members>Actuals_Record__c.Advertising_Contract__c</members>
+        <members>Actuals_Record__c.Gross_Revenue__c</members>
+        <members>Actuals_Record__c.Net_Revenue__c</members>
+        <members>Actuals_Record__c.Agency_Commission__c</members>
+        <members>Actuals_Record__c.Date_Type__c</members>
+        <members>Actuals_Record__c.Calendar_Date__c</members>
+        <members>Actuals_Record__c.Broadcast_Date__c</members>
+        <members>Actuals_Record__c.Source_File__c</members>
+        <members>Actuals_Record__c.Import_Batch_ID__c</members>
+        <members>Actuals_Record__c.Counterpoint_Order_ID__c</members>
+        <members>Actuals_Record__c.Status__c</members>
+        <members>Actuals_Record__c.Match_Notes__c</members>
+        <!-- Advertising_Contract__c -->
+        <members>Advertising_Contract__c.Account__c</members>
+        <members>Advertising_Contract__c.Advertising_Opportunity__c</members>
+        <members>Advertising_Contract__c.Agency_Account__c</members>
+        <members>Advertising_Contract__c.Approved_By__c</members>
+        <members>Advertising_Contract__c.Approved_Date__c</members>
+        <members>Advertising_Contract__c.Cancellation_Fee_Percent__c</members>
+        <members>Advertising_Contract__c.Cancellation_Notice_Days__c</members>
+        <members>Advertising_Contract__c.Cancellation_Policy__c</members>
+        <members>Advertising_Contract__c.Contract_Status__c</members>
+        <members>Advertising_Contract__c.Contract_Terms__c</members>
+        <members>Advertising_Contract__c.E_Signature_Date__c</members>
+        <members>Advertising_Contract__c.E_Signature_Document_URL__c</members>
+        <members>Advertising_Contract__c.E_Signature_Status__c</members>
+        <members>Advertising_Contract__c.End_Date__c</members>
+        <members>Advertising_Contract__c.Last_Traffic_Transmission__c</members>
+        <members>Advertising_Contract__c.Make_Good_Credits__c</members>
+        <members>Advertising_Contract__c.Make_Good_Policy__c</members>
+        <members>Advertising_Contract__c.Market__c</members>
+        <members>Advertising_Contract__c.Notes__c</members>
+        <members>Advertising_Contract__c.Signatory_Email__c</members>
+        <members>Advertising_Contract__c.Signatory_Name__c</members>
+        <members>Advertising_Contract__c.Signatory_Title__c</members>
+        <members>Advertising_Contract__c.Start_Date__c</members>
+        <members>Advertising_Contract__c.Total_Contract_Value__c</members>
+        <members>Advertising_Contract__c.Traffic_Callback_Token__c</members>
+        <members>Advertising_Contract__c.Traffic_Error_Message__c</members>
+        <members>Advertising_Contract__c.Traffic_Order_ID__c</members>
+        <members>Advertising_Contract__c.Traffic_Status__c</members>
+        <!-- Account custom fields -->
+        <members>Account.Market__c</members>
+        <members>Account.Media_Type__c</members>
+        <members>Account.Primary_Agency__c</members>
+        <!-- Advertising_Opportunity__c -->
+        <members>Advertising_Opportunity__c.Account__c</members>
+        <members>Advertising_Opportunity__c.Agency_Account__c</members>
+        <members>Advertising_Opportunity__c.Close_Date__c</members>
+        <members>Advertising_Opportunity__c.Competition__c</members>
+        <members>Advertising_Opportunity__c.Description__c</members>
+        <members>Advertising_Opportunity__c.End_Date__c</members>
+        <members>Advertising_Opportunity__c.Estimated_Revenue__c</members>
+        <members>Advertising_Opportunity__c.Fiscal_Year__c</members>
+        <members>Advertising_Opportunity__c.Lead_Source__c</members>
+        <members>Advertising_Opportunity__c.Lost_Reason__c</members>
+        <members>Advertising_Opportunity__c.Market__c</members>
+        <members>Advertising_Opportunity__c.Media_Cloud_Media_Plan_ID__c</members>
+        <members>Advertising_Opportunity__c.Media_Type__c</members>
+        <members>Advertising_Opportunity__c.Primary_Demo__c</members>
+        <members>Advertising_Opportunity__c.Proposal_Notes__c</members>
+        <members>Advertising_Opportunity__c.Secondary_Demo__c</members>
+        <members>Advertising_Opportunity__c.Next_Step__c</members>
+        <members>Advertising_Opportunity__c.Primary_Contact__c</members>
+        <members>Advertising_Opportunity__c.Probability__c</members>
+        <members>Advertising_Opportunity__c.Start_Date__c</members>
+        <members>Advertising_Opportunity__c.Status__c</members>
+        <members>Advertising_Opportunity__c.Total_Actual_Amount__c</members>
+        <members>Advertising_Opportunity__c.Total_Budget__c</members>
+        <members>Advertising_Opportunity__c.Total_Planned_Amount__c</members>
+        <members>Advertising_Opportunity__c.Total_Variance_Amount__c</members>
+        <!-- Contact custom fields -->
+        <members>Contact.Contact_Role__c</members>
+        <members>Contact.Is_Primary__c</members>
+        <!-- Budget_Line__c -->
+        <members>Budget_Line__c.Account__c</members>
+        <members>Budget_Line__c.Actual_Amount__c</members>
+        <members>Budget_Line__c.Advertising_Opportunity__c</members>
+        <members>Budget_Line__c.Broadcast_Date__c</members>
+        <members>Budget_Line__c.Calendar_Date__c</members>
+        <members>Budget_Line__c.Channel__c</members>
+        <members>Budget_Line__c.Copy_Code__c</members>
+        <members>Budget_Line__c.Copy_Rotation__c</members>
+        <members>Budget_Line__c.Date_Type__c</members>
+        <members>Budget_Line__c.Fiscal_Year__c</members>
+        <members>Budget_Line__c.Month__c</members>
+        <members>Budget_Line__c.Notes__c</members>
+        <members>Budget_Line__c.Planned_Amount__c</members>
+        <members>Budget_Line__c.Spot_Instructions__c</members>
+        <members>Budget_Line__c.Spot_Length__c</members>
+        <members>Budget_Line__c.Spot_Rate__c</members>
+        <members>Budget_Line__c.Status__c</members>
+        <members>Budget_Line__c.Variance_Amount__c</members>
+        <members>Budget_Line__c.Variance_Status__c</members>
+        <members>Budget_Line__c.Vehicle__c</members>
+        <members>Budget_Line__c.Weekly_Spots__c</members>
+        <!-- Channel__c -->
+        <members>Channel__c.Account__c</members>
+        <members>Channel__c.Channel_Code__c</members>
+        <members>Channel__c.Channel_Type__c</members>
+        <members>Channel__c.Market__c</members>
+        <members>Channel__c.Status__c</members>
+        <!-- Vehicle__c -->
+        <members>Vehicle__c.Channel__c</members>
+        <members>Vehicle__c.Day_Part__c</members>
+        <members>Vehicle__c.Description__c</members>
+        <members>Vehicle__c.End_Date__c</members>
+        <members>Vehicle__c.External_ID__c</members>
+        <members>Vehicle__c.Market__c</members>
+        <members>Vehicle__c.Media_Cloud_Ad_Space_ID__c</members>
+        <members>Vehicle__c.Program__c</members>
+        <members>Vehicle__c.Rate_Card__c</members>
+        <members>Vehicle__c.Start_Date__c</members>
+        <members>Vehicle__c.Status__c</members>
+        <members>Vehicle__c.Vehicle_Code__c</members>
+        <members>Vehicle__c.Vehicle_Type__c</members>
+        <!-- Vehicle__c — Matrix integration fields -->
+        <members>Vehicle__c.Matrix_Avail_Units__c</members>
+        <members>Vehicle__c.Matrix_Avail_Last_Updated__c</members>
+        <!-- Vehicle_Channel__c -->
+        <members>Vehicle_Channel__c.Channel__c</members>
+        <members>Vehicle_Channel__c.Vehicle__c</members>
+        <!-- Advertising_Opportunity__c — Matrix integration fields -->
+        <members>Advertising_Opportunity__c.Matrix_Order_ID__c</members>
+        <members>Advertising_Opportunity__c.Matrix_Sync_Status__c</members>
+        <members>Advertising_Opportunity__c.Matrix_Last_Synced__c</members>
+        <members>Advertising_Opportunity__c.Matrix_Sync_Error__c</members>
+        <!-- Account — Matrix account mapping -->
+        <members>Account.Matrix_Account_ID__c</members>
+        <!-- Matrix_Order_Sync__e platform event fields -->
+        <members>Matrix_Order_Sync__e.Opportunity_Id__c</members>
+        <members>Matrix_Order_Sync__e.Operation__c</members>
+        <members>Matrix_Order_Sync__e.Retry_Count__c</members>
+        <!-- Reconciliation_Line__c -->
+        <members>Reconciliation_Line__c.Reconciliation_Status__c</members>
+        <members>Reconciliation_Line__c.Budget_Line__c</members>
+        <members>Reconciliation_Line__c.Advertising_Opportunity__c</members>
+        <members>Reconciliation_Line__c.Channel__c</members>
+        <members>Reconciliation_Line__c.Vehicle__c</members>
+        <members>Reconciliation_Line__c.Month__c</members>
+        <members>Reconciliation_Line__c.Fiscal_Year__c</members>
+        <members>Reconciliation_Line__c.Planned_Amount__c</members>
+        <members>Reconciliation_Line__c.Actual_Amount__c</members>
+        <members>Reconciliation_Line__c.Variance_Amount__c</members>
+        <members>Reconciliation_Line__c.Planned_Weekly_Spots__c</members>
+        <members>Reconciliation_Line__c.Actual_Spot_Count__c</members>
+        <members>Reconciliation_Line__c.Match_Key__c</members>
+        <name>CustomField</name>
+    </types>
+
+    <!-- ─── Record Types ─────────────────────────────────────────────────── -->
+    <types>
+        <members>Account.Advertiser</members>
+        <members>Account.Agency</members>
+        <members>Advertising_Opportunity__c.Agency_Buy</members>
+        <members>Advertising_Opportunity__c.Direct_Buy</members>
+        <members>Advertising_Opportunity__c.Local_Ad_Sales</members>
+        <name>RecordType</name>
+    </types>
+
+    <!-- ─── Custom Tabs ───────────────────────────────────────────────────── -->
+    <types>
+        <members>Actuals_Record__c</members>
+        <members>Advertising_Opportunity__c</members>
+        <members>Budget_Line__c</members>
+        <members>Channel__c</members>
+        <members>Vehicle__c</members>
         <name>CustomTab</name>
     </types>
+
+    <!-- ─── Permission Sets ───────────────────────────────────────────────── -->
     <types>
         <members>MediaCloud_Admin</members>
         <members>MediaCloud_Manager</members>
         <members>MediaCloud_Rep</members>
         <name>PermissionSet</name>
     </types>
+
+    <!-- ─── Apex Classes ─────────────────────────────────────────────────── -->
     <types>
-        <members>Advertising_Opportunity__c.Agency_Buy</members>
-        <members>Advertising_Opportunity__c.Direct_Buy</members>
-        <name>RecordType</name>
+        <members>CounterpointFileParser</members>
+        <members>CounterpointFileParserTest</members>
+        <members>CounterpointIngestionBatch</members>
+        <members>CounterpointIngestionBatchTest</members>
+        <members>CounterpointIngestionService</members>
+        <members>CounterpointIngestionServiceTest</members>
+        <members>CreateLocalAdProposal</members>
+        <members>CreateLocalAdProposalTest</members>
+        <members>CreateOpportunityWithBudgetLines</members>
+        <members>CreateOpportunityWithBudgetLinesTest</members>
+        <members>LocalAdProposalController</members>
+        <members>LocalAdProposalControllerTest</members>
+        <members>MatrixAPIService</members>
+        <members>MatrixAPIServiceTest</members>
+        <members>MatrixInventoryScheduler</members>
+        <members>MatrixInventorySchedulerTest</members>
+        <members>MatrixInventorySyncQueueable</members>
+        <members>MatrixInventorySyncQueueableTest</members>
+        <members>MatrixOrderSyncService</members>
+        <members>MatrixOrderSyncServiceTest</members>
+        <members>TrafficOrderCallbackController</members>
+        <members>TrafficOrderCallbackControllerTest</members>
+        <members>TrafficOrderService</members>
+        <members>TrafficOrderServiceTest</members>
+        <members>TrafficOrderTransmitQueueable</members>
+        <members>ReconciliationBatch</members>
+        <members>ReconciliationBatchTest</members>
+        <members>RunReconciliationAction</members>
+        <name>ApexClass</name>
     </types>
+
+    <!-- ─── Lightning Web Components ─────────────────────────────────────── -->
+    <types>
+        <members>budgetLineEditor</members>
+        <members>proposalBudgetLines</members>
+        <name>LightningComponentBundle</name>
+    </types>
+
+    <!-- ─── Flows ─────────────────────────────────────────────────────────── -->
+    <types>
+        <members>Create_Advertising_Opportunity</members>
+        <members>Create_Contract_On_Close_Won</members>
+        <members>Log_Sales_Activity</members>
+        <members>Matrix_Order_Outbound_Sync</members>
+        <members>New_Advertising_Opportunity</members>
+        <members>Create_Local_Ad_Proposal</members>
+        <members>Transmit_Traffic_Order_on_Contract_Activation</members>
+        <members>Update_Opportunity_Stage</members>
+        <members>Run_Reconciliation</members>
+        <name>Flow</name>
+    </types>
+
+    <!-- ─── Quick Actions ────────────────────────────────────────────────── -->
+    <types>
+        <members>Account.Create_Advertising_Opportunity</members>
+        <members>Account.Create_Local_Ad_Proposal</members>
+        <members>Advertising_Opportunity__c.Log_Activity</members>
+        <members>Advertising_Opportunity__c.New_Opportunity</members>
+        <members>Advertising_Opportunity__c.Run_Reconciliation</members>
+        <members>Advertising_Opportunity__c.Update_Stage</members>
+        <name>QuickAction</name>
+    </types>
+
+    <!-- ─── FlexiPages ───────────────────────────────────────────────────── -->
+    <types>
+        <members>Account_Advertising_Budget</members>
+        <name>FlexiPage</name>
+    </types>
+
+    <!-- ─── Visualforce Pages ──────────────────────────────────────────────── -->
+    <types>
+        <members>LocalAdProposal</members>
+        <name>ApexPage</name>
+    </types>
+
+    <!-- ─── Apex Triggers ──────────────────────────────────────────────────── -->
+    <types>
+        <members>MatrixOrderSyncTrigger</members>
+        <name>ApexTrigger</name>
+    </types>
+
+    <!-- ─── Named Credentials ────────────────────────────────────────────── -->
+    <types>
+        <members>Matrix_API</members>
+        <members>Traffic_System</members>
+        <name>NamedCredential</name>
+    </types>
+
+    <!-- ─── Custom Report Types ─────────────────────────────────────────── -->
+    <types>
+        <members>Budget_Lines_with_Opportunity_and_Vehicle</members>
+        <name>CustomReportType</name>
+    </types>
+    <types>
+        <members>Reconciliation_Report</members>
+        <name>ReportType</name>
+    </types>
+
+    <!-- ─── Reports ──────────────────────────────────────────────────────── -->
+    <types>
+        <members>Advertising_Analytics</members>
+        <members>MediaCloud</members>
+        <name>ReportFolder</name>
+    </types>
+    <types>
+        <members>Advertising_Analytics/Order_Pacing</members>
+        <members>Advertising_Analytics/Revenue_by_Market</members>
+        <members>Advertising_Analytics/Revenue_by_Vehicle</members>
+        <members>MediaCloud/Current_Month_Pacing</members>
+        <members>MediaCloud/Deal_Aging</members>
+        <members>MediaCloud/Pipeline_30_60_90_Day</members>
+        <members>MediaCloud/Pipeline_by_Market</members>
+        <members>MediaCloud/Rep_Productivity</members>
+        <name>Report</name>
+    </types>
+
+    <!-- ─── Dashboards ───────────────────────────────────────────────────── -->
+    <types>
+        <members>Advertising_Analytics</members>
+        <members>MediaCloud</members>
+        <name>DashboardFolder</name>
+    </types>
+    <types>
+        <members>Advertising_Analytics/Weekly_Analytics_Dashboard</members>
+        <members>MediaCloud/Sales_Manager_Dashboard</members>
+        <name>Dashboard</name>
+    </types>
+
     <version>62.0</version>
 </Package>

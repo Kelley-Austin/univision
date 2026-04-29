@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Variance_Status__c</fullName>
+    <formula>IF(ISNULL(Actual_Amount__c), &quot;No Actuals&quot;,
+  IF(Actual_Amount__c &gt; Planned_Amount__c, &quot;Over&quot;,
+    IF(Actual_Amount__c &gt;= Planned_Amount__c * 0.9, &quot;On Track&quot;, &quot;Under&quot;)))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Variance Status</label>
+    <type>Text</type>
+</CustomField>

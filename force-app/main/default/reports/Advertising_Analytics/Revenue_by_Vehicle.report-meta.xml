@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Vehicle__r.Day_Part__c</field>
+    </columns>
+    <columns>
+        <field>Advertising_Opportunity__r.Market__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Planned_Amount__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Actual_Amount__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Variance_Amount__c</field>
+    </columns>
+    <description>Total planned, actual, and variance revenue grouped by vehicle type and vehicle name. Run weekly to evaluate performance by advertising vehicle. Positive variance means over-delivery; negative means under.</description>
+    <filter>
+        <criteriaItems>
+            <column>Status__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Cancelled</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsRows>
+        <dateGranularity>None</dateGranularity>
+        <field>Vehicle__r.Vehicle_Type__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsRows>
+    <groupingsRows>
+        <dateGranularity>None</dateGranularity>
+        <field>Vehicle__r.NAME</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsRows>
+    <name>Revenue by Vehicle</name>
+    <reportType>Budget_Lines_with_Opportunity_and_Vehicle</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <timeFrameFilter>
+        <dateColumn>Calendar_Date__c</dateColumn>
+        <interval>INTERVAL_CURRENT_FY</interval>
+    </timeFrameFilter>
+</Report>

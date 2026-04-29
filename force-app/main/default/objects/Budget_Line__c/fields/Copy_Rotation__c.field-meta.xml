@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Copy_Rotation__c</fullName>
+    <description>How the traffic system should rotate multiple creatives for this spot. Even distributes equally; Proportional uses weighted distribution; Sequential plays in order.</description>
+    <externalId>false</externalId>
+    <label>Copy Rotation</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Even</fullName>
+                <default>true</default>
+                <label>Even</label>
+            </value>
+            <value>
+                <fullName>Proportional</fullName>
+                <default>false</default>
+                <label>Proportional</label>
+            </value>
+            <value>
+                <fullName>Sequential</fullName>
+                <default>false</default>
+                <label>Sequential</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

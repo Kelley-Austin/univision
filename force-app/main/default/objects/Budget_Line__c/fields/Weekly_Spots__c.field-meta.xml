@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Weekly_Spots__c</fullName>
+    <description>Number of times this spot should air per week during the flight. Used by the traffic system to schedule the correct number of airings.</description>
+    <externalId>false</externalId>
+    <label>Weekly Spots</label>
+    <precision>4</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

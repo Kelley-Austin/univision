@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Broadcast_Date__c</fullName>
+    <description>Broadcast-calendar air date from the Counterpoint broadcast-date file variant. Broadcast weeks begin on Monday per Nielsen convention. Populated when Date_Type__c is Broadcast.</description>
+    <label>Broadcast Date</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

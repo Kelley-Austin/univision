@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Import_Batch_ID__c</fullName>
+    <description>Timestamp-based identifier shared by all records from the same ingestion run. Allows bulk querying or deletion of a specific import batch.</description>
+    <label>Import Batch ID</label>
+    <length>50</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

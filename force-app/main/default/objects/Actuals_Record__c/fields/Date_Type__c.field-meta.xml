@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Date_Type__c</fullName>
+    <description>Indicates which date field governs this actuals record. Calendar = standard Gregorian date in Calendar_Date__c; Broadcast = broadcast-calendar date in Broadcast_Date__c. Detected automatically from the Counterpoint file header.</description>
+    <label>Date Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Calendar</fullName>
+                <default>false</default>
+                <label>Calendar</label>
+            </value>
+            <value>
+                <fullName>Broadcast</fullName>
+                <default>false</default>
+                <label>Broadcast</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

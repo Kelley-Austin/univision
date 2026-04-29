@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Matrix_Avail_Units__c</fullName>
+    <description>Available spot/unit inventory for this vehicle as reported by Matrix. Updated by the MatrixInventoryScheduler every 15 minutes. Matrix is the system of record for this field — do not edit manually.</description>
+    <label>Matrix Avail Units</label>
+    <precision>8</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <type>Number</type>
+</CustomField>

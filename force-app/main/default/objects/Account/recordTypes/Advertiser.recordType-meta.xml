@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <description>An advertiser — a company that purchases advertising directly or through an agency to reach audiences on Univision properties.</description>
+    <label>Advertiser</label>
+</RecordType>
