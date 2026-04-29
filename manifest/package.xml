@@ -4,6 +4,13 @@
     <!-- ── Apex Classes ─────────────────────────────────────────────────── -->
     <types>
         <members>AccountMatcher</members>
+        <members>AccountMatcherTest</members>
+        <members>ActualRevenueTriggerHandler</members>
+        <members>ActualRevenueTriggerHandlerTest</members>
+        <members>ProjectionRollupQueueable</members>
+        <members>ProjectionRollupQueueableTest</members>
+        <members>ReconciliationController</members>
+        <members>ReconciliationControllerTest</members>
         <members>BudgetLockService</members>
         <members>BudgetLockServiceTest</members>
         <members>CancellationPolicyService</members>
@@ -53,7 +60,9 @@
         <members>ProjectionTriggerHandler</members>
         <members>ReconciliationBatch</members>
         <members>ReconciliationEngine</members>
+        <members>ReconciliationEngineTest</members>
         <members>SalespersonMatcher</members>
+        <members>SalespersonMatcherTest</members>
         <members>SourceSystemTransformer</members>
         <members>StrataTransformer</members>
         <members>StrataTransformerTest</members>
@@ -72,9 +81,11 @@
 
     <!-- ── Custom Objects ───────────────────────────────────────────────── -->
     <types>
+        <members>AE_Code_Alias__c</members>
         <members>Actuals_Record__c</members>
         <members>Budget_Line__c</members>
         <members>Inbound_Staging__c</members>
+        <members>Period_Close__c</members>
         <members>Load_Batch__c</members>
         <members>Mapping_Rule__c</members>
         <members>Revenue_Code_Mapping__mdt</members>
@@ -84,6 +95,29 @@
 
     <!-- ── Custom Fields ────────────────────────────────────────────────── -->
     <types>
+        <!-- Account -->
+        <members>Account.MDM_External_Id__c</members>
+        <!-- AE_Code_Alias__c -->
+        <members>AE_Code_Alias__c.Last_Used__c</members>
+        <members>AE_Code_Alias__c.Match_Tier__c</members>
+        <members>AE_Code_Alias__c.Normalized_Code__c</members>
+        <members>AE_Code_Alias__c.Source_System_Code__c</members>
+        <members>AE_Code_Alias__c.User__c</members>
+        <!-- Actual_Revenue__c -->
+        <members>Actual_Revenue__c.Category_Snapshot__c</members>
+        <members>Actual_Revenue__c.Is_Late__c</members>
+        <!-- Inbound_Staging__c — new reconciliation field -->
+        <members>Inbound_Staging__c.Raw_Advertiser_Code__c</members>
+        <!-- Period_Close__c -->
+        <members>Period_Close__c.Close_Date__c</members>
+        <members>Period_Close__c.Composite_Key__c</members>
+        <members>Period_Close__c.Period_Month__c</members>
+        <members>Period_Close__c.Period_Year__c</members>
+        <members>Period_Close__c.Status__c</members>
+        <!-- Projection__c -->
+        <members>Projection__c.Actual_Amount__c</members>
+        <!-- User -->
+        <members>User.AE_Code__c</members>
         <!-- Budget_Line__c — core fields -->
         <members>Budget_Line__c.Advertising_Opportunity__c</members>
         <members>Budget_Line__c.Channel__c</members>
@@ -211,12 +245,14 @@
     <types>
         <members>accountBudgetGrid</members>
         <members>aeProjectionGrid</members>
+        <members>aeReconciliationWorklist</members>
         <members>categoryTreeManager</members>
         <members>counterpointFileUpload</members>
         <members>fileUploadSource</members>
         <members>loadBatchDashboard</members>
         <members>mappingRuleEditor</members>
         <members>mdmKpiTiles</members>
+        <members>salesOpsReconciliationWorklist</members>
         <members>sourceFileUpload</members>
         <name>LightningComponentBundle</name>
     </types>
@@ -233,6 +269,12 @@
         <members>Advertising_Opportunity__c.Import_Counterpoint_Data</members>
         <members>Budget_Line__c.Traffic_Copy_Entry</members>
         <name>QuickAction</name>
+    </types>
+
+    <!-- ── Apex Triggers ──────────────────────────────────────────────────── -->
+    <types>
+        <members>ActualRevenueTrigger</members>
+        <name>ApexTrigger</name>
     </types>
 
     <!-- ── Page Layouts ──────────────────────────────────────────────────── -->
