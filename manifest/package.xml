@@ -76,6 +76,14 @@
         <members>TrafficOrderTransmitQueueableTest</members>
         <members>TrafficOrderCallbackController</members>
         <members>TrafficOrderCallbackControllerTest</members>
+        <members>PeriodCloseService</members>
+        <members>PeriodCloseServiceTest</members>
+        <members>PeriodCloseController</members>
+        <members>PeriodCloseControllerTest</members>
+        <members>PitchProjectUnitCodeLinker</members>
+        <members>PitchProjectUnitCodeLinkerTest</members>
+        <members>PitchProjectController</members>
+        <members>PitchProjectControllerTest</members>
         <name>ApexClass</name>
     </types>
 
@@ -86,6 +94,9 @@
         <members>Budget_Line__c</members>
         <members>Inbound_Staging__c</members>
         <members>Period_Close__c</members>
+        <members>Period_Snapshot__c</members>
+        <members>Pitch_Project__c</members>
+        <members>Pitch_Project_Outlet__c</members>
         <members>Load_Batch__c</members>
         <members>Mapping_Rule__c</members>
         <members>Revenue_Code_Mapping__mdt</members>
@@ -106,6 +117,11 @@
         <!-- Actual_Revenue__c -->
         <members>Actual_Revenue__c.Category_Snapshot__c</members>
         <members>Actual_Revenue__c.Is_Late__c</members>
+        <members>Actual_Revenue__c.Late_Status__c</members>
+        <members>Actual_Revenue__c.Unit_Code__c</members>
+        <members>Actual_Revenue__c.Pitch_Project__c</members>
+        <!-- Advertising_Opportunity__c -->
+        <members>Advertising_Opportunity__c.Pitch_Project__c</members>
         <!-- Inbound_Staging__c — new reconciliation field -->
         <members>Inbound_Staging__c.Raw_Advertiser_Code__c</members>
         <!-- Period_Close__c -->
@@ -114,6 +130,18 @@
         <members>Period_Close__c.Period_Month__c</members>
         <members>Period_Close__c.Period_Year__c</members>
         <members>Period_Close__c.Status__c</members>
+        <!-- Period_Snapshot__c -->
+        <members>Period_Snapshot__c.Period_Close__c</members>
+        <members>Period_Snapshot__c.Projection__c</members>
+        <members>Period_Snapshot__c.Account__c</members>
+        <members>Period_Snapshot__c.Category__c</members>
+        <members>Period_Snapshot__c.Revenue_Type__c</members>
+        <members>Period_Snapshot__c.Period_Year__c</members>
+        <members>Period_Snapshot__c.Period_Month__c</members>
+        <members>Period_Snapshot__c.Projected_At_Close__c</members>
+        <members>Period_Snapshot__c.Actual_At_Close__c</members>
+        <members>Period_Snapshot__c.Variance_Pct__c</members>
+        <members>Period_Snapshot__c.Composite_Key__c</members>
         <!-- Projection__c -->
         <members>Projection__c.Actual_Amount__c</members>
         <!-- User -->
@@ -254,21 +282,89 @@
         <members>mdmKpiTiles</members>
         <members>salesOpsReconciliationWorklist</members>
         <members>sourceFileUpload</members>
+        <members>periodCloseActions</members>
+        <members>lateActualsWorklist</members>
+        <members>periodCloseDashboard</members>
+        <members>pitchProjectCreator</members>
+        <members>pitchProjectPacing</members>
         <name>LightningComponentBundle</name>
     </types>
 
     <!-- ── Flows ─────────────────────────────────────────────────────────── -->
     <types>
         <members>Counterpoint_CSV_Import</members>
+        <members>Create_Agency_Account</members>
+        <members>Create_Direct_Buy_Advertiser</members>
+        <members>Link_Agency_To_Advertiser</members>
+        <members>Makegood_Or_Cancellation</members>
+        <members>Matrix_Inventory_Admin_Sync</members>
+        <members>Pitch_Project_Creator</members>
+        <members>Retire_Category_With_Successor</members>
         <members>Traffic_Copy_Entry</members>
+        <members>Period_Close_Actions</members>
         <name>Flow</name>
     </types>
 
     <!-- ── Quick Actions ─────────────────────────────────────────────────── -->
     <types>
+        <members>Advertising_Contract__c.Makegood_Or_Cancellation</members>
         <members>Advertising_Opportunity__c.Import_Counterpoint_Data</members>
         <members>Budget_Line__c.Traffic_Copy_Entry</members>
+        <members>Period_Close__c.Close_Period</members>
+        <members>Pitch_Project__c.Create_Pitch_Project</members>
         <name>QuickAction</name>
+    </types>
+
+    <!-- ── Custom Tabs ──────────────────────────────────────────────────── -->
+    <types>
+        <members>Actual_Revenue__c</members>
+        <members>Advertising_Contract__c</members>
+        <members>Advertising_Opportunity__c</members>
+        <members>Budget_Line__c</members>
+        <members>Category__c</members>
+        <members>Inbound_Staging__c</members>
+        <members>Load_Batch__c</members>
+        <members>Mapping_Rule__c</members>
+        <members>Medium__c</members>
+        <members>Office__c</members>
+        <members>Outlet__c</members>
+        <members>Period_Close__c</members>
+        <members>Pitch_Project__c</members>
+        <members>Source_System__c</members>
+        <name>CustomTab</name>
+    </types>
+
+    <!-- ── Custom Applications ──────────────────────────────────────────── -->
+    <types>
+        <members>MDM_Workspace</members>
+        <members>MediaCloud</members>
+        <name>CustomApplication</name>
+    </types>
+
+    <!-- ── FlexiPages ───────────────────────────────────────────────────── -->
+    <types>
+        <members>Account_Advertising_Budget</members>
+        <members>Advertising_Contract_Record_Page</members>
+        <members>Advertising_Opportunity_Record_Page</members>
+        <members>Agency_Account_Record_Page</members>
+        <members>Budget_Line_Record_Page</members>
+        <members>MDM_Workspace_Home</members>
+        <members>Period_Close_Record_Page</members>
+        <members>Pitch_Project_Record_Page</members>
+        <name>FlexiPage</name>
+    </types>
+
+    <!-- ── Reports ──────────────────────────────────────────────────────────── -->
+    <types>
+        <members>Advertising_Analytics/Forecast_Accuracy_by_Period</members>
+        <members>Advertising_Analytics/Forecast_Accuracy_by_Category</members>
+        <name>Report</name>
+    </types>
+
+    <!-- ── Report Folders ────────────────────────────────────────────────────── -->
+    <types>
+        <members>Advertising_Analytics</members>
+        <name>ReportFolder</name>
     </types>
 
     <!-- ── Apex Triggers ──────────────────────────────────────────────────── -->
