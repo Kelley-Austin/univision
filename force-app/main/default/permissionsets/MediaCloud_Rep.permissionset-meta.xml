@@ -60,6 +60,17 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
 
+    <!-- Object Permissions — Advertising_Contract__c (create/read/edit; no delete) -->
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Advertising_Contract__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+
     <!-- Field Permissions — Advertising_Opportunity__c -->
     <fieldPermissions>
         <editable>true</editable>
@@ -355,6 +366,123 @@
         <readable>true</readable>
     </fieldPermissions>
 
+    <!-- Field Permissions — Advertising_Contract__c -->
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Contract__c.Advertising_Opportunity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Contract__c.Account__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Contract__c.Agency_Account__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Advertising_Contract__c.Contract_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Contract__c.Start_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Contract__c.End_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Advertising_Contract__c.Total_Contract_Value__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Contract__c.Market__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Contract__c.Signatory_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Contract__c.Signatory_Title__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Contract__c.Signatory_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Contract__c.Contract_Terms__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Contract__c.Cancellation_Policy__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Contract__c.Cancellation_Notice_Days__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Contract__c.Cancellation_Fee_Percent__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Contract__c.Make_Good_Policy__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Contract__c.Make_Good_Credits__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Advertising_Contract__c.E_Signature_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Advertising_Contract__c.E_Signature_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Advertising_Contract__c.E_Signature_Document_URL__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Advertising_Contract__c.Approved_By__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Advertising_Contract__c.Approved_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Contract__c.Notes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+
     <!-- Record Type Visibility — Advertising_Opportunity__c -->
     <recordTypeVisibilities>
         <recordType>Advertising_Opportunity__c.Direct_Buy</recordType>
@@ -384,6 +512,10 @@
     </tabSettings>
     <tabSettings>
         <tab>Actuals_Record__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Advertising_Contract__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
 </PermissionSet>

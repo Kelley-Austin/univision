@@ -33,8 +33,15 @@
         <members>Vehicle_Channel__c.Vehicle__c</members>
         <members>Vehicle_Channel__c.Channel__c</members>
         <members>Budget_Line__c.Vehicle__c</members>
+        <members>Budget_Line__c.Calendar_Date__c</members>
+        <members>Budget_Line__c.Broadcast_Date__c</members>
+        <members>Budget_Line__c.Date_Type__c</members>
         <members>Advertising_Opportunity__c.Media_Cloud_Media_Plan_ID__c</members>
         <name>CustomField</name>
+    </types>
+    <types>
+        <members>Budget_Line__c.Date_Type_Active_Date_Required</members>
+        <name>ValidationRule</name>
     </types>
     <types>
         <members>MediaCloud_Admin</members>
