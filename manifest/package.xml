@@ -96,7 +96,10 @@
     <!-- ── Custom Fields ────────────────────────────────────────────────── -->
     <types>
         <!-- Account -->
+        <members>Account.Market__c</members>
         <members>Account.MDM_External_Id__c</members>
+        <members>Account.Media_Type__c</members>
+        <members>Account.Primary_Agency__c</members>
         <!-- AE_Code_Alias__c -->
         <members>AE_Code_Alias__c.Last_Used__c</members>
         <members>AE_Code_Alias__c.Match_Tier__c</members>
@@ -257,18 +260,56 @@
         <name>LightningComponentBundle</name>
     </types>
 
+    <!-- ── FlexiPages ───────────────────────────────────────────────────── -->
+    <types>
+        <members>Agency_Account_Record_Page</members>
+        <name>FlexiPage</name>
+    </types>
+
     <!-- ── Flows ─────────────────────────────────────────────────────────── -->
     <types>
         <members>Counterpoint_CSV_Import</members>
+        <members>Create_Agency_Account</members>
+        <members>Create_Direct_Buy_Advertiser</members>
+        <members>Link_Agency_To_Advertiser</members>
         <members>Traffic_Copy_Entry</members>
         <name>Flow</name>
     </types>
 
+    <!-- ── Permission Sets ──────────────────────────────────────────────── -->
+    <types>
+        <members>Finance_Analyst</members>
+        <members>Integration_User</members>
+        <members>MatrixCore_AE</members>
+        <members>MDM_Curator</members>
+        <members>Sales_Rep</members>
+        <members>SalesOps_FullAccess</members>
+        <name>PermissionSet</name>
+    </types>
+
     <!-- ── Quick Actions ─────────────────────────────────────────────────── -->
     <types>
+        <members>Account.Link_Agency_To_Advertiser</members>
         <members>Advertising_Opportunity__c.Import_Counterpoint_Data</members>
         <members>Budget_Line__c.Traffic_Copy_Entry</members>
+        <members>New_Advertiser</members>
+        <members>New_Agency</members>
         <name>QuickAction</name>
+    </types>
+
+    <!-- ── Record Types ──────────────────────────────────────────────────── -->
+    <types>
+        <members>Account.Advertiser</members>
+        <members>Account.Agency</members>
+        <members>Account.Direct_Buy</members>
+        <members>Account.HoldCo</members>
+        <name>RecordType</name>
+    </types>
+
+    <!-- ── Validation Rules ──────────────────────────────────────────────── -->
+    <types>
+        <members>Account.Enforce_Parent_Hierarchy</members>
+        <name>ValidationRule</name>
     </types>
 
     <!-- ── Apex Triggers ──────────────────────────────────────────────────── -->
