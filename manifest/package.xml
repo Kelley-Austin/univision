@@ -1,37 +1,174 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <!-- ── Lightning Apps ───────────────────────────────────────────────────── -->
     <types>
-        <members>MatrixAdminSyncAction</members>
-        <members>MatrixAdminSyncAction.cls</members>
-        <members>MatrixAdminSyncActionTest</members>
-        <members>MatrixAdminSyncActionTest.cls</members>
-        <members>MatrixPromoteToContractAction</members>
-        <members>MatrixRescheduleInvocable</members>
-        <members>MatrixRescheduleInvocable.cls</members>
-        <members>MatrixScheduleInfoInvocable</members>
-        <members>MatrixScheduleInfoInvocable.cls</members>
-        <members>MatrixSyncController</members>
-        <members>MatrixSyncInvocable</members>
-        <members>MatrixSyncInvocableTest</members>
-        <name>ApexClass</name>
+        <members>MediaCloud.app</members>
+        <members>Sales_Operations_Console.app</members>
+        <name>CustomApplication</name>
     </types>
+
+    <!-- ── Custom Objects ───────────────────────────────────────────────────── -->
     <types>
-        <members>Matrix_Sync_Log__c</members>
+        <members>Actual_Revenue__c</members>
+        <members>Budget__c</members>
+        <members>Budget_Lock__c</members>
+        <members>Category__c</members>
+        <members>Pacing_Snapshot__c</members>
+        <members>Projection__c</members>
         <name>CustomObject</name>
     </types>
+
+    <!-- ── Custom Fields ────────────────────────────────────────────────────── -->
     <types>
-        <members>Matrix_Inventory_Admin_Sync.flow</members>
-        <name>Flow</name>
+        <!-- Actual_Revenue__c -->
+        <members>Actual_Revenue__c.Account__c</members>
+        <members>Actual_Revenue__c.Advertiser__c</members>
+        <members>Actual_Revenue__c.AE_Code__c</members>
+        <members>Actual_Revenue__c.Amount__c</members>
+        <members>Actual_Revenue__c.Broadcast_Period__c</members>
+        <members>Actual_Revenue__c.Category__c</members>
+        <members>Actual_Revenue__c.Category_Snapshot__c</members>
+        <members>Actual_Revenue__c.External_Id__c</members>
+        <members>Actual_Revenue__c.External_Key__c</members>
+        <members>Actual_Revenue__c.Is_Late__c</members>
+        <members>Actual_Revenue__c.Late_Status__c</members>
+        <members>Actual_Revenue__c.Period_Month__c</members>
+        <members>Actual_Revenue__c.Period_Year__c</members>
+        <members>Actual_Revenue__c.Revenue_Amount__c</members>
+        <members>Actual_Revenue__c.Revenue_Type__c</members>
+        <members>Actual_Revenue__c.Source__c</members>
+        <members>Actual_Revenue__c.Station_Code__c</members>
+        <members>Actual_Revenue__c.Unit_Code__c</members>
+        <!-- Budget__c -->
+        <members>Budget__c.Account__c</members>
+        <members>Budget__c.Apr_Budget__c</members>
+        <members>Budget__c.Aug_Budget__c</members>
+        <members>Budget__c.Category__c</members>
+        <members>Budget__c.Dec_Budget__c</members>
+        <members>Budget__c.Feb_Budget__c</members>
+        <members>Budget__c.Jan_Budget__c</members>
+        <members>Budget__c.Jul_Budget__c</members>
+        <members>Budget__c.Jun_Budget__c</members>
+        <members>Budget__c.Mar_Budget__c</members>
+        <members>Budget__c.May_Budget__c</members>
+        <members>Budget__c.Notes__c</members>
+        <members>Budget__c.Nov_Budget__c</members>
+        <members>Budget__c.Oct_Budget__c</members>
+        <members>Budget__c.Period_Year__c</members>
+        <members>Budget__c.Revenue_Type__c</members>
+        <members>Budget__c.Sep_Budget__c</members>
+        <members>Budget__c.Total_Budget__c</members>
+        <!-- Budget_Lock__c (Office__c deferred — Office__c object not yet in org) -->
+        <members>Budget_Lock__c.Account__c</members>
+        <members>Budget_Lock__c.Category__c</members>
+        <members>Budget_Lock__c.Is_Active__c</members>
+        <members>Budget_Lock__c.Lock_Message__c</members>
+        <members>Budget_Lock__c.Locked_By__c</members>
+        <members>Budget_Lock__c.Locked_Date__c</members>
+        <members>Budget_Lock__c.Period_Year__c</members>
+        <members>Budget_Lock__c.Revenue_Type__c</members>
+        <members>Budget_Lock__c.Scope_Level__c</members>
+        <!-- Category__c -->
+        <members>Category__c.Description__c</members>
+        <members>Category__c.Full_Path__c</members>
+        <members>Category__c.Is_Active__c</members>
+        <members>Category__c.Level__c</members>
+        <members>Category__c.Parent_Category__c</members>
+        <members>Category__c.Sort_Order__c</members>
+        <members>Category__c.Successor_Category__c</members>
+        <!-- Opportunity -->
+        <members>Opportunity.Fiscal_Year__c</members>
+        <members>Opportunity.Primary_Category__c</members>
+        <members>Opportunity.Revenue_Type__c</members>
+        <!-- Projection__c -->
+        <members>Projection__c.Account__c</members>
+        <members>Projection__c.Actual_Amount__c</members>
+        <members>Projection__c.Amount__c</members>
+        <members>Projection__c.Category__c</members>
+        <members>Projection__c.Composite_Key__c</members>
+        <members>Projection__c.Opportunity__c</members>
+        <members>Projection__c.Period_Month__c</members>
+        <members>Projection__c.Period_Year__c</members>
+        <members>Projection__c.Pitch_Project__c</members>
+        <members>Projection__c.Revenue_Type__c</members>
+        <members>Projection__c.Stage__c</members>
+        <name>CustomField</name>
     </types>
+
+    <!-- ── Custom Tabs ──────────────────────────────────────────────────────── -->
     <types>
-        <members>Matrix_API.namedCredential</members>
-        <name>NamedCredential</name>
+        <members>Actual_Revenue__c.tab</members>
+        <members>Advertising_Contract__c.tab</members>
+        <members>Advertising_Opportunity__c.tab</members>
+        <members>Budget_Line__c.tab</members>
+        <members>Pacing_Snapshot__c.tab</members>
+        <members>Period_Close__c.tab</members>
+        <members>Pitch_Project__c.tab</members>
+        <members>Sales_Ops_Console.tab</members>
+        <name>CustomTab</name>
     </types>
+
+    <!-- ── FlexiPages ───────────────────────────────────────────────────────── -->
     <types>
-        <members>Integration_User.permissionset</members>
-        <members>MatrixCore_AE.permissionset</members>
-        <members>SalesOps_FullAccess.permissionset</members>
-        <name>PermissionSet</name>
+        <members>Account_Advertising_Budget.flexipage</members>
+        <members>Advertising_Contract_Record_Page.flexipage</members>
+        <members>Advertising_Opportunity_Record_Page.flexipage</members>
+        <members>Budget_Line_Record_Page.flexipage</members>
+        <members>Period_Close_Record_Page.flexipage</members>
+        <members>Pitch_Project_Record_Page.flexipage</members>
+        <members>Sales_Operations_Console_App.flexipage</members>
+        <name>FlexiPage</name>
     </types>
+
+    <!-- ── Apex Triggers ────────────────────────────────────────────────────── -->
+    <types>
+        <members>ProjectionTrigger</members>
+        <name>ApexTrigger</name>
+    </types>
+
+    <!-- ── Apex Classes ─────────────────────────────────────────────────────── -->
+    <types>
+        <members>BibleExportController</members>
+        <members>BibleExportControllerTest</members>
+        <members>BudgetLockService</members>
+        <members>BudgetLockServiceTest</members>
+        <members>CategoryService</members>
+        <members>CategoryServiceTest</members>
+        <members>ExclusionLogController</members>
+        <members>ExclusionLogControllerTest</members>
+        <members>FinancialReportController</members>
+        <members>FinancialReportControllerTest</members>
+        <members>PacingSnapshotBatch</members>
+        <members>PacingSnapshotBatchTest</members>
+        <members>PacingSnapshotScheduler</members>
+        <members>ProjectionService</members>
+        <members>ProjectionServiceTest</members>
+        <members>ProjectionTriggerHandler</members>
+        <members>SalesOpsKpiController</members>
+        <members>SalesOpsKpiControllerTest</members>
+        <name>ApexClass</name>
+    </types>
+
+    <!-- ── LWC Components ───────────────────────────────────────────────────── -->
+    <types>
+        <members>accountBudgetGrid</members>
+        <members>aeProjectionGrid</members>
+        <members>bibleExtract</members>
+        <members>exclusionLogListView</members>
+        <members>financialReportBuilder</members>
+        <members>salesOpsConsole</members>
+        <members>salesOpsKpiDashboard</members>
+        <name>LightningComponentBundle</name>
+    </types>
+
+    <!-- ── Custom Report Types ──────────────────────────────────────────────── -->
+    <types>
+        <members>Forecast_Stage_Snapshots</members>
+        <members>Pacing_Snapshots</members>
+        <members>Period_Snapshots_Detail</members>
+        <name>ReportType</name>
+    </types>
+
     <version>61.0</version>
 </Package>
