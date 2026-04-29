@@ -240,6 +240,16 @@ public with sharing class ReconciliationController {
         return wr;
     }
 
+    // ── Launch reconciliation batch (Sales Ops action) ────────────────────────
+
+    @AuraEnabled
+    public static String runReconciliationBatch() {
+        Id jobId = Database.executeBatch(new ReconciliationBatch(), 200);
+        return jobId;
+    }
+
+    // ── Helpers ───────────────────────────────────────────────────────────────
+
     private static Inbound_Staging__c getStagingRow(Id stagingId) {
         List<Inbound_Staging__c> rows = [
             SELECT Id, External_Key__c, Status__c, Excluding_Rule__c,
