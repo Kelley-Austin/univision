@@ -13,5 +13,6 @@
     <tabs>Budget_Line__c</tabs>
     <tabs>Channel__c</tabs>
     <tabs>Actuals_Record__c</tabs>
+    <tabs>Vehicle__c</tabs>
     <uiType>Lightning</uiType>
 </CustomApplication>

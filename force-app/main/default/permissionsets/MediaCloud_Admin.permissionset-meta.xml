@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Administrator access: full CRUD + ModifyAll on all Media Cloud objects. Intended for system admins managing the Univision ad-sales platform.</description>
+    <description>System administrator access for the Media Cloud app: full CRUD, View All, and Modify All on all advertising objects. Also grants write access to Media Cloud mapping fields (Ad Space ID, Media Plan ID) for integration management.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Media Cloud — Admin</label>
 
-    <!-- Object Permissions -->
+    <!-- Object Permissions — full access including Modify All -->
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
@@ -29,6 +29,15 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
+        <object>Vehicle__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
         <object>Channel__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
@@ -42,7 +51,7 @@
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
 
-    <!-- Field Permissions — Advertising_Opportunity__c (full edit except roll-up summaries) -->
+    <!-- Field Permissions — Advertising_Opportunity__c (all editable) -->
     <fieldPermissions>
         <editable>true</editable>
         <field>Advertising_Opportunity__c.Account__c</field>
@@ -79,27 +88,32 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Advertising_Opportunity__c.Total_Budget__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Advertising_Opportunity__c.Total_Actual_Amount__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Advertising_Opportunity__c.Total_Planned_Amount__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Advertising_Opportunity__c.Total_Variance_Amount__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Advertising_Opportunity__c.Media_Cloud_Media_Plan_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 
-    <!-- Field Permissions — Budget_Line__c (full edit except reconciliation-managed fields) -->
+    <!-- Field Permissions — Budget_Line__c (all editable) -->
     <fieldPermissions>
         <editable>true</editable>
         <field>Budget_Line__c.Account__c</field>
@@ -150,7 +164,6 @@
         <field>Budget_Line__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <!-- Admin can override reconciliation fields if needed -->
     <fieldPermissions>
         <editable>true</editable>
         <field>Budget_Line__c.Actual_Amount__c</field>
@@ -167,7 +180,54 @@
         <readable>true</readable>
     </fieldPermissions>
 
-    <!-- Field Permissions — Channel__c (full edit) -->
+    <!-- Field Permissions — Vehicle__c (all editable) -->
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Vehicle__c.Channel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Vehicle__c.Vehicle_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Vehicle__c.Day_Part__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Vehicle__c.Program__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Vehicle__c.Rate_Card__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Vehicle__c.Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Vehicle__c.Market__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Vehicle__c.External_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Vehicle__c.Media_Cloud_Ad_Space_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+
+    <!-- Field Permissions — Channel__c (all editable) -->
     <fieldPermissions>
         <editable>true</editable>
         <field>Channel__c.Account__c</field>
@@ -194,7 +254,7 @@
         <readable>true</readable>
     </fieldPermissions>
 
-    <!-- Field Permissions — Actuals_Record__c (full edit for manual corrections) -->
+    <!-- Field Permissions — Actuals_Record__c (all editable for admin) -->
     <fieldPermissions>
         <editable>true</editable>
         <field>Actuals_Record__c.Account__c</field>
@@ -246,7 +306,7 @@
         <readable>true</readable>
     </fieldPermissions>
 
-    <!-- Record Type Visibility — Advertising_Opportunity__c -->
+    <!-- Record Type Visibility -->
     <recordTypeVisibilities>
         <recordType>Advertising_Opportunity__c.Direct_Buy</recordType>
         <visible>true</visible>
@@ -255,16 +315,6 @@
         <recordType>Advertising_Opportunity__c.Agency_Buy</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-
-    <!-- User Permissions -->
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>CreateCustomizeReports</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>ManageCustomReportTypes</name>
-    </userPermissions>
 
     <!-- Tab Visibility -->
     <tabSettings>
@@ -277,6 +327,10 @@
     </tabSettings>
     <tabSettings>
         <tab>Channel__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Vehicle__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>

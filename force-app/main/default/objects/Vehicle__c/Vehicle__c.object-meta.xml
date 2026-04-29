@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Advertising vehicle — a specific bookable media placement (e.g., KVEA Evening News :30). Linked to Channel__c and used as the ad unit on Budget Lines. Maps to Media Cloud Ad Space.</description>
+    <description>Named grouping of programs that air across one or more stations (e.g., BMF, Gold Network, Platinum Network). Assigned to Budget Lines and used to filter advertising reports. Stations are linked via Vehicle_Channel__c junction records.</description>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
     <label>Vehicle</label>
-    <pluralLabel>Vehicles</pluralLabel>
     <nameField>
         <label>Vehicle Name</label>
         <type>Text</type>
     </nameField>
-    <deploymentStatus>Deployed</deploymentStatus>
-    <sharingModel>Read</sharingModel>
+    <pluralLabel>Vehicles</pluralLabel>
+    <sharingModel>ReadWrite</sharingModel>
 </CustomObject>

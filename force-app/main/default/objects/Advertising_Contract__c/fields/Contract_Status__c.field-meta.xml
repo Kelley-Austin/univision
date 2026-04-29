@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Vehicle_Type__c</fullName>
-    <label>Vehicle Type</label>
-    <required>false</required>
+    <fullName>Contract_Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Contract Status</label>
+    <required>true</required>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -10,34 +12,34 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Network Package</fullName>
-                <default>false</default>
-                <label>Network Package</label>
+                <fullName>Draft</fullName>
+                <default>true</default>
+                <label>Draft</label>
             </value>
             <value>
-                <fullName>Program Package</fullName>
+                <fullName>Pending Approval</fullName>
                 <default>false</default>
-                <label>Program Package</label>
+                <label>Pending Approval</label>
             </value>
             <value>
-                <fullName>Sports Package</fullName>
+                <fullName>Approved</fullName>
                 <default>false</default>
-                <label>Sports Package</label>
+                <label>Approved</label>
             </value>
             <value>
-                <fullName>Sponsorship</fullName>
+                <fullName>Active</fullName>
                 <default>false</default>
-                <label>Sponsorship</label>
+                <label>Active</label>
             </value>
             <value>
-                <fullName>Digital Package</fullName>
+                <fullName>Cancelled</fullName>
                 <default>false</default>
-                <label>Digital Package</label>
+                <label>Cancelled</label>
             </value>
             <value>
-                <fullName>Multimedia Package</fullName>
+                <fullName>Completed</fullName>
                 <default>false</default>
-                <label>Multimedia Package</label>
+                <label>Completed</label>
             </value>
         </valueSetDefinition>
     </valueSet>

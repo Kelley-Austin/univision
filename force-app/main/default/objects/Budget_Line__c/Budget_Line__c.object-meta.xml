@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>A single line item within an Advertising Opportunity representing a planned spend allocation against a channel for a given period. Each line carries one governing date type (Calendar or Broadcast) for billing.</description>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <label>Budget Line</label>
+    <nameField>
+        <displayFormat>BL-{000000}</displayFormat>
+        <label>Budget Line Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Budget Lines</pluralLabel>
+    <sharingModel>ReadWrite</sharingModel>
+
+    <listViews>
+        <fullName>All_Budget_Lines</fullName>
+        <columns>NAME</columns>
+        <columns>Status__c</columns>
+        <columns>Date_Type__c</columns>
+        <columns>Calendar_Date__c</columns>
+        <columns>Broadcast_Date__c</columns>
+        <columns>Planned_Amount__c</columns>
+        <columns>Channel__c</columns>
+        <columns>Advertising_Opportunity__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Budget Lines</label>
+    </listViews>
+</CustomObject>

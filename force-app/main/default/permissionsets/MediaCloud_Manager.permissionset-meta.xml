@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Manager access: full CRUD on Advertising Opportunities and Budget Lines with ViewAll; create/edit on Channels; read-only with ViewAll on Actuals Records.</description>
+    <description>Sales manager access: full CRUD and View All on Advertising Opportunities, Budget Lines, and Vehicles; full CRUD on Channels; read-only on Actuals Records. No Modify All — escalate to Admin for bulk edits.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Media Cloud — Manager</label>
 
@@ -21,6 +21,24 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Budget_Line__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Vehicle__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>Vehicle_Channel__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -98,6 +116,11 @@
         <field>Advertising_Opportunity__c.Total_Variance_Amount__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Advertising_Opportunity__c.Media_Cloud_Media_Plan_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 
     <!-- Field Permissions — Budget_Line__c -->
     <fieldPermissions>
@@ -113,6 +136,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Budget_Line__c.Channel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Budget_Line__c.Vehicle__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -151,22 +179,117 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Budget_Line__c.Actual_Amount__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Budget_Line__c.Variance_Amount__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Budget_Line__c.Variance_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
 
-    <!-- Field Permissions — Channel__c (create/edit) -->
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Budget_Line__c.Date_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Budget_Line__c.Calendar_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Budget_Line__c.Broadcast_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+
+    <!-- Field Permissions — Vehicle__c -->
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Vehicle__c.Vehicle_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Vehicle__c.Description__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Vehicle__c.Start_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Vehicle__c.End_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Vehicle__c.Channel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Vehicle__c.Vehicle_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Vehicle__c.Day_Part__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Vehicle__c.Program__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Vehicle__c.Rate_Card__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Vehicle__c.Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Vehicle__c.Market__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Vehicle__c.External_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Vehicle__c.Media_Cloud_Ad_Space_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+
+    <!-- Field Permissions — Vehicle_Channel__c -->
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Vehicle_Channel__c.Vehicle__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Vehicle_Channel__c.Channel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+
+    <!-- Field Permissions — Channel__c -->
     <fieldPermissions>
         <editable>true</editable>
         <field>Channel__c.Account__c</field>
@@ -245,7 +368,7 @@
         <readable>true</readable>
     </fieldPermissions>
 
-    <!-- Record Type Visibility — Advertising_Opportunity__c -->
+    <!-- Record Type Visibility -->
     <recordTypeVisibilities>
         <recordType>Advertising_Opportunity__c.Direct_Buy</recordType>
         <visible>true</visible>
@@ -266,6 +389,10 @@
     </tabSettings>
     <tabSettings>
         <tab>Channel__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Vehicle__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>

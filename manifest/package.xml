@@ -9,7 +9,32 @@
         <members>Actuals_Record__c</members>
         <members>Budget_Line__c</members>
         <members>Channel__c</members>
+        <members>Vehicle__c</members>
         <name>CustomTab</name>
+    </types>
+    <types>
+        <members>Vehicle__c</members>
+        <members>Vehicle_Channel__c</members>
+        <members>Budget_Line__c</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>Vehicle__c.Vehicle_Code__c</members>
+        <members>Vehicle__c.Description__c</members>
+        <members>Vehicle__c.Vehicle_Type__c</members>
+        <members>Vehicle__c.Status__c</members>
+        <members>Vehicle__c.Start_Date__c</members>
+        <members>Vehicle__c.End_Date__c</members>
+        <members>Vehicle__c.Market__c</members>
+        <members>Vehicle__c.Channel__c</members>
+        <members>Vehicle__c.Day_Part__c</members>
+        <members>Vehicle__c.Rate_Card__c</members>
+        <members>Vehicle__c.Media_Cloud_Ad_Space_ID__c</members>
+        <members>Vehicle_Channel__c.Vehicle__c</members>
+        <members>Vehicle_Channel__c.Channel__c</members>
+        <members>Budget_Line__c.Vehicle__c</members>
+        <members>Advertising_Opportunity__c.Media_Cloud_Media_Plan_ID__c</members>
+        <name>CustomField</name>
     </types>
     <types>
         <members>MediaCloud_Admin</members>

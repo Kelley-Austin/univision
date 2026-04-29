@@ -3,6 +3,6 @@
     <fullName>Start_Date__c</fullName>
     <label>Start Date</label>
     <required>false</required>
-    <trackTrending>false</trackTrending>
     <type>Date</type>
+    <trackTrending>false</trackTrending>
 </CustomField>
