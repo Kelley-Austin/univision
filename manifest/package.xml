@@ -15,6 +15,7 @@
     </types>
     <types>
         <members>Advertising_Contract__c</members>
+        <members>Advertising_Opportunity__c</members>
         <members>Vehicle__c</members>
         <members>Vehicle_Channel__c</members>
         <members>Budget_Line__c</members>
@@ -64,6 +65,13 @@
         <members>Budget_Line__c.Broadcast_Date__c</members>
         <members>Budget_Line__c.Date_Type__c</members>
         <members>Advertising_Opportunity__c.Media_Cloud_Media_Plan_ID__c</members>
+        <members>Advertising_Opportunity__c.Status__c</members>
+        <members>Advertising_Opportunity__c.Account__c</members>
+        <members>Advertising_Opportunity__c.Agency_Account__c</members>
+        <members>Advertising_Opportunity__c.Start_Date__c</members>
+        <members>Advertising_Opportunity__c.End_Date__c</members>
+        <members>Advertising_Opportunity__c.Total_Budget__c</members>
+        <members>Advertising_Opportunity__c.Market__c</members>
         <name>CustomField</name>
     </types>
     <types>
