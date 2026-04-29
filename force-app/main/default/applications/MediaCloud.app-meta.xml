@@ -14,5 +14,6 @@
     <tabs>Channel__c</tabs>
     <tabs>Actuals_Record__c</tabs>
     <tabs>Vehicle__c</tabs>
+    <tabs>Advertising_Contract__c</tabs>
     <uiType>Lightning</uiType>
 </CustomApplication>

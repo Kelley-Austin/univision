@@ -7,18 +7,45 @@
     <types>
         <members>Advertising_Opportunity__c</members>
         <members>Actuals_Record__c</members>
+        <members>Advertising_Contract__c</members>
         <members>Budget_Line__c</members>
         <members>Channel__c</members>
         <members>Vehicle__c</members>
         <name>CustomTab</name>
     </types>
     <types>
+        <members>Advertising_Contract__c</members>
         <members>Vehicle__c</members>
         <members>Vehicle_Channel__c</members>
         <members>Budget_Line__c</members>
         <name>CustomObject</name>
     </types>
     <types>
+        <!-- Advertising_Contract__c fields -->
+        <members>Advertising_Contract__c.Advertising_Opportunity__c</members>
+        <members>Advertising_Contract__c.Account__c</members>
+        <members>Advertising_Contract__c.Agency_Account__c</members>
+        <members>Advertising_Contract__c.Contract_Status__c</members>
+        <members>Advertising_Contract__c.Start_Date__c</members>
+        <members>Advertising_Contract__c.End_Date__c</members>
+        <members>Advertising_Contract__c.Total_Contract_Value__c</members>
+        <members>Advertising_Contract__c.Market__c</members>
+        <members>Advertising_Contract__c.Signatory_Name__c</members>
+        <members>Advertising_Contract__c.Signatory_Title__c</members>
+        <members>Advertising_Contract__c.Signatory_Email__c</members>
+        <members>Advertising_Contract__c.Contract_Terms__c</members>
+        <members>Advertising_Contract__c.Cancellation_Policy__c</members>
+        <members>Advertising_Contract__c.Cancellation_Notice_Days__c</members>
+        <members>Advertising_Contract__c.Cancellation_Fee_Percent__c</members>
+        <members>Advertising_Contract__c.Make_Good_Policy__c</members>
+        <members>Advertising_Contract__c.Make_Good_Credits__c</members>
+        <members>Advertising_Contract__c.E_Signature_Status__c</members>
+        <members>Advertising_Contract__c.E_Signature_Date__c</members>
+        <members>Advertising_Contract__c.E_Signature_Document_URL__c</members>
+        <members>Advertising_Contract__c.Approved_By__c</members>
+        <members>Advertising_Contract__c.Approved_Date__c</members>
+        <members>Advertising_Contract__c.Notes__c</members>
+        <!-- Fields from other slices -->
         <members>Vehicle__c.Vehicle_Code__c</members>
         <members>Vehicle__c.Description__c</members>
         <members>Vehicle__c.Vehicle_Type__c</members>
@@ -53,6 +80,22 @@
         <members>Advertising_Opportunity__c.Agency_Buy</members>
         <members>Advertising_Opportunity__c.Direct_Buy</members>
         <name>RecordType</name>
+    </types>
+    <types>
+        <members>Advertising_Contract__c.Contract_Approval_Process</members>
+        <name>ApprovalProcess</name>
+    </types>
+    <types>
+        <members>Advertising_Contract__c</members>
+        <name>Workflow</name>
+    </types>
+    <types>
+        <members>Promote_Opportunity_to_Contract</members>
+        <name>Flow</name>
+    </types>
+    <types>
+        <members>Advertising_Opportunity__c.Promote_to_Contract</members>
+        <name>QuickAction</name>
     </types>
     <version>62.0</version>
 </Package>
