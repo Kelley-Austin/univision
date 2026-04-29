@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Scope_Level__c</fullName>
+    <description>Determines how broadly this lock applies. Global locks all budgets for the year. Narrower scopes (Market → Region → Office → Account → Category) restrict progressively.</description>
+    <label>Scope Level</label>
+    <required>true</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value><fullName>Global</fullName><default>false</default><label>Global</label></value>
+            <value><fullName>Market</fullName><default>false</default><label>Market</label></value>
+            <value><fullName>Region</fullName><default>false</default><label>Region</label></value>
+            <value><fullName>Office</fullName><default>false</default><label>Office</label></value>
+            <value><fullName>Account</fullName><default>false</default><label>Account</label></value>
+            <value><fullName>Category</fullName><default>false</default><label>Category</label></value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

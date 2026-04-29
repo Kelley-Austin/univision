@@ -22,6 +22,10 @@
         <members>Office__c</members>
         <members>Projection__c</members>
         <members>Budget__c</members>
+        <members>Vehicle__c</members>
+        <members>Advertising_Opportunity__c</members>
+        <members>Matrix_Sync_Log__c</members>
+        <members>Matrix_Sync_Config__mdt</members>
         <name>CustomObject</name>
     </types>
     <types>
@@ -43,7 +47,26 @@
         <members>Office__c.Region__c</members>
         <members>Office__c.Is_Active__c</members>
         <members>Office__c.Code__c</members>
+        <members>Vehicle__c.Media_Cloud_Ad_Space_ID__c</members>
+        <members>Vehicle__c.Last_Matrix_Sync__c</members>
+        <members>Vehicle__c.Matrix_Sync_Status__c</members>
+        <members>Advertising_Opportunity__c.Media_Cloud_Media_Plan_ID__c</members>
+        <members>Matrix_Sync_Log__c.Status__c</members>
+        <members>Matrix_Sync_Log__c.Records_Processed__c</members>
+        <members>Matrix_Sync_Log__c.Records_Failed__c</members>
+        <members>Matrix_Sync_Log__c.Error_Detail__c</members>
+        <members>Matrix_Sync_Log__c.Sync_Type__c</members>
+        <members>Matrix_Sync_Config__mdt.Named_Credential__c</members>
+        <members>Matrix_Sync_Config__mdt.Schedule_Hour__c</members>
         <name>CustomField</name>
+    </types>
+    <types>
+        <members>Matrix_Sync_Config.Default</members>
+        <name>CustomMetadata</name>
+    </types>
+    <types>
+        <members>Matrix_API</members>
+        <name>NamedCredential</name>
     </types>
     <types>
         <members>MatrixCore_AE</members>
@@ -60,6 +83,18 @@
         <members>MdmKpiControllerTest</members>
         <members>CategoryRetireAction</members>
         <members>CategoryRetireActionTest</members>
+        <members>MatrixApiService</members>
+        <members>MatrixApiServiceTest</members>
+        <members>MatrixInventorySyncQueueable</members>
+        <members>MatrixInventorySyncQueueableTest</members>
+        <members>MatrixInventoryScheduler</members>
+        <members>MatrixInventorySchedulerTest</members>
+        <members>MatrixPromoteToContractAction</members>
+        <members>MatrixPromoteToContractActionTest</members>
+        <members>MatrixSyncController</members>
+        <members>MatrixSyncControllerTest</members>
+        <members>MatrixSyncInvocable</members>
+        <members>MatrixSyncInvocableTest</members>
         <name>ApexClass</name>
     </types>
     <types>
@@ -69,6 +104,7 @@
     </types>
     <types>
         <members>Retire_Category_With_Successor</members>
+        <members>Matrix_Inventory_Admin_Sync</members>
         <name>Flow</name>
     </types>
     <types>

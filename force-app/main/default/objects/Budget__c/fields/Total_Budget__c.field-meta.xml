@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Total_Budget__c</fullName>
+    <externalId>false</externalId>
+    <formula>BLANKVALUE(Jan_Budget__c, 0) + BLANKVALUE(Feb_Budget__c, 0) + BLANKVALUE(Mar_Budget__c, 0) + BLANKVALUE(Apr_Budget__c, 0) + BLANKVALUE(May_Budget__c, 0) + BLANKVALUE(Jun_Budget__c, 0) + BLANKVALUE(Jul_Budget__c, 0) + BLANKVALUE(Aug_Budget__c, 0) + BLANKVALUE(Sep_Budget__c, 0) + BLANKVALUE(Oct_Budget__c, 0) + BLANKVALUE(Nov_Budget__c, 0) + BLANKVALUE(Dec_Budget__c, 0)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Total Budget</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <type>Currency</type>
+</CustomField>

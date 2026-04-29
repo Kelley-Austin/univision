@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Transform_Logic__c</fullName>
+    <label>Transform Logic</label>
+    <type>Text</type>
+    <length>255</length>
+    <required>false</required>
+    <description>Optional hint for dry-run preview (e.g., TRIM, UPPERCASE, EXTRACT_EMAIL_PREFIX, DERIVE_REVENUE_TYPE).</description>
+</CustomField>

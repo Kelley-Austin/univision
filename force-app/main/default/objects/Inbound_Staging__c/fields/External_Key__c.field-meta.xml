@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>External_Key__c</fullName>
+    <label>External Key</label>
+    <type>Text</type>
+    <length>255</length>
+    <required>false</required>
+    <unique>true</unique>
+    <caseSensitive>false</caseSensitive>
+    <externalId>true</externalId>
+    <description>Idempotency key constructed by each transformer (source_system + row fingerprint). Upsert on this field prevents duplicate staging rows from re-loads.</description>
+</CustomField>
