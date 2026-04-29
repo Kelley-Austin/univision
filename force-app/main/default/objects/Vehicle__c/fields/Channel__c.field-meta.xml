@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Channel__c</fullName>
+    <label>Channel</label>
+    <type>Lookup</type>
+    <referenceTo>Channel__c</referenceTo>
+    <relationshipLabel>Vehicles</relationshipLabel>
+    <relationshipName>Vehicles</relationshipName>
+    <required>true</required>
+</CustomField>

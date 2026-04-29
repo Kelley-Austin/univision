@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Vehicle_Type__c</fullName>
+    <label>Vehicle Type</label>
+    <required>true</required>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>:15 Spot</fullName>
+                <default>false</default>
+                <label>:15 Spot</label>
+            </value>
+            <value>
+                <fullName>:30 Spot</fullName>
+                <default>true</default>
+                <label>:30 Spot</label>
+            </value>
+            <value>
+                <fullName>:60 Spot</fullName>
+                <default>false</default>
+                <label>:60 Spot</label>
+            </value>
+            <value>
+                <fullName>Sponsorship</fullName>
+                <default>false</default>
+                <label>Sponsorship</label>
+            </value>
+            <value>
+                <fullName>Billboard</fullName>
+                <default>false</default>
+                <label>Billboard</label>
+            </value>
+            <value>
+                <fullName>Digital Banner</fullName>
+                <default>false</default>
+                <label>Digital Banner</label>
+            </value>
+            <value>
+                <fullName>Digital Video</fullName>
+                <default>false</default>
+                <label>Digital Video</label>
+            </value>
+            <value>
+                <fullName>OOH</fullName>
+                <default>false</default>
+                <label>OOH</label>
+            </value>
+            <value>
+                <fullName>Print</fullName>
+                <default>false</default>
+                <label>Print</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
