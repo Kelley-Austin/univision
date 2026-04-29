@@ -1,0 +1,85 @@
+<template>
+    <lightning-card title="Financial Report Builder" icon-name="utility:report">
+
+        <!-- Config panel -->
+        <div class="slds-grid slds-gutters slds-wrap slds-p-horizontal_medium slds-p-bottom_small">
+            <div class="slds-col slds-size_1-of-6">
+                <lightning-input label="Year" type="number" value={config.periodYear}
+                    onchange={handleYearChange} min="2020" max="2030">
+                </lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-6">
+                <lightning-combobox label="From Month" value={config.fromMonth}
+                    options={monthOptions} onchange={handleFromMonthChange}>
+                </lightning-combobox>
+            </div>
+            <div class="slds-col slds-size_1-of-6">
+                <lightning-combobox label="To Month" value={config.toMonth}
+                    options={monthOptions} onchange={handleToMonthChange}>
+                </lightning-combobox>
+            </div>
+            <div class="slds-col slds-size_1-of-5">
+                <lightning-combobox label="Group By" value={config.groupBy}
+                    options={groupByOptions} onchange={handleGroupByChange}>
+                </lightning-combobox>
+            </div>
+            <div class="slds-col slds-size_1-of-6">
+                <lightning-input label="Revenue Type" type="text" value={config.revenueType}
+                    onchange={handleRevTypeChange} placeholder="(all)">
+                </lightning-input>
+            </div>
+        </div>
+
+        <!-- Column visibility toggles -->
+        <div class="slds-grid slds-wrap slds-p-horizontal_medium slds-p-bottom_small">
+            <template for:each={columnToggles} for:item="col">
+                <div key={col.field} class="slds-col slds-size_1-of-8 slds-p-right_small">
+                    <lightning-input type="checkbox" label={col.label} checked={col.visible}
+                        data-field={col.field} onchange={handleColumnToggle}>
+                    </lightning-input>
+                </div>
+            </template>
+        </div>
+
+        <!-- Action bar -->
+        <div class="slds-grid slds-p-horizontal_medium slds-p-bottom_medium slds-gutters">
+            <lightning-button label="Run Report" onclick={handleRun} variant="brand"></lightning-button>
+            <lightning-button label="Export CSV" onclick={handleExport}
+                variant="neutral" disabled={noData} icon-name="utility:download"
+                class="slds-m-left_small">
+            </lightning-button>
+        </div>
+
+        <!-- Results -->
+        <template lwc:if={isLoading}>
+            <div class="slds-align_absolute-center slds-p-around_large">
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </div>
+        </template>
+
+        <template lwc:if={hasError}>
+            <div class="slds-notify slds-notify_alert slds-alert_error slds-m-around_medium" role="alert">
+                {errorMessage}
+            </div>
+        </template>
+
+        <template lwc:if={hasData}>
+            <div class="slds-p-horizontal_small slds-text-body_small slds-text-color_weak slds-p-bottom_x-small">
+                {rows.length} rows · grouped by {config.groupBy}
+            </div>
+            <lightning-datatable
+                key-field="groupKey"
+                data={rows}
+                columns={visibleColumns}
+                hide-checkbox-column>
+            </lightning-datatable>
+        </template>
+
+        <template lwc:if={isEmpty}>
+            <div class="slds-align_absolute-center slds-p-around_large slds-text-color_weak">
+                No data. Run the report to see results.
+            </div>
+        </template>
+
+    </lightning-card>
+</template>

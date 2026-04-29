@@ -1,0 +1,90 @@
+<template>
+    <lightning-card title="Exclusion Log" icon-name="utility:block_visitor">
+
+        <!-- Filter bar -->
+        <div class="slds-grid slds-gutters slds-p-horizontal_medium slds-p-bottom_small" slot="actions">
+            <div class="slds-col slds-size_1-of-4">
+                <lightning-combobox
+                    label="Excluding Rule"
+                    value={filterRule}
+                    options={ruleOptions}
+                    onchange={handleRuleChange}
+                    variant="label-hidden"
+                    placeholder="All Rules">
+                </lightning-combobox>
+            </div>
+            <div class="slds-col slds-size_1-of-4">
+                <lightning-input
+                    label="Period Year"
+                    type="number"
+                    value={filterYear}
+                    onchange={handleYearChange}
+                    variant="label-hidden"
+                    placeholder="Period Year">
+                </lightning-input>
+            </div>
+            <div class="slds-col slds-size_1-of-6">
+                <lightning-button label="Apply" onclick={handleApply} variant="neutral"></lightning-button>
+            </div>
+            <div class="slds-col slds-size_1-of-6">
+                <lightning-button
+                    label="Re-queue Selected"
+                    onclick={handleRequeue}
+                    variant="brand"
+                    disabled={noSelection}>
+                </lightning-button>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <template lwc:if={isLoading}>
+            <div class="slds-align_absolute-center slds-p-around_large">
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </div>
+        </template>
+
+        <template lwc:if={hasError}>
+            <div class="slds-notify slds-notify_alert slds-alert_error slds-m-around_medium" role="alert">
+                {errorMessage}
+            </div>
+        </template>
+
+        <template lwc:if={hasData}>
+            <lightning-datatable
+                key-field="stagingId"
+                data={rows}
+                columns={columns}
+                selected-rows={selectedIds}
+                onrowselection={handleRowSelection}
+                hide-checkbox-column={false}
+                draft-values={draftValues}>
+            </lightning-datatable>
+
+            <!-- Pagination -->
+            <div class="slds-grid slds-grid_align-center slds-p-around_small">
+                <lightning-button
+                    label="Previous"
+                    onclick={handlePrev}
+                    disabled={isFirstPage}
+                    variant="neutral">
+                </lightning-button>
+                <span class="slds-m-horizontal_medium slds-align-middle">
+                    Page {currentPage} &nbsp;·&nbsp; {rows.length} rows
+                </span>
+                <lightning-button
+                    label="Next"
+                    onclick={handleNext}
+                    disabled={isLastPage}
+                    variant="neutral">
+                </lightning-button>
+            </div>
+        </template>
+
+        <template lwc:if={isEmpty}>
+            <div class="slds-align_absolute-center slds-p-around_large slds-text-color_weak">
+                No excluded rows match the current filters.
+            </div>
+        </template>
+
+    </lightning-card>
+</template>

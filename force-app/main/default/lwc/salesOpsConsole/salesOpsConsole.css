@@ -1,0 +1,17 @@
+.console-wrap {
+    background: #f3f2f2;
+    min-height: 100vh;
+}
+
+.console-header {
+    background: #fff;
+    border-bottom: 1px solid #dddbda;
+}
+
+.console-tabs {
+    padding: 0.75rem 1rem 0;
+}
+
+.tab-body {
+    padding: 1rem 0;
+}
