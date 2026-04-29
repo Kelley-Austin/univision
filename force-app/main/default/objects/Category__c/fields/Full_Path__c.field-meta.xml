@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Full_Path__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(ISBLANK(Parent_Category__c),
+  Name,
+  IF(ISBLANK(Parent_Category__r.Parent_Category__c),
+    Parent_Category__r.Name &amp; &quot; &gt; &quot; &amp; Name,
+    Parent_Category__r.Parent_Category__r.Name &amp; &quot; &gt; &quot; &amp; Parent_Category__r.Name &amp; &quot; &gt; &quot; &amp; Name
+  )
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Full Path</label>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Successor_Category__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Successor Category</label>
+    <referenceTo>Category__c</referenceTo>
+    <relationshipLabel>Replaced Categories</relationshipLabel>
+    <relationshipName>Replaced_Categories</relationshipName>
+    <required>false</required>
+    <type>Lookup</type>
+</CustomField>

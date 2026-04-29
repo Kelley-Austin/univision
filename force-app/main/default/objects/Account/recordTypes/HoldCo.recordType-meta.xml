@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <description>Top-level holding company. Cannot have a parent account. Agencies and Advertisers roll up through this record type for hierarchy reporting.</description>
+    <fullName>HoldCo</fullName>
+    <label>HoldCo</label>
+</RecordType>

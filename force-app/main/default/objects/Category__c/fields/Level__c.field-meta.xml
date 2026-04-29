@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Level__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(ISBLANK(Parent_Category__c), 1,
+  IF(ISBLANK(Parent_Category__r.Parent_Category__c), 2,
+    IF(ISBLANK(Parent_Category__r.Parent_Category__r.Parent_Category__c), 3, 4)
+  )
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Level</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <type>Number</type>
+</CustomField>

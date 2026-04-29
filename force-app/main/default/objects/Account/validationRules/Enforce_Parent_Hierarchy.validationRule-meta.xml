@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Enforce_Parent_Hierarchy</fullName>
+    <active>true</active>
+    <description>Enforces the HoldCo → Agency → Advertiser hierarchy. HoldCo accounts must have no parent. Agency parent must be a HoldCo. Advertiser parent must be an Agency.</description>
+    <errorConditionFormula>OR(
+    AND(
+        RecordType.DeveloperName = &quot;HoldCo&quot;,
+        NOT(ISBLANK(ParentId))
+    ),
+    AND(
+        RecordType.DeveloperName = &quot;Agency&quot;,
+        NOT(ISBLANK(ParentId)),
+        Parent.RecordType.DeveloperName != &quot;HoldCo&quot;
+    ),
+    AND(
+        RecordType.DeveloperName = &quot;Advertiser&quot;,
+        NOT(ISBLANK(ParentId)),
+        Parent.RecordType.DeveloperName != &quot;Agency&quot;
+    )
+)</errorConditionFormula>
+    <errorMessage>Invalid parent hierarchy. HoldCo accounts cannot have a parent. Agency accounts must report to a HoldCo. Advertiser accounts must report to an Agency.</errorMessage>
+</ValidationRule>
