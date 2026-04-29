@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>PERIOD_YEAR</field>
+    </columns>
+    <columns>
+        <field>PERIOD_MONTH</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>PROJECTED_AT_CLOSE</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>ACTUAL_AT_CLOSE</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Average</aggregateTypes>
+        <field>VARIANCE_PCT</field>
+    </columns>
+    <description>Forecast accuracy by period — compares Projected_At_Close to Actual_At_Close across all Period Snapshots. Grouped by year and month.</description>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>FiscalYear</dateGranularity>
+        <field>PERIOD_YEAR</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>FiscalYear</dateGranularity>
+        <field>PERIOD_MONTH</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Forecast Accuracy by Period</name>
+    <reportType>Period_Snapshot__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <interval>CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

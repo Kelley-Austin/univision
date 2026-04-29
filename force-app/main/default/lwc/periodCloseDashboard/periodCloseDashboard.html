@@ -1,0 +1,128 @@
+<template>
+    <lightning-card title="Period Close Dashboard — Trailing 24 Months"
+                    icon-name="standard:report">
+        <div class="slds-card__body slds-card__body_inner">
+
+            <!-- Loading spinner -->
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </template>
+
+            <!-- Error state -->
+            <template if:true={hasError}>
+                <div class="slds-notify slds-notify_alert slds-theme_error slds-m-bottom_small">
+                    <span>{errorMessage}</span>
+                </div>
+            </template>
+
+            <!-- Dashboard table -->
+            <template if:false={isLoading}>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th scope="col">Period</th>
+                            <th scope="col">Status</th>
+                            <th scope="col" class="slds-text-align_right">Projected</th>
+                            <th scope="col" class="slds-text-align_right">Actual</th>
+                            <th scope="col" class="slds-text-align_right">Variance %</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={rows} for:item="row">
+                            <template key={row.periodLabel}>
+                                <tr class="slds-hint-parent">
+                                    <td class="slds-text-body_regular">{row.periodLabel}</td>
+                                    <td>
+                                        <span class={row.statusBadgeClass}>{row.status}</span>
+                                    </td>
+                                    <td class="slds-text-align_right">
+                                        <template if:true={row.hasData}>
+                                            <lightning-formatted-number
+                                                value={row.projected}
+                                                format-style="currency"
+                                                currency-code="USD">
+                                            </lightning-formatted-number>
+                                        </template>
+                                        <template if:false={row.hasData}>—</template>
+                                    </td>
+                                    <td class="slds-text-align_right">
+                                        <template if:true={row.hasData}>
+                                            <lightning-formatted-number
+                                                value={row.actual}
+                                                format-style="currency"
+                                                currency-code="USD">
+                                            </lightning-formatted-number>
+                                        </template>
+                                        <template if:false={row.hasData}>—</template>
+                                    </td>
+                                    <td class="slds-text-align_right">
+                                        <template if:true={row.hasVariance}>
+                                            <span class={row.varianceClass}>
+                                                {row.variancePctFormatted}%
+                                            </span>
+                                        </template>
+                                        <template if:false={row.hasVariance}>—</template>
+                                    </td>
+                                    <td>
+                                        <template if:true={row.hasDrilldown}>
+                                            <lightning-button
+                                                label="Detail"
+                                                variant="base"
+                                                icon-name="utility:search"
+                                                data-id={row.periodCloseId}
+                                                onclick={handleDrilldown}>
+                                            </lightning-button>
+                                        </template>
+                                    </td>
+                                </tr>
+
+                                <!-- Drilldown rows (inline expansion) -->
+                                <template if:true={row.isExpanded}>
+                                    <template for:each={row.snapshots} for:item="snap">
+                                        <tr key={snap.snapshotId} class="slds-is-selected">
+                                            <td class="slds-p-left_large slds-text-color_weak">
+                                                {snap.accountName} — {snap.categoryName}
+                                            </td>
+                                            <td>{snap.revenueType}</td>
+                                            <td class="slds-text-align_right">
+                                                <lightning-formatted-number
+                                                    value={snap.projected}
+                                                    format-style="currency"
+                                                    currency-code="USD">
+                                                </lightning-formatted-number>
+                                            </td>
+                                            <td class="slds-text-align_right">
+                                                <lightning-formatted-number
+                                                    value={snap.actual}
+                                                    format-style="currency"
+                                                    currency-code="USD">
+                                                </lightning-formatted-number>
+                                            </td>
+                                            <td class="slds-text-align_right">
+                                                <template if:true={snap.hasVariance}>
+                                                    <span class={snap.varianceClass}>
+                                                        {snap.variancePctFormatted}%
+                                                    </span>
+                                                </template>
+                                                <template if:false={snap.hasVariance}>—</template>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    </template>
+                                    <template if:false={row.snapshots.length}>
+                                        <tr key="no-snaps">
+                                            <td colspan="6" class="slds-text-align_center slds-text-color_weak">
+                                                No snapshots for this period.
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </template>
+                            </template>
+                        </template>
+                    </tbody>
+                </table>
+            </template>
+        </div>
+    </lightning-card>
+</template>

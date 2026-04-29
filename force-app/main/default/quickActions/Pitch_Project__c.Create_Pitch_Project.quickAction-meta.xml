@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionSubtype>ScreenAction</actionSubtype>
+    <description>Opens the multi-step Pitch Project Creator wizard to configure participating outlets and unit codes for a new pitch effort.</description>
+    <flowDefinition>Pitch_Project_Creator</flowDefinition>
+    <label>New Pitch Project</label>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <type>Flow</type>
+</QuickAction>

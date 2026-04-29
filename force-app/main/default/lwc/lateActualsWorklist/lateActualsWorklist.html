@@ -1,0 +1,111 @@
+<template>
+    <lightning-card title="Late Actuals Worklist" icon-name="standard:work_order">
+        <div class="slds-card__body slds-card__body_inner">
+
+            <!-- Filter bar -->
+            <div class="slds-grid slds-gutters slds-m-bottom_small">
+                <div class="slds-col slds-size_1-of-4">
+                    <lightning-input
+                        type="number"
+                        label="Year"
+                        placeholder="e.g. 2025"
+                        value={filterYear}
+                        onchange={handleYearChange}>
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                    <lightning-combobox
+                        label="Month"
+                        placeholder="All"
+                        options={monthOptions}
+                        value={filterMonth}
+                        onchange={handleMonthChange}>
+                    </lightning-combobox>
+                </div>
+                <div class="slds-col slds-col_bump-left slds-align-bottom">
+                    <lightning-button
+                        label="Refresh"
+                        icon-name="utility:refresh"
+                        onclick={handleRefresh}
+                        variant="neutral">
+                    </lightning-button>
+                </div>
+            </div>
+
+            <!-- Loading spinner -->
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </template>
+
+            <!-- Error state -->
+            <template if:true={hasError}>
+                <div class="slds-notify slds-notify_alert slds-theme_error">
+                    <span>{errorMessage}</span>
+                </div>
+            </template>
+
+            <!-- Empty state -->
+            <template if:false={hasRows}>
+                <template if:false={isLoading}>
+                    <div class="slds-m-top_medium slds-text-align_center">
+                        <p class="slds-text-body_regular slds-text-color_weak">
+                            No pending late actuals.
+                        </p>
+                    </div>
+                </template>
+            </template>
+
+            <!-- Worklist table -->
+            <template if:true={hasRows}>
+                <div class="slds-m-bottom_x-small">
+                    <span class="slds-badge slds-badge_lightest">{rows.length} row(s)</span>
+                </div>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th scope="col">Account</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Period</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={rows} for:item="row">
+                            <tr key={row.actualId} class="slds-hint-parent">
+                                <td>{row.accountName}</td>
+                                <td>{row.categoryName}</td>
+                                <td>{row.revenueType}</td>
+                                <td>{row.periodMonth}/{row.periodYear}</td>
+                                <td>
+                                    <lightning-formatted-number
+                                        value={row.amount}
+                                        format-style="currency"
+                                        currency-code="USD">
+                                    </lightning-formatted-number>
+                                </td>
+                                <td>
+                                    <lightning-button-group>
+                                        <lightning-button
+                                            label="Accept"
+                                            variant="brand"
+                                            data-id={row.actualId}
+                                            onclick={handleAccept}>
+                                        </lightning-button>
+                                        <lightning-button
+                                            label="Reject"
+                                            variant="destructive-text"
+                                            data-id={row.actualId}
+                                            onclick={handleReject}>
+                                        </lightning-button>
+                                    </lightning-button-group>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </template>
+        </div>
+    </lightning-card>
+</template>

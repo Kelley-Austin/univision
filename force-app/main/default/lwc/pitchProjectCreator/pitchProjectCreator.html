@@ -1,0 +1,210 @@
+<template>
+    <lightning-card title="New Pitch Project">
+        <!-- Step indicator -->
+        <div class="slds-var-p-horizontal_medium slds-var-p-top_small">
+            <lightning-progress-indicator current-step={currentStepStr} type="base" has-error="false">
+                <lightning-progress-step label="Basic Info"          value="1"></lightning-progress-step>
+                <lightning-progress-step label="Outlets"             value="2"></lightning-progress-step>
+                <lightning-progress-step label="Unit Codes"          value="3"></lightning-progress-step>
+                <lightning-progress-step label="Confirm"             value="4"></lightning-progress-step>
+            </lightning-progress-indicator>
+        </div>
+
+        <div class="slds-var-p-around_medium">
+
+            <!-- ── Step 1: Basic Info ──────────────────────────────────── -->
+            <template if:true={isStep1}>
+                <lightning-input
+                    label="Project Name"
+                    value={project.name}
+                    required
+                    onchange={handleFieldChange}
+                    data-field="name">
+                </lightning-input>
+
+                <lightning-combobox
+                    label="Owner Type"
+                    value={project.ownerType}
+                    options={ownerTypeOptions}
+                    required
+                    onchange={handleFieldChange}
+                    data-field="ownerType">
+                </lightning-combobox>
+
+                <template if:true={isMarketOwner}>
+                    <lightning-record-picker
+                        label="Owning Market"
+                        placeholder="Search accounts..."
+                        object-api-name="Account"
+                        value={project.owningMarketId}
+                        onchange={handleMarketChange}>
+                    </lightning-record-picker>
+                </template>
+
+                <lightning-input
+                    label="Time Frame"
+                    value={project.timeFrame}
+                    onchange={handleFieldChange}
+                    data-field="timeFrame">
+                </lightning-input>
+
+                <lightning-input
+                    type="number"
+                    label="Goal ($)"
+                    value={project.goal}
+                    formatter="currency"
+                    required
+                    onchange={handleFieldChange}
+                    data-field="goal">
+                </lightning-input>
+
+                <lightning-input
+                    type="date"
+                    label="Start Date"
+                    value={project.startDate}
+                    onchange={handleFieldChange}
+                    data-field="startDate">
+                </lightning-input>
+
+                <lightning-input
+                    type="date"
+                    label="End Date"
+                    value={project.endDate}
+                    onchange={handleFieldChange}
+                    data-field="endDate">
+                </lightning-input>
+
+                <lightning-textarea
+                    label="Description"
+                    value={project.description}
+                    onchange={handleFieldChange}
+                    data-field="description">
+                </lightning-textarea>
+            </template>
+
+            <!-- ── Step 2: Participating Outlets ──────────────────────── -->
+            <template if:true={isStep2}>
+                <template if:true={outletsLoading}>
+                    <lightning-spinner alternative-text="Loading outlets..."></lightning-spinner>
+                </template>
+                <template if:false={outletsLoading}>
+                    <lightning-dual-listbox
+                        label="Participating Outlets"
+                        source-label="Available Outlets"
+                        selected-label="Selected Outlets"
+                        options={outletOptions}
+                        value={selectedOutletIds}
+                        onchange={handleOutletSelection}>
+                    </lightning-dual-listbox>
+                    <template if:true={outletsError}>
+                        <p class="slds-text-color_error">{outletsError}</p>
+                    </template>
+                </template>
+            </template>
+
+            <!-- ── Step 3: Unit Codes ──────────────────────────────────── -->
+            <template if:true={isStep3}>
+                <p class="slds-var-m-bottom_small slds-text-body_small slds-text-color_weak">
+                    Enter one or more unit codes per outlet (comma-separated).
+                    These codes are matched against incoming revenue records.
+                </p>
+                <template for:each={outletUnitCodeRows} for:item="row">
+                    <div key={row.outletId} class="slds-var-m-bottom_x-small">
+                        <lightning-input
+                            label={row.outletName}
+                            value={row.unitCodes}
+                            placeholder="e.g. UC-001, UC-002"
+                            data-outlet-id={row.outletId}
+                            onchange={handleUnitCodeChange}>
+                        </lightning-input>
+                    </div>
+                </template>
+                <template if:false={hasOutlets}>
+                    <p class="slds-text-color_weak">No outlets selected. Go back and select at least one outlet.</p>
+                </template>
+            </template>
+
+            <!-- ── Step 4: Confirmation ────────────────────────────────── -->
+            <template if:true={isStep4}>
+                <template if:true={saveError}>
+                    <div class="slds-notify slds-notify_alert slds-theme_error slds-var-m-bottom_small" role="alert">
+                        <span>{saveError}</span>
+                    </div>
+                </template>
+
+                <dl class="slds-dl_horizontal">
+                    <dt class="slds-dl_horizontal__label slds-text-color_weak">Project Name</dt>
+                    <dd class="slds-dl_horizontal__detail">{project.name}</dd>
+
+                    <dt class="slds-dl_horizontal__label slds-text-color_weak">Owner Type</dt>
+                    <dd class="slds-dl_horizontal__detail">{project.ownerType}</dd>
+
+                    <template if:true={project.owningMarketId}>
+                        <dt class="slds-dl_horizontal__label slds-text-color_weak">Owning Market</dt>
+                        <dd class="slds-dl_horizontal__detail">{project.owningMarketId}</dd>
+                    </template>
+
+                    <dt class="slds-dl_horizontal__label slds-text-color_weak">Goal</dt>
+                    <dd class="slds-dl_horizontal__detail">{formattedGoal}</dd>
+
+                    <template if:true={project.timeFrame}>
+                        <dt class="slds-dl_horizontal__label slds-text-color_weak">Time Frame</dt>
+                        <dd class="slds-dl_horizontal__detail">{project.timeFrame}</dd>
+                    </template>
+
+                    <template if:true={project.startDate}>
+                        <dt class="slds-dl_horizontal__label slds-text-color_weak">Start Date</dt>
+                        <dd class="slds-dl_horizontal__detail">{project.startDate}</dd>
+                    </template>
+
+                    <template if:true={project.endDate}>
+                        <dt class="slds-dl_horizontal__label slds-text-color_weak">End Date</dt>
+                        <dd class="slds-dl_horizontal__detail">{project.endDate}</dd>
+                    </template>
+                </dl>
+
+                <p class="slds-var-m-top_small slds-text-title_caps slds-text-color_weak">
+                    Unit Codes ({totalUnitCodeCount})
+                </p>
+                <template for:each={outletUnitCodeRows} for:item="row">
+                    <div key={row.outletId} class="slds-var-m-bottom_xx-small">
+                        <span class="slds-text-body_small">
+                            <strong>{row.outletName}</strong>: {row.unitCodes}
+                        </span>
+                    </div>
+                </template>
+            </template>
+
+            <!-- ── Navigation buttons ─────────────────────────────────── -->
+            <div class="slds-var-m-top_medium slds-grid slds-grid_align-spread">
+                <lightning-button
+                    label="Back"
+                    onclick={handleBack}
+                    class={backButtonClass}
+                    disabled={isLoading}>
+                </lightning-button>
+                <template if:false={isStep4}>
+                    <lightning-button
+                        variant="brand"
+                        label="Next"
+                        onclick={handleNext}
+                        disabled={isLoading}>
+                    </lightning-button>
+                </template>
+                <template if:true={isStep4}>
+                    <lightning-button
+                        variant="brand"
+                        label="Create Pitch Project"
+                        onclick={handleSave}
+                        disabled={isLoading}>
+                    </lightning-button>
+                </template>
+            </div>
+
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Saving..." size="small"></lightning-spinner>
+            </template>
+
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportFolder xmlns="http://soap.sforce.com/2006/04/metadata">
+    <accessType>Hidden</accessType>
+    <folderShares>
+        <accessLevel>Manage</accessLevel>
+        <shareType>Organization</shareType>
+    </folderShares>
+    <name>Advertising Analytics</name>
+    <publicFolderAccess>ReadWrite</publicFolderAccess>
+</ReportFolder>

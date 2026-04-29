@@ -5,10 +5,13 @@
  *   - Populates Category_Snapshot__c from Category__r.Name (immutable; skipped on update).
  *   - Sets Is_Late__c = true when today is after the Period_Close__c.Close_Date__c for
  *     the matching Period_Month__c + Period_Year__c.
+ *   - Stamps Pitch_Project__c via PitchProjectUnitCodeLinker when Unit_Code__c matches
+ *     an Active pitch project's registered unit codes.
  *
  * Before update:
  *   - Prevents Category_Snapshot__c from being changed once set.
  *   - Re-evaluates Is_Late__c in case the record's period fields are corrected.
+ *   - Re-runs unit-code linking when Unit_Code__c changes and Pitch_Project__c is still null.
  */
 public with sharing class ActualRevenueTriggerHandler {
 
@@ -50,6 +53,21 @@ public with sharing class ActualRevenueTriggerHandler {
         }
 
         Date today = Date.today();
+
+        // ── Pitch Project unit-code linking ───────────────────────────────────
+        if (isInsert) {
+            PitchProjectUnitCodeLinker.linkActuals(newList);
+        } else {
+            // On update: re-link only records whose unit code changed and are still unlinked
+            List<Actual_Revenue__c> toRelink = new List<Actual_Revenue__c>();
+            for (Actual_Revenue__c a : newList) {
+                Actual_Revenue__c old = oldMap != null ? oldMap.get(a.Id) : null;
+                if (old != null && a.Unit_Code__c != old.Unit_Code__c && a.Pitch_Project__c == null) {
+                    toRelink.add(a);
+                }
+            }
+            if (!toRelink.isEmpty()) PitchProjectUnitCodeLinker.linkActuals(toRelink);
+        }
 
         for (Actual_Revenue__c a : newList) {
             // ── Category Snapshot (insert only; immutable) ────────────────────

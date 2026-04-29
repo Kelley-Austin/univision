@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Point-in-time snapshot of a Projection captured when its Period_Close__c transitions to Closed. Stores Projected_At_Close and Actual_At_Close for forecast accuracy reporting.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <label>Period Snapshot</label>
+    <nameField>
+        <displayFormat>PS-{000000}</displayFormat>
+        <label>Period Snapshot Number</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Period Snapshots</pluralLabel>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>
