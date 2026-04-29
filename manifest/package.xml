@@ -36,7 +36,9 @@
         <members>IngestServiceTest</members>
         <members>IngestTriggerController</members>
         <members>LoadBatchDashboardController</members>
+        <members>LoadBatchDashboardControllerTest</members>
         <members>MappingRuleExecutor</members>
+        <members>MappingRuleExecutorTest</members>
         <members>MappingRuleService</members>
         <members>MappingRuleServiceTest</members>
         <members>MatrixApiService</members>
@@ -237,10 +239,19 @@
 
     <!-- ── Custom Metadata Records ──────────────────────────────────────── -->
     <types>
+        <members>Matrix_Sync_Config.Default</members>
         <members>Revenue_Code_Mapping.WO_DIG_50</members>
+        <members>Revenue_Code_Mapping.WO_RAD_30</members>
+        <members>Revenue_Code_Mapping.WO_RAD_60</members>
+        <members>Revenue_Code_Mapping.WO_RAD_SPN</members>
         <members>Revenue_Code_Mapping.WO_RADIO_40</members>
+        <members>Revenue_Code_Mapping.WO_TV_10</members>
         <members>Revenue_Code_Mapping.WO_TV_15</members>
         <members>Revenue_Code_Mapping.WO_TV_16</members>
+        <members>Revenue_Code_Mapping.WO_TV_30</members>
+        <members>Revenue_Code_Mapping.WO_TV_60</members>
+        <members>Revenue_Code_Mapping.WO_TV_OTT</members>
+        <members>Revenue_Code_Mapping.WO_TV_SPN</members>
         <name>CustomMetadata</name>
     </types>
 
@@ -263,6 +274,8 @@
     <!-- ── FlexiPages ───────────────────────────────────────────────────── -->
     <types>
         <members>Agency_Account_Record_Page</members>
+        <members>MDM_Workspace_Home</members>
+        <members>Source_System_Record_Page</members>
         <name>FlexiPage</name>
     </types>
 
@@ -289,7 +302,7 @@
 
     <!-- ── Quick Actions ─────────────────────────────────────────────────── -->
     <types>
-        <members>Account.Link_Agency_To_Advertiser</members>
+        <members>Account.Link_Agency</members>
         <members>Advertising_Opportunity__c.Import_Counterpoint_Data</members>
         <members>Budget_Line__c.Traffic_Copy_Entry</members>
         <members>New_Advertiser</members>
@@ -309,6 +322,7 @@
     <!-- ── Validation Rules ──────────────────────────────────────────────── -->
     <types>
         <members>Account.Enforce_Parent_Hierarchy</members>
+        <members>Mapping_Rule__c.Active_Requires_Notes</members>
         <name>ValidationRule</name>
     </types>
 
