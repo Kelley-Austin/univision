@@ -1,123 +1,54 @@
 <template>
-    <lightning-card title="Mapping Rule Editor" icon-name="utility:rules">
-        <div class="slds-m-around_medium">
-
-            <!-- Header toolbar -->
-            <div class="slds-grid slds-grid_align-spread slds-m-bottom_small">
-                <div class="slds-col">
-                    <h3 class="slds-text-heading_small">
-                        Rules for: <strong>{sourceSystemName}</strong>
-                    </h3>
-                </div>
-                <div class="slds-col_bump-left">
-                    <lightning-button-group>
-                        <lightning-button label="Add Rule" icon-name="utility:add"
-                            onclick={handleAddRule}></lightning-button>
-                        <lightning-button label="Dry Run Preview" icon-name="utility:preview"
-                            variant="brand"
-                            onclick={handleDryRun}
-                            disabled={!selectedSourceId}></lightning-button>
-                    </lightning-button-group>
-                </div>
-            </div>
-
-            <!-- Rule table -->
-            <template if:true={hasRules}>
-                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
-                    <thead>
-                        <tr class="slds-line-height_reset">
-                            <th scope="col">Source Field</th>
-                            <th scope="col">Target Field</th>
-                            <th scope="col">Transform Logic</th>
-                            <th scope="col">Default Value</th>
-                            <th scope="col">Order</th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <template for:each={rules} for:item="rule">
-                            <tr key={rule.Id}>
-                                <td>{rule.Source_Field__c}</td>
-                                <td>{rule.Target_Field__c}</td>
-                                <td>{rule.Transform_Logic__c}</td>
-                                <td>{rule.Default_Value__c}</td>
-                                <td>{rule.Sort_Order__c}</td>
-                                <td>
-                                    <lightning-button-icon icon-name="utility:edit"
-                                        alternative-text="Edit"
-                                        data-id={rule.Id}
-                                        onclick={handleEditRule}
-                                        size="small">
-                                    </lightning-button-icon>
-                                    <lightning-button-icon icon-name="utility:delete"
-                                        alternative-text="Delete"
-                                        data-id={rule.Id}
-                                        onclick={handleDeleteRule}
-                                        size="small"
-                                        variant="error">
-                                    </lightning-button-icon>
-                                </td>
-                            </tr>
-                        </template>
-                    </tbody>
-                </table>
+    <lightning-card title="Mapping Rules" icon-name="utility:rules">
+        <div slot="actions">
+            <lightning-button label="Dry Run" onclick={handleDryRun} class="slds-m-right_x-small"></lightning-button>
+            <lightning-button variant="brand" label="New Rule" onclick={handleNew}></lightning-button>
+        </div>
+        <div class="slds-card__body slds-card__body_inner">
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading..." size="small"></lightning-spinner>
             </template>
-
-            <template if:false={hasRules}>
-                <p class="slds-text-color_weak">No mapping rules defined. Click "Add Rule" to create one.</p>
-            </template>
-
-            <!-- Edit/Add modal -->
-            <template if:true={showModal}>
-                <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
-                    <div class="slds-modal__container">
-                        <header class="slds-modal__header">
-                            <h2 class="slds-text-heading_medium">{modalTitle}</h2>
-                        </header>
-                        <div class="slds-modal__content slds-p-around_medium">
-                            <lightning-input label="Source Field" value={editRule.Source_Field__c}
-                                data-field="Source_Field__c" onchange={handleFieldChange} required>
-                            </lightning-input>
-                            <lightning-input label="Target Field" value={editRule.Target_Field__c}
-                                data-field="Target_Field__c" onchange={handleFieldChange} required>
-                            </lightning-input>
-                            <lightning-input label="Transform Logic" value={editRule.Transform_Logic__c}
-                                data-field="Transform_Logic__c" onchange={handleFieldChange}>
-                            </lightning-input>
-                            <lightning-input label="Default Value" value={editRule.Default_Value__c}
-                                data-field="Default_Value__c" onchange={handleFieldChange}>
-                            </lightning-input>
-                            <lightning-input type="number" label="Sort Order" value={editRule.Sort_Order__c}
-                                data-field="Sort_Order__c" onchange={handleFieldChange}>
-                            </lightning-input>
-                        </div>
-                        <footer class="slds-modal__footer">
-                            <lightning-button label="Cancel" onclick={handleModalCancel}></lightning-button>
-                            <lightning-button label="Save" variant="brand"
-                                onclick={handleModalSave}></lightning-button>
-                        </footer>
-                    </div>
-                </section>
-                <div class="slds-backdrop slds-backdrop_open"></div>
-            </template>
-
-            <!-- Dry run results -->
             <template if:true={dryRunResult}>
-                <div class="slds-box slds-m-top_medium dry-run-panel">
-                    <h3 class="slds-text-heading_small slds-m-bottom_small">Dry Run Preview</h3>
-                    <p><strong>Total rows:</strong> {dryRunResult.totalRows}</p>
-                    <p><strong>Would create (Pending):</strong> {dryRunResult.pendingRows}</p>
-                    <p><strong>Would exclude:</strong> {dryRunResult.excludedRows}</p>
-                    <template if:true={dryRunHasErrors}>
-                        <p class="slds-text-color_error"><strong>Errors:</strong></p>
-                        <ul>
-                            <template for:each={dryRunResult.errors} for:item="err">
-                                <li key={err}>{err}</li>
-                            </template>
-                        </ul>
-                    </template>
+                <div class="slds-box slds-m-bottom_small slds-theme_info">
+                    <p>Dry Run: {dryRunResult.pendingRows} pending rows &mdash;
+                       {dryRunResult.wouldExclude} would be excluded,
+                       {dryRunResult.wouldRemap} would be remapped.</p>
                 </div>
             </template>
+            <lightning-datatable
+                key-field="Id"
+                data={rules}
+                columns={columns}
+                onrowaction={handleRowAction}
+                hide-checkbox-column>
+            </lightning-datatable>
         </div>
     </lightning-card>
+
+    <template if:true={showModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-modal__title">{modalTitle}</h2>
+                    <button class="slds-button slds-button_icon slds-modal__close" onclick={handleModalClose}>
+                        <lightning-icon icon-name="utility:close" size="small"></lightning-icon>
+                    </button>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <lightning-input label="Rule Name" value={editRecord.Name} data-field="Name" onchange={handleFieldChange}></lightning-input>
+                    <lightning-combobox label="Rule Type" value={editRecord.Rule_Type__c} options={ruleTypeOptions} data-field="Rule_Type__c" onchange={handleFieldChange}></lightning-combobox>
+                    <lightning-input label="Field Name" value={editRecord.Field_Name__c} data-field="Field_Name__c" onchange={handleFieldChange}></lightning-input>
+                    <lightning-input label="Raw Value" value={editRecord.Raw_Value__c} data-field="Raw_Value__c" onchange={handleFieldChange}></lightning-input>
+                    <lightning-input label="Mapped Value" value={editRecord.Mapped_Value__c} data-field="Mapped_Value__c" onchange={handleFieldChange}></lightning-input>
+                    <lightning-input type="checkbox" label="Is Active" checked={editRecord.Is_Active__c} data-field="Is_Active__c" onchange={handleCheckboxChange}></lightning-input>
+                    <lightning-textarea label="Notes" value={editRecord.Notes__c} data-field="Notes__c" onchange={handleFieldChange}></lightning-textarea>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button label="Cancel" onclick={handleModalClose}></lightning-button>
+                    <lightning-button variant="brand" label="Save" onclick={handleSave}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
 </template>

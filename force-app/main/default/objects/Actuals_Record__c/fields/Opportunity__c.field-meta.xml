@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Opportunity__c</fullName>
+    <label>Opportunity</label>
+    <type>Lookup</type>
+    <referenceTo>Advertising_Opportunity__c</referenceTo>
+    <relationshipLabel>Actuals Records</relationshipLabel>
+    <relationshipName>Actuals_Records</relationshipName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <required>false</required>
+    <description>The Advertising Opportunity from which this import was triggered via the quick action. Allows filtering actuals by deal context.</description>
+</CustomField>
