@@ -6,6 +6,7 @@
     <referenceTo>Category__c</referenceTo>
     <relationshipLabel>Account Categories</relationshipLabel>
     <relationshipName>Account_Categories</relationshipName>
+    <deleteConstraint>Restrict</deleteConstraint>
     <required>true</required>
     <type>Lookup</type>
 </CustomField>
