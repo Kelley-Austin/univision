@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Sales Representative — create and manage Direct Buy Advertiser and Agency accounts exclusively through the guided screen flows. Grants the minimum Account permissions needed to run the Create Direct Buy Advertiser, Create Agency Account, and Link Agency To Advertiser flows.</description>
+    <description>Sales Representative — minimum permissions to create and manage Direct Buy Advertiser and Agency accounts through guided screen flows.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Matrix — Sales Representative</label>
 

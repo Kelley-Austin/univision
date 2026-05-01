@@ -264,10 +264,6 @@
             <fieldText>Request Type</fieldText>
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>varRequestType</assignToReference>
-                <name>value</name>
-            </outputParameters>
         </fields>
         <fields>
             <name>Reason</name>

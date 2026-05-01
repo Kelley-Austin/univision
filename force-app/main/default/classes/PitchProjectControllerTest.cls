@@ -33,7 +33,7 @@ private class PitchProjectControllerTest {
             Advertising_Opportunity__c = oppId,
             Planned_Amount__c          = amount,
             Status__c                  = status,
-            Month__c                   = 4,
+            Month__c                   = 'April',
             Fiscal_Year__c             = 2026
         );
         insert bl;

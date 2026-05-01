@@ -298,7 +298,6 @@
             <dataType>Number</dataType>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
-            <label>Run at hour (UTC, 0–23)</label>
             <scale>0</scale>
         </fields>
         <showFooter>true</showFooter>
