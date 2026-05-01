@@ -21,7 +21,6 @@
         <developerName>PLANNED_SUM</developerName>
         <isActive>true</isActive>
         <isCrossBlock>false</isCrossBlock>
-        <label>Sum of Planned Amount</label>
         <reportType>Budget_Line__c</reportType>
         <scale>2</scale>
     </aggregates>
@@ -31,7 +30,6 @@
         <developerName>ACTUAL_SUM</developerName>
         <isActive>true</isActive>
         <isCrossBlock>false</isCrossBlock>
-        <label>Sum of Actual Amount</label>
         <reportType>Budget_Line__c</reportType>
         <scale>2</scale>
     </aggregates>
@@ -41,7 +39,6 @@
         <developerName>VARIANCE_SUM</developerName>
         <isActive>true</isActive>
         <isCrossBlock>false</isCrossBlock>
-        <label>Sum of Variance</label>
         <reportType>Budget_Line__c</reportType>
         <scale>2</scale>
     </aggregates>

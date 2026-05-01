@@ -11,7 +11,6 @@
     <!-- Default sort: newest period first -->
     <columns>
         <field>Period_Year__c</field>
-        <sortOrder>Desc</sortOrder>
         <sortIndex>0</sortIndex>
     </columns>
     <columns>

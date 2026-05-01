@@ -18,7 +18,6 @@
         <developerName>ROWCOUNT</developerName>
         <isActive>true</isActive>
         <isCrossBlock>false</isCrossBlock>
-        <label>Deal Count</label>
         <reportType>Advertising_Opportunity__c</reportType>
         <scale>0</scale>
     </aggregates>

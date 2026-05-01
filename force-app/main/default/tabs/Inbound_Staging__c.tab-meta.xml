@@ -3,5 +3,4 @@
     <customObject>true</customObject>
     <label>Inbound Staging</label>
     <motif>Custom97: Handshake</motif>
-    <object>Inbound_Staging__c</object>
 </CustomTab>

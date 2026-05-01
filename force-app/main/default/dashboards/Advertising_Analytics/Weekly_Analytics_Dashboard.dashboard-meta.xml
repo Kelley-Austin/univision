@@ -15,7 +15,6 @@
             <drillEnabled>true</drillEnabled>
             <drillToDetailEnabled>false</drillToDetailEnabled>
             <enableHover>true</enableHover>
-            <expandOtherItems>false</expandOtherItems>
             <header>Vehicle Pacing</header>
             <legendPosition>Bottom</legendPosition>
             <maxValuesDisplayed>15</maxValuesDisplayed>
@@ -37,7 +36,6 @@
             <drillEnabled>true</drillEnabled>
             <drillToDetailEnabled>false</drillToDetailEnabled>
             <enableHover>true</enableHover>
-            <expandOtherItems>false</expandOtherItems>
             <header>Channel Pacing</header>
             <legendPosition>Bottom</legendPosition>
             <maxValuesDisplayed>15</maxValuesDisplayed>
@@ -56,7 +54,6 @@
             <drillEnabled>true</drillEnabled>
             <drillToDetailEnabled>false</drillToDetailEnabled>
             <enableHover>false</enableHover>
-            <expandOtherItems>false</expandOtherItems>
             <header>Traffic Order Status</header>
             <maxValuesDisplayed>10</maxValuesDisplayed>
             <report>Advertising_Analytics/Order_Pacing</report>
@@ -77,7 +74,6 @@
             <drillEnabled>true</drillEnabled>
             <drillToDetailEnabled>false</drillToDetailEnabled>
             <enableHover>true</enableHover>
-            <expandOtherItems>false</expandOtherItems>
             <header>Market Revenue YTD</header>
             <legendPosition>Bottom</legendPosition>
             <maxValuesDisplayed>15</maxValuesDisplayed>

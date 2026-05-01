@@ -66,3 +66,18 @@
 # LWC already deployed with correct lightning__FlowScreen target; redeploy triggers false conflict
 **/lwc/periodCloseActions
 
+# Filename-only fallbacks for files that exist on this branch — ** patterns can be unreliable
+# when the file physically exists in the source tree (SF CLI v2 forceignore limitation)
+New_Advertiser.quickAction-meta.xml
+New_Agency.quickAction-meta.xml
+Create_Agency_Account.flow-meta.xml
+Create_Direct_Buy_Advertiser.flow-meta.xml
+Link_Agency_To_Advertiser.flow-meta.xml
+Retire_Category_With_Successor.flow-meta.xml
+Makegood_Or_Cancellation.flow-meta.xml
+Traffic_Copy_Entry.flow-meta.xml
+Pitch_Project_Creator.flow-meta.xml
+Agency_Account_Record_Page.flexipage-meta.xml
+MDM_Workspace_Home.flexipage-meta.xml
+MDM_Workspace.app-meta.xml
+Matrix_API.namedCredential-meta.xml

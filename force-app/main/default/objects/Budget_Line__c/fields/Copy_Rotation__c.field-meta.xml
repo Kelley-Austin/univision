@@ -2,7 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Copy_Rotation__c</fullName>
     <externalId>false</externalId>
-    <inlineHelpText>How copy rotates across spots. Examples: 100, 50/50, 33/33/34.</inlineHelpText>
     <label>Copy Rotation</label>
     <length>80</length>
     <required>false</required>

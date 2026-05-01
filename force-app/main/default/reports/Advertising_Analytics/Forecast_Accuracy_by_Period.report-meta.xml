@@ -44,7 +44,6 @@
         <developerName>PROJ_SUM</developerName>
         <isActive>true</isActive>
         <isCrossBlock>false</isCrossBlock>
-        <label>Total Projected</label>
         <reportType>Period_Snapshot_Forecast_Accuracy</reportType>
         <scale>2</scale>
     </aggregates>
@@ -54,7 +53,6 @@
         <developerName>ACT_SUM</developerName>
         <isActive>true</isActive>
         <isCrossBlock>false</isCrossBlock>
-        <label>Total Actual</label>
         <reportType>Period_Snapshot_Forecast_Accuracy</reportType>
         <scale>2</scale>
     </aggregates>
@@ -64,7 +62,6 @@
         <developerName>VAR_SUM</developerName>
         <isActive>true</isActive>
         <isCrossBlock>false</isCrossBlock>
-        <label>Total Variance $</label>
         <reportType>Period_Snapshot_Forecast_Accuracy</reportType>
         <scale>2</scale>
     </aggregates>
@@ -74,7 +71,6 @@
         <developerName>VAR_PCT_AVG</developerName>
         <isActive>true</isActive>
         <isCrossBlock>false</isCrossBlock>
-        <label>Avg Variance %</label>
         <reportType>Period_Snapshot_Forecast_Accuracy</reportType>
         <scale>1</scale>
     </aggregates>

@@ -18,7 +18,6 @@
         <developerName>TOTAL_BUDGET_SUM</developerName>
         <isActive>true</isActive>
         <isCrossBlock>false</isCrossBlock>
-        <label>YTD Pipeline</label>
         <reportType>Advertising_Opportunity__c</reportType>
         <scale>2</scale>
     </aggregates>
@@ -28,7 +27,6 @@
         <developerName>ACTUAL_SUM</developerName>
         <isActive>true</isActive>
         <isCrossBlock>false</isCrossBlock>
-        <label>YTD Actual Revenue</label>
         <reportType>Advertising_Opportunity__c</reportType>
         <scale>2</scale>
     </aggregates>
@@ -38,7 +36,6 @@
         <developerName>ROWCOUNT</developerName>
         <isActive>true</isActive>
         <isCrossBlock>false</isCrossBlock>
-        <label>Opportunity Count</label>
         <reportType>Advertising_Opportunity__c</reportType>
         <scale>0</scale>
     </aggregates>

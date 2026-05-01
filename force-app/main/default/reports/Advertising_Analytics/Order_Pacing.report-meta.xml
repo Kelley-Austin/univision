@@ -18,7 +18,6 @@
         <developerName>CONTRACT_VALUE_SUM</developerName>
         <isActive>true</isActive>
         <isCrossBlock>false</isCrossBlock>
-        <label>Sum of Contract Value</label>
         <reportType>Advertising_Contract__c</reportType>
         <scale>2</scale>
     </aggregates>
@@ -28,7 +27,6 @@
         <developerName>ROWCOUNT</developerName>
         <isActive>true</isActive>
         <isCrossBlock>false</isCrossBlock>
-        <label>Order Count</label>
         <reportType>Advertising_Contract__c</reportType>
         <scale>0</scale>
     </aggregates>

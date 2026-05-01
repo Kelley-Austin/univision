@@ -15,7 +15,6 @@
         <developerName>BUDGET_SUM</developerName>
         <isActive>true</isActive>
         <isCrossBlock>false</isCrossBlock>
-        <label>Sum of Budget</label>
         <reportType>Advertising_Opportunity__c</reportType>
         <scale>2</scale>
     </aggregates>
@@ -25,7 +24,6 @@
         <developerName>ACTUAL_SUM</developerName>
         <isActive>true</isActive>
         <isCrossBlock>false</isCrossBlock>
-        <label>Sum of Actual Revenue</label>
         <reportType>Advertising_Opportunity__c</reportType>
         <scale>2</scale>
     </aggregates>
