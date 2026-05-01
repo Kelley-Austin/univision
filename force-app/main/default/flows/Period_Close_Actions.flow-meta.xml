@@ -47,7 +47,6 @@
                     <elementReference>recordId</elementReference>
                 </value>
             </inputParameters>
-            <isRequired>false</isRequired>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
