@@ -3,3 +3,8 @@
 **/jsconfig.json
 **/.eslintrc.json
 **/lwc/**/__tests__/**
+
+# CLI parsing issue with folder metadata in source format
+**/reportFolders/Advertising_Analytics.reportFolder-meta.xml
+**/dashboardFolders/Advertising_Analytics.dashboardFolder-meta.xml
+**/dashboardFolders/MediaCloud.dashboardFolder-meta.xml
