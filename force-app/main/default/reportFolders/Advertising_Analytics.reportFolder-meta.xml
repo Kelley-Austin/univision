@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ReportFolder xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Advertising_Analytics</fullName>
     <accessType>Hidden</accessType>
     <folderShares>
         <accessLevel>Manage</accessLevel>
