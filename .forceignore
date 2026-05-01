@@ -11,3 +11,7 @@
 
 # Unexpected child metadata — quick action inside CustomObject directory
 **/objects/Account/quickActions/Link_Agency.quickAction-meta.xml
+
+# Reports — invalid elements for this org's API version
+**/reports/Advertising_Analytics/*.report-meta.xml
+**/reportTypes/Period_Snapshot_Forecast_Accuracy.reportType-meta.xml

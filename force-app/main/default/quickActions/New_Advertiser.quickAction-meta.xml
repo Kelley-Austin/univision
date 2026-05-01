@@ -2,7 +2,7 @@
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionSubtype>ScreenAction</actionSubtype>
     <description>Creates a new Direct Buy Advertiser account with market, media type, and optional primary agency. Launches the Create Direct Buy Advertiser screen flow.</description>
-    <flow>Create_Direct_Buy_Advertiser</flow>
+    <flowDefinition>Create_Direct_Buy_Advertiser</flowDefinition>
     <label>New Advertiser (Direct Buy)</label>
     <optionsCreateFeedItem>false</optionsCreateFeedItem>
     <type>Flow</type>

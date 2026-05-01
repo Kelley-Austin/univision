@@ -3,5 +3,6 @@
     <description>Opens the Pitch Project Creator wizard to capture basic info, participating outlets, and unit codes in a single guided flow.</description>
     <flowDefinition>Pitch_Project_Creator</flowDefinition>
     <label>New Pitch Project</label>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
     <type>Flow</type>
 </QuickAction>
