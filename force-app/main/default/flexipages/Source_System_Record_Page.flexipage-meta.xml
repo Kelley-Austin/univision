@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Lightning Record Page for Source System. Provides a single-screen ingest operations view: file upload, batch history dashboard, and mapping rule editor so data operations staff can manage the full ingest lifecycle without navigating away.</description>
+    <masterLabel>Source System Record Page</masterLabel>
+    <sobjectType>Source_System__c</sobjectType>
+    <type>RecordPage</type>
+
+    <!-- Header: source system name, code, active flag, last upload timestamp -->
+    <flexiPageRegions>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>variant</name>
+                <value>base</value>
+            </componentInstanceProperties>
+            <componentName>force:highlightsPanel</componentName>
+        </componentInstances>
+        <mode>AppDefault</mode>
+        <name>header</name>
+        <type>Region</type>
+    </flexiPageRegions>
+
+    <!-- Main body -->
+    <flexiPageRegions>
+        <!-- File upload: staff selects a file and triggers the ingest pipeline -->
+        <componentInstances>
+            <componentName>c:sourceFileUpload</componentName>
+        </componentInstances>
+
+        <!-- Batch dashboard: recent Load_Batch__c records — row count, error count, status -->
+        <componentInstances>
+            <componentName>c:loadBatchDashboard</componentName>
+        </componentInstances>
+
+        <!-- Mapping rule editor: manage Exclude and Map rules with dry-run preview -->
+        <componentInstances>
+            <componentName>c:mappingRuleEditor</componentName>
+        </componentInstances>
+
+        <!-- Standard field detail: code, description, encoding, transformer class, frequency config -->
+        <componentInstances>
+            <componentName>force:recordDetail</componentName>
+        </componentInstances>
+
+        <mode>AppDefault</mode>
+        <name>main</name>
+        <type>Region</type>
+    </flexiPageRegions>
+
+</FlexiPage>

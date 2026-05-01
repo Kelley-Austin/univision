@@ -4,20 +4,40 @@
         <members>AccountMatcher</members>
         <members>CounterpointIngestionServiceTest</members>
         <members>CounterpointTransformer</members>
+        <members>CounterpointTransformerTest</members>
         <members>CoxRepsTransformer</members>
+        <members>CoxRepsTransformerTest</members>
+        <members>IngestBatch</members>
+        <members>IngestController</members>
+        <members>IngestControllerTest</members>
+        <members>IngestException</members>
+        <members>IngestQueueable</members>
+        <members>IngestService</members>
+        <members>IngestServiceTest</members>
+        <members>IngestTriggerController</members>
+        <members>LoadBatchDashboardController</members>
+        <members>LoadBatchDashboardControllerTest</members>
+        <members>MappingRuleExecutor</members>
+        <members>MappingRuleExecutorTest</members>
+        <members>MappingRuleService</members>
+        <members>MappingRuleServiceTest</members>
         <members>MatrixRescheduleInvocable</members>
-        <members>MatrixRescheduleInvocable.cls</members>
         <members>MatrixScheduleInfoInvocable</members>
-        <members>MatrixScheduleInfoInvocable.cls</members>
         <members>MatrixSyncInvocable</members>
         <members>MatrixSyncInvocableTest</members>
         <members>OperativeTransformer</members>
+        <members>OperativeTransformerTest</members>
         <members>PeriodCloseBatch</members>
         <members>PeriodCloseService</members>
         <members>PeriodCloseTriggerHandler</members>
         <members>ProjectionRollupQueueable</members>
+        <members>SourceSystemTransformer</members>
         <members>StrataTransformer</members>
+        <members>StrataTransformerTest</members>
+        <members>TransformerRegistry</members>
+        <members>TransformerTestHelper</members>
         <members>WideOrbitTransformer</members>
+        <members>WideOrbitTransformerTest</members>
         <name>ApexClass</name>
     </types>
     <types>
@@ -80,10 +100,20 @@
     </types>
     <types>
         <members>fileUploadSource</members>
+        <members>loadBatchDashboard</members>
+        <members>mappingRuleEditor</members>
         <members>periodCloseActions</members>
         <members>pitchProjectCreator</members>
         <members>sourceFileUpload</members>
         <name>LightningComponentBundle</name>
+    </types>
+
+    <!-- ══ FlexiPages ═══════════════════════════════════════════════════════ -->
+    <types>
+        <members>Agency_Account_Record_Page</members>
+        <members>MDM_Workspace_Home</members>
+        <members>Source_System_Record_Page</members>
+        <name>FlexiPage</name>
     </types>
     <types>
         <members>Matrix_API.namedCredential</members>
@@ -100,5 +130,5 @@
         <members>Period_Snapshot_Forecast_Accuracy.reportType</members>
         <name>ReportType</name>
     </types>
-    <version>61.0</version>
+    <version>62.0</version>
 </Package>
