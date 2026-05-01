@@ -35,7 +35,7 @@ public with sharing class ProjectionRollupQueueable implements Queueable {
 
         // Chain if more records remain
         if (batchEnd < actualIds.size()) {
-            System.enqueueJob(new ProjectionRollupQueueable(actualIds, end));
+            System.enqueueJob(new ProjectionRollupQueueable(actualIds, batchEnd));
         }
     }
 

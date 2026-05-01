@@ -5,47 +5,47 @@
     <sobjectType>Period_Close__c</sobjectType>
     <type>RecordPage</type>
 
-    <!-- Header: period close key fields + action bar (Close / Reopen Period quick action appears here) -->
     <flexiPageRegions>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>variant</name>
-                <value>base</value>
-            </componentInstanceProperties>
-            <componentName>force:highlightsPanel</componentName>
-        </componentInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>variant</name>
+                    <value>base</value>
+                </componentInstanceProperties>
+                <componentName>force:highlightsPanel</componentName>
+            </componentInstance>
+        </itemInstances>
         <mode>Replace</mode>
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
 
-    <!-- Main body -->
     <flexiPageRegions>
-        <!-- Standard field detail (Status, close date, expected-close, etc.) -->
-        <componentInstances>
-            <componentName>force:recordDetail</componentName>
-        </componentInstances>
-
-        <!-- Period Close Dashboard: progress per source, expected-close date, staleness indicators -->
-        <componentInstances>
-            <componentName>c:periodCloseDashboard</componentName>
-        </componentInstances>
-
-        <!-- Period Close Actions: inline close/reopen buttons with confirmation modal -->
-        <componentInstances>
-            <componentName>c:periodCloseActions</componentName>
-        </componentInstances>
-
-        <!-- Late Actuals Worklist: actuals that arrived after this period closed -->
-        <componentInstances>
-            <componentName>c:lateActualsWorklist</componentName>
-        </componentInstances>
-
-        <!-- All related lists (period snapshots, files, etc.) -->
-        <componentInstances>
-            <componentName>force:relatedListContainer</componentName>
-        </componentInstances>
-
+        <itemInstances>
+            <componentInstance>
+                <componentName>force:recordDetail</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>c:periodCloseDashboard</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>c:periodCloseActions</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>c:lateActualsWorklist</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>force:relatedListContainer</componentName>
+            </componentInstance>
+        </itemInstances>
         <mode>Replace</mode>
         <name>main</name>
         <type>Region</type>

@@ -26,6 +26,11 @@
 # Quick action name invalid in this org
 **/quickActions/Budget_Line__c.Traffic_Copy_Entry.quickAction-meta.xml
 
+# Flows using flowruntime:lookupField extension not available in this org
+**/flows/Create_Agency_Account.flow-meta.xml
+**/flows/Create_Direct_Buy_Advertiser.flow-meta.xml
+**/flows/Link_Agency_To_Advertiser.flow-meta.xml
+
 # Reports with CUSTOM date interval not supported in this org
 **/reports/Advertising_Analytics/Forecast_Accuracy_by_Category.report-meta.xml
 **/reports/Advertising_Analytics/Forecast_Accuracy_by_Period.report-meta.xml

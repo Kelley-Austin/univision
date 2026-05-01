@@ -5,32 +5,32 @@
     <sobjectType>Advertising_Contract__c</sobjectType>
     <type>RecordPage</type>
 
-    <!-- Header: key contract fields + action bar (Make-Good / Cancel quick action appears here) -->
     <flexiPageRegions>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>variant</name>
-                <value>base</value>
-            </componentInstanceProperties>
-            <componentName>force:highlightsPanel</componentName>
-        </componentInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>variant</name>
+                    <value>base</value>
+                </componentInstanceProperties>
+                <componentName>force:highlightsPanel</componentName>
+            </componentInstance>
+        </itemInstances>
         <mode>Replace</mode>
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
 
-    <!-- Main body -->
     <flexiPageRegions>
-        <!-- Standard field detail (contract terms, traffic, e-sig, cancellation fields) -->
-        <componentInstances>
-            <componentName>force:recordDetail</componentName>
-        </componentInstances>
-
-        <!-- All related lists (files, activities, chatter, etc.) -->
-        <componentInstances>
-            <componentName>force:relatedListContainer</componentName>
-        </componentInstances>
-
+        <itemInstances>
+            <componentInstance>
+                <componentName>force:recordDetail</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>force:relatedListContainer</componentName>
+            </componentInstance>
+        </itemInstances>
         <mode>Replace</mode>
         <name>main</name>
         <type>Region</type>

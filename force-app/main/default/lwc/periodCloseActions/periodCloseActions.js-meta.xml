@@ -7,7 +7,10 @@
         <target>lightning__AppPage</target>
         <target>lightning__FlowScreen</target>
     </targets>
-<targetConfigs>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="recordId" type="String" label="Record ID"/>
+        </targetConfig>
         <targetConfig targets="lightning__RecordPage">
             <objects>
                 <object>Period_Close__c</object>

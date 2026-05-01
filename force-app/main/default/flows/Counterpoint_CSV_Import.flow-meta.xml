@@ -126,7 +126,7 @@
         <label>Import Counterpoint Data</label>
         <locationX>176</locationX>
         <locationY>168</locationY>
-        <allowBack>false</allowBack>
+        <allowBack>true</allowBack>
         <allowFinish>false</allowFinish>
         <allowPause>false</allowPause>
         <connector>
