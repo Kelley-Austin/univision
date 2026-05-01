@@ -19,7 +19,7 @@ public with sharing class MappingRuleExecutor {
 
     public void apply(List<Inbound_Staging__c> records) {
         for (Inbound_Staging__c rec : records) {
-            if (rec.Status__c == 'Excluded') continue;
+            if (rec.Status__c == 'Excluded' || rec.Status__c == 'Error') continue;
             applyExclusions(rec);
             if (rec.Status__c != 'Excluded') applyMappings(rec);
         }
