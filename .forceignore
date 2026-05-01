@@ -63,10 +63,6 @@
 **/lwc/sourceFileUpload
 **/lwc/pitchProjectCreator
 
-# Apex classes referencing non-existent fields (Market__c, Total_Budget__c, Fiscal_Year__c on Opp)
-**/classes/DashboardEmailScheduler.cls
-**/classes/DashboardEmailScheduler.cls-meta.xml
-**/classes/DashboardEmailSchedulerTest.cls
-**/classes/DashboardEmailSchedulerTest.cls-meta.xml
-**/classes/CounterpointIngestionServiceTest.cls
-**/classes/CounterpointIngestionServiceTest.cls-meta.xml
+# LWC already deployed with correct lightning__FlowScreen target; redeploy triggers false conflict
+**/lwc/periodCloseActions
+
