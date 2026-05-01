@@ -43,8 +43,7 @@ public with sharing class PeriodCloseService {
         return results;
     }
 
-    @TestVisible
-    static CloseResult doClose(Id periodCloseId) {
+    public static CloseResult doClose(Id periodCloseId) {
         CloseResult res = new CloseResult();
         res.success = false;
         res.snapshotsCreated = 0;
@@ -91,11 +90,6 @@ public with sharing class PeriodCloseService {
         public String errorMessage;
     }
 
-    @InvocableMethod(
-        label='Reopen Period'
-        description='Transitions a Period_Close__c from Closed to Reopened. Blocked for future periods.'
-        category='Period Management'
-    )
     public static List<ReopenResult> reopenPeriod(List<ReopenRequest> requests) {
         List<ReopenResult> results = new List<ReopenResult>();
         for (ReopenRequest req : requests) {
@@ -104,8 +98,7 @@ public with sharing class PeriodCloseService {
         return results;
     }
 
-    @TestVisible
-    static ReopenResult doReopen(Id periodCloseId) {
+    public static ReopenResult doReopen(Id periodCloseId) {
         ReopenResult res = new ReopenResult();
         res.success = false;
 

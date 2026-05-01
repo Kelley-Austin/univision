@@ -5,6 +5,7 @@
     <referenceTo>Category__c</referenceTo>
     <relationshipLabel>Budgets</relationshipLabel>
     <relationshipName>Budgets</relationshipName>
+    <deleteConstraint>Restrict</deleteConstraint>
     <required>true</required>
     <type>Lookup</type>
 </CustomField>

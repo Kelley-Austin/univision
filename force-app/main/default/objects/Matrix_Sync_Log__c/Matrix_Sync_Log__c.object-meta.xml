@@ -10,7 +10,7 @@
     <enableReports>true</enableReports>
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
-    <enableStreamingApi>false</enableStreamingApi>
+    <enableStreamingApi>true</enableStreamingApi>
     <label>Matrix Sync Log</label>
     <nameField>
         <displayFormat>SL-{0000000}</displayFormat>

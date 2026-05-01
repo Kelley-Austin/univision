@@ -219,7 +219,7 @@
             <dataType>String</dataType>
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
-            <label>What would you like to do?</label>
+            <fieldText>What would you like to do?</fieldText>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>

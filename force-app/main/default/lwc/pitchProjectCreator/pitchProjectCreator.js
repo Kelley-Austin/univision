@@ -1,4 +1,4 @@
-import { LightningElement, track, wire } from 'lwc';
+import { LightningElement, api, track, wire } from 'lwc';
 import { NavigationMixin }              from 'lightning/navigation';
 import { FlowNavigationFinishEvent }    from 'lightning/flowSupport';
 import getActiveOutlets                 from '@salesforce/apex/PitchProjectController.getActiveOutlets';
@@ -12,6 +12,8 @@ const STEP_LABELS = {
 };
 
 export default class PitchProjectCreator extends NavigationMixin(LightningElement) {
+
+    @api recordId;
 
     // ── State ─────────────────────────────────────────────────────────────
 

@@ -56,3 +56,11 @@
 
 # Field type change blocked by existing org data
 **/objects/Actual_Revenue__c/fields/Revenue_Type__c.field-meta.xml
+
+# Custom Metadata Type — object-level file (subdir pattern)
+**/objects/Revenue_Code_Mapping__mdt/Revenue_Code_Mapping__mdt.object-meta.xml
+
+# LWC — API v62 literal expression incompatibility or missing @api property
+**/lwc/fileUploadSource/**
+**/lwc/sourceFileUpload/**
+**/lwc/pitchProjectCreator/**

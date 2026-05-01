@@ -13,7 +13,7 @@ public with sharing class PeriodCloseBatch implements Database.Batchable<SObject
 
     /** Periods with fewer projections than this are closed synchronously. */
     @TestVisible
-    static final Integer SYNC_THRESHOLD = 200;
+    public static final Integer SYNC_THRESHOLD = 200;
 
     private final Id    periodCloseId;
     private       Integer snapshotsCreated = 0;

@@ -9,7 +9,7 @@
         <label>Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Readonly</behavior>
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
@@ -18,35 +18,6 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>
-        <style>TwoColumnsTopToBottom</style>
-    </layoutSections>
-
-    <!-- ── System Information section ─────────────────────────────────── -->
-    <layoutSections>
-        <customLabel>false</customLabel>
-        <detailHeading>false</detailHeading>
-        <editHeading>false</editHeading>
-        <label>System Information</label>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>CreatedById</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>LastModifiedById</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>CreatedDate</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>LastModifiedDate</field>
-            </layoutItems>
-        </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
 
@@ -61,40 +32,11 @@
         <quickActionListItems>
             <quickActionName>FeedItem.ContentPost</quickActionName>
         </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>SendEmail</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>LogACall</quickActionName>
-        </quickActionListItems>
     </quickActionList>
 
     <!-- ── Related Lists ──────────────────────────────────────────────── -->
 
-    <!-- Actuals Records — populated by the Counterpoint ingestion pipeline -->
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Advertiser_Name__c</fields>
-        <fields>Station_Code__c</fields>
-        <fields>Calendar_Date__c</fields>
-        <fields>Broadcast_Date__c</fields>
-        <fields>Revenue_Amount__c</fields>
-        <fields>Validation_Status__c</fields>
-        <fields>Import_Batch_ID__c</fields>
-        <relatedList>Actuals_Records__r</relatedList>
-    </relatedLists>
-
-    <!-- Standard Activity related list -->
-    <relatedLists>
-        <relatedList>ActivityHistories</relatedList>
-    </relatedLists>
-
-    <!-- Open Activities -->
-    <relatedLists>
-        <relatedList>OpenActivities</relatedList>
-    </relatedLists>
-
-    <!-- Chatter feed (enableFeeds = true on the object) -->
+    <!-- Chatter feed -->
     <relatedLists>
         <relatedList>CombinedAttachments</relatedList>
     </relatedLists>
