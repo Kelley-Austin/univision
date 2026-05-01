@@ -25,21 +25,21 @@ public with sharing class PeriodCloseTriggerHandler {
 
         for (Period_Close__c pc : newList) {
             Period_Close__c old = oldMap.get(pc.Id);
-            String from = old.Status__c;
-            String to   = pc.Status__c;
+            String fromStatus = old.Status__c;
+            String toStatus   = pc.Status__c;
 
-            if (from == to) continue; // no status change — skip
+            if (fromStatus == toStatus) continue; // no status change — skip
 
-            if (!isValidTransition(from, to)) {
+            if (!isValidTransition(fromStatus, toStatus)) {
                 pc.addError(
-                    'Invalid status transition: ' + from + ' → ' + to +
+                    'Invalid status transition: ' + fromStatus + ' → ' + toStatus +
                     '. Allowed: Open→Closed, Closed→Reopened, Reopened→Closed.'
                 );
                 continue;
             }
 
             // Block reopening a future period
-            if (to == 'Reopened') {
+            if (toStatus == 'Reopened') {
                 Integer year  = pc.Period_Year__c  != null ? pc.Period_Year__c.intValue()  : 0;
                 Integer month = pc.Period_Month__c != null ? pc.Period_Month__c.intValue() : 0;
                 if (year > currentYear || (year == currentYear && month > currentMonth)) {
