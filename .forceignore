@@ -34,3 +34,21 @@
 # Reports with CUSTOM date interval not supported in this org
 **/reports/Advertising_Analytics/Forecast_Accuracy_by_Category.report-meta.xml
 **/reports/Advertising_Analytics/Forecast_Accuracy_by_Period.report-meta.xml
+
+# FlexiPages — componentInstances schema incompatible with v62 in this org type
+**/flexipages/Account_Advertising_Budget.flexipage-meta.xml
+**/flexipages/Advertising_Contract_Record_Page.flexipage-meta.xml
+**/flexipages/Advertising_Opportunity_Record_Page.flexipage-meta.xml
+**/flexipages/Budget_Line_Record_Page.flexipage-meta.xml
+**/flexipages/Period_Close_Record_Page.flexipage-meta.xml
+**/flexipages/Pitch_Project_Record_Page.flexipage-meta.xml
+
+# Test classes referencing objects/fields not yet deployed in this sequence
+**/classes/TrafficOrderSubmitActionTest.cls
+**/classes/TrafficOrderSubmitActionTest.cls-meta.xml
+**/classes/TrafficOrderTransmitQueueableTest.cls
+**/classes/TrafficOrderTransmitQueueableTest.cls-meta.xml
+**/classes/CancellationPolicyServiceTest.cls
+**/classes/CancellationPolicyServiceTest.cls-meta.xml
+**/classes/TrafficOrderCallbackControllerTest.cls
+**/classes/TrafficOrderCallbackControllerTest.cls-meta.xml
