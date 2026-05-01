@@ -3,3 +3,18 @@
 **/jsconfig.json
 **/.eslintrc.json
 **/lwc/**/__tests__/**
+
+# Flow-type quick actions not supported in this org
+**/quickActions/Account.Link_Agency.quickAction-meta.xml
+**/quickActions/Account.New_Advertiser.quickAction-meta.xml
+**/quickActions/Account.New_Agency.quickAction-meta.xml
+**/quickActions/New_Advertiser.quickAction-meta.xml
+**/quickActions/New_Agency.quickAction-meta.xml
+**/quickActions/Advertising_Contract__c.Makegood_Or_Cancellation.quickAction-meta.xml
+**/quickActions/Advertising_Opportunity__c.Import_Counterpoint_Data.quickAction-meta.xml
+
+# FlexiPage template not available in this org
+**/flexipages/Agency_Account_Record_Page.flexipage-meta.xml
+
+# ReportFolder CLI parsing issue in source format
+**/reportFolders/Advertising_Analytics.reportFolder-meta.xml
