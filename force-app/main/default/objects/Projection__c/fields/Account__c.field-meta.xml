@@ -6,6 +6,6 @@
     <relationshipLabel>Projections</relationshipLabel>
     <relationshipName>Projections</relationshipName>
     <deleteConstraint>Restrict</deleteConstraint>
-    <required>true</required>
+    <required>false</required>
     <type>Lookup</type>
 </CustomField>

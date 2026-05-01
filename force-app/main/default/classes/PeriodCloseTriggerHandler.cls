@@ -25,14 +25,14 @@ public with sharing class PeriodCloseTriggerHandler {
 
         for (Period_Close__c pc : newList) {
             Period_Close__c old = oldMap.get(pc.Id);
-            String fromStatus = old.Status__c;
+            String prevStatus = old.Status__c;
             String toStatus   = pc.Status__c;
 
-            if (fromStatus == toStatus) continue; // no status change — skip
+            if (prevStatus == toStatus) continue; // no status change — skip
 
-            if (!isValidTransition(fromStatus, toStatus)) {
+            if (!isValidTransition(prevStatus, toStatus)) {
                 pc.addError(
-                    'Invalid status transition: ' + fromStatus + ' → ' + toStatus +
+                    'Invalid status transition: ' + prevStatus + ' → ' + toStatus +
                     '. Allowed: Open→Closed, Closed→Reopened, Reopened→Closed.'
                 );
                 continue;
@@ -54,10 +54,10 @@ public with sharing class PeriodCloseTriggerHandler {
     // ── Helpers ───────────────────────────────────────────────────────────────
 
     @TestVisible
-    static Boolean isValidTransition(String fromStatus, String toStatus) {
-        if (fromStatus == 'Open'     && toStatus == 'Closed')   return true;
-        if (fromStatus == 'Closed'   && toStatus == 'Reopened') return true;
-        if (fromStatus == 'Reopened' && toStatus == 'Closed')   return true;
+    static Boolean isValidTransition(String prevStatus, String toStatus) {
+        if (prevStatus == 'Open'     && toStatus == 'Closed')   return true;
+        if (prevStatus == 'Closed'   && toStatus == 'Reopened') return true;
+        if (prevStatus == 'Reopened' && toStatus == 'Closed')   return true;
         return false;
     }
 }
