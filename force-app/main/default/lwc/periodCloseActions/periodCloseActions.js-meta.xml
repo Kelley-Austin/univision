@@ -7,10 +7,7 @@
         <target>lightning__AppPage</target>
         <target>lightning__FlowScreen</target>
     </targets>
-    <interfaces>
-        <interface>lightning__FlowScreen</interface>
-    </interfaces>
-    <targetConfigs>
+<targetConfigs>
         <targetConfig targets="lightning__RecordPage">
             <objects>
                 <object>Period_Close__c</object>
