@@ -207,7 +207,7 @@
         <label>Matrix Sync Status</label>
         <locationX>176</locationX>
         <locationY>374</locationY>
-        <allowBack>false</allowBack>
+        <allowBack>true</allowBack>
         <allowFinish>false</allowFinish>
         <allowPause>false</allowPause>
         <connector>

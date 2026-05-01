@@ -43,20 +43,7 @@
 
     <!-- ── Related Lists ──────────────────────────────────────────────── -->
 
-    <!-- Actuals Records — populated by the Counterpoint ingestion pipeline -->
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Advertiser_Name__c</fields>
-        <fields>Station_Code__c</fields>
-        <fields>Calendar_Date__c</fields>
-        <fields>Broadcast_Date__c</fields>
-        <fields>Revenue_Amount__c</fields>
-        <fields>Validation_Status__c</fields>
-        <fields>Import_Batch_ID__c</fields>
-        <relatedList>Actuals_Records__r</relatedList>
-    </relatedLists>
-
-    <!-- Standard Activity related list -->
+<!-- Standard Activity related list -->
     <relatedLists>
         <relatedList>ActivityHistories</relatedList>
     </relatedLists>
