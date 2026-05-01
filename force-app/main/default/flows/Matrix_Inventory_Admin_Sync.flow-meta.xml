@@ -162,7 +162,7 @@
         <inputParameters>
             <name>scheduleHour</name>
             <value>
-                <elementReference>syncHour</elementReference>
+                <elementReference>inputHour</elementReference>
             </value>
         </inputParameters>
         <outputParameters>
@@ -277,7 +277,7 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>syncHour</name>
+            <name>inputHour</name>
             <dataType>Number</dataType>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
