@@ -25,31 +25,6 @@
     </variables>
 
     <variables>
-        <name>varRequestType</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-
-    <variables>
-        <name>varReason</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-
-    <variables>
-        <name>varRequestedCreditAmount</name>
-        <dataType>Currency</dataType>
-        <scale>2</scale>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-
-    <variables>
         <name>varResultSuccess</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
@@ -125,65 +100,6 @@
             <targetReference>Screen_RequestDetails</targetReference>
         </connector>
     </start>
-
-    <!-- 1. Screen: collect request type, reason, and optional credit amount -->
-    <screens>
-        <name>Screen_RequestDetails</name>
-        <label>Request Details</label>
-        <locationX>176</locationX>
-        <locationY>168</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Action_ProcessRequest</targetReference>
-        </connector>
-        <fields>
-            <name>Intro_Text</name>
-            <fieldText>&lt;p&gt;Use this form to submit a &lt;strong&gt;Make-Good&lt;/strong&gt; (add credit to the contract) or a &lt;strong&gt;Cancellation&lt;/strong&gt; request. The Contract Approvers team will be notified automatically.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>RequestType</name>
-            <choiceReferences>Choice_MakeGood</choiceReferences>
-            <choiceReferences>Choice_Cancellation</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Request Type</fieldText>
-            <fieldType>RadioButtons</fieldType>
-            <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>varRequestType</assignToReference>
-                <name>value</name>
-            </outputParameters>
-        </fields>
-        <fields>
-            <name>Reason</name>
-            <dataType>String</dataType>
-            <fieldText>Reason</fieldText>
-            <fieldType>LargeTextArea</fieldType>
-            <helpText>Describe the reason for this make-good or cancellation request.</helpText>
-            <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>varReason</assignToReference>
-                <name>value</name>
-            </outputParameters>
-        </fields>
-        <fields>
-            <name>RequestedCreditAmount</name>
-            <dataType>Currency</dataType>
-            <fieldText>Requested Credit Amount</fieldText>
-            <fieldType>InputField</fieldType>
-            <helpText>For Make-Good: the credit amount to add. For Cancellations, the fee is computed automatically from the contract policy.</helpText>
-            <isRequired>false</isRequired>
-            <outputParameters>
-                <assignToReference>varRequestedCreditAmount</assignToReference>
-                <name>value</name>
-            </outputParameters>
-            <scale>2</scale>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
 
     <!-- 2. Apex action: CancellationPolicyService.process() -->
     <actionCalls>
@@ -295,6 +211,53 @@
             <label>Make Good</label>
         </rules>
     </decisions>
+
+    <!-- 1. Screen: collect request type, reason, and optional credit amount -->
+    <screens>
+        <name>Screen_RequestDetails</name>
+        <label>Request Details</label>
+        <locationX>176</locationX>
+        <locationY>168</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Action_ProcessRequest</targetReference>
+        </connector>
+        <fields>
+            <name>Intro_Text</name>
+            <fieldText>&lt;p&gt;Use this form to submit a &lt;strong&gt;Make-Good&lt;/strong&gt; (add credit to the contract) or a &lt;strong&gt;Cancellation&lt;/strong&gt; request. The Contract Approvers team will be notified automatically.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>RequestType</name>
+            <choiceReferences>Choice_MakeGood</choiceReferences>
+            <choiceReferences>Choice_Cancellation</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Request Type</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Reason</name>
+            <dataType>String</dataType>
+            <fieldText>Reason</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <helpText>Describe the reason for this make-good or cancellation request.</helpText>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>RequestedCreditAmount</name>
+            <dataType>Currency</dataType>
+            <fieldText>Requested Credit Amount</fieldText>
+            <fieldType>InputField</fieldType>
+            <helpText>For Make-Good: the credit amount to add. For Cancellations, the fee is computed automatically from the contract policy.</helpText>
+            <isRequired>false</isRequired>
+            <scale>2</scale>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
 
     <!-- 5a. Screen: Make-Good success -->
     <screens>

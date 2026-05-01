@@ -3,5 +3,4 @@
     <customObject>true</customObject>
     <label>Mapping Rules</label>
     <motif>Custom97: Handshake</motif>
-    <object>Mapping_Rule__c</object>
 </CustomTab>
