@@ -3,8 +3,8 @@
     <fullName>Period_Year__c</fullName>
     <label>Period Year</label>
     <precision>4</precision>
-    <required>false</required>
     <scale>0</scale>
+    <required>false</required>
     <type>Number</type>
     <unique>false</unique>
 </CustomField>

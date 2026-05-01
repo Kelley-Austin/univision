@@ -1,49 +1,80 @@
-import { LightningElement, api, wire } from 'lwc';
+import { LightningElement, api, wire, track } from 'lwc';
 import getPacingData from '@salesforce/apex/PitchProjectController.getPacingData';
 
-const FMT = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
-
-function fmt(val) { return FMT.format(val || 0); }
-function pct(part, total) {
-    if (!total || total === 0) return 0;
-    return Math.min(Math.round((part / total) * 100), 100);
-}
+const USD_FMT = new Intl.NumberFormat('en-US', {
+    style              : 'currency',
+    currency           : 'USD',
+    maximumFractionDigits: 0
+});
 
 export default class PitchProjectPacing extends LightningElement {
 
     @api recordId;
 
-    _data   = null;
-    _error  = null;
+    @track _data      = null;
+    @track _error     = null;
+    @track isLoading  = true;
+
+    // ── Wire ─────────────────────────────────────────────────────────────
 
     @wire(getPacingData, { projectId: '$recordId' })
-    wiredPacing({ data, error }) {
-        if (data)  { this._data = data;  this._error = null; }
-        if (error) { this._error = error.body?.message || 'Error loading pacing data'; this._data = null; }
+    wiredPacing({ error, data }) {
+        this.isLoading = false;
+        if (data) {
+            this._data  = data;
+            this._error = null;
+        } else if (error) {
+            this._error = error;
+            this._data  = null;
+        }
     }
 
-    // ── state gates ───────────────────────────────────────────────────────
+    // ── Computed: display ─────────────────────────────────────────────────
 
-    get isLoading()   { return !this._data && !this._error; }
-    get hasError()    { return !!this._error; }
-    get hasData()     { return !!this._data; }
-    get errorMessage(){ return this._error; }
+    get hasData()  { return !!this._data; }
+    get hasError() { return !!this._error; }
 
-    // ── formatted values ─────────────────────────────────────────────────
+    get errorMessage() {
+        if (!this._error) return '';
+        return this._error.body ? this._error.body.message : JSON.stringify(this._error);
+    }
 
-    get formattedGoal()    { return fmt(this._data?.goal); }
-    get formattedBooked()  { return fmt(this._data?.booked); }
-    get formattedPending() { return fmt(this._data?.pending); }
-    get formattedForecast(){ return fmt(this._data?.forecast); }
+    get goal()     { return this._data ? (this._data.goal     || 0) : 0; }
+    get booked()   { return this._data ? (this._data.booked   || 0) : 0; }
+    get pending()  { return this._data ? (this._data.pending  || 0) : 0; }
+    get forecast() { return this._data ? (this._data.forecast || 0) : 0; }
 
-    // ── progress bar ──────────────────────────────────────────────────────
+    get formattedGoal()     { return USD_FMT.format(this.goal); }
+    get formattedBooked()   { return USD_FMT.format(this.booked); }
+    get formattedPending()  { return USD_FMT.format(this.pending); }
+    get formattedForecast() { return USD_FMT.format(this.forecast); }
 
-    get bookedPct()  { return pct(this._data?.booked,  this._data?.goal); }
-    get pendingPct() { return pct(this._data?.pending, this._data?.goal); }
+    get bookedPct()   { return this._pct(this.booked); }
+    get pendingPct()  { return this._pct(this.pending); }
+    get forecastPct() { return this._pct(this.forecast); }
 
-    get bookedBarStyle()  { return `width:${this.bookedPct}%;background:#2e844a;height:12px;display:inline-block;`; }
-    get pendingBarStyle() { return `width:${this.pendingPct}%;background:#f59e0b;height:12px;display:inline-block;`; }
+    // ── Progress bar styles ───────────────────────────────────────────────
 
-    get bookedBarLabel()  { return `Booked: ${this.formattedBooked} (${this.bookedPct}% of goal)`; }
-    get pendingBarLabel() { return `Pending: ${this.formattedPending} (${this.pendingPct}% of goal)`; }
+    get bookedBarStyle() {
+        return `width: ${this._barWidth(this.booked)}%`;
+    }
+
+    get pendingBarStyle() {
+        // pending bar starts where booked ends; clamp combined width to 100%
+        const bookedW  = this._barWidth(this.booked);
+        const pendingW = Math.min(this._barWidth(this.pending), 100 - bookedW);
+        return `width: ${pendingW}%`;
+    }
+
+    // ── Helpers ───────────────────────────────────────────────────────────
+
+    _pct(amount) {
+        if (!this.goal || this.goal === 0) return 0;
+        return Math.round((amount / this.goal) * 100);
+    }
+
+    _barWidth(amount) {
+        if (!this.goal || this.goal === 0) return 0;
+        return Math.min(100, Math.round((amount / this.goal) * 100));
+    }
 }

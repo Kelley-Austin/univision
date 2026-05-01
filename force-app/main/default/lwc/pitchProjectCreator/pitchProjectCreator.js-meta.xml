@@ -5,6 +5,11 @@
     <targets>
         <target>lightning__FlowScreen</target>
         <target>lightning__AppPage</target>
-        <target>lightning__HomePage</target>
+        <target>lightning__RecordPage</target>
     </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="recordId" type="String" label="Record Id" description="Not used; creator always creates a new project."/>
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>

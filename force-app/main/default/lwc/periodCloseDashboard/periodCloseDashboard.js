@@ -1,113 +1,139 @@
 import { LightningElement, track, wire } from 'lwc';
-import getDashboardData from '@salesforce/apex/PeriodCloseController.getDashboardData';
-import getPeriodSnapshots from '@salesforce/apex/PeriodCloseController.getPeriodSnapshots';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { refreshApex } from '@salesforce/apex';
+import getTrailing24Months   from '@salesforce/apex/PeriodCloseController.getTrailing24Months';
+import getSnapshotsForPeriod from '@salesforce/apex/PeriodCloseController.getSnapshotsForPeriod';
+
+const MONTH_NAMES = [
+    '', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+];
 
 export default class PeriodCloseDashboard extends LightningElement {
-    @track rows         = [];
-    @track isLoading    = true;
-    @track hasError     = false;
+
+    @track rows = [];
+    @track isLoading  = false;
+    @track hasError   = false;
     @track errorMessage = '';
 
-    // key → expanded snapshot rows
-    _expandedKeys = new Set();
-    _snapshotCache = {};
+    // Drill-down state
+    @track showDrilldown       = false;
+    @track isDrilldownLoading  = false;
+    @track drilldownRows       = [];
+    @track drilldownPeriodLabel = '';
+    _drilldownPeriodCloseId    = null;
 
-    // ── Wire: dashboard summary ────────────────────────────────────────────────
+    // ── Wire: trailing 24 months ──────────────────────────────────────────────
 
-    @wire(getDashboardData)
-    wiredDashboard({ data, error }) {
+    _wiredResult;
+
+    @wire(getTrailing24Months)
+    wiredMonths(result) {
+        this._wiredResult = result;
         this.isLoading = false;
+        const { error, data } = result;
         if (error) {
-            this.hasError     = true;
-            this.errorMessage = error.body?.message || 'Failed to load dashboard';
+            this.hasError = true;
+            this.errorMessage = error.body?.message || 'Failed to load dashboard data.';
+            this.rows = [];
         } else if (data) {
             this.hasError = false;
             this.rows = data.map(r => this._enrichRow(r));
         }
     }
 
-    // ── Row enrichment ─────────────────────────────────────────────────────────
+    // ── Row enrichment ────────────────────────────────────────────────────────
 
     _enrichRow(r) {
-        const isExpanded = this._expandedKeys.has(r.periodLabel);
-        const snapshots  = isExpanded
-            ? (this._snapshotCache[r.periodCloseId] || []).map(s => this._enrichSnap(s))
-            : [];
+        const monthName  = MONTH_NAMES[r.periodMonth] || r.periodMonth;
+        const statusBadgeClass = this._badgeClass(r.status);
+        const hasSnapshots  = r.snapshotCount != null && r.snapshotCount > 0;
+        const hasVariancePct = r.variancePct != null;
+        const variancePctFormatted = hasVariancePct
+            ? (r.variancePct >= 0 ? '+' : '') + r.variancePct.toFixed(1)
+            : null;
+        const varianceClass = hasVariancePct
+            ? (r.variancePct >= 0 ? 'positive-variance' : 'negative-variance')
+            : '';
+
         return {
             ...r,
-            hasData:       r.projected != null || r.actual != null,
-            hasDrilldown:  r.periodCloseId != null && r.status !== 'No Record',
-            hasVariance:   r.variancePct != null,
-            variancePctFormatted: r.variancePct != null
-                ? r.variancePct.toFixed(1)
-                : null,
-            varianceClass: this._varianceClass(r.variancePct),
-            statusBadgeClass: this._statusClass(r.status),
-            isExpanded,
-            snapshots
+            key:                 `${r.periodYear}-${r.periodMonth}`,
+            periodLabel:         `${monthName} ${r.periodYear}`,
+            statusBadgeClass,
+            hasSnapshots,
+            hasPeriodCloseId:    !!r.periodCloseId,
+            hasVariancePct,
+            variancePctFormatted,
+            varianceClass
         };
+    }
+
+    _badgeClass(status) {
+        if (status === 'Closed')      return 'slds-badge slds-theme_inverse';
+        if (status === 'Reopened')    return 'slds-badge slds-theme_warning';
+        if (status === 'Open')        return 'slds-badge slds-theme_success';
+        return 'slds-badge slds-badge_lightest';
+    }
+
+    // ── Drill-down ────────────────────────────────────────────────────────────
+
+    async handleViewDetail(event) {
+        const periodCloseId = event.target.dataset.periodCloseId;
+        const row = this.rows.find(r => r.periodCloseId === periodCloseId);
+        this._drilldownPeriodCloseId = periodCloseId;
+        this.drilldownPeriodLabel    = row?.periodLabel || '';
+        this.showDrilldown           = true;
+        this.isDrilldownLoading      = true;
+        this.drilldownRows           = [];
+
+        try {
+            const snaps = await getSnapshotsForPeriod({ periodCloseId });
+            this.drilldownRows = snaps.map(s => this._enrichSnap(s));
+        } catch (e) {
+            this._toast(e.body?.message || 'Failed to load snapshots.', 'error');
+        } finally {
+            this.isDrilldownLoading = false;
+        }
     }
 
     _enrichSnap(s) {
+        const hasVariancePct = s.variancePct != null;
+        const variancePctFormatted = hasVariancePct
+            ? (s.variancePct >= 0 ? '+' : '') + s.variancePct.toFixed(1)
+            : null;
+        const varianceClass = (s.varianceAmount || 0) >= 0
+            ? 'positive-variance'
+            : 'negative-variance';
         return {
             ...s,
-            hasVariance: s.variancePct != null,
-            variancePctFormatted: s.variancePct != null ? s.variancePct.toFixed(1) : null,
-            varianceClass: this._varianceClass(s.variancePct)
+            hasVariancePct,
+            variancePctFormatted,
+            varianceClass
         };
     }
 
-    _varianceClass(pct) {
-        if (pct == null) return '';
-        return pct >= 0 ? 'slds-text-color_success' : 'slds-text-color_error';
+    handleCloseDrilldown() {
+        this.showDrilldown = false;
+        this.drilldownRows = [];
     }
 
-    _statusClass(status) {
-        const base = 'slds-badge ';
-        if (status === 'Closed')   return base + 'slds-badge_lightest';
-        if (status === 'Reopened') return base + 'slds-theme_warning';
-        if (status === 'Open')     return base + 'slds-badge_inverse';
-        return base;
+    // ── Computed ──────────────────────────────────────────────────────────────
+
+    get hasDrilldownRows() {
+        return this.drilldownRows && this.drilldownRows.length > 0;
     }
 
-    // ── Drilldown: expand / collapse ───────────────────────────────────────────
+    // ── Refresh ───────────────────────────────────────────────────────────────
 
-    async handleDrilldown(event) {
-        const pcId = event.currentTarget.dataset.id;
-        const row  = this.rows.find(r => r.periodCloseId === pcId);
-        if (!row) return;
+    handleRefresh() {
+        this.isLoading = true;
+        refreshApex(this._wiredResult);
+    }
 
-        const key = row.periodLabel;
-        if (this._expandedKeys.has(key)) {
-            this._expandedKeys.delete(key);
-            this.rows = this.rows.map(r =>
-                r.periodLabel === key ? { ...r, isExpanded: false, snapshots: [] } : r
-            );
-            return;
-        }
+    // ── Toast ─────────────────────────────────────────────────────────────────
 
-        // Load snapshots (cached after first fetch)
-        if (!this._snapshotCache[pcId]) {
-            this.isLoading = true;
-            try {
-                const snaps = await getPeriodSnapshots({ periodCloseId: pcId });
-                this._snapshotCache[pcId] = snaps;
-            } catch (e) {
-                this.isLoading = false;
-                return;
-            }
-            this.isLoading = false;
-        }
-
-        this._expandedKeys.add(key);
-        this.rows = this.rows.map(r =>
-            r.periodLabel === key
-                ? {
-                    ...r,
-                    isExpanded: true,
-                    snapshots: (this._snapshotCache[pcId] || []).map(s => this._enrichSnap(s))
-                  }
-                : r
-        );
+    _toast(message, variant = 'info') {
+        this.dispatchEvent(new ShowToastEvent({ title: message, variant }));
     }
 }

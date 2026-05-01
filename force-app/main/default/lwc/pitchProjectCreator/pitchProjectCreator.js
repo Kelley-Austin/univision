@@ -1,204 +1,219 @@
-import { LightningElement, track, wire } from 'lwc';
-import { NavigationMixin } from 'lightning/navigation';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import { FlowNavigationFinishEvent } from 'lightning/flowSupport';
-import getActiveOutlets from '@salesforce/apex/PitchProjectController.getActiveOutlets';
-import saveProject from '@salesforce/apex/PitchProjectController.saveProject';
+import { LightningElement, api, track, wire } from 'lwc';
+import { NavigationMixin }              from 'lightning/navigation';
+import { FlowNavigationFinishEvent }    from 'lightning/flowSupport';
+import getActiveOutlets                 from '@salesforce/apex/PitchProjectController.getActiveOutlets';
+import saveProject                      from '@salesforce/apex/PitchProjectController.saveProject';
 
-const OWNER_TYPE_OPTIONS = [
-    { label: 'Corporate', value: 'Corporate' },
-    { label: 'Market',    value: 'Market' }
-];
+const STEP_LABELS = {
+    1 : 'Basic Info',
+    2 : 'Participating Outlets',
+    3 : 'Unit Codes',
+    4 : 'Confirm & Create'
+};
 
 export default class PitchProjectCreator extends NavigationMixin(LightningElement) {
 
+    @api recordId;
+
+    // ── State ─────────────────────────────────────────────────────────────
+
     @track currentStep = 1;
-    @track isLoading = false;
-    @track saveError = null;
-
-    @track project = {
-        name:          '',
-        ownerType:     '',
-        owningMarketId: null,
-        timeFrame:     '',
-        goal:          null,
-        startDate:     null,
-        endDate:       null,
-        description:   ''
+    @track form = {
+        projectName    : '',
+        ownerType      : '',
+        owningMarketId : null,
+        timeFrame      : '',
+        goal           : null,
+        description    : '',
+        startDate      : '',
+        endDate        : ''
     };
+    @track outletOptions  = [];   // { id, label, checked }
+    @track validationError = '';
+    @track saveError       = '';
+    @track isSaving        = false;
 
-    @track selectedOutletIds = [];
-    @track outletUnitCodeRows = [];  // [{ outletId, outletName, unitCodes }]
+    outletsLoading = false;
+    outletsError   = false;
 
-    outlets = [];
-    outletsLoading = true;
-    outletsError = null;
+    // ── Wired outlets ─────────────────────────────────────────────────────
 
     @wire(getActiveOutlets)
-    wiredOutlets({ data, error }) {
-        this.outletsLoading = false;
+    wiredOutlets({ error, data }) {
         if (data) {
-            this.outlets = data;
+            this.outletsLoading = false;
+            this.outletOptions  = data.map(o => ({
+                id      : o.Id,
+                label   : o.Name,
+                code    : o.Code__c,
+                checked : false,
+                unitCode: ''
+            }));
         } else if (error) {
-            this.outletsError = error.body?.message || 'Error loading outlets';
+            this.outletsLoading = false;
+            this.outletsError   = true;
+            console.error('getActiveOutlets error', error);
+        } else {
+            this.outletsLoading = true;
         }
     }
 
-    // ── computed ──────────────────────────────────────────────────────────
-
-    get ownerTypeOptions() { return OWNER_TYPE_OPTIONS; }
+    // ── Computed ──────────────────────────────────────────────────────────
 
     get currentStepStr() { return String(this.currentStep); }
+    get stepLabel()       { return STEP_LABELS[this.currentStep]; }
 
     get isStep1() { return this.currentStep === 1; }
     get isStep2() { return this.currentStep === 2; }
     get isStep3() { return this.currentStep === 3; }
     get isStep4() { return this.currentStep === 4; }
 
-    get isMarketOwner() { return this.project.ownerType === 'Market'; }
+    get isLastStep() { return this.currentStep === 4; }
+    get showBack()   { return this.currentStep > 1; }
 
-    get outletOptions() {
-        return this.outlets.map(o => ({ label: o.Name, value: o.Id }));
+    get isMarketOwner() { return this.form.ownerType === 'Market'; }
+
+    get ownerTypeOptions() {
+        return [
+            { label: 'Corporate', value: 'Corporate' },
+            { label: 'Market',    value: 'Market' }
+        ];
     }
 
-    get hasOutlets() { return this.selectedOutletIds.length > 0; }
+    get hasOutlets() {
+        return !this.outletsLoading && !this.outletsError && this.outletOptions.length > 0;
+    }
 
-    get backButtonClass() { return this.currentStep === 1 ? 'slds-hide' : ''; }
+    get selectedOutlets() {
+        return this.outletOptions.filter(o => o.checked);
+    }
+
+    get selectedCount() { return this.selectedOutlets.length; }
 
     get formattedGoal() {
-        if (!this.project.goal) return '$0.00';
-        return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' })
-            .format(this.project.goal);
+        if (!this.form.goal) return '$0';
+        return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 })
+            .format(this.form.goal);
     }
 
-    get totalUnitCodeCount() {
-        return this.outletUnitCodeRows.reduce((sum, row) => {
-            const codes = row.unitCodes ? row.unitCodes.split(',').filter(c => c.trim()) : [];
-            return sum + codes.length;
-        }, 0);
-    }
-
-    // ── event handlers ────────────────────────────────────────────────────
+    // ── Event handlers ────────────────────────────────────────────────────
 
     handleFieldChange(event) {
         const field = event.target.dataset.field;
-        let val = event.target.value;
-        if (field === 'goal') val = parseFloat(val) || null;
-        this.project = { ...this.project, [field]: val };
+        this.form   = { ...this.form, [field]: event.target.value };
+        this.validationError = '';
     }
 
     handleMarketChange(event) {
-        this.project = { ...this.project, owningMarketId: event.detail.value };
+        this.form = { ...this.form, owningMarketId: event.detail.recordId };
     }
 
-    handleOutletSelection(event) {
-        this.selectedOutletIds = event.detail.value;
+    handleOutletToggle(event) {
+        const outletId = event.target.dataset.id;
+        this.outletOptions = this.outletOptions.map(o =>
+            o.id === outletId ? { ...o, checked: event.target.checked } : o
+        );
+        this.validationError = '';
     }
 
     handleUnitCodeChange(event) {
-        const outletId = event.target.dataset.outletId;
-        this.outletUnitCodeRows = this.outletUnitCodeRows.map(row =>
-            row.outletId === outletId
-                ? { ...row, unitCodes: event.target.value }
-                : row
+        const outletId = event.target.dataset.id;
+        this.outletOptions = this.outletOptions.map(o =>
+            o.id === outletId ? { ...o, unitCode: event.target.value } : o
         );
+        this.validationError = '';
     }
 
     handleNext() {
-        if (!this._validateCurrentStep()) return;
-        if (this.currentStep === 2) this._syncOutletRows();
-        this.currentStep += 1;
+        const err = this.validateCurrentStep();
+        if (err) {
+            this.validationError = err;
+            return;
+        }
+        this.validationError = '';
+        this.currentStep++;
     }
 
     handleBack() {
-        if (this.currentStep > 1) {
-            this.saveError = null;
-            this.currentStep -= 1;
-        }
+        this.validationError = '';
+        this.saveError = '';
+        this.currentStep--;
     }
 
-    async handleSave() {
-        this.isLoading = true;
-        this.saveError = null;
+    async handleSubmit() {
+        this.saveError  = '';
+        this.isSaving   = true;
 
-        const outletIds = [];
-        const unitCodes = [];
-
-        for (const row of this.outletUnitCodeRows) {
-            const codes = row.unitCodes
-                ? row.unitCodes.split(',').map(c => c.trim()).filter(Boolean)
-                : [];
-            for (const code of codes) {
-                outletIds.push(row.outletId);
-                unitCodes.push(code);
-            }
-        }
+        const outletsPayload = this.selectedOutlets.map(o => ({
+            outletId : o.id,
+            unitCode : o.unitCode
+        }));
 
         try {
-            const projId = await saveProject({
-                projectName:    this.project.name,
-                ownerType:      this.project.ownerType,
-                owningMarketId: this.project.owningMarketId,
-                timeFrame:      this.project.timeFrame,
-                goal:           this.project.goal,
-                startDate:      this.project.startDate,
-                endDate:        this.project.endDate,
-                description:    this.project.description,
-                outletIds,
-                unitCodes
+            const newId = await saveProject({
+                projectName    : this.form.projectName,
+                ownerType      : this.form.ownerType,
+                owningMarketId : this.form.owningMarketId || null,
+                timeFrame      : this.form.timeFrame,
+                goal           : this.form.goal ? Number(this.form.goal) : 0,
+                description    : this.form.description,
+                startDate      : this.form.startDate   || null,
+                endDate        : this.form.endDate     || null,
+                outlets        : outletsPayload
             });
 
-            this.dispatchEvent(new ShowToastEvent({
-                title:   'Pitch Project Created',
-                message: 'Your new pitch project has been saved.',
-                variant: 'success'
-            }));
-
-            // Navigate to the new record, then finish the flow if inside one
+            // Navigate to the new record
             this[NavigationMixin.Navigate]({
-                type: 'standard__recordPage',
-                attributes: { recordId: projId, actionName: 'view' }
+                type       : 'standard__recordPage',
+                attributes : {
+                    recordId   : newId,
+                    objectApiName : 'Pitch_Project__c',
+                    actionName : 'view'
+                }
             });
+
+            // Finish the flow modal (if used inside a Screen Flow)
             this.dispatchEvent(new FlowNavigationFinishEvent());
 
         } catch (err) {
-            this.saveError = err.body?.message || err.message || 'An unexpected error occurred.';
+            this.saveError = err.body ? err.body.message : String(err);
         } finally {
-            this.isLoading = false;
+            this.isSaving = false;
         }
     }
 
-    // ── private ───────────────────────────────────────────────────────────
+    // ── Validation ────────────────────────────────────────────────────────
 
-    _validateCurrentStep() {
-        if (this.currentStep === 1) {
-            if (!this.project.name?.trim()) {
-                this._toast('Validation', 'Project Name is required.', 'error');
-                return false;
+    validateCurrentStep() {
+        switch (this.currentStep) {
+            case 1: {
+                if (!this.form.projectName || !this.form.projectName.trim()) {
+                    return 'Project Name is required.';
+                }
+                if (!this.form.ownerType) {
+                    return 'Owner Type is required.';
+                }
+                if (!this.form.goal || Number(this.form.goal) <= 0) {
+                    return 'Goal must be a positive number.';
+                }
+                break;
             }
-            if (!this.project.ownerType) {
-                this._toast('Validation', 'Owner Type is required.', 'error');
-                return false;
+            case 2: {
+                if (this.selectedCount === 0) {
+                    return 'Select at least one participating outlet.';
+                }
+                break;
             }
-            if (!this.project.goal || this.project.goal <= 0) {
-                this._toast('Validation', 'Goal must be a positive amount.', 'error');
-                return false;
+            case 3: {
+                const missing = this.selectedOutlets.filter(o => !o.unitCode || !o.unitCode.trim());
+                if (missing.length > 0) {
+                    return `Enter a unit code for: ${missing.map(o => o.label).join(', ')}`;
+                }
+                break;
             }
+            default:
+                break;
         }
-        return true;
-    }
-
-    _syncOutletRows() {
-        const existingMap = new Map(this.outletUnitCodeRows.map(r => [r.outletId, r]));
-        const outletMap = new Map(this.outlets.map(o => [o.Id, o.Name]));
-        this.outletUnitCodeRows = this.selectedOutletIds.map(id => ({
-            outletId:   id,
-            outletName: outletMap.get(id) || id,
-            unitCodes:  existingMap.has(id) ? existingMap.get(id).unitCodes : ''
-        }));
-    }
-
-    _toast(title, message, variant) {
-        this.dispatchEvent(new ShowToastEvent({ title, message, variant }));
+        return null;
     }
 }

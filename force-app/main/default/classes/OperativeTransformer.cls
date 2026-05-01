@@ -6,7 +6,7 @@ public class OperativeTransformer implements SourceSystemTransformer {
         List<String> lines = fileContent.split('\n');
         Boolean firstLine = true;
         for (String line : lines) {
-            line = line.stripTrailing();
+            line = line.trim();
             if (firstLine) { firstLine = false; continue; }
             if (String.isBlank(line)) continue;
             List<String> cols = parseCsvLine(line);

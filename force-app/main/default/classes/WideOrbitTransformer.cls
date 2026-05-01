@@ -7,7 +7,7 @@ public class WideOrbitTransformer implements SourceSystemTransformer {
         List<String> lines = fileContent.split('\n');
         Boolean firstLine = true;
         for (String line : lines) {
-            line = line.stripTrailing();
+            line = line.replaceAll('\\s+$', '');
             if (firstLine) { firstLine = false; continue; }
             if (String.isBlank(line)) continue;
             List<String> cols = line.split('\t');

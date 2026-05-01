@@ -3,16 +3,7 @@
     <apiVersion>62.0</apiVersion>
     <isExposed>true</isExposed>
     <targets>
-        <target>lightning__RecordPage</target>
         <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
     </targets>
-    <targetConfigs>
-        <targetConfig targets="lightning__RecordPage">
-            <objects>
-                <object>Period_Close__c</object>
-            </objects>
-            <property name="periodYear"  type="Integer" label="Period Year"  />
-            <property name="periodMonth" type="Integer" label="Period Month" />
-        </targetConfig>
-    </targetConfigs>
 </LightningComponentBundle>

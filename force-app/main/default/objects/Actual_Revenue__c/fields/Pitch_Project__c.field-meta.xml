@@ -2,12 +2,11 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Pitch_Project__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
-    <externalId>false</externalId>
     <label>Pitch Project</label>
     <referenceTo>Pitch_Project__c</referenceTo>
     <relationshipLabel>Actual Revenues</relationshipLabel>
     <relationshipName>Actual_Revenues</relationshipName>
     <required>false</required>
-    <trackTrending>false</trackTrending>
+    <trackHistory>false</trackHistory>
     <type>Lookup</type>
 </CustomField>

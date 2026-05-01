@@ -84,6 +84,34 @@
         </connector>
     </start>
 
+    <!-- ── Decision: did upload succeed? ─────────────────────────────── -->
+
+    <decisions>
+        <name>Check_Upload_Success</name>
+        <label>Import Successful?</label>
+        <locationX>176</locationX>
+        <locationY>288</locationY>
+        <defaultConnector>
+            <targetReference>Error_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Import_Succeeded</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varUploadSuccess</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Success_Screen</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+
     <!-- ── Screen 1: Upload ───────────────────────────────────────────── -->
 
     <screens>
@@ -91,7 +119,7 @@
         <label>Import Counterpoint Data</label>
         <locationX>176</locationX>
         <locationY>168</locationY>
-        <allowBack>false</allowBack>
+        <allowBack>true</allowBack>
         <allowFinish>false</allowFinish>
         <allowPause>false</allowPause>
         <connector>
@@ -137,34 +165,6 @@
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
-
-    <!-- ── Decision: did upload succeed? ─────────────────────────────── -->
-
-    <decisions>
-        <name>Check_Upload_Success</name>
-        <label>Import Successful?</label>
-        <locationX>176</locationX>
-        <locationY>288</locationY>
-        <defaultConnector>
-            <targetReference>Error_Screen</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>Import_Succeeded</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>varUploadSuccess</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Success_Screen</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
 
     <!-- ── Screen 2a: Success ─────────────────────────────────────────── -->
 

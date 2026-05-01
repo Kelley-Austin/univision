@@ -1,142 +1,158 @@
 @IsTest
 private class PitchProjectControllerTest {
 
-    // ── helpers ────────────────────────────────────────────────────────────
+    // ── Helpers ───────────────────────────────────────────────────────────────
 
-    private static Outlet__c makeOutlet(String name, Boolean active) {
-        Outlet__c o = new Outlet__c(Name = name, Is_Active__c = active);
-        insert o;
-        return o;
+    private static Account makeAccount() {
+        Id rtId = Schema.SObjectType.Account
+            .getRecordTypeInfosByDeveloperName().get('Advertiser').getRecordTypeId();
+        Account a = new Account(Name = 'Pacing Test Adv', RecordTypeId = rtId);
+        insert a;
+        return a;
     }
 
-    private static Pitch_Project__c makeProject(Decimal goal, String status) {
-        Pitch_Project__c pp = new Pitch_Project__c(
-            Project_Name__c = 'Test Pitch',
-            Owner_Type__c   = 'Corporate',
-            Goal__c         = goal,
-            Status__c       = status
-        );
-        insert pp;
-        return pp;
-    }
-
-    private static Advertising_Opportunity__c makeOpp(Id pitchId) {
+    private static Advertising_Opportunity__c makeOpp(Id accountId, Id projectId,
+                                                       String status, Decimal amount) {
         Advertising_Opportunity__c opp = new Advertising_Opportunity__c(
-            Pitch_Project__c = pitchId
+            Account__c               = accountId,
+            Status__c                = status,
+            Total_Planned_Amount__c  = amount,
+            Pitch_Project__c         = projectId,
+            Fiscal_Year__c           = 2026
         );
         insert opp;
         return opp;
     }
 
-    private static Budget_Line__c makeLine(Id oppId, Decimal amount, String status) {
-        Budget_Line__c bl = new Budget_Line__c(
-            Advertising_Opportunity__c = oppId,
-            Planned_Amount__c          = amount,
-            Status__c                  = status,
-            Month__c                   = 4,
-            Fiscal_Year__c             = 2026
-        );
-        insert bl;
-        return bl;
-    }
-
-    // ── test 1: getActiveOutlets returns only active records ──────────────
+    // ── getActiveOutlets ──────────────────────────────────────────────────────
 
     @IsTest
-    static void testGetActiveOutletsReturnsActiveOnly() {
-        makeOutlet('Active Outlet', true);
-        makeOutlet('Inactive Outlet', false);
+    static void testGetActiveOutlets_returnsActiveOnly() {
+        Outlet__c active   = new Outlet__c(Name = 'Active Outlet',   Is_Active__c = true);
+        Outlet__c inactive = new Outlet__c(Name = 'Inactive Outlet', Is_Active__c = false);
+        insert new List<Outlet__c>{ active, inactive };
 
         Test.startTest();
         List<Outlet__c> results = PitchProjectController.getActiveOutlets();
         Test.stopTest();
 
+        Boolean foundInactive = false;
         for (Outlet__c o : results) {
-            System.assertEquals(true, o.Is_Active__c, 'Should only return active outlets');
+            if (o.Id == inactive.Id) foundInactive = true;
         }
+        Assert.isFalse(foundInactive, 'Inactive outlet should not be returned');
     }
 
-    // ── test 2: saveProject creates project + junction records ────────────
+    // ── saveProject ───────────────────────────────────────────────────────────
 
     @IsTest
-    static void testSaveProjectCreatesProjectAndJunctions() {
-        Outlet__c outlet = makeOutlet('Test Outlet', true);
+    static void testSaveProject_createsProjectAndJunctions() {
+        Outlet__c o1 = new Outlet__c(Name = 'Outlet A', Is_Active__c = true);
+        Outlet__c o2 = new Outlet__c(Name = 'Outlet B', Is_Active__c = true);
+        insert new List<Outlet__c>{ o1, o2 };
+
+        List<Map<String, String>> outlets = new List<Map<String, String>>{
+            new Map<String, String>{ 'outletId' => o1.Id, 'unitCode' => 'CODE-A' },
+            new Map<String, String>{ 'outletId' => o2.Id, 'unitCode' => 'CODE-B' }
+        };
 
         Test.startTest();
         Id projId = PitchProjectController.saveProject(
-            'My Pitch', 'Corporate', null, 'Q2 2026', 50000,
-            Date.today(), Date.today().addDays(90), 'Description text',
-            new List<Id>{ outlet.Id },
-            new List<String>{ 'UC-TEST' }
+            'Q3 BMW Pitch', 'Corporate', null, 'Q3 2026',
+            250000, 'Test description', '2026-07-01', '2026-09-30', outlets
         );
         Test.stopTest();
 
-        System.assertNotEquals(null, projId, 'Should return new project Id');
+        Assert.isNotNull(projId, 'saveProject should return a non-null Id');
 
-        Pitch_Project__c proj = [SELECT Project_Name__c, Goal__c, Status__c FROM Pitch_Project__c WHERE Id = :projId];
-        System.assertEquals('My Pitch', proj.Project_Name__c);
-        System.assertEquals(50000, proj.Goal__c);
-        System.assertEquals('Draft', proj.Status__c);
+        Pitch_Project__c proj = [
+            SELECT Project_Name__c, Owner_Type__c, Goal__c, Status__c
+            FROM   Pitch_Project__c WHERE Id = :projId
+        ];
+        Assert.areEqual('Q3 BMW Pitch', proj.Project_Name__c);
+        Assert.areEqual('Corporate',    proj.Owner_Type__c);
+        Assert.areEqual(250000,         proj.Goal__c);
+        Assert.areEqual('Active',       proj.Status__c);
 
         List<Pitch_Project_Outlet__c> junctions = [
-            SELECT Unit_Code__c, Outlet__c FROM Pitch_Project_Outlet__c WHERE Pitch_Project__c = :projId
+            SELECT Unit_Code__c FROM Pitch_Project_Outlet__c WHERE Pitch_Project__c = :projId
         ];
-        System.assertEquals(1, junctions.size(), 'Should create one junction record');
-        System.assertEquals('UC-TEST', junctions[0].Unit_Code__c);
-        System.assertEquals(outlet.Id, junctions[0].Outlet__c);
+        Assert.areEqual(2, junctions.size(), 'Two junction records should be created');
     }
 
-    // ── test 3: saveProject with no outlets skips junction insert ─────────
-
     @IsTest
-    static void testSaveProjectEmptyOutlets() {
+    static void testSaveProject_emptyOutletsStillCreatesProject() {
         Test.startTest();
         Id projId = PitchProjectController.saveProject(
-            'No Outlets', 'Corporate', null, null, 10000,
-            null, null, null,
-            new List<Id>(),
-            new List<String>()
+            'Solo Pitch', 'Market', null, 'H1 2026',
+            50000, null, null, null, new List<Map<String, String>>()
         );
         Test.stopTest();
 
-        System.assertNotEquals(null, projId);
-        Integer junctionCount = [SELECT COUNT() FROM Pitch_Project_Outlet__c WHERE Pitch_Project__c = :projId];
-        System.assertEquals(0, junctionCount, 'No junctions should be created when no outlets provided');
+        Assert.isNotNull(projId);
+        Integer junctionCount = [
+            SELECT COUNT() FROM Pitch_Project_Outlet__c WHERE Pitch_Project__c = :projId
+        ];
+        Assert.areEqual(0, junctionCount);
     }
 
-    // ── test 4: getPacingData aggregates booked/pending/forecast correctly ─
+    // ── getPacingData ─────────────────────────────────────────────────────────
 
     @IsTest
-    static void testGetPacingDataCorrectAggregates() {
-        Pitch_Project__c pp = makeProject(100000, 'Active');
-        Advertising_Opportunity__c opp = makeOpp(pp.Id);
+    static void testGetPacingData_correctAggregates() {
+        Account adv = makeAccount();
+        Pitch_Project__c proj = new Pitch_Project__c(
+            Project_Name__c = 'Pacing Test', Owner_Type__c = 'Corporate',
+            Goal__c = 1000000, Status__c = 'Active'
+        );
+        insert proj;
 
-        makeLine(opp.Id, 40000, 'Locked');   // booked
-        makeLine(opp.Id, 20000, 'Approved'); // pending
-        makeLine(opp.Id, 10000, 'Draft');    // pending
-        makeLine(opp.Id, 5000,  'Cancelled'); // excluded
+        // Booked: Active + Closed → 300k + 200k = 500k
+        makeOpp(adv.Id, proj.Id, 'Active', 300000);
+        makeOpp(adv.Id, proj.Id, 'Closed', 200000);
+        // Pending: Submitted + Approved → 100k + 150k = 250k
+        makeOpp(adv.Id, proj.Id, 'Submitted', 100000);
+        makeOpp(adv.Id, proj.Id, 'Approved',  150000);
+        // Cancelled: should be excluded from forecast
+        makeOpp(adv.Id, proj.Id, 'Cancelled', 999999);
 
         Test.startTest();
-        PitchProjectController.PacingData pd = PitchProjectController.getPacingData(pp.Id);
+        PitchProjectController.PacingData pd = PitchProjectController.getPacingData(proj.Id);
         Test.stopTest();
 
-        System.assertEquals(100000, pd.goal,    'Goal should match project Goal__c');
-        System.assertEquals(40000,  pd.booked,  'Booked = Locked lines only');
-        System.assertEquals(30000,  pd.pending, 'Pending = Approved + Draft');
-        // forecast = 40000*1.0 + 20000*0.6 + 10000*0.1 = 40000 + 12000 + 1000 = 53000
-        System.assertEquals(53000,  pd.forecast, 'Forecast should be weighted sum');
+        Assert.areEqual(1000000, pd.goal);
+        Assert.areEqual(500000,  pd.booked,  'Booked = Active + Closed opps');
+        Assert.areEqual(250000,  pd.pending, 'Pending = Submitted + Approved opps');
+
+        // Forecast (weighted): 300k*1.0 + 200k*1.0 + 100k*0.30 + 150k*0.60 = 500k + 30k + 90k = 620k
+        Assert.areEqual(620000, pd.forecast.setScale(0), 'Weighted forecast mismatch');
     }
 
-    // ── test 5: getPacingData throws on null projectId ─────────────────────
-
     @IsTest
-    static void testGetPacingDataNullIdThrows() {
+    static void testGetPacingData_nullProjectIdThrows() {
         Boolean threw = false;
         try {
             PitchProjectController.getPacingData(null);
         } catch (AuraHandledException e) {
             threw = true;
         }
-        System.assert(threw, 'Should throw AuraHandledException for null projectId');
+        Assert.isTrue(threw, 'Null projectId should throw AuraHandledException');
+    }
+
+    @IsTest
+    static void testGetPacingData_noOppsReturnsZeros() {
+        Pitch_Project__c proj = new Pitch_Project__c(
+            Project_Name__c = 'Empty Project', Owner_Type__c = 'Market',
+            Goal__c = 500000, Status__c = 'Active'
+        );
+        insert proj;
+
+        Test.startTest();
+        PitchProjectController.PacingData pd = PitchProjectController.getPacingData(proj.Id);
+        Test.stopTest();
+
+        Assert.areEqual(0, pd.booked);
+        Assert.areEqual(0, pd.pending);
+        Assert.areEqual(0, pd.forecast);
     }
 }

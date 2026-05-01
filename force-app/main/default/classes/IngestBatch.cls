@@ -36,34 +36,67 @@ public with sharing class IngestBatch implements Database.Batchable<SObject>, Da
         }
         update scope;
 
+        // Collect all unique names not yet in the static cache, then bulk-query once
+        Set<String> uncachedNames = new Set<String>();
+        for (Inbound_Staging__c row : scope) {
+            if (row.Account__c == null && String.isNotBlank(row.Raw_Advertiser_Name__c)) {
+                String key = row.Raw_Advertiser_Name__c.toLowerCase();
+                if (!accountCache.containsKey(key)) uncachedNames.add(row.Raw_Advertiser_Name__c);
+            }
+        }
+        if (!uncachedNames.isEmpty()) {
+            for (Account a : [
+                SELECT Id, Name FROM Account
+                WHERE Name IN :uncachedNames
+                  AND RecordType.DeveloperName IN ('Direct_Buy', 'Advertiser')
+            ]) {
+                accountCache.put(a.Name.toLowerCase(), a.Id);
+            }
+            // Mark all names queried but not found as null so we don't re-query them
+            for (String name : uncachedNames) {
+                if (!accountCache.containsKey(name.toLowerCase())) {
+                    accountCache.put(name.toLowerCase(), null);
+                }
+            }
+        }
+
+        List<Actual_Revenue__c> actualsToUpsert = new List<Actual_Revenue__c>();
+        List<Integer> actualIndexes = new List<Integer>();
         List<Inbound_Staging__c> toUpdate = new List<Inbound_Staging__c>();
 
         for (Inbound_Staging__c row : scope) {
             processed++;
-            try {
-                // Use Account__c pre-resolved by MappingRuleExecutor when available
-                Id advertiserId = row.Account__c;
-                if (advertiserId == null) {
-                    advertiserId = resolveAccount(row.Raw_Advertiser_Name__c);
-                }
-                if (advertiserId == null) {
-                    row.Status__c = 'Excluded';
-                    row.Excluding_Rule__c = 'UNKNOWN_ADVERTISER';
-                    toUpdate.add(row);
-                    continue;
-                }
-
-                Actual_Revenue__c actual = buildActual(row, advertiserId);
-                upsert actual External_Key__c;
-
-                row.Status__c = 'Matched';
-                promoted++;
-            } catch (Exception ex) {
-                row.Status__c = 'Error';
-                row.Excluding_Rule__c = ex.getMessage().abbreviate(255);
-                errors++;
+            Id advertiserId = row.Account__c;
+            if (advertiserId == null && String.isNotBlank(row.Raw_Advertiser_Name__c)) {
+                advertiserId = accountCache.get(row.Raw_Advertiser_Name__c.toLowerCase());
             }
+            if (advertiserId == null) {
+                row.Status__c = 'Excluded';
+                row.Excluding_Rule__c = 'UNKNOWN_ADVERTISER';
+                toUpdate.add(row);
+                continue;
+            }
+            row.Status__c = 'Matched';
+            promoted++;
             toUpdate.add(row);
+            actualsToUpsert.add(buildActual(row, advertiserId));
+            actualIndexes.add(toUpdate.size() - 1);
+        }
+
+        // Bulk upsert all actuals (one DML per execute chunk)
+        if (!actualsToUpsert.isEmpty()) {
+            Database.UpsertResult[] uResults =
+                Database.upsert(actualsToUpsert, Actual_Revenue__c.External_Key__c, false);
+            for (Integer i = 0; i < uResults.size(); i++) {
+                if (!uResults[i].isSuccess()) {
+                    Inbound_Staging__c failedRow = toUpdate[actualIndexes[i]];
+                    failedRow.Status__c = 'Error';
+                    failedRow.Excluding_Rule__c =
+                        uResults[i].getErrors()[0].getMessage().abbreviate(255);
+                    errors++;
+                    promoted--;
+                }
+            }
         }
 
         update toUpdate;
@@ -78,23 +111,8 @@ public with sharing class IngestBatch implements Database.Batchable<SObject>, Da
 
     // ── Private helpers ───────────────────────────────────────────────────
 
+    // Static cache persists across execute() calls within the same batch job (Database.Stateful)
     private static Map<String, Id> accountCache = new Map<String, Id>();
-
-    private static Id resolveAccount(String name) {
-        if (String.isBlank(name)) return null;
-        String key = name.toLowerCase();
-        if (accountCache.containsKey(key)) return accountCache.get(key);
-
-        List<Account> matches = [
-            SELECT Id FROM Account
-            WHERE Name = :name
-              AND RecordType.DeveloperName IN ('Direct_Buy', 'Advertiser')
-            LIMIT 1
-        ];
-        Id result = matches.isEmpty() ? null : matches[0].Id;
-        accountCache.put(key, result);
-        return result;
-    }
 
     @TestVisible
     private static Actual_Revenue__c buildActual(Inbound_Staging__c row, Id advertiserId) {

@@ -1,19 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Sales Representative — create and manage Direct Buy Advertiser and Agency accounts exclusively through the guided screen flows. Grants the minimum Account permissions needed to run the Create Direct Buy Advertiser, Create Agency Account, and Link Agency To Advertiser flows.</description>
+    <description>Sales Representative — minimum permissions for the Create Direct Buy Advertiser, Create Agency Account, and Link Agency To Advertiser screen flows.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Matrix — Sales Representative</label>
-
-    <!-- Account object: create, read, edit (no delete, no modify-all) -->
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>Account</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
 
     <!-- Field-level security: new fields required by the advertiser/agency flows -->
     <fieldPermissions>
@@ -32,17 +21,16 @@
         <readable>true</readable>
     </fieldPermissions>
 
-    <!-- Record type visibility: Direct Buy Advertiser and Agency only -->
-    <recordTypeVisibilities>
-        <default>true</default>
-        <recordType>Account.Direct_Buy</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Account.Agency</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
+    <!-- Account object: create, read, edit (no delete, no modify-all) -->
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Account</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
 
     <!-- Read-only access to reference data needed for lookups in the flows -->
     <objectPermissions>
@@ -60,7 +48,7 @@
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>Outlet__c</object>
+        <object>Office__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -69,9 +57,19 @@
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>Office__c</object>
+        <object>Outlet__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
+
+    <!-- Record type visibility: Direct Buy Advertiser and Agency only -->
+    <recordTypeVisibilities>
+        <recordType>Account.Agency</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Account.Direct_Buy</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
 
     <userPermissions>
         <enabled>true</enabled>

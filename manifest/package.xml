@@ -1,77 +1,134 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-
-    <!-- ── Lightning Apps ───────────────────────────────────────────────────── -->
     <types>
-        <members>MediaCloud.app</members>
-        <members>Sales_Operations_Console.app</members>
-        <name>CustomApplication</name>
-    </types>
-
-    <!-- ── Custom Object ────────────────────────────────────────────────────── -->
-    <types>
-        <members>Pacing_Snapshot__c</members>
-        <name>CustomObject</name>
-    </types>
-
-    <!-- ── Custom Tabs ──────────────────────────────────────────────────────── -->
-    <types>
-        <members>Actual_Revenue__c.tab</members>
-        <members>Advertising_Contract__c.tab</members>
-        <members>Advertising_Opportunity__c.tab</members>
-        <members>Budget_Line__c.tab</members>
-        <members>Pacing_Snapshot__c.tab</members>
-        <members>Period_Close__c.tab</members>
-        <members>Pitch_Project__c.tab</members>
-        <members>Sales_Ops_Console.tab</members>
-        <name>CustomTab</name>
-    </types>
-
-    <!-- ── FlexiPages ───────────────────────────────────────────────────────── -->
-    <types>
-        <members>Account_Advertising_Budget.flexipage</members>
-        <members>Advertising_Contract_Record_Page.flexipage</members>
-        <members>Advertising_Opportunity_Record_Page.flexipage</members>
-        <members>Budget_Line_Record_Page.flexipage</members>
-        <members>Period_Close_Record_Page.flexipage</members>
-        <members>Pitch_Project_Record_Page.flexipage</members>
-        <members>Sales_Operations_Console_App.flexipage</members>
-        <name>FlexiPage</name>
-    </types>
-
-    <!-- ── Apex Classes (this slice) ────────────────────────────────────────── -->
-    <types>
-        <members>BibleExportController</members>
-        <members>BibleExportControllerTest</members>
-        <members>ExclusionLogController</members>
-        <members>ExclusionLogControllerTest</members>
-        <members>FinancialReportController</members>
-        <members>FinancialReportControllerTest</members>
-        <members>PacingSnapshotBatch</members>
-        <members>PacingSnapshotBatchTest</members>
-        <members>PacingSnapshotScheduler</members>
-        <members>SalesOpsKpiController</members>
-        <members>SalesOpsKpiControllerTest</members>
+        <members>AccountMatcher</members>
+        <members>CounterpointIngestionServiceTest</members>
+        <members>CounterpointTransformer</members>
+        <members>CounterpointTransformerTest</members>
+        <members>CoxRepsTransformer</members>
+        <members>CoxRepsTransformerTest</members>
+        <members>IngestBatch</members>
+        <members>IngestController</members>
+        <members>IngestControllerTest</members>
+        <members>IngestException</members>
+        <members>IngestQueueable</members>
+        <members>IngestService</members>
+        <members>IngestServiceTest</members>
+        <members>IngestTriggerController</members>
+        <members>LoadBatchDashboardController</members>
+        <members>LoadBatchDashboardControllerTest</members>
+        <members>MappingRuleExecutor</members>
+        <members>MappingRuleExecutorTest</members>
+        <members>MappingRuleService</members>
+        <members>MappingRuleServiceTest</members>
+        <members>MatrixRescheduleInvocable</members>
+        <members>MatrixScheduleInfoInvocable</members>
+        <members>MatrixSyncInvocable</members>
+        <members>MatrixSyncInvocableTest</members>
+        <members>OperativeTransformer</members>
+        <members>OperativeTransformerTest</members>
+        <members>PeriodCloseBatch</members>
+        <members>PeriodCloseService</members>
+        <members>PeriodCloseTriggerHandler</members>
+        <members>ProjectionRollupQueueable</members>
+        <members>SourceSystemTransformer</members>
+        <members>StrataTransformer</members>
+        <members>StrataTransformerTest</members>
+        <members>TransformerRegistry</members>
+        <members>TransformerTestHelper</members>
+        <members>WideOrbitTransformer</members>
+        <members>WideOrbitTransformerTest</members>
         <name>ApexClass</name>
     </types>
-
-    <!-- ── LWC Components (this slice) ──────────────────────────────────────── -->
     <types>
-        <members>bibleExtract</members>
-        <members>exclusionLogListView</members>
-        <members>financialReportBuilder</members>
-        <members>salesOpsConsole</members>
-        <members>salesOpsKpiDashboard</members>
+        <members>MDM_Workspace.app</members>
+        <name>CustomApplication</name>
+    </types>
+    <types>
+        <members>AE_Code_Alias__c.User__c.field</members>
+        <members>Account_Category__c.Account__c.field</members>
+        <members>Account_Category__c.Category__c.field</members>
+        <members>Actual_Revenue__c.Account__c.field</members>
+        <members>Advertising_Opportunity__c.Fiscal_Year__c.field</members>
+        <members>Advertising_Opportunity__c.Market__c.field</members>
+        <members>Advertising_Opportunity__c.Total_Actual_Amount__c.field</members>
+        <members>Advertising_Opportunity__c.Total_Budget__c.field</members>
+        <members>Advertising_Opportunity__c.Total_Planned_Amount__c.field</members>
+        <members>Budget_Line__c.Account__c.field</members>
+        <members>Budget_Line__c.Copy_Rotation__c.field</members>
+        <members>Budget__c.Account__c.field</members>
+        <members>Budget__c.Category__c.field</members>
+        <members>Inbound_Staging__c.Source_System__c.field</members>
+        <members>Load_Batch__c.Source_System__c.field</members>
+        <members>Mapping_Rule__c.Source_System__c.field</members>
+        <members>Period_Snapshot__c.Period_Close__c.field</members>
+        <members>Pitch_Project_Outlet__c.Pitch_Project__c.field</members>
+        <members>Pitch_Project__c.Status__c.field</members>
+        <members>Projection__c.Account__c.field</members>
+        <members>Projection__c.Category__c.field</members>
+        <members>Vehicle__c.Status__c.field</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>Advertising_Contract__c</members>
+        <members>Budget_Line__c</members>
+        <members>Matrix_Sync_Log__c</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>Inbound_Staging__c.tab</members>
+        <members>Load_Batch__c.tab</members>
+        <members>Mapping_Rule__c.tab</members>
+        <members>Source_System__c.tab</members>
+        <name>CustomTab</name>
+    </types>
+    <types>
+        <members>Advertising_Analytics</members>
+        <members>MediaCloud</members>
+        <name>Dashboard</name>
+    </types>
+    <types>
+        <members>Counterpoint_CSV_Import.flow</members>
+        <members>Makegood_Or_Cancellation.flow</members>
+        <members>Matrix_Inventory_Admin_Sync.flow</members>
+        <members>Traffic_Copy_Entry.flow</members>
+        <name>Flow</name>
+    </types>
+    <types>
+        <members>Advertising_Opportunity__c-Advertising Opportunity Layout.layout</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>fileUploadSource</members>
+        <members>loadBatchDashboard</members>
+        <members>mappingRuleEditor</members>
+        <members>periodCloseActions</members>
+        <members>pitchProjectCreator</members>
+        <members>sourceFileUpload</members>
         <name>LightningComponentBundle</name>
     </types>
 
-    <!-- ── Custom Report Types ──────────────────────────────────────────────── -->
+    <!-- ══ FlexiPages ═══════════════════════════════════════════════════════ -->
     <types>
-        <members>Forecast_Stage_Snapshots</members>
-        <members>Pacing_Snapshots</members>
-        <members>Period_Snapshots_Detail</members>
+        <members>Agency_Account_Record_Page</members>
+        <members>MDM_Workspace_Home</members>
+        <members>Source_System_Record_Page</members>
+        <name>FlexiPage</name>
+    </types>
+    <types>
+        <members>Matrix_API.namedCredential</members>
+        <name>NamedCredential</name>
+    </types>
+    <types>
+        <members>Integration_User.permissionset</members>
+        <members>MatrixCore_AE.permissionset</members>
+        <members>SalesOps_FullAccess.permissionset</members>
+        <members>Sales_Rep.permissionset</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
+        <members>Period_Snapshot_Forecast_Accuracy.reportType</members>
         <name>ReportType</name>
     </types>
-
-    <version>61.0</version>
+    <version>62.0</version>
 </Package>

@@ -1,43 +1,49 @@
 /**
- * Called from ActualRevenueTriggerHandler (before insert and before update when
- * Unit_Code__c changes). Stamps Pitch_Project__c on actuals whose unit code matches
- * an Active pitch project's Pitch_Project_Outlet__c registration.
+ * Before-trigger service called by ActualRevenueTriggerHandler.
+ *
+ * Looks up active Pitch_Project_Outlet__c rows whose Unit_Code__c matches
+ * an incoming Actual_Revenue__c.Unit_Code__c value and stamps the Pitch_Project__c
+ * lookup on the actual record (before insert/update, so no extra DML needed).
  *
  * Rules:
- *   - Only stamps when Pitch_Project__c is currently null (never overwrites).
- *   - Only Active pitch projects attract links; Draft/Won/Lost/Cancelled are ignored.
- *   - When multiple Active projects share a unit code, the oldest (CreatedDate ASC) wins.
+ * - Only links records where Pitch_Project__c is currently blank (never overwrites).
+ * - Only considers Pitch Projects in Active status.
+ * - If multiple active projects share the same unit code, the first result wins
+ *   (query is ordered by CreatedDate ASC for determinism).
  */
 public with sharing class PitchProjectUnitCodeLinker {
 
     public static void linkActuals(List<Actual_Revenue__c> actuals) {
-        Set<String> codes = new Set<String>();
+        if (actuals == null || actuals.isEmpty()) return;
+
+        Set<String> unitCodes = new Set<String>();
         for (Actual_Revenue__c a : actuals) {
             if (String.isNotBlank(a.Unit_Code__c) && a.Pitch_Project__c == null) {
-                codes.add(a.Unit_Code__c);
+                unitCodes.add(a.Unit_Code__c.trim());
             }
         }
-        if (codes.isEmpty()) return;
+        if (unitCodes.isEmpty()) return;
 
+        // Build unit-code → project map; first Active project wins per code
         Map<String, Id> codeToProject = new Map<String, Id>();
         for (Pitch_Project_Outlet__c ppo : [
             SELECT Unit_Code__c, Pitch_Project__c
             FROM   Pitch_Project_Outlet__c
-            WHERE  Unit_Code__c IN :codes
+            WHERE  Unit_Code__c IN :unitCodes
               AND  Pitch_Project__r.Status__c = 'Active'
-            ORDER BY Pitch_Project__r.CreatedDate ASC
+            ORDER BY CreatedDate ASC
         ]) {
-            if (!codeToProject.containsKey(ppo.Unit_Code__c)) {
-                codeToProject.put(ppo.Unit_Code__c, ppo.Pitch_Project__c);
+            String code = ppo.Unit_Code__c.trim();
+            if (!codeToProject.containsKey(code)) {
+                codeToProject.put(code, ppo.Pitch_Project__c);
             }
         }
+        if (codeToProject.isEmpty()) return;
 
         for (Actual_Revenue__c a : actuals) {
-            if (String.isNotBlank(a.Unit_Code__c)
-                    && a.Pitch_Project__c == null
-                    && codeToProject.containsKey(a.Unit_Code__c)) {
-                a.Pitch_Project__c = codeToProject.get(a.Unit_Code__c);
-            }
+            if (a.Pitch_Project__c != null || String.isBlank(a.Unit_Code__c)) continue;
+            Id projectId = codeToProject.get(a.Unit_Code__c.trim());
+            if (projectId != null) a.Pitch_Project__c = projectId;
         }
     }
 }

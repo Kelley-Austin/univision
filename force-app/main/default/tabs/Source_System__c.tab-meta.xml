@@ -3,5 +3,4 @@
     <customObject>true</customObject>
     <label>Source Systems</label>
     <motif>Custom97: Handshake</motif>
-    <object>Source_System__c</object>
 </CustomTab>

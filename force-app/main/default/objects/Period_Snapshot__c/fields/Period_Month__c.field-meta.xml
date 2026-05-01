@@ -3,8 +3,8 @@
     <fullName>Period_Month__c</fullName>
     <label>Period Month</label>
     <precision>2</precision>
-    <required>false</required>
     <scale>0</scale>
+    <required>false</required>
     <type>Number</type>
     <unique>false</unique>
 </CustomField>

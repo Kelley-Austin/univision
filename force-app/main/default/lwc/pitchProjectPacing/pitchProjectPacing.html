@@ -1,65 +1,93 @@
 <template>
-    <lightning-card title="Pitch Pacing">
-        <template if:true={isLoading}>
-            <lightning-spinner alternative-text="Loading pacing data..." size="small"></lightning-spinner>
-        </template>
+    <lightning-card title="Pitch Pacing" icon-name="utility:chart">
 
-        <template if:true={hasError}>
-            <div class="slds-var-p-around_medium">
-                <p class="slds-text-color_error">{errorMessage}</p>
-            </div>
-        </template>
+        <div class="slds-m-around_medium">
 
-        <template if:true={hasData}>
-            <div class="slds-var-p-around_medium">
+            <template lwc:if={isLoading}>
+                <div class="slds-align_absolute-center slds-p-around_large">
+                    <lightning-spinner alternative-text="Loading pacing data..." size="medium"></lightning-spinner>
+                </div>
+            </template>
 
-                <!-- Metric tiles -->
-                <div class="slds-grid slds-wrap slds-gutters_small slds-var-m-bottom_medium">
+            <template lwc:if={hasError}>
+                <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                    <span class="slds-assistive-text">Error</span>
+                    {errorMessage}
+                </div>
+            </template>
 
-                    <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4">
-                        <div class="slds-box slds-box_x-small slds-text-align_center">
-                            <p class="slds-text-title slds-text-color_weak">Goal</p>
-                            <p class="slds-text-heading_medium">{formattedGoal}</p>
+            <template lwc:if={hasData}>
+
+                <!-- ── Metric tiles ─────────────────────────────────── -->
+                <div class="slds-grid slds-wrap slds-gutters slds-m-bottom_medium">
+
+                    <!-- Goal -->
+                    <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4 slds-m-bottom_small">
+                        <div class="metric-tile metric-tile_goal">
+                            <p class="tile-label">Goal</p>
+                            <p class="tile-value">{formattedGoal}</p>
+                            <p class="tile-sub">&nbsp;</p>
                         </div>
                     </div>
 
-                    <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4">
-                        <div class="slds-box slds-box_x-small slds-text-align_center tile-booked">
-                            <p class="slds-text-title slds-text-color_weak">Booked</p>
-                            <p class="slds-text-heading_medium">{formattedBooked}</p>
+                    <!-- Booked -->
+                    <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4 slds-m-bottom_small">
+                        <div class="metric-tile metric-tile_booked">
+                            <p class="tile-label">Booked</p>
+                            <p class="tile-value">{formattedBooked}</p>
+                            <p class="tile-sub">{bookedPct}% of goal</p>
                         </div>
                     </div>
 
-                    <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4">
-                        <div class="slds-box slds-box_x-small slds-text-align_center tile-pending">
-                            <p class="slds-text-title slds-text-color_weak">Pending</p>
-                            <p class="slds-text-heading_medium">{formattedPending}</p>
+                    <!-- Pending -->
+                    <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4 slds-m-bottom_small">
+                        <div class="metric-tile metric-tile_pending">
+                            <p class="tile-label">Pending</p>
+                            <p class="tile-value">{formattedPending}</p>
+                            <p class="tile-sub">{pendingPct}% of goal</p>
                         </div>
                     </div>
 
-                    <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4">
-                        <div class="slds-box slds-box_x-small slds-text-align_center tile-forecast">
-                            <p class="slds-text-title slds-text-color_weak">Forecast (Wtd)</p>
-                            <p class="slds-text-heading_medium">{formattedForecast}</p>
+                    <!-- Forecast (Weighted) -->
+                    <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4 slds-m-bottom_small">
+                        <div class="metric-tile metric-tile_forecast">
+                            <p class="tile-label">Forecast (Weighted)</p>
+                            <p class="tile-value">{formattedForecast}</p>
+                            <p class="tile-sub">{forecastPct}% of goal</p>
                         </div>
                     </div>
 
                 </div>
 
-                <!-- Stacked progress bar against Goal -->
-                <p class="slds-text-title_caps slds-text-color_weak slds-var-m-bottom_xx-small">
-                    Progress vs. Goal
-                </p>
-                <div class="progress-bar-track">
-                    <div class="progress-bar-booked" style={bookedBarStyle} title={bookedBarLabel}></div>
-                    <div class="progress-bar-pending" style={pendingBarStyle} title={pendingBarLabel}></div>
-                </div>
-                <div class="slds-grid slds-var-m-top_xx-small">
-                    <span class="slds-col slds-text-body_small legend-dot legend-green">&#9632; Booked ({bookedPct}%)</span>
-                    <span class="slds-col slds-text-body_small legend-dot legend-yellow slds-var-m-left_small">&#9632; Pending ({pendingPct}%)</span>
+                <!-- ── Stacked progress bar ─────────────────────────── -->
+                <div class="slds-m-top_small">
+                    <div class="slds-grid slds-grid_align-spread slds-m-bottom_xx-small">
+                        <span class="slds-text-body_small slds-text-color_weak">Revenue vs Goal</span>
+                        <span class="slds-text-body_small slds-text-color_weak">{formattedGoal}</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-segment progress-booked"  style={bookedBarStyle}></div>
+                        <div class="progress-segment progress-pending"  style={pendingBarStyle}></div>
+                    </div>
+                    <div class="slds-grid slds-m-top_x-small slds-gutters">
+                        <div class="slds-col">
+                            <span class="legend-dot legend-dot_booked"></span>
+                            <span class="slds-text-body_small"> Booked</span>
+                        </div>
+                        <div class="slds-col">
+                            <span class="legend-dot legend-dot_pending"></span>
+                            <span class="slds-text-body_small"> Pending</span>
+                        </div>
+                        <div class="slds-col">
+                            <span class="legend-dot legend-dot_forecast"></span>
+                            <span class="slds-text-body_small"> Forecast</span>
+                        </div>
+                    </div>
                 </div>
 
-            </div>
-        </template>
+            </template>
+
+        </div>
+
     </lightning-card>
 </template>

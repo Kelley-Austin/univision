@@ -1,10 +1,10 @@
 <template>
-    <lightning-card title="Period Close Actions" icon-name="standard:event">
+    <lightning-card title="Period Actions" icon-name="standard:date_time">
         <div class="slds-card__body slds-card__body_inner">
 
             <!-- Loading spinner -->
             <template if:true={isLoading}>
-                <lightning-spinner alternative-text="Processing" size="medium"></lightning-spinner>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
             </template>
 
             <!-- Error banner -->
@@ -14,110 +14,130 @@
                 </div>
             </template>
 
-            <!-- Status badge -->
-            <div class="slds-m-bottom_medium">
-                <span class={statusBadgeClass}>{recordStatus}</span>
-            </div>
-
-            <!-- Warning: projections without actuals -->
-            <template if:true={hasWarnings}>
-                <div class="slds-box slds-theme_warning slds-m-bottom_medium">
-                    <p class="slds-text-heading_small slds-m-bottom_x-small">
-                        Projections without Actuals ({warningCount})
-                    </p>
-                    <p class="slds-text-body_small slds-m-bottom_small">
-                        The following projections have no matching actuals. Closing now will snapshot them with $0 actual.
-                    </p>
-                    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
-                        <thead>
-                            <tr>
-                                <th>Account</th>
-                                <th>Category</th>
-                                <th>Type</th>
-                                <th>Projected</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <template for:each={warnings} for:item="w">
-                                <tr key={w.projectionId}>
-                                    <td>{w.accountName}</td>
-                                    <td>{w.categoryName}</td>
-                                    <td>{w.revenueType}</td>
-                                    <td>
-                                        <lightning-formatted-number
-                                            value={w.projectedAmount}
-                                            format-style="currency"
-                                            currency-code="USD">
-                                        </lightning-formatted-number>
-                                    </td>
-                                </tr>
-                            </template>
-                        </tbody>
-                    </table>
+            <template if:false={isLoading}>
+                <!-- Status header -->
+                <div class="slds-grid slds-gutters slds-m-bottom_medium">
+                    <div class="slds-col">
+                        <p class="slds-text-heading_small">
+                            {periodLabel}
+                        </p>
+                        <span class={statusBadgeClass}>{summary.status}</span>
+                        <template if:true={summary.closedAt}>
+                            <span class="slds-m-left_x-small slds-text-color_weak slds-text-body_small">
+                                Closed {summary.closedAt}
+                            </span>
+                        </template>
+                        <template if:true={reopenedBefore}>
+                            <span class="slds-m-left_x-small slds-text-color_weak slds-text-body_small">
+                                (reopened {summary.reopenCount}x)
+                            </span>
+                        </template>
+                    </div>
+                    <div class="slds-col slds-col_bump-left slds-text-align_right">
+                        <p class="slds-text-body_small slds-text-color_weak">
+                            {summary.projectionCount} projection(s)
+                        </p>
+                        <template if:true={showActualsWarning}>
+                            <p class="slds-text-color_error slds-text-body_small">
+                                ⚠ {summary.projectionsWithoutActuals} projection(s) have no actuals
+                            </p>
+                        </template>
+                    </div>
                 </div>
-            </template>
 
-            <!-- Action buttons -->
-            <div class="slds-grid slds-gutters">
-                <div class="slds-col">
+                <!-- Actions -->
+                <div class="slds-grid slds-gutters">
                     <template if:true={canClose}>
-                        <lightning-button
-                            label="Close Period"
-                            variant="brand"
-                            icon-name="utility:lock"
-                            onclick={handleCloseClick}
-                            disabled={isLoading}>
-                        </lightning-button>
+                        <div class="slds-col">
+                            <lightning-button
+                                label="Close Period"
+                                variant="brand"
+                                icon-name="utility:lock"
+                                onclick={handleCloseClick}
+                                disabled={isLoading}>
+                            </lightning-button>
+                        </div>
                     </template>
                     <template if:true={canReopen}>
-                        <lightning-button
-                            label="Reopen Period"
-                            variant="neutral"
-                            icon-name="utility:unlock"
-                            onclick={handleReopenClick}
-                            disabled={isLoading}>
-                        </lightning-button>
-                    </template>
-                    <template if:false={hasActions}>
-                        <span class="slds-text-color_weak">No actions available for this period.</span>
+                        <div class="slds-col">
+                            <lightning-button
+                                label="Reopen Period"
+                                variant="neutral"
+                                icon-name="utility:unlock"
+                                onclick={handleReopenClick}
+                                disabled={isLoading}>
+                            </lightning-button>
+                        </div>
                     </template>
                 </div>
-            </div>
+            </template>
         </div>
     </lightning-card>
 
-    <!-- Confirmation modal -->
-    <template if:true={showModal}>
+    <!-- Close confirmation modal -->
+    <template if:true={showCloseModal}>
         <section role="dialog" tabindex="-1" aria-modal="true"
                  class="slds-modal slds-fade-in-open">
             <div class="slds-modal__container">
                 <header class="slds-modal__header">
-                    <h2 class="slds-modal__title">{modalTitle}</h2>
+                    <h2 class="slds-modal__title">Close {periodLabel}?</h2>
                     <button class="slds-button slds-button_icon slds-modal__close"
-                            onclick={handleCancelModal}>
+                            onclick={handleCancelClose} title="Cancel">
                         <lightning-icon icon-name="utility:close" size="small"></lightning-icon>
                     </button>
                 </header>
                 <div class="slds-modal__content slds-p-around_medium">
-                    <p>{modalBody}</p>
-                    <template if:true={hasWarnings}>
-                        <p class="slds-m-top_small slds-text-color_error">
-                            Warning: {warningCount} projection(s) have no actuals and will be snapshotted at $0 actual.
-                        </p>
+                    <p>Closing this period will generate one snapshot per Projection record,
+                       locking the Projected and Actual amounts at this moment in time.</p>
+                    <template if:true={showActualsWarning}>
+                        <div class="slds-notify slds-notify_alert slds-theme_warning slds-m-top_small">
+                            <strong>{summary.projectionsWithoutActuals} projection(s) currently have no actuals.</strong>
+                            Their Actual_At_Close will be recorded as $0.
+                            You can still proceed — actuals received after closing will appear
+                            in the Late Actuals Worklist.
+                        </div>
                     </template>
+                    <p class="slds-m-top_small slds-text-color_weak">
+                        This action cannot be undone without reopening the period.
+                    </p>
                 </div>
                 <footer class="slds-modal__footer">
-                    <lightning-button
-                        label="Cancel"
-                        variant="neutral"
-                        onclick={handleCancelModal}>
-                    </lightning-button>
-                    <lightning-button
-                        label={modalConfirmLabel}
-                        variant="brand"
-                        class="slds-m-left_x-small"
-                        onclick={handleConfirm}>
-                    </lightning-button>
+                    <lightning-button label="Cancel" onclick={handleCancelClose}
+                                      class="slds-m-right_x-small"></lightning-button>
+                    <lightning-button label="Close Period" variant="brand"
+                                      onclick={handleConfirmClose}
+                                      disabled={isLoading}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <!-- Reopen confirmation modal -->
+    <template if:true={showReopenModal}>
+        <section role="dialog" tabindex="-1" aria-modal="true"
+                 class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-modal__title">Reopen {periodLabel}?</h2>
+                    <button class="slds-button slds-button_icon slds-modal__close"
+                            onclick={handleCancelReopen} title="Cancel">
+                        <lightning-icon icon-name="utility:close" size="small"></lightning-icon>
+                    </button>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <p>Reopening allows Projections and Actuals to be edited.
+                       Existing snapshots will be overwritten on the next close.</p>
+                    <p class="slds-m-top_small slds-text-color_weak">
+                        Future periods cannot be reopened.
+                    </p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button label="Cancel" onclick={handleCancelReopen}
+                                      class="slds-m-right_x-small"></lightning-button>
+                    <lightning-button label="Reopen" variant="neutral"
+                                      onclick={handleConfirmReopen}
+                                      disabled={isLoading}></lightning-button>
                 </footer>
             </div>
         </section>

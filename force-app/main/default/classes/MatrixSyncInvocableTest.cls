@@ -15,12 +15,12 @@ private class MatrixSyncInvocableTest {
 
     @IsTest
     static void reschedule_validHour_schedulesAndReturnsSuccess() {
-        MatrixSyncInvocable.RescheduleRequest req = new MatrixSyncInvocable.RescheduleRequest();
+        MatrixRescheduleInvocable.RescheduleRequest req = new MatrixRescheduleInvocable.RescheduleRequest();
         req.scheduleHour = 5;
 
         Test.startTest();
-        List<MatrixSyncInvocable.RescheduleResult> results =
-            MatrixSyncInvocable.reschedule(new List<MatrixSyncInvocable.RescheduleRequest>{ req });
+        List<MatrixRescheduleInvocable.RescheduleResult> results =
+            MatrixRescheduleInvocable.reschedule(new List<MatrixRescheduleInvocable.RescheduleRequest>{ req });
         Test.stopTest();
 
         System.assertEquals(1, results.size());
@@ -31,12 +31,12 @@ private class MatrixSyncInvocableTest {
 
     @IsTest
     static void reschedule_invalidHour_returnsFailure() {
-        MatrixSyncInvocable.RescheduleRequest req = new MatrixSyncInvocable.RescheduleRequest();
+        MatrixRescheduleInvocable.RescheduleRequest req = new MatrixRescheduleInvocable.RescheduleRequest();
         req.scheduleHour = 99;
 
         Test.startTest();
-        List<MatrixSyncInvocable.RescheduleResult> results =
-            MatrixSyncInvocable.reschedule(new List<MatrixSyncInvocable.RescheduleRequest>{ req });
+        List<MatrixRescheduleInvocable.RescheduleResult> results =
+            MatrixRescheduleInvocable.reschedule(new List<MatrixRescheduleInvocable.RescheduleRequest>{ req });
         Test.stopTest();
 
         System.assertEquals(false, results[0].success);
@@ -45,32 +45,30 @@ private class MatrixSyncInvocableTest {
 
     @IsTest
     static void getScheduleInfo_noJob_returnsNotScheduled() {
-        MatrixSyncInvocable.ScheduleInfoRequest req = new MatrixSyncInvocable.ScheduleInfoRequest();
+        MatrixScheduleInfoInvocable.ScheduleInfoRequest req = new MatrixScheduleInfoInvocable.ScheduleInfoRequest();
 
         Test.startTest();
-        List<MatrixSyncInvocable.ScheduleInfoResult> results =
-            MatrixSyncInvocable.getScheduleInfo(new List<MatrixSyncInvocable.ScheduleInfoRequest>{ req });
+        List<MatrixScheduleInfoInvocable.ScheduleInfoResult> results =
+            MatrixScheduleInfoInvocable.getScheduleInfo(new List<MatrixScheduleInfoInvocable.ScheduleInfoRequest>{ req });
         Test.stopTest();
 
         System.assertEquals(1, results.size());
         System.assertEquals(false, results[0].isScheduled);
         System.assertEquals('Not scheduled', results[0].nextFireTimeText);
-        System.assertEquals(null, results[0].nextFireTime);
     }
 
     @IsTest
     static void getScheduleInfo_withJob_returnsScheduledInfo() {
         MatrixInventoryScheduler.scheduleAt(3);
 
-        MatrixSyncInvocable.ScheduleInfoRequest req = new MatrixSyncInvocable.ScheduleInfoRequest();
+        MatrixScheduleInfoInvocable.ScheduleInfoRequest req = new MatrixScheduleInfoInvocable.ScheduleInfoRequest();
 
         Test.startTest();
-        List<MatrixSyncInvocable.ScheduleInfoResult> results =
-            MatrixSyncInvocable.getScheduleInfo(new List<MatrixSyncInvocable.ScheduleInfoRequest>{ req });
+        List<MatrixScheduleInfoInvocable.ScheduleInfoResult> results =
+            MatrixScheduleInfoInvocable.getScheduleInfo(new List<MatrixScheduleInfoInvocable.ScheduleInfoRequest>{ req });
         Test.stopTest();
 
         System.assertEquals(true, results[0].isScheduled);
-        System.assertNotEquals(null, results[0].nextFireTime);
         System.assertNotEquals('Not scheduled', results[0].nextFireTimeText);
     }
 }

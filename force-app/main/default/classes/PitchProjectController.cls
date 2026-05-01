@@ -1,121 +1,157 @@
 /**
- * AuraEnabled controller backing the pitchProjectCreator wizard and pitchProjectPacing
- * record-page component.
+ * Apex controller for pitchProjectCreator and pitchProjectPacing LWCs.
  *
- * Pacing stage weights (applied to Budget_Line__c.Planned_Amount__c):
- *   Locked   → 100% (Booked)
- *   Approved → 60%  (Pending)
- *   Draft    → 10%  (Pending)
- *   Cancelled → excluded
+ * Creator side: getActiveOutlets() + saveProject()
+ * Pacing  side: getPacingData()
  */
 public with sharing class PitchProjectController {
 
-    // ── Wizard helpers ─────────────────────────────────────────────────────
+    // ── Creator ──────────────────────────────────────────────────────────────
 
     @AuraEnabled(cacheable=true)
     public static List<Outlet__c> getActiveOutlets() {
-        return [SELECT Id, Name FROM Outlet__c WHERE Is_Active__c = true ORDER BY Name];
+        return [
+            SELECT Id, Name, Code__c
+            FROM   Outlet__c
+            WHERE  Is_Active__c = true
+            ORDER BY Name
+        ];
     }
 
     /**
-     * Creates a Pitch_Project__c and its Pitch_Project_Outlet__c junctions atomically.
-     * outletIds[i] and unitCodes[i] are parallel arrays; each pair produces one junction.
-     * Returns the new project Id on success; throws AuraHandledException on failure.
+     * Atomically inserts a Pitch_Project__c and its Pitch_Project_Outlet__c children.
+     *
+     * @param outlets  List of maps, each with keys 'outletId' (Id as String) and 'unitCode' (String).
+     * @return         Id of the new Pitch_Project__c record.
      */
     @AuraEnabled
     public static Id saveProject(
-        String  projectName,
-        String  ownerType,
-        Id      owningMarketId,
-        String  timeFrame,
-        Decimal goal,
-        Date    startDate,
-        Date    endDate,
-        String  description,
-        List<Id>     outletIds,
-        List<String> unitCodes
+        String          projectName,
+        String          ownerType,
+        String          owningMarketId,
+        String          timeFrame,
+        Decimal         goal,
+        String          description,
+        String          startDate,
+        String          endDate,
+        List<Map<String, String>> outlets
     ) {
         Savepoint sp = Database.setSavepoint();
         try {
             Pitch_Project__c proj = new Pitch_Project__c(
                 Project_Name__c  = projectName,
                 Owner_Type__c    = ownerType,
-                Owning_Market__c = owningMarketId,
+                Owning_Market__c = String.isNotBlank(owningMarketId) ? (Id) owningMarketId : null,
                 Time_Frame__c    = timeFrame,
                 Goal__c          = goal,
-                Start_Date__c    = startDate,
-                End_Date__c      = endDate,
                 Description__c   = description,
-                Status__c        = 'Draft'
+                Start_Date__c    = String.isNotBlank(startDate) ? Date.valueOf(startDate) : null,
+                End_Date__c      = String.isNotBlank(endDate)   ? Date.valueOf(endDate)   : null,
+                Status__c        = 'Active'
             );
             insert proj;
 
-            if (outletIds != null && !outletIds.isEmpty()) {
-                List<Pitch_Project_Outlet__c> junctions = new List<Pitch_Project_Outlet__c>();
-                for (Integer i = 0; i < outletIds.size(); i++) {
-                    String code = (unitCodes != null && i < unitCodes.size())
-                        ? unitCodes[i] : '';
-                    if (String.isBlank(code)) continue;
+            List<Pitch_Project_Outlet__c> junctions = new List<Pitch_Project_Outlet__c>();
+            for (Map<String, String> outlet : outlets) {
+                String outletId = outlet.get('outletId');
+                String unitCode = outlet.get('unitCode');
+                if (String.isNotBlank(outletId) && String.isNotBlank(unitCode)) {
                     junctions.add(new Pitch_Project_Outlet__c(
                         Pitch_Project__c = proj.Id,
-                        Outlet__c        = outletIds[i],
-                        Unit_Code__c     = code
+                        Outlet__c        = (Id) outletId,
+                        Unit_Code__c     = unitCode.trim()
                     ));
                 }
-                if (!junctions.isEmpty()) insert junctions;
             }
+            if (!junctions.isEmpty()) insert junctions;
 
             return proj.Id;
+
         } catch (Exception e) {
             Database.rollback(sp);
             throw new AuraHandledException(e.getMessage());
         }
     }
 
-    // ── Pacing data ────────────────────────────────────────────────────────
+    // ── Pacing ───────────────────────────────────────────────────────────────
 
+    /**
+     * Returns Goal, Booked, Pending, and Forecast (Weighted) for a Pitch_Project__c.
+     *
+     * Booked   = SUM(Total_Planned_Amount__c) on linked Opps with Status = Active | Closed
+     * Pending  = SUM on linked Opps with Status = Submitted | Approved
+     * Forecast = probability-weighted sum across all non-Cancelled linked Opps
+     *            (Draft=10%, Submitted=30%, Approved=60%, Active/Closed=100%)
+     */
     @AuraEnabled(cacheable=true)
     public static PacingData getPacingData(Id projectId) {
-        if (projectId == null) {
-            throw new AuraHandledException('projectId is required');
-        }
+        if (projectId == null) throw new AuraHandledException('projectId is required');
 
         Pitch_Project__c proj = [
-            SELECT Goal__c
+            SELECT Goal__c, Status__c, Project_Name__c
             FROM   Pitch_Project__c
             WHERE  Id = :projectId
         ];
+        Decimal goalVal = proj.Goal__c != null ? proj.Goal__c : 0;
 
-        // Aggregate Budget_Line__c amounts via linked opportunities
-        Map<String, Decimal> byStatus = new Map<String, Decimal>();
-        for (AggregateResult ar : [
-            SELECT Status__c s, SUM(Planned_Amount__c) total
-            FROM   Budget_Line__c
-            WHERE  Advertising_Opportunity__r.Pitch_Project__c = :projectId
-              AND  Status__c != 'Cancelled'
-            GROUP BY Status__c
+        AggregateResult[] bookedAgg = [
+            SELECT SUM(Total_Planned_Amount__c) total
+            FROM   Advertising_Opportunity__c
+            WHERE  Pitch_Project__c = :projectId
+              AND  Status__c IN ('Active', 'Closed')
+        ];
+        Decimal booked = safeDecimal(bookedAgg[0].get('total'));
+
+        AggregateResult[] pendingAgg = [
+            SELECT SUM(Total_Planned_Amount__c) total
+            FROM   Advertising_Opportunity__c
+            WHERE  Pitch_Project__c = :projectId
+              AND  Status__c IN ('Submitted', 'Approved')
+        ];
+        Decimal pending = safeDecimal(pendingAgg[0].get('total'));
+
+        Map<String, Decimal> weights = new Map<String, Decimal>{
+            'Draft'     => 0.10,
+            'Submitted' => 0.30,
+            'Approved'  => 0.60,
+            'Active'    => 1.00,
+            'Closed'    => 1.00
+        };
+        Decimal forecast = 0;
+        for (Advertising_Opportunity__c opp : [
+            SELECT Total_Planned_Amount__c, Status__c
+            FROM   Advertising_Opportunity__c
+            WHERE  Pitch_Project__c = :projectId
+              AND  Status__c        != 'Cancelled'
         ]) {
-            String s = (String) ar.get('s');
-            Decimal t = ar.get('total') != null ? (Decimal) ar.get('total') : 0;
-            byStatus.put(s, t);
+            Decimal w = weights.containsKey(opp.Status__c) ? weights.get(opp.Status__c) : 0;
+            forecast += safeDecimal(opp.Total_Planned_Amount__c) * w;
         }
 
-        Decimal locked   = byStatus.containsKey('Locked')   ? byStatus.get('Locked')   : 0;
-        Decimal approved = byStatus.containsKey('Approved') ? byStatus.get('Approved') : 0;
-        Decimal draft    = byStatus.containsKey('Draft')    ? byStatus.get('Draft')    : 0;
-
         PacingData pd    = new PacingData();
-        pd.goal     = proj.Goal__c != null ? proj.Goal__c : 0;
-        pd.booked   = locked;
-        pd.pending  = approved + draft;
-        pd.forecast = locked + (approved * 0.60) + (draft * 0.10);
+        pd.goal          = goalVal;
+        pd.booked        = booked;
+        pd.pending       = pending;
+        pd.forecast      = forecast;
+        pd.projectName   = proj.Project_Name__c;
+        pd.projectStatus = proj.Status__c;
         return pd;
     }
 
+    // ── Inner classes ────────────────────────────────────────────────────────
+
     public class PacingData {
-        @AuraEnabled public Decimal goal;
-        @AuraEnabled public Decimal booked;
-        @AuraEnabled public Decimal pending;
-        @AuraEnabled public Decimal forecast;
+        @AuraEnabled public Decimal goal          { get; set; }
+        @AuraEnabled public Decimal booked        { get; set; }
+        @AuraEnabled public Decimal pending       { get; set; }
+        @AuraEnabled public Decimal forecast      { get; set; }
+        @AuraEnabled public String  projectName   { get; set; }
+        @AuraEnabled public String  projectStatus { get; set; }
+    }
+
+    // ── Helpers ──────────────────────────────────────────────────────────────
+
+    private static Decimal safeDecimal(Object val) {
+        return val == null ? 0 : (Decimal) val;
     }
 }

@@ -6,7 +6,6 @@
     <description>Individual budget allocation line linked to an Advertising Opportunity. Tracks planned vs actual amounts by channel, vehicle, and month. Traffic coordinators use the Traffic Copy Entry quick action to add spot-level details for transmission to the traffic system.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>true</enableHistory>
     <enableLicensing>false</enableLicensing>

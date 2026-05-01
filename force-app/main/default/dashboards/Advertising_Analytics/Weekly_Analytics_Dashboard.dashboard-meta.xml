@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Dashboard xmlns="http://soap.sforce.com/2006/04/metadata">
+    <backgroundEndColor>#FFFFFF</backgroundEndColor>
+    <backgroundFadeDirection>Diagonal</backgroundFadeDirection>
+    <backgroundStartColor>#FFFFFF</backgroundStartColor>
+    <dashboardType>LoggedInUser</dashboardType>
+    <description>Budget vs. actuals pacing by vehicle and channel; revenue by market; order traffic status. Scheduled for Friday 4 PM delivery via DashboardEmailScheduler.</description>
+    <leftSection>
+        <columnSize>WIDE</columnSize>
+        <components>
+            <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
+            <chartAxisRange>Auto</chartAxisRange>
+            <componentType>Bar</componentType>
+            <displayUnits>Thousands</displayUnits>
+            <drillEnabled>true</drillEnabled>
+            <drillToDetailEnabled>false</drillToDetailEnabled>
+            <enableHover>true</enableHover>
+            <header>Vehicle Pacing</header>
+            <legendPosition>Bottom</legendPosition>
+            <maxValuesDisplayed>15</maxValuesDisplayed>
+            <report>Advertising_Analytics/Revenue_by_Vehicle</report>
+            <showPercentage>false</showPercentage>
+            <showTotal>true</showTotal>
+            <showValues>true</showValues>
+            <sortBy>RowValueDescending</sortBy>
+            <title>Budget vs. Actuals by Vehicle (YTD)</title>
+        </components>
+    </leftSection>
+    <middleSection>
+        <columnSize>WIDE</columnSize>
+        <components>
+            <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
+            <chartAxisRange>Auto</chartAxisRange>
+            <componentType>Bar</componentType>
+            <displayUnits>Thousands</displayUnits>
+            <drillEnabled>true</drillEnabled>
+            <drillToDetailEnabled>false</drillToDetailEnabled>
+            <enableHover>true</enableHover>
+            <header>Channel Pacing</header>
+            <legendPosition>Bottom</legendPosition>
+            <maxValuesDisplayed>15</maxValuesDisplayed>
+            <report>Advertising_Analytics/Current_Month_Pacing</report>
+            <showPercentage>false</showPercentage>
+            <showTotal>true</showTotal>
+            <showValues>true</showValues>
+            <sortBy>RowValueDescending</sortBy>
+            <title>Budget vs. Actuals by Channel</title>
+        </components>
+        <components>
+            <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
+            <chartAxisRange>Auto</chartAxisRange>
+            <componentType>Table</componentType>
+            <displayUnits>Auto</displayUnits>
+            <drillEnabled>true</drillEnabled>
+            <drillToDetailEnabled>false</drillToDetailEnabled>
+            <enableHover>false</enableHover>
+            <header>Traffic Order Status</header>
+            <maxValuesDisplayed>10</maxValuesDisplayed>
+            <report>Advertising_Analytics/Order_Pacing</report>
+            <showPercentage>false</showPercentage>
+            <showTotal>false</showTotal>
+            <showValues>true</showValues>
+            <sortBy>RowLabelAscending</sortBy>
+            <title>Order Pacing by Traffic Status</title>
+        </components>
+    </middleSection>
+    <rightSection>
+        <columnSize>WIDE</columnSize>
+        <components>
+            <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
+            <chartAxisRange>Auto</chartAxisRange>
+            <componentType>Bar</componentType>
+            <displayUnits>Thousands</displayUnits>
+            <drillEnabled>true</drillEnabled>
+            <drillToDetailEnabled>false</drillToDetailEnabled>
+            <enableHover>true</enableHover>
+            <header>Market Revenue YTD</header>
+            <legendPosition>Bottom</legendPosition>
+            <maxValuesDisplayed>15</maxValuesDisplayed>
+            <report>Advertising_Analytics/Revenue_by_Market</report>
+            <showPercentage>false</showPercentage>
+            <showTotal>true</showTotal>
+            <showValues>true</showValues>
+            <sortBy>RowValueDescending</sortBy>
+            <title>Revenue by Market (Budget vs. Actual)</title>
+        </components>
+    </rightSection>
+    <textColor>#000000</textColor>
+    <title>Weekly Analytics Dashboard</title>
+    <titleColor>#003366</titleColor>
+    <titleSize>14</titleSize>
+</Dashboard>

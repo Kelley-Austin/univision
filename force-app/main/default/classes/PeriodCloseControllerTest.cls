@@ -1,189 +1,250 @@
 @IsTest
 private class PeriodCloseControllerTest {
 
-    // ── Helpers ────────────────────────────────────────────────────────────────
-
-    private static Period_Close__c makePC(Integer yr, Integer mo, String status) {
+    static Period_Close__c insertPc(Integer year, Integer month, String status) {
         Period_Close__c pc = new Period_Close__c(
-            Period_Year__c  = yr,
-            Period_Month__c = mo,
-            Status__c       = status,
-            Composite_Key__c = String.valueOf(yr) + '|' + String.valueOf(mo)
+            Period_Year__c   = year,
+            Period_Month__c  = month,
+            Close_Date__c    = Date.newInstance(year, month, 14),
+            Status__c        = status,
+            Composite_Key__c = year + '|' + String.valueOf(month).leftPad(2, '0')
         );
         insert pc;
         return pc;
     }
 
-    private static Actual_Revenue__c makeLateActual(Account acc) {
-        Actual_Revenue__c ar = new Actual_Revenue__c(
-            Account__c      = acc.Id,
-            Revenue_Type__c = 'Local',
-            Period_Year__c  = 2025,
-            Period_Month__c = 1,
-            Amount__c       = 1000,
-            Is_Late__c      = true,
-            Late_Status__c  = 'Pending'
+    static Account insertAccount() {
+        Account a = new Account(Name = 'Controller Test Acct');
+        insert a;
+        return a;
+    }
+
+    static Projection__c insertProj(Account a, Integer year, Integer month, Decimal amt, Decimal actual) {
+        Projection__c p = new Projection__c(
+            Account__c       = a.Id,
+            Period_Year__c   = year,
+            Period_Month__c  = month,
+            Amount__c        = amt,
+            Actual_Amount__c = actual,
+            Stage__c         = 'Working'
         );
-        insert ar;
-        return ar;
+        insert p;
+        return p;
     }
 
-    // ── closePeriod (delegates to service) ────────────────────────────────────
+    // ── getPeriodSummary ──────────────────────────────────────────────────────
 
     @IsTest
-    static void testClosePeriod_delegatesToService() {
-        Period_Close__c pc = makePC(2025, 8, 'Open');
+    static void testGetPeriodSummary() {
+        Account a = insertAccount();
+        Period_Close__c pc = insertPc(2025, 11, 'Open');
+        insertProj(a, 2025, 11, 80000, 70000);
+        insertProj(a, 2025, 11, 40000, null);
 
         Test.startTest();
-        PeriodCloseService.CloseResult result = PeriodCloseController.closePeriod(pc.Id);
+        PeriodCloseController.PeriodSummaryResult res =
+            PeriodCloseController.getPeriodSummary(pc.Id);
         Test.stopTest();
 
-        System.assert(result.success);
-        System.assertEquals(0, result.snapshotCount);
-    }
-
-    // ── reopenPeriod (delegates to service) ───────────────────────────────────
-
-    @IsTest
-    static void testReopenPeriod_delegatesToService() {
-        Period_Close__c pc = makePC(2024, 6, 'Closed');
-
-        Test.startTest();
-        PeriodCloseService.CloseResult result = PeriodCloseController.reopenPeriod(pc.Id);
-        Test.stopTest();
-
-        System.assert(result.success);
-    }
-
-    // ── getDashboardData ───────────────────────────────────────────────────────
-
-    @IsTest
-    static void testGetDashboardData_returns24Rows() {
-        makePC(2025, 1, 'Closed');
-        makePC(2025, 2, 'Open');
-
-        Test.startTest();
-        List<PeriodCloseController.PeriodSummary> rows =
-            PeriodCloseController.getDashboardData();
-        Test.stopTest();
-
-        System.assertEquals(24, rows.size(), 'Should return exactly 24 months');
-        // First row should be most recent month
-        System.assertEquals(Date.today().year(),  rows[0].periodYear);
-        System.assertEquals(Date.today().month(), rows[0].periodMonth);
+        System.assertEquals('Open', res.status);
+        System.assertEquals(2, res.projectionCount);
+        System.assertEquals(1, res.projectionsWithoutActuals);
+        System.assertEquals(2025, res.periodYear);
+        System.assertEquals(11,   res.periodMonth);
     }
 
     @IsTest
-    static void testGetDashboardData_statusReflected() {
-        Integer yr = Date.today().year();
-        Integer mo = Date.today().month() - 1 == 0 ? 12 : Date.today().month() - 1;
-        Integer prevYr = mo == 12 ? yr - 1 : yr;
-        makePC(prevYr, mo, 'Closed');
+    static void testGetPeriodSummaryClosedPeriod() {
+        Account a = insertAccount();
+        Period_Close__c pc = insertPc(2025, 10, 'Open');
+        insertProj(a, 2025, 10, 50000, null);
+
+        pc.Status__c = 'Closed';
+        pc.Closed_At__c = Datetime.now();
+        update pc;
 
         Test.startTest();
-        List<PeriodCloseController.PeriodSummary> rows =
-            PeriodCloseController.getDashboardData();
+        PeriodCloseController.PeriodSummaryResult res =
+            PeriodCloseController.getPeriodSummary(pc.Id);
         Test.stopTest();
 
-        // Find the row for the closed period
-        PeriodCloseController.PeriodSummary closedRow = null;
-        for (PeriodCloseController.PeriodSummary r : rows) {
-            if (r.periodYear == prevYr && r.periodMonth == mo) {
-                closedRow = r;
+        System.assertEquals('Closed', res.status);
+        // projectionsWithoutActuals not computed for closed periods
+        System.assertEquals(0, res.projectionsWithoutActuals);
+        System.assertNotEquals(null, res.closedAt);
+    }
+
+    // ── closePeriodAsync (sync path) ──────────────────────────────────────────
+
+    @IsTest
+    static void testClosePeriodAsyncSyncPath() {
+        Account a = insertAccount();
+        Period_Close__c pc = insertPc(2025, 9, 'Open');
+        insertProj(a, 2025, 9, 100000, 95000);
+
+        Test.startTest();
+        String result = PeriodCloseController.closePeriodAsync(pc.Id);
+        Test.stopTest();
+
+        System.assert(result.startsWith('sync:'), 'Expected sync path: ' + result);
+        System.assertEquals('Closed', [SELECT Status__c FROM Period_Close__c WHERE Id = :pc.Id].Status__c);
+    }
+
+    @IsTest
+    static void testClosePeriodAsyncErrorThrows() {
+        Period_Close__c pc = insertPc(2025, 8, 'Open');
+        pc.Status__c = 'Closed';
+        update pc;
+
+        Boolean threw = false;
+        Test.startTest();
+        try {
+            PeriodCloseController.closePeriodAsync(pc.Id);
+        } catch (AuraHandledException e) {
+            threw = true;
+        }
+        Test.stopTest();
+
+        System.assert(threw, 'Expected AuraHandledException for invalid close');
+    }
+
+    // ── reopenPeriod ──────────────────────────────────────────────────────────
+
+    @IsTest
+    static void testReopenPeriod() {
+        Period_Close__c pc = insertPc(2025, 7, 'Open');
+        pc.Status__c = 'Closed';
+        update pc;
+
+        Test.startTest();
+        PeriodCloseController.reopenPeriod(pc.Id);
+        Test.stopTest();
+
+        System.assertEquals('Reopened', [SELECT Status__c FROM Period_Close__c WHERE Id = :pc.Id].Status__c);
+    }
+
+    @IsTest
+    static void testReopenPeriodThrowsOnInvalid() {
+        Period_Close__c pc = insertPc(2025, 6, 'Open');
+
+        Boolean threw = false;
+        Test.startTest();
+        try {
+            PeriodCloseController.reopenPeriod(pc.Id);
+        } catch (AuraHandledException e) {
+            threw = true;
+        }
+        Test.stopTest();
+
+        System.assert(threw, 'Expected AuraHandledException for invalid reopen');
+    }
+
+    // ── getTrailing24Months ───────────────────────────────────────────────────
+
+    @IsTest
+    static void testGetTrailing24MonthsEmpty() {
+        Test.startTest();
+        List<PeriodCloseController.MonthRow> rows = PeriodCloseController.getTrailing24Months();
+        Test.stopTest();
+
+        System.assertEquals(24, rows.size(), 'Expected exactly 24 month rows');
+    }
+
+    @IsTest
+    static void testGetTrailing24MonthsWithData() {
+        Account a = insertAccount();
+        Date today = Date.today();
+        Integer year  = today.year();
+        Integer month = today.month();
+
+        Period_Close__c pc = insertPc(year, month, 'Open');
+        insertProj(a, year, month, 100000, 90000);
+        pc.Status__c = 'Closed';
+        pc.Closed_At__c = Datetime.now();
+        update pc;
+
+        // Generate a snapshot manually
+        insert new Period_Snapshot__c(
+            Period_Close__c       = pc.Id,
+            Period_Year__c        = year,
+            Period_Month__c       = month,
+            Projected_At_Close__c = 100000,
+            Actual_At_Close__c    = 90000,
+            Snapshot_Composite_Key__c = pc.Id + '|fake001'
+        );
+
+        Test.startTest();
+        List<PeriodCloseController.MonthRow> rows = PeriodCloseController.getTrailing24Months();
+        Test.stopTest();
+
+        PeriodCloseController.MonthRow currentRow = null;
+        for (PeriodCloseController.MonthRow r : rows) {
+            if (r.periodYear == year && r.periodMonth == month) {
+                currentRow = r;
+                break;
             }
         }
-        System.assertNotEquals(null, closedRow);
-        System.assertEquals('Closed', closedRow.status);
+        System.assertNotEquals(null, currentRow, 'Should find current month row');
+        System.assertEquals('Closed', currentRow.status);
+        System.assertEquals(100000, currentRow.projectedTotal);
+        System.assertEquals(90000,  currentRow.actualTotal);
+        System.assertEquals(-10.0,  currentRow.variancePct);
     }
 
-    // ── getPeriodSnapshots ─────────────────────────────────────────────────────
+    // ── getSnapshotsForPeriod ─────────────────────────────────────────────────
 
     @IsTest
-    static void testGetPeriodSnapshots_returnsRows() {
-        Period_Close__c pc = makePC(2025, 9, 'Closed');
-        Account acc = new Account(Name = 'Snap Account', Type = 'Advertiser');
-        insert acc;
-        Category__c cat = new Category__c(Name = 'TV');
-        insert cat;
-        Period_Snapshot__c snap = new Period_Snapshot__c(
+    static void testGetSnapshotsForPeriod() {
+        Account a = insertAccount();
+        Period_Close__c pc = insertPc(2025, 5, 'Open');
+        insertProj(a, 2025, 5, 75000, 80000);
+
+        insert new Period_Snapshot__c(
             Period_Close__c       = pc.Id,
-            Account__c            = acc.Id,
-            Category__c           = cat.Id,
-            Revenue_Type__c       = 'Local',
+            Account__c            = a.Id,
+            Revenue_Type__c       = 'TV',
             Period_Year__c        = 2025,
-            Period_Month__c       = 9,
-            Projected_At_Close__c = 5000,
-            Actual_At_Close__c    = 4500,
-            Composite_Key__c      = pc.Id + '|snap1'
+            Period_Month__c       = 5,
+            Projected_At_Close__c = 75000,
+            Actual_At_Close__c    = 80000,
+            Snapshot_Composite_Key__c = pc.Id + '|snap001'
         );
-        insert snap;
 
         Test.startTest();
         List<PeriodCloseController.SnapshotRow> rows =
-            PeriodCloseController.getPeriodSnapshots(pc.Id);
+            PeriodCloseController.getSnapshotsForPeriod(pc.Id);
         Test.stopTest();
 
         System.assertEquals(1, rows.size());
-        System.assertEquals(5000, rows[0].projected);
-        System.assertEquals(4500, rows[0].actual);
+        System.assertEquals(75000, rows[0].projectedAtClose);
+        System.assertEquals(80000, rows[0].actualAtClose);
+        System.assertEquals(5000,  rows[0].varianceAmount);
+        System.assertEquals('TV',  rows[0].revenueType);
     }
 
-    // ── getLateActuals + accept/reject ────────────────────────────────────────
+    // ── buildTrailing24 ───────────────────────────────────────────────────────
 
     @IsTest
-    static void testGetLateActuals_filtersByPending() {
-        Account acc = new Account(Name = 'Late Acct', Type = 'Advertiser');
-        insert acc;
-        Actual_Revenue__c ar = makeLateActual(acc);
+    static void testBuildTrailing24Structure() {
+        List<Integer[]> periods = PeriodCloseController.buildTrailing24();
+        System.assertEquals(24, periods.size());
+        Date today = Date.today();
+        System.assertEquals(today.year(),  periods[0][0]);
+        System.assertEquals(today.month(), periods[0][1]);
 
-        Test.startTest();
-        List<PeriodCloseController.LateActualRow> rows =
-            PeriodCloseController.getLateActuals(2025, 1);
-        Test.stopTest();
-
-        System.assertEquals(1, rows.size());
-        System.assertEquals(ar.Id, rows[0].actualId);
-    }
-
-    @IsTest
-    static void testAcceptLateActual_setsAccepted() {
-        Account acc = new Account(Name = 'Accept Acct', Type = 'Advertiser');
-        insert acc;
-        Actual_Revenue__c ar = makeLateActual(acc);
-
-        Test.startTest();
-        PeriodCloseController.acceptLateActual(ar.Id);
-        Test.stopTest();
-
-        System.assertEquals('Accepted',
-            [SELECT Late_Status__c FROM Actual_Revenue__c WHERE Id = :ar.Id].Late_Status__c);
-    }
-
-    @IsTest
-    static void testRejectLateActual_setsRejected() {
-        Account acc = new Account(Name = 'Reject Acct', Type = 'Advertiser');
-        insert acc;
-        Actual_Revenue__c ar = makeLateActual(acc);
-
-        Test.startTest();
-        PeriodCloseController.rejectLateActual(ar.Id);
-        Test.stopTest();
-
-        System.assertEquals('Rejected',
-            [SELECT Late_Status__c FROM Actual_Revenue__c WHERE Id = :ar.Id].Late_Status__c);
-    }
-
-    @IsTest
-    static void testGetLateActuals_noFilter_returnsAll() {
-        Account acc = new Account(Name = 'All Late', Type = 'Advertiser');
-        insert acc;
-        makeLateActual(acc);
-
-        Test.startTest();
-        List<PeriodCloseController.LateActualRow> rows =
-            PeriodCloseController.getLateActuals(null, null);
-        Test.stopTest();
-
-        System.assert(rows.size() >= 1, 'Should return at least one late actual');
+        // Verify they are consecutive months descending
+        for (Integer i = 1; i < periods.size(); i++) {
+            Integer prevYear  = periods[i-1][0];
+            Integer prevMonth = periods[i-1][1];
+            Integer curYear   = periods[i][0];
+            Integer curMonth  = periods[i][1];
+            if (prevMonth == 1) {
+                System.assertEquals(prevYear - 1, curYear);
+                System.assertEquals(12, curMonth);
+            } else {
+                System.assertEquals(prevYear, curYear);
+                System.assertEquals(prevMonth - 1, curMonth);
+            }
+        }
     }
 }

@@ -5,6 +5,7 @@
     <referenceTo>Category__c</referenceTo>
     <relationshipLabel>Projections</relationshipLabel>
     <relationshipName>Projections</relationshipName>
-    <required>true</required>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <required>false</required>
     <type>Lookup</type>
 </CustomField>

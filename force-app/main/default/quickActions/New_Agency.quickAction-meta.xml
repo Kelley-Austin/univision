@@ -2,7 +2,7 @@
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionSubtype>ScreenAction</actionSubtype>
     <description>Creates a new Agency account linked to a HoldCo parent. Launches the Create Agency Account screen flow.</description>
-    <flow>Create_Agency_Account</flow>
+    <flowDefinition>Create_Agency_Account</flowDefinition>
     <label>New Agency</label>
     <optionsCreateFeedItem>false</optionsCreateFeedItem>
     <type>Flow</type>

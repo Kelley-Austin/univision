@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>62.0</apiVersion>
-    <description>Launches the pitchProjectCreator LWC wizard to create a new Pitch Project with participating outlets and unit codes.</description>
-    <interviewLabel>Pitch_Project_Creator {!$Flow.CurrentDateTime}</interviewLabel>
+    <description>Screen Flow that hosts the pitchProjectCreator LWC. The LWC manages all four wizard steps internally (Basic Info → Participating Outlets → Unit Codes → Confirmation) and fires FlowNavigationFinishEvent on successful save.</description>
+    <interviewLabel>Pitch Project Creator {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Pitch Project Creator</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -10,22 +10,10 @@
             <stringValue>LightningFlowBuilder</stringValue>
         </value>
     </processMetadataValues>
-    <processMetadataValues>
-        <name>CanvasMode</name>
-        <value>
-            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
-        </value>
-    </processMetadataValues>
-    <processMetadataValues>
-        <name>OriginBuilderType</name>
-        <value>
-            <stringValue>LightningFlowBuilder</stringValue>
-        </value>
-    </processMetadataValues>
     <processType>Flow</processType>
     <screens>
-        <name>Pitch_Project_Creator_Screen</name>
-        <label>Pitch Project Creator</label>
+        <name>Create_Pitch_Project_Screen</name>
+        <label>Create Pitch Project</label>
         <locationX>176</locationX>
         <locationY>158</locationY>
         <allowBack>false</allowBack>
@@ -37,7 +25,7 @@
             <fieldType>ComponentInstance</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <storeOutputAutomatically>false</storeOutputAutomatically>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
@@ -46,7 +34,7 @@
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Pitch_Project_Creator_Screen</targetReference>
+            <targetReference>Create_Pitch_Project_Screen</targetReference>
         </connector>
     </start>
     <status>Active</status>
