@@ -3,7 +3,7 @@
     <fullName>Copy_Rotation__c</fullName>
     <externalId>false</externalId>
     <label>Copy Rotation</label>
-    <helpText>How copy rotates across spots. Examples: 100, 50/50, 33/33/34.</helpText>
+    <inlineHelpText>How copy rotates across spots. Examples: 100, 50/50, 33/33/34.</inlineHelpText>
     <length>80</length>
     <required>false</required>
     <trackHistory>false</trackHistory>

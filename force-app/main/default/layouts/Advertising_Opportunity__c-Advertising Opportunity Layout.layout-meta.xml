@@ -20,22 +20,12 @@
     <!-- ── Quick action bar ────────────────────────────────────────────── -->
     <quickActionList>
         <quickActionListItems>
-            <quickActionName>Advertising_Opportunity__c.Import_Counterpoint_Data</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
             <quickActionName>FeedItem.TextPost</quickActionName>
         </quickActionListItems>
         <quickActionListItems>
             <quickActionName>FeedItem.ContentPost</quickActionName>
         </quickActionListItems>
     </quickActionList>
-
-    <!-- ── Related Lists ──────────────────────────────────────────────── -->
-
-    <!-- Chatter feed -->
-    <relatedLists>
-        <relatedList>CombinedAttachments</relatedList>
-    </relatedLists>
 
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>

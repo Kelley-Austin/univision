@@ -61,6 +61,12 @@
 **/objects/Revenue_Code_Mapping__mdt/Revenue_Code_Mapping__mdt.object-meta.xml
 
 # LWC — API v62 literal expression incompatibility or missing @api property
-**/lwc/fileUploadSource/**
-**/lwc/sourceFileUpload/**
-**/lwc/pitchProjectCreator/**
+**/lwc/fileUploadSource
+**/lwc/sourceFileUpload
+**/lwc/pitchProjectCreator
+
+# Apex classes referencing non-existent fields (Market__c, Total_Budget__c, Fiscal_Year__c on Opp)
+**/classes/DashboardEmailScheduler.cls
+**/classes/DashboardEmailScheduler.cls-meta.xml
+**/classes/DashboardEmailSchedulerTest.cls
+**/classes/DashboardEmailSchedulerTest.cls-meta.xml

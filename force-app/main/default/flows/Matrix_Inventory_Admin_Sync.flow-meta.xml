@@ -9,10 +9,6 @@
     <runInMode>SystemModeWithSharing</runInMode>
     <status>Active</status>
 
-    <!-- ═══════════════════════════════════════════════════
-         Variables
-    ═══════════════════════════════════════════════════ -->
-
     <variables>
         <name>lastSyncLog</name>
         <dataType>SObject</dataType>
@@ -42,23 +38,6 @@
     </variables>
 
     <variables>
-        <name>userAction</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-
-    <variables>
-        <name>syncHour</name>
-        <dataType>Number</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <scale>0</scale>
-    </variables>
-
-    <variables>
         <name>rescheduleSuccess</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
@@ -73,10 +52,6 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
-
-    <!-- ═══════════════════════════════════════════════════
-         Choices
-    ═══════════════════════════════════════════════════ -->
 
     <choices>
         <name>Choice_TriggerNow</name>
@@ -96,10 +71,6 @@
         </value>
     </choices>
 
-    <!-- ═══════════════════════════════════════════════════
-         Formulas
-    ═══════════════════════════════════════════════════ -->
-
     <formulas>
         <name>fmtSyncTime</name>
         <dataType>String</dataType>
@@ -112,10 +83,6 @@
         <expression>IF({!isScheduled}, "Scheduled — next run: " &amp; {!nextFireTimeText}, "Not scheduled")</expression>
     </formulas>
 
-    <!-- ═══════════════════════════════════════════════════
-         Start
-    ═══════════════════════════════════════════════════ -->
-
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
@@ -123,10 +90,6 @@
             <targetReference>Get_Last_Sync_Log</targetReference>
         </connector>
     </start>
-
-    <!-- ═══════════════════════════════════════════════════
-         1. Get Records — last sync log
-    ═══════════════════════════════════════════════════ -->
 
     <recordLookups>
         <name>Get_Last_Sync_Log</name>
@@ -152,26 +115,16 @@
         <sortOrder>Desc</sortOrder>
     </recordLookups>
 
-    <!-- ═══════════════════════════════════════════════════
-         2. Action — get schedule info
-    ═══════════════════════════════════════════════════ -->
-
     <actionCalls>
         <name>Get_Schedule_Info</name>
         <label>Get Schedule Info</label>
         <locationX>176</locationX>
         <locationY>254</locationY>
-        <actionName>MatrixSyncInvocable</actionName>
+        <actionName>MatrixScheduleInfoInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Status_Dashboard</targetReference>
         </connector>
-        <inputParameters>
-            <name>requests</name>
-            <value>
-                <elementReference>Get_Schedule_Info_Input</elementReference>
-            </value>
-        </inputParameters>
         <outputParameters>
             <assignToReference>isScheduled</assignToReference>
             <name>isScheduled</name>
@@ -183,9 +136,71 @@
         <storeOutputAutomatically>false</storeOutputAutomatically>
     </actionCalls>
 
-    <!-- ═══════════════════════════════════════════════════
-         3. Screen — Status Dashboard
-    ═══════════════════════════════════════════════════ -->
+    <actionCalls>
+        <name>Trigger_Sync_Action</name>
+        <label>Trigger Manual Sync</label>
+        <locationX>176</locationX>
+        <locationY>614</locationY>
+        <actionName>MatrixSyncInvocable</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Sync_Queued_Screen</targetReference>
+        </connector>
+        <storeOutputAutomatically>false</storeOutputAutomatically>
+    </actionCalls>
+
+    <actionCalls>
+        <name>Reschedule_Action</name>
+        <label>Reschedule Nightly Sync</label>
+        <locationX>594</locationX>
+        <locationY>734</locationY>
+        <actionName>MatrixRescheduleInvocable</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Reschedule_Result_Screen</targetReference>
+        </connector>
+        <inputParameters>
+            <name>scheduleHour</name>
+            <value>
+                <elementReference>syncHour</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>rescheduleSuccess</assignToReference>
+            <name>success</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>rescheduleMessage</assignToReference>
+            <name>message</name>
+        </outputParameters>
+        <storeOutputAutomatically>false</storeOutputAutomatically>
+    </actionCalls>
+
+    <decisions>
+        <name>User_Choice_Decision</name>
+        <label>User Action</label>
+        <locationX>380</locationX>
+        <locationY>494</locationY>
+        <defaultConnector>
+            <targetReference>Schedule_Input_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Change Schedule</defaultConnectorLabel>
+        <rules>
+            <name>Choice_Is_Trigger_Now</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>userAction</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>TriggerNow</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Trigger_Sync_Action</targetReference>
+            </connector>
+            <label>Trigger Now</label>
+        </rules>
+    </decisions>
 
     <screens>
         <name>Status_Dashboard</name>
@@ -225,57 +240,6 @@
         <showHeader>true</showHeader>
     </screens>
 
-    <!-- ═══════════════════════════════════════════════════
-         4. Decision — branch on user choice
-    ═══════════════════════════════════════════════════ -->
-
-    <decisions>
-        <name>User_Choice_Decision</name>
-        <label>User Action</label>
-        <locationX>380</locationX>
-        <locationY>494</locationY>
-        <defaultConnector>
-            <targetReference>Schedule_Input_Screen</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Change Schedule</defaultConnectorLabel>
-        <rules>
-            <name>Choice_Is_Trigger_Now</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>userAction</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>TriggerNow</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Trigger_Sync_Action</targetReference>
-            </connector>
-            <label>Trigger Now</label>
-        </rules>
-    </decisions>
-
-    <!-- ═══════════════════════════════════════════════════
-         5a. Action — trigger sync
-    ═══════════════════════════════════════════════════ -->
-
-    <actionCalls>
-        <name>Trigger_Sync_Action</name>
-        <label>Trigger Manual Sync</label>
-        <locationX>176</locationX>
-        <locationY>614</locationY>
-        <actionName>MatrixSyncInvocable</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Sync_Queued_Screen</targetReference>
-        </connector>
-        <storeOutputAutomatically>false</storeOutputAutomatically>
-    </actionCalls>
-
-    <!-- ═══════════════════════════════════════════════════
-         5b. Screen — sync queued confirmation
-    ═══════════════════════════════════════════════════ -->
-
     <screens>
         <name>Sync_Queued_Screen</name>
         <label>Sync Queued</label>
@@ -293,10 +257,6 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
-
-    <!-- ═══════════════════════════════════════════════════
-         6a. Screen — schedule input
-    ═══════════════════════════════════════════════════ -->
 
     <screens>
         <name>Schedule_Input_Screen</name>
@@ -321,47 +281,12 @@
             <dataType>Number</dataType>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
-            <label>Run at hour (UTC, 0–23)</label>
+            <fieldText>Run at hour (UTC, 0–23)</fieldText>
             <scale>0</scale>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
-
-    <!-- ═══════════════════════════════════════════════════
-         6b. Action — reschedule
-    ═══════════════════════════════════════════════════ -->
-
-    <actionCalls>
-        <name>Reschedule_Action</name>
-        <label>Reschedule Nightly Sync</label>
-        <locationX>594</locationX>
-        <locationY>734</locationY>
-        <actionName>MatrixSyncInvocable</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Reschedule_Result_Screen</targetReference>
-        </connector>
-        <inputParameters>
-            <name>scheduleHour</name>
-            <value>
-                <elementReference>syncHour</elementReference>
-            </value>
-        </inputParameters>
-        <outputParameters>
-            <assignToReference>rescheduleSuccess</assignToReference>
-            <name>success</name>
-        </outputParameters>
-        <outputParameters>
-            <assignToReference>rescheduleMessage</assignToReference>
-            <name>message</name>
-        </outputParameters>
-        <storeOutputAutomatically>false</storeOutputAutomatically>
-    </actionCalls>
-
-    <!-- ═══════════════════════════════════════════════════
-         6c. Screen — reschedule result
-    ═══════════════════════════════════════════════════ -->
 
     <screens>
         <name>Reschedule_Result_Screen</name>
