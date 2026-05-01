@@ -13,5 +13,5 @@
     <tabs>Outlet__c</tabs>
     <tabs>Office__c</tabs>
     <uiType>Lightning</uiType>
-    <workspaceType>Standard</workspaceType>
+    <formFactors>Large</formFactors>
 </CustomApplication>
