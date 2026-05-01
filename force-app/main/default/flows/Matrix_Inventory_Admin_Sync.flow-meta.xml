@@ -38,14 +38,6 @@
     </variables>
 
     <variables>
-        <name>userAction</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-
-    <variables>
         <name>syncHour</name>
         <dataType>Number</dataType>
         <isCollection>false</isCollection>

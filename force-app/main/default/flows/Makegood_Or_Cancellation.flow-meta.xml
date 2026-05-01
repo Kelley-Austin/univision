@@ -272,10 +272,6 @@
             <fieldType>LargeTextArea</fieldType>
             <helpText>Describe the reason for this make-good or cancellation request.</helpText>
             <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>varReason</assignToReference>
-                <name>value</name>
-            </outputParameters>
         </fields>
         <fields>
             <name>RequestedCreditAmount</name>
@@ -284,10 +280,6 @@
             <fieldType>InputField</fieldType>
             <helpText>For Make-Good: the credit amount to add. For Cancellations, the fee is computed automatically from the contract policy.</helpText>
             <isRequired>false</isRequired>
-            <outputParameters>
-                <assignToReference>varRequestedCreditAmount</assignToReference>
-                <name>value</name>
-            </outputParameters>
             <scale>2</scale>
         </fields>
         <showFooter>true</showFooter>
