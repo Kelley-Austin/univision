@@ -14,7 +14,7 @@
             </componentInstanceProperties>
             <componentName>force:highlightsPanel</componentName>
         </componentInstances>
-        <mode>AppDefault</mode>
+        <mode>Replace</mode>
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
@@ -31,7 +31,7 @@
             <componentName>force:relatedListContainer</componentName>
         </componentInstances>
 
-        <mode>AppDefault</mode>
+        <mode>Replace</mode>
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>

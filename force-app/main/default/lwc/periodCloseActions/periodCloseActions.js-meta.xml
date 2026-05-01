@@ -5,7 +5,11 @@
     <targets>
         <target>lightning__RecordPage</target>
         <target>lightning__AppPage</target>
+        <target>lightning__FlowScreen</target>
     </targets>
+    <interfaces>
+        <interface>lightning__FlowScreen</interface>
+    </interfaces>
     <targetConfigs>
         <targetConfig targets="lightning__RecordPage">
             <objects>

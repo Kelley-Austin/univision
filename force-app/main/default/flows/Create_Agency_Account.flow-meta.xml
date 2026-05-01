@@ -83,6 +83,51 @@
         <storeOutputAutomatically>false</storeOutputAutomatically>
     </recordLookups>
 
+    <!-- 3. Create the Agency account -->
+    <recordCreates>
+        <name>Create_AgencyAccount</name>
+        <label>Create Agency Account</label>
+        <locationX>176</locationX>
+        <locationY>408</locationY>
+        <assignRecordIdToReference>var_newAccountId</assignRecordIdToReference>
+        <connector>
+            <targetReference>Screen_Success</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>fi_AgencyName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>var_agencyRT.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ParentId</field>
+            <value>
+                <elementReference>var_holdCoParentId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Website</field>
+            <value>
+                <elementReference>fi_Website</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phone</field>
+            <value>
+                <elementReference>fi_Phone</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordCreates>
+
+
+
     <!-- 2. Screen: collect agency details -->
     <screens>
         <name>Screen_AgencyDetails</name>
@@ -159,48 +204,6 @@
         <showHeader>true</showHeader>
     </screens>
 
-    <!-- 3. Create the Agency account -->
-    <recordCreates>
-        <name>Create_AgencyAccount</name>
-        <label>Create Agency Account</label>
-        <locationX>176</locationX>
-        <locationY>408</locationY>
-        <assignRecordIdToReference>var_newAccountId</assignRecordIdToReference>
-        <connector>
-            <targetReference>Screen_Success</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>Name</field>
-            <value>
-                <elementReference>fi_AgencyName</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>RecordTypeId</field>
-            <value>
-                <elementReference>var_agencyRT.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ParentId</field>
-            <value>
-                <elementReference>var_holdCoParentId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Website</field>
-            <value>
-                <elementReference>fi_Website</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Phone</field>
-            <value>
-                <elementReference>fi_Phone</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Account</object>
-    </recordCreates>
 
     <!-- 4. Success screen -->
     <screens>

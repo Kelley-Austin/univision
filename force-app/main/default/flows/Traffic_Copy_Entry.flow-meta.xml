@@ -126,83 +126,6 @@
         </connector>
     </start>
 
-    <!-- 1. Screen: collect copy & spot details -->
-    <screens>
-        <name>Screen_CopyDetails</name>
-        <label>Enter Traffic Copy Details</label>
-        <locationX>176</locationX>
-        <locationY>168</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Action_SubmitTrafficOrder</targetReference>
-        </connector>
-        <fields>
-            <name>Intro_Text</name>
-            <fieldText>&lt;p&gt;Enter the spot-level copy details below and click &lt;strong&gt;Submit&lt;/strong&gt; to send this budget line to the traffic system. The contract &lt;strong&gt;Traffic Status&lt;/strong&gt; will be set to &lt;strong&gt;Pending&lt;/strong&gt; immediately; the traffic system will confirm or reject the order asynchronously.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>CopyCode</name>
-            <dataType>String</dataType>
-            <fieldText>Copy Code</fieldText>
-            <fieldType>InputField</fieldType>
-            <helpText>The traffic system copy code assigned to this spot (e.g., ABC1234).</helpText>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>CopyRotation</name>
-            <dataType>String</dataType>
-            <fieldText>Copy Rotation</fieldText>
-            <fieldType>InputField</fieldType>
-            <helpText>How copies rotate across spots. Examples: 100, 50/50, 33/33/34.</helpText>
-            <isRequired>false</isRequired>
-        </fields>
-        <fields>
-            <name>SpotLength</name>
-            <choiceReferences>Choice_10sec</choiceReferences>
-            <choiceReferences>Choice_15sec</choiceReferences>
-            <choiceReferences>Choice_30sec</choiceReferences>
-            <choiceReferences>Choice_45sec</choiceReferences>
-            <choiceReferences>Choice_60sec</choiceReferences>
-            <choiceReferences>Choice_90sec</choiceReferences>
-            <choiceReferences>Choice_120sec</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Spot Length</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <isRequired>false</isRequired>
-        </fields>
-        <fields>
-            <name>WeeklySpots</name>
-            <dataType>Number</dataType>
-            <fieldText>Weekly Spots</fieldText>
-            <fieldType>InputField</fieldType>
-            <helpText>Number of spots scheduled per week.</helpText>
-            <isRequired>false</isRequired>
-            <scale>0</scale>
-        </fields>
-        <fields>
-            <name>SpotRate</name>
-            <dataType>Currency</dataType>
-            <fieldText>Spot Rate</fieldText>
-            <fieldType>InputField</fieldType>
-            <helpText>Rate per individual spot.</helpText>
-            <isRequired>false</isRequired>
-            <scale>2</scale>
-        </fields>
-        <fields>
-            <name>SpotInstructions</name>
-            <dataType>String</dataType>
-            <fieldText>Special Instructions</fieldText>
-            <fieldType>LargeTextArea</fieldType>
-            <helpText>Any special instructions for the traffic team (e.g., &quot;Run in prime time only&quot;, &quot;Do not air during news&quot;).</helpText>
-            <isRequired>false</isRequired>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-
     <!-- 2. Apex action: TrafficOrderSubmitAction.submit() -->
     <actionCalls>
         <name>Action_SubmitTrafficOrder</name>
@@ -301,6 +224,86 @@
         </rules>
     </decisions>
 
+
+
+    <!-- 1. Screen: collect copy & spot details -->
+    <screens>
+        <name>Screen_CopyDetails</name>
+        <label>Enter Traffic Copy Details</label>
+        <locationX>176</locationX>
+        <locationY>168</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Action_SubmitTrafficOrder</targetReference>
+        </connector>
+        <fields>
+            <name>Intro_Text</name>
+            <fieldText>&lt;p&gt;Enter the spot-level copy details below and click &lt;strong&gt;Submit&lt;/strong&gt; to send this budget line to the traffic system. The contract &lt;strong&gt;Traffic Status&lt;/strong&gt; will be set to &lt;strong&gt;Pending&lt;/strong&gt; immediately; the traffic system will confirm or reject the order asynchronously.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>CopyCode</name>
+            <dataType>String</dataType>
+            <fieldText>Copy Code</fieldText>
+            <fieldType>InputField</fieldType>
+            <helpText>The traffic system copy code assigned to this spot (e.g., ABC1234).</helpText>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>CopyRotation</name>
+            <dataType>String</dataType>
+            <fieldText>Copy Rotation</fieldText>
+            <fieldType>InputField</fieldType>
+            <helpText>How copies rotate across spots. Examples: 100, 50/50, 33/33/34.</helpText>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>SpotLength</name>
+            <choiceReferences>Choice_10sec</choiceReferences>
+            <choiceReferences>Choice_15sec</choiceReferences>
+            <choiceReferences>Choice_30sec</choiceReferences>
+            <choiceReferences>Choice_45sec</choiceReferences>
+            <choiceReferences>Choice_60sec</choiceReferences>
+            <choiceReferences>Choice_90sec</choiceReferences>
+            <choiceReferences>Choice_120sec</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Spot Length</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>WeeklySpots</name>
+            <dataType>Number</dataType>
+            <fieldText>Weekly Spots</fieldText>
+            <fieldType>InputField</fieldType>
+            <helpText>Number of spots scheduled per week.</helpText>
+            <isRequired>false</isRequired>
+            <scale>0</scale>
+        </fields>
+        <fields>
+            <name>SpotRate</name>
+            <dataType>Currency</dataType>
+            <fieldText>Spot Rate</fieldText>
+            <fieldType>InputField</fieldType>
+            <helpText>Rate per individual spot.</helpText>
+            <isRequired>false</isRequired>
+            <scale>2</scale>
+        </fields>
+        <fields>
+            <name>SpotInstructions</name>
+            <dataType>String</dataType>
+            <fieldText>Special Instructions</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <helpText>Any special instructions for the traffic team (e.g., &quot;Run in prime time only&quot;, &quot;Do not air during news&quot;).</helpText>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+
     <!-- 4a. Screen: success -->
     <screens>
         <name>Screen_TrafficSubmitted</name>
@@ -319,6 +322,7 @@
         <showHeader>true</showHeader>
     </screens>
 
+
     <!-- 4b. Screen: business-logic error returned by Apex -->
     <screens>
         <name>Screen_BusinessError</name>
@@ -336,6 +340,7 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
+
 
     <!-- 5. Screen: uncaught Apex fault -->
     <screens>

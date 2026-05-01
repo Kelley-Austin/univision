@@ -27,14 +27,14 @@ public with sharing class ProjectionRollupQueueable implements Queueable {
     }
 
     public void execute(QueueableContext ctx) {
-        Integer end    = Math.min(offset + MAX_ACTUALS_PER_JOB, actualIds.size());
+        Integer batchEnd = Math.min(offset + MAX_ACTUALS_PER_JOB, actualIds.size());
         List<Id> chunk = new List<Id>();
-        for (Integer i = offset; i < end; i++) chunk.add(actualIds[i]);
+        for (Integer i = offset; i < batchEnd; i++) chunk.add(actualIds[i]);
 
         rollup(chunk);
 
         // Chain if more records remain
-        if (end < actualIds.size()) {
+        if (batchEnd < actualIds.size()) {
             System.enqueueJob(new ProjectionRollupQueueable(actualIds, end));
         }
     }

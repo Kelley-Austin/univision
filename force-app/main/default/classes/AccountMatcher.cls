@@ -117,7 +117,7 @@ public with sharing class AccountMatcher {
     // ── Tier 2: Fuzzy Name ────────────────────────────────────────────────────
 
     @TestVisible
-    static Map<String, List<MatchSuggestion>> tier2FuzzyLookup(Set<String> names) {
+    public static Map<String, List<MatchSuggestion>> tier2FuzzyLookup(Set<String> names) {
         Map<String, List<MatchSuggestion>> result = new Map<String, List<MatchSuggestion>>();
         if (names.isEmpty()) return result;
 

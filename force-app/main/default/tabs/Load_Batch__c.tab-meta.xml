@@ -3,5 +3,4 @@
     <customObject>true</customObject>
     <label>Load Batches</label>
     <motif>Custom97: Handshake</motif>
-    <object>Load_Batch__c</object>
 </CustomTab>

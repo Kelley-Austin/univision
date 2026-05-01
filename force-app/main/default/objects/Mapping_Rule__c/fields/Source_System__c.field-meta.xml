@@ -6,6 +6,6 @@
     <referenceTo>Source_System__c</referenceTo>
     <relationshipLabel>Mapping Rules</relationshipLabel>
     <relationshipName>Mapping_Rules</relationshipName>
-    <deleteConstraint>Cascade</deleteConstraint>
+    <deleteConstraint>Restrict</deleteConstraint>
     <required>true</required>
 </CustomField>

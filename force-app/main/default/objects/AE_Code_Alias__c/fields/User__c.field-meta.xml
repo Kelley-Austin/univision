@@ -5,6 +5,7 @@
     <referenceTo>User</referenceTo>
     <relationshipLabel>AE Code Aliases</relationshipLabel>
     <relationshipName>AE_Code_Aliases</relationshipName>
-    <required>true</required>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <required>false</required>
     <type>Lookup</type>
 </CustomField>

@@ -149,7 +149,6 @@ private class CounterpointIngestionServiceTest {
         // Build a minimal ContentDocument in a test context
         ContentVersion cv = new ContentVersion(
             Title          = 'empty.csv',
-            PathOnBody     = 'empty.csv',
             VersionData    = Blob.valueOf(''),
             IsMajorVersion = true
         );
@@ -174,7 +173,6 @@ private class CounterpointIngestionServiceTest {
     static void importCsv_validRows_insertsRecordsAndQueuesBatch() {
         ContentVersion cv = new ContentVersion(
             Title          = 'actuals.csv',
-            PathOnBody     = 'actuals.csv',
             VersionData    = calendarCsv(''),
             IsMajorVersion = true
         );
@@ -211,7 +209,6 @@ private class CounterpointIngestionServiceTest {
     static void importCsvFromLwc_validFile_returnsSuccessResult() {
         ContentVersion cv = new ContentVersion(
             Title          = 'lwc_test.csv',
-            PathOnBody     = 'lwc_test.csv',
             VersionData    = calendarCsv(''),
             IsMajorVersion = true
         );
@@ -234,7 +231,6 @@ private class CounterpointIngestionServiceTest {
     static void importCsvFromLwc_broadcastFile_populatesBroadcastDate() {
         ContentVersion cv = new ContentVersion(
             Title          = 'bcast_lwc.csv',
-            PathOnBody     = 'bcast_lwc.csv',
             VersionData    = broadcastCsv(),
             IsMajorVersion = true
         );
