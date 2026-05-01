@@ -41,24 +41,8 @@
         </quickActionListItems>
     </quickActionList>
 
-    <!-- ── Related Lists ──────────────────────────────────────────────── -->
 
-<!-- Standard Activity related list -->
-    <relatedLists>
-        <relatedList>ActivityHistories</relatedList>
-    </relatedLists>
-
-    <!-- Open Activities -->
-    <relatedLists>
-        <relatedList>OpenActivities</relatedList>
-    </relatedLists>
-
-    <!-- Chatter feed (enableFeeds = true on the object) -->
-    <relatedLists>
-        <relatedList>CombinedAttachments</relatedList>
-    </relatedLists>
-
-    <showEmailCheckbox>false</showEmailCheckbox>
+<showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSolutionSection>false</showSolutionSection>
