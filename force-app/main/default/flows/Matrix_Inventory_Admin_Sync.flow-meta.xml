@@ -38,15 +38,6 @@
     </variables>
 
     <variables>
-        <name>syncHour</name>
-        <dataType>Number</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <scale>0</scale>
-    </variables>
-
-    <variables>
         <name>rescheduleSuccess</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>

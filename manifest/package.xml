@@ -18,9 +18,5 @@
         <members>Advertising_Opportunity__c-Advertising Opportunity Layout.layout</members>
         <name>Layout</name>
     </types>
-    <types>
-        <members>Sales_Rep.permissionset</members>
-        <name>PermissionSet</name>
-    </types>
     <version>61.0</version>
 </Package>
