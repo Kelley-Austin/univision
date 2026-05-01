@@ -3,14 +3,14 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Audit log for Matrix inventory sync runs. One record is written by MatrixInventorySyncQueueable after every sync attempt (scheduled or manual).</description>
     <enableActivities>false</enableActivities>
-    <enableBulkApi>true</enableBulkApi>
+    <enableBulkApi>false</enableBulkApi>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>false</enableSearch>
-    <enableSharing>true</enableSharing>
-    <enableStreamingApi>true</enableStreamingApi>
+    <enableSharing>false</enableSharing>
+    <enableStreamingApi>false</enableStreamingApi>
     <label>Matrix Sync Log</label>
     <nameField>
         <displayFormat>SL-{0000000}</displayFormat>

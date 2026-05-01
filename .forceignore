@@ -50,9 +50,7 @@
 **/flows/Create_Direct_Buy_Advertiser.flow-meta.xml
 **/flows/Makegood_Or_Cancellation.flow-meta.xml
 **/flows/Traffic_Copy_Entry.flow-meta.xml
-**/flows/Counterpoint_CSV_Import.flow-meta.xml
 **/flows/Pitch_Project_Creator.flow-meta.xml
-**/flows/Matrix_Inventory_Admin_Sync.flow-meta.xml
 
 # Field type change blocked by existing org data
 **/objects/Actual_Revenue__c/fields/Revenue_Type__c.field-meta.xml
@@ -70,3 +68,5 @@
 **/classes/DashboardEmailScheduler.cls-meta.xml
 **/classes/DashboardEmailSchedulerTest.cls
 **/classes/DashboardEmailSchedulerTest.cls-meta.xml
+**/classes/CounterpointIngestionServiceTest.cls
+**/classes/CounterpointIngestionServiceTest.cls-meta.xml
