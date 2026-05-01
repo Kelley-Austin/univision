@@ -12,6 +12,7 @@
 **/quickActions/New_Agency.quickAction-meta.xml
 **/quickActions/Advertising_Contract__c.Makegood_Or_Cancellation.quickAction-meta.xml
 **/quickActions/Advertising_Opportunity__c.Import_Counterpoint_Data.quickAction-meta.xml
+**/objects/Account/quickActions/Link_Agency.quickAction-meta.xml
 
 # FlexiPage template not available in this org
 **/flexipages/Agency_Account_Record_Page.flexipage-meta.xml
