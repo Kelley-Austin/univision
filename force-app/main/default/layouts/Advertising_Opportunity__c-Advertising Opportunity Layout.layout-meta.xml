@@ -21,27 +21,8 @@
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
 
-    <!-- ── System Information section ─────────────────────────────────── -->
-    <layoutSections>
-        <customLabel>false</customLabel>
-        <detailHeading>false</detailHeading>
-        <editHeading>false</editHeading>
-        <label>System Information</label>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>CreatedById</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>LastModifiedById</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns/>
-        <style>TwoColumnsTopToBottom</style>
-    </layoutSections>
 
-    <!-- ── Quick action bar ────────────────────────────────────────────── -->
+<!-- ── Quick action bar ────────────────────────────────────────────── -->
     <quickActionList>
         <quickActionListItems>
             <quickActionName>Advertising_Opportunity__c.Import_Counterpoint_Data</quickActionName>

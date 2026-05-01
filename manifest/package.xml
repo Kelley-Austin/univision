@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>PitchProjectControllerTest</members>
-        <name>ApexClass</name>
-    </types>
-    <types>
-        <members>Budget_Line__c.Account__c.field</members>
-        <name>CustomField</name>
-    </types>
-    <types>
-        <members>Makegood_Or_Cancellation.flow</members>
-        <members>Matrix_Inventory_Admin_Sync.flow</members>
-        <members>Period_Close_Actions.flow</members>
-        <name>Flow</name>
-    </types>
-    <types>
         <members>Advertising_Opportunity__c-Advertising Opportunity Layout.layout</members>
         <name>Layout</name>
     </types>
