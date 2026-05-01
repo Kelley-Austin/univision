@@ -27,6 +27,7 @@
 # FlexiPage / App using schema elements not valid in this org type
 **/flexipages/MDM_Workspace_Home.flexipage-meta.xml
 **/flexipages/Agency_Account_Record_Page.flexipage-meta.xml
+**/flexipages/Source_System_Record_Page.flexipage-meta.xml
 **/applications/MDM_Workspace.app-meta.xml
 
 # Named Credential — type element invalid in this org
