@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionSubtype>ScreenAction</actionSubtype>
+    <description>Guided 3-step flow to create a new Advertising Opportunity — account, details, and timeline.</description>
+    <flow>New_Advertising_Opportunity</flow>
+    <label>New Opportunity</label>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <type>Flow</type>
+</QuickAction>

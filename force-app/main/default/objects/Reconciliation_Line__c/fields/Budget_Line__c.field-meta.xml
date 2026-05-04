@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Budget_Line__c</fullName>
+    <description>The planned Budget Line this reconciliation row covers. Null for Unmatched Actual rows.</description>
+    <label>Budget Line</label>
+    <referenceTo>Budget_Line__c</referenceTo>
+    <relationshipLabel>Reconciliation Lines</relationshipLabel>
+    <relationshipName>Reconciliation_Lines</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <description>Publishes a Matrix_Order_Sync__e platform event when an Advertising Opportunity's Status changes to a sync-eligible value: Approved or Closed Won → CREATE or UPDATE; Closed Lost → CANCEL. Runs asynchronously after the record commits so it does not add latency to the user's save.</description>
+    <environments>Default</environments>
+    <interviewLabel>Matrix Order Outbound Sync {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Matrix Order Outbound Sync</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+
+    <!-- ─── Variable: operation string passed to the platform event ─────── -->
+    <variables>
+        <name>varOperation</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>CREATE</stringValue>
+        </value>
+    </variables>
+
+    <!-- ─── Trigger: fires after Advertising_Opportunity__c is saved ──────
+         Entry conditions:
+           1. Status__c changed (IsChanged = true)
+           2. AND (Status__c = Active OR Status__c = Cancelled)
+         The background/async path runs after the transaction commits.      -->
+    <start>
+        <locationX>176</locationX>
+        <locationY>0</locationY>
+        <filterLogic>1 AND (2 OR 3 OR 4)</filterLogic>
+        <filters>
+            <field>Status__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Approved</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Closed Won</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Closed Lost</stringValue>
+            </value>
+        </filters>
+        <object>Advertising_Opportunity__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Determine_Operation</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+
+    <!-- ─── Decision: which operation to send? ─────────────────────────── -->
+    <decisions>
+        <name>Determine_Operation</name>
+        <label>Determine Operation</label>
+        <locationX>176</locationX>
+        <locationY>120</locationY>
+        <defaultConnector>
+            <targetReference>Set_CREATE</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Approved/Closed Won — no Matrix ID yet (CREATE)</defaultConnectorLabel>
+        <rules>
+            <name>Is_CANCEL</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed Lost</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_CANCEL</targetReference>
+            </connector>
+            <label>Closed Lost → CANCEL</label>
+        </rules>
+        <rules>
+            <name>Is_UPDATE</name>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Approved</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed Won</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Matrix_Order_ID__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_UPDATE</targetReference>
+            </connector>
+            <label>Approved/Closed Won with existing Matrix ID → UPDATE</label>
+        </rules>
+    </decisions>
+
+    <!-- ─── Assignments ─────────────────────────────────────────────────── -->
+    <assignments>
+        <name>Set_CANCEL</name>
+        <label>Set CANCEL</label>
+        <locationX>0</locationX>
+        <locationY>240</locationY>
+        <assignmentItems>
+            <assignToReference>varOperation</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>CANCEL</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Publish_Event</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_UPDATE</name>
+        <label>Set UPDATE</label>
+        <locationX>176</locationX>
+        <locationY>240</locationY>
+        <assignmentItems>
+            <assignToReference>varOperation</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>UPDATE</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Publish_Event</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_CREATE</name>
+        <label>Set CREATE</label>
+        <locationX>352</locationX>
+        <locationY>240</locationY>
+        <assignmentItems>
+            <assignToReference>varOperation</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>CREATE</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Publish_Event</targetReference>
+        </connector>
+    </assignments>
+
+    <!-- ─── Create Record: publish the platform event ───────────────────── -->
+    <recordCreates>
+        <name>Publish_Event</name>
+        <label>Publish Matrix Order Sync Event</label>
+        <locationX>176</locationX>
+        <locationY>360</locationY>
+        <inputAssignments>
+            <field>Opportunity_Id__c</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Operation__c</field>
+            <value>
+                <elementReference>varOperation</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Retry_Count__c</field>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </inputAssignments>
+        <object>Matrix_Order_Sync__e</object>
+    </recordCreates>
+
+    <status>Active</status>
+</Flow>

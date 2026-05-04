@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionSubtype>ScreenAction</actionSubtype>
+    <description>Opens the Run Reconciliation flow to compare Budget Lines against Counterpoint actuals for this opportunity.</description>
+    <flowDefinition>Run_Reconciliation</flowDefinition>
+    <label>Run Reconciliation</label>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <type>Flow</type>
+</QuickAction>

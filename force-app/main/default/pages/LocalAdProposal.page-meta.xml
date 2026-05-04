@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <availableInTouch>false</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>Printable proposal PDF for a Local Ad Sales Advertising Opportunity. Pass ?id=&lt;opportunityId&gt; as a URL parameter. Renders flight details, demo targets, rate card, and budget schedule formatted for print/PDF. Launched from the Create Local Ad Proposal flow success screen.</description>
+    <label>Local Ad Proposal</label>
+</ApexPage>

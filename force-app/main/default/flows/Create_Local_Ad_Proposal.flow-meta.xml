@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <description>Guided local ad sales proposal creation. Launched from an Account record. Collects flight dates, demographic targets, vehicle/daypart, and budget lines — then creates an Advertising Opportunity (Local Ad Sales) with linked Budget Lines in a single transaction. The success screen links directly to the printable proposal PDF.</description>
+    <interviewLabel>Create Local Ad Proposal {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Create Local Ad Proposal</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <runInMode>DefaultMode</runInMode>
+    <start>
+        <locationX>176</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>getAccount</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+
+    <!-- ═══════════════════════════════════════════
+         VARIABLES
+    ═══════════════════════════════════════════ -->
+
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <description>Account record ID passed automatically when launched via Quick Action from an Account record page.</description>
+    </variables>
+    <variables>
+        <name>varMarket</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varStartDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varEndDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varTotalBudget</name>
+        <dataType>Currency</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+    </variables>
+    <variables>
+        <name>varPrimaryDemo</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varSecondaryDemo</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varProposalNotes</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varVehicleId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varBudgetLinesJson</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varOpportunityId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>varOpportunityName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varSuccess</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varErrorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <!-- ═══════════════════════════════════════════
+         PICKLIST CHOICES — Primary Demo
+    ═══════════════════════════════════════════ -->
+
+    <choices>
+        <name>demoA18plus</name>
+        <choiceText>A18+</choiceText>
+        <dataType>String</dataType>
+        <value><stringValue>A18+</stringValue></value>
+    </choices>
+    <choices>
+        <name>demoA1849</name>
+        <choiceText>A18-49</choiceText>
+        <dataType>String</dataType>
+        <value><stringValue>A18-49</stringValue></value>
+    </choices>
+    <choices>
+        <name>demoA2554</name>
+        <choiceText>A25-54</choiceText>
+        <dataType>String</dataType>
+        <value><stringValue>A25-54</stringValue></value>
+    </choices>
+    <choices>
+        <name>demoA3564</name>
+        <choiceText>A35-64</choiceText>
+        <dataType>String</dataType>
+        <value><stringValue>A35-64</stringValue></value>
+    </choices>
+    <choices>
+        <name>demoW1849</name>
+        <choiceText>W18-49</choiceText>
+        <dataType>String</dataType>
+        <value><stringValue>W18-49</stringValue></value>
+    </choices>
+    <choices>
+        <name>demoW2554</name>
+        <choiceText>W25-54</choiceText>
+        <dataType>String</dataType>
+        <value><stringValue>W25-54</stringValue></value>
+    </choices>
+    <choices>
+        <name>demoM1849</name>
+        <choiceText>M18-49</choiceText>
+        <dataType>String</dataType>
+        <value><stringValue>M18-49</stringValue></value>
+    </choices>
+    <choices>
+        <name>demoM2554</name>
+        <choiceText>M25-54</choiceText>
+        <dataType>String</dataType>
+        <value><stringValue>M25-54</stringValue></value>
+    </choices>
+    <choices>
+        <name>demoHispA1849</name>
+        <choiceText>Hispanic A18-49</choiceText>
+        <dataType>String</dataType>
+        <value><stringValue>Hispanic A18-49</stringValue></value>
+    </choices>
+    <choices>
+        <name>demoHispA2554</name>
+        <choiceText>Hispanic A25-54</choiceText>
+        <dataType>String</dataType>
+        <value><stringValue>Hispanic A25-54</stringValue></value>
+    </choices>
+    <choices>
+        <name>demoNone</name>
+        <choiceText>None</choiceText>
+        <dataType>String</dataType>
+        <value><stringValue>None</stringValue></value>
+    </choices>
+
+    <!-- ═══════════════════════════════════════════
+         ELEMENT 1 — Get Account
+    ═══════════════════════════════════════════ -->
+
+    <recordLookups>
+        <name>getAccount</name>
+        <label>Get Account</label>
+        <locationX>176</locationX>
+        <locationY>170</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>screenProposalSetup</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+
+    <!-- ═══════════════════════════════════════════
+         ELEMENT 2 — Screen: Proposal Setup
+         Collect flight dates, demo targets, budget, notes
+    ═══════════════════════════════════════════ -->
+
+    <screens>
+        <name>screenProposalSetup</name>
+        <label>Step 1 of 2 — Proposal Details</label>
+        <locationX>176</locationX>
+        <locationY>290</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>false</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>screenVehicleAndBudget</targetReference>
+        </connector>
+        <fields>
+            <name>dispSetupHeader</name>
+            <fieldText>&lt;h2 style="font-size:16px;font-weight:bold;margin-bottom:4px;"&gt;New Local Ad Sales Proposal&lt;/h2&gt;&lt;p style="color:#444;margin-top:0;"&gt;Advertiser: &lt;strong&gt;{!getAccount.Name}&lt;/strong&gt;&lt;/p&gt;&lt;p style="color:#555;font-size:13px;"&gt;Fill in the campaign details below, then click &lt;strong&gt;Next&lt;/strong&gt; to select your vehicle and add budget lines.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>inputMarket</name>
+            <dataType>String</dataType>
+            <fieldText>Market</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>varMarket</assignToReference>
+                <name>value</name>
+            </outputParameters>
+        </fields>
+        <fields>
+            <name>inputStartDate</name>
+            <dataType>Date</dataType>
+            <fieldText>Flight Start Date</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>varStartDate</assignToReference>
+                <name>value</name>
+            </outputParameters>
+        </fields>
+        <fields>
+            <name>inputEndDate</name>
+            <dataType>Date</dataType>
+            <fieldText>Flight End Date</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>varEndDate</assignToReference>
+                <name>value</name>
+            </outputParameters>
+        </fields>
+        <fields>
+            <name>inputTotalBudget</name>
+            <dataType>Currency</dataType>
+            <fieldText>Total Budget</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <outputParameters>
+                <assignToReference>varTotalBudget</assignToReference>
+                <name>value</name>
+            </outputParameters>
+            <scale>2</scale>
+        </fields>
+        <fields>
+            <name>inputPrimaryDemo</name>
+            <choiceReferences>demoA18plus</choiceReferences>
+            <choiceReferences>demoA1849</choiceReferences>
+            <choiceReferences>demoA2554</choiceReferences>
+            <choiceReferences>demoA3564</choiceReferences>
+            <choiceReferences>demoW1849</choiceReferences>
+            <choiceReferences>demoW2554</choiceReferences>
+            <choiceReferences>demoM1849</choiceReferences>
+            <choiceReferences>demoM2554</choiceReferences>
+            <choiceReferences>demoHispA1849</choiceReferences>
+            <choiceReferences>demoHispA2554</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Primary Demo Target</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+            <outputParameters>
+                <assignToReference>varPrimaryDemo</assignToReference>
+                <name>value</name>
+            </outputParameters>
+        </fields>
+        <fields>
+            <name>inputSecondaryDemo</name>
+            <choiceReferences>demoNone</choiceReferences>
+            <choiceReferences>demoA18plus</choiceReferences>
+            <choiceReferences>demoA1849</choiceReferences>
+            <choiceReferences>demoA2554</choiceReferences>
+            <choiceReferences>demoA3564</choiceReferences>
+            <choiceReferences>demoW1849</choiceReferences>
+            <choiceReferences>demoW2554</choiceReferences>
+            <choiceReferences>demoM1849</choiceReferences>
+            <choiceReferences>demoM2554</choiceReferences>
+            <choiceReferences>demoHispA1849</choiceReferences>
+            <choiceReferences>demoHispA2554</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Secondary Demo Target</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+            <outputParameters>
+                <assignToReference>varSecondaryDemo</assignToReference>
+                <name>value</name>
+            </outputParameters>
+        </fields>
+        <fields>
+            <name>inputProposalNotes</name>
+            <dataType>String</dataType>
+            <fieldText>Proposal Notes</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>false</isRequired>
+            <outputParameters>
+                <assignToReference>varProposalNotes</assignToReference>
+                <name>value</name>
+            </outputParameters>
+        </fields>
+        <nextOrFinishButtonLabel>Next: Vehicle &amp; Budget</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <!-- ═══════════════════════════════════════════
+         ELEMENT 3 — Screen: Vehicle & Budget Lines
+         LWC handles vehicle selection + budget line entry
+    ═══════════════════════════════════════════ -->
+
+    <screens>
+        <name>screenVehicleAndBudget</name>
+        <label>Step 2 of 2 — Vehicle &amp; Budget Lines</label>
+        <locationX>176</locationX>
+        <locationY>410</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>false</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>actionCreateProposal</targetReference>
+        </connector>
+        <fields>
+            <name>dispBudgetHeader</name>
+            <fieldText>&lt;p style="color:#555;font-size:13px;"&gt;Select the vehicle / program package for this campaign. The day part and rate card will appear automatically. Then add one or more budget lines — one per channel and month. Click &lt;strong&gt;Create Proposal&lt;/strong&gt; when done.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>budgetLinesComponent</name>
+            <extensionName>c:proposalBudgetLines</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>false</storeOutputAutomatically>
+            <outputParameters>
+                <assignToReference>varVehicleId</assignToReference>
+                <name>selectedVehicleId</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>varBudgetLinesJson</assignToReference>
+                <name>budgetLinesJson</name>
+            </outputParameters>
+        </fields>
+        <nextOrFinishButtonLabel>Create Proposal</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <!-- ═══════════════════════════════════════════
+         ELEMENT 4 — Apex Action: Create Local Ad Proposal
+    ═══════════════════════════════════════════ -->
+
+    <actionCalls>
+        <name>actionCreateProposal</name>
+        <label>Create Local Ad Proposal</label>
+        <locationX>176</locationX>
+        <locationY>530</locationY>
+        <actionName>CreateLocalAdProposal</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>decisionSuccess</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>screenErrorFault</targetReference>
+        </faultConnector>
+        <inputParameters>
+            <name>accountId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>market</name>
+            <value>
+                <elementReference>varMarket</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>startDate</name>
+            <value>
+                <elementReference>varStartDate</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>endDate</name>
+            <value>
+                <elementReference>varEndDate</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>primaryDemo</name>
+            <value>
+                <elementReference>varPrimaryDemo</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>secondaryDemo</name>
+            <value>
+                <elementReference>varSecondaryDemo</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>proposalNotes</name>
+            <value>
+                <elementReference>varProposalNotes</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>totalBudget</name>
+            <value>
+                <elementReference>varTotalBudget</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>vehicleId</name>
+            <value>
+                <elementReference>varVehicleId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>budgetLinesJson</name>
+            <value>
+                <elementReference>varBudgetLinesJson</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>varOpportunityId</assignToReference>
+            <name>opportunityId</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>varOpportunityName</assignToReference>
+            <name>opportunityName</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>varSuccess</assignToReference>
+            <name>success</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>varErrorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputParameters>
+        <storeOutputAutomatically>false</storeOutputAutomatically>
+    </actionCalls>
+
+    <!-- ═══════════════════════════════════════════
+         ELEMENT 5 — Decision: Did the Apex action succeed?
+    ═══════════════════════════════════════════ -->
+
+    <decisions>
+        <name>decisionSuccess</name>
+        <label>Proposal Created Successfully?</label>
+        <locationX>176</locationX>
+        <locationY>650</locationY>
+        <defaultConnector>
+            <targetReference>screenErrorApex</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No — Show Error</defaultConnectorLabel>
+        <rules>
+            <name>outcomeSuccess</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varSuccess</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>screenProposalReady</targetReference>
+            </connector>
+            <label>Yes — Proposal Created</label>
+        </rules>
+    </decisions>
+
+    <!-- ═══════════════════════════════════════════
+         ELEMENT 6 — Screen: Proposal Ready (Success)
+         Shows proposal summary and link to printable PDF
+    ═══════════════════════════════════════════ -->
+
+    <screens>
+        <name>screenProposalReady</name>
+        <label>Proposal Created</label>
+        <locationX>176</locationX>
+        <locationY>770</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>dispSuccess</name>
+            <fieldText>&lt;div style="text-align:center;padding:24px;"&gt;&lt;p style="font-size:36px;margin:0;"&gt;✓&lt;/p&gt;&lt;h2 style="color:#2e844a;margin-top:8px;"&gt;Proposal Created&lt;/h2&gt;&lt;p&gt;Opportunity &lt;strong&gt;{!varOpportunityName}&lt;/strong&gt; has been saved in &lt;strong&gt;Draft&lt;/strong&gt; status with all budget lines attached.&lt;/p&gt;&lt;p style="margin-top:16px;"&gt;&lt;a href="/apex/LocalAdProposal?id={!varOpportunityId}" target="_blank" style="font-size:14px;font-weight:bold;color:#0070d2;"&gt;🖨 Open Printable Proposal PDF&lt;/a&gt;&lt;/p&gt;&lt;p style="font-size:12px;color:#777;margin-top:8px;"&gt;The link opens in a new tab. Use your browser&apos;s Print function (Ctrl+P / ⌘+P) to save as PDF or send to a printer.&lt;/p&gt;&lt;/div&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <!-- ═══════════════════════════════════════════
+         ERROR SCREENS
+    ═══════════════════════════════════════════ -->
+
+    <screens>
+        <name>screenErrorApex</name>
+        <label>Error Creating Proposal</label>
+        <locationX>440</locationX>
+        <locationY>650</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>dispErrorApex</name>
+            <fieldText>&lt;div style="padding:16px;"&gt;&lt;h2 style="color:#c23934;"&gt;Proposal Could Not Be Created&lt;/h2&gt;&lt;p&gt;The proposal record could not be saved. No data was written — you can safely try again.&lt;/p&gt;&lt;p&gt;Error: &lt;em&gt;{!varErrorMessage}&lt;/em&gt;&lt;/p&gt;&lt;p&gt;If this error repeats, please contact your Salesforce administrator.&lt;/p&gt;&lt;/div&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <screens>
+        <name>screenErrorFault</name>
+        <label>Unexpected Error</label>
+        <locationX>440</locationX>
+        <locationY>530</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>dispErrorFault</name>
+            <fieldText>&lt;div style="padding:16px;"&gt;&lt;h2 style="color:#c23934;"&gt;Unexpected Error&lt;/h2&gt;&lt;p&gt;An unexpected error occurred and the proposal was not saved.&lt;/p&gt;&lt;p&gt;Error: &lt;em&gt;{!$Flow.FaultMessage}&lt;/em&gt;&lt;/p&gt;&lt;p&gt;Please contact your Salesforce administrator.&lt;/p&gt;&lt;/div&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+</Flow>

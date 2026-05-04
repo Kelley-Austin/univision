@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Channel_Code__c</fullName>
+    <description>Short alphanumeric code identifying this channel (e.g., KMEX, KUVS). Must be unique across all channels.</description>
+    <externalId>true</externalId>
+    <label>Channel Code</label>
+    <length>10</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>true</unique>
+</CustomField>

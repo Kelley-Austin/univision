@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Matrix_Last_Synced__c</fullName>
+    <description>Timestamp of the most recent successful sync to Matrix. Used for conflict detection: if the record was modified in Salesforce after this timestamp, a two-way conflict may exist.</description>
+    <label>Matrix Last Synced</label>
+    <required>false</required>
+    <type>DateTime</type>
+</CustomField>

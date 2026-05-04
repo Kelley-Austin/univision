@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Month__c</fullName>
+    <description>The calendar month this reconciliation line covers (e.g., January). Derived from the actuals effective date for Unmatched Actual rows.</description>
+    <label>Month</label>
+    <length>20</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

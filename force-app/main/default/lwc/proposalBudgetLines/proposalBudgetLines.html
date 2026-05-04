@@ -1,0 +1,138 @@
+<template>
+    <!-- Vehicle selector + detail panel -->
+    <div class="slds-box slds-theme_shade slds-m-bottom_medium">
+        <h2 class="slds-text-heading_small slds-m-bottom_small">Step 1 — Select Vehicle / Program Package</h2>
+        <lightning-combobox
+            label="Vehicle"
+            placeholder="Select an active vehicle..."
+            options={vehicleOptions}
+            value={selectedVehicleId}
+            required
+            onchange={handleVehicleChange}
+        ></lightning-combobox>
+
+        <template if:true={selectedVehicle}>
+            <div class="slds-grid slds-wrap slds-gutters_small slds-m-top_small">
+                <div class="slds-col slds-size_1-of-3">
+                    <p class="slds-text-title_caps slds-m-bottom_xx-small">Day Part</p>
+                    <p class="slds-text-body_regular">{selectedVehicle.Day_Part__c}</p>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <p class="slds-text-title_caps slds-m-bottom_xx-small">Rate Card</p>
+                    <p class="slds-text-body_regular">{rateCardFormatted}</p>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <p class="slds-text-title_caps slds-m-bottom_xx-small">Program</p>
+                    <p class="slds-text-body_regular">{selectedVehicle.Program__c}</p>
+                </div>
+            </div>
+        </template>
+    </div>
+
+    <!-- Budget line rows -->
+    <div class="slds-m-bottom_small">
+        <h2 class="slds-text-heading_small slds-m-bottom_small">Step 2 — Add Budget Lines</h2>
+
+        <template if:true={hasError}>
+            <div class="slds-box slds-theme_error slds-m-bottom_small">
+                <p>{validationError}</p>
+            </div>
+        </template>
+
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th class="slds-text-title_caps" scope="col">Channel</th>
+                    <th class="slds-text-title_caps" scope="col">Month</th>
+                    <th class="slds-text-title_caps" scope="col">Fiscal Year</th>
+                    <th class="slds-text-title_caps" scope="col">Planned Amount ($)</th>
+                    <th class="slds-text-title_caps" scope="col">Notes</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={rows} for:item="row">
+                    <tr key={row.id}>
+                        <td>
+                            <lightning-combobox
+                                data-row-id={row.id}
+                                data-field="channelId"
+                                options={channelOptions}
+                                value={row.channelId}
+                                placeholder="Channel"
+                                variant="label-hidden"
+                                onchange={handleFieldChange}
+                            ></lightning-combobox>
+                        </td>
+                        <td>
+                            <lightning-combobox
+                                data-row-id={row.id}
+                                data-field="month"
+                                options={monthOptions}
+                                value={row.month}
+                                placeholder="Month"
+                                variant="label-hidden"
+                                onchange={handleFieldChange}
+                            ></lightning-combobox>
+                        </td>
+                        <td>
+                            <lightning-input
+                                type="text"
+                                data-row-id={row.id}
+                                data-field="fiscalYear"
+                                value={row.fiscalYear}
+                                placeholder="e.g. 2026"
+                                variant="label-hidden"
+                                onchange={handleFieldChange}
+                            ></lightning-input>
+                        </td>
+                        <td>
+                            <lightning-input
+                                type="number"
+                                data-row-id={row.id}
+                                data-field="plannedAmount"
+                                value={row.plannedAmount}
+                                min="0"
+                                step="0.01"
+                                formatter="currency"
+                                variant="label-hidden"
+                                onchange={handleFieldChange}
+                            ></lightning-input>
+                        </td>
+                        <td>
+                            <lightning-input
+                                type="text"
+                                data-row-id={row.id}
+                                data-field="notes"
+                                value={row.notes}
+                                placeholder="Optional notes"
+                                variant="label-hidden"
+                                onchange={handleFieldChange}
+                            ></lightning-input>
+                        </td>
+                        <td>
+                            <lightning-button-icon
+                                icon-name="utility:delete"
+                                data-row-id={row.id}
+                                onclick={handleRemoveRow}
+                                variant="bare"
+                                alternative-text="Remove row"
+                                disabled={isOnlyRow}
+                                title="Remove this line"
+                            ></lightning-button-icon>
+                        </td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+
+        <div class="slds-m-top_small">
+            <lightning-button
+                label="Add Budget Line"
+                icon-name="utility:add"
+                icon-position="left"
+                onclick={handleAddRow}
+            ></lightning-button>
+        </div>
+    </div>
+</template>

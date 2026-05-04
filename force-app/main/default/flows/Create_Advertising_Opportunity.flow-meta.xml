@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <description>Screen flow for creating an Advertising Opportunity with Budget Lines. Launched from the Account record page via quick action.</description>
+    <interviewLabel>Create Advertising Opportunity {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Create Advertising Opportunity</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <runInMode>DefaultMode</runInMode>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>GetAccount</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+
+    <!-- ═══ Variables ═══ -->
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>opportunityId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>isSuccess</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>errorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>budgetLinesJson</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>[]</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>accountRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+
+    <!-- ═══ Step 1: Get Account ═══ -->
+    <recordLookups>
+        <name>GetAccount</name>
+        <label>Get Account</label>
+        <locationX>50</locationX>
+        <locationY>120</locationY>
+        <connector>
+            <targetReference>OpportunityDetailsScreen</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <outputReference>accountRecord</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+    </recordLookups>
+
+    <!-- ═══ Step 2: Screen — Opportunity Details + Budget Lines ═══ -->
+    <screens>
+        <name>OpportunityDetailsScreen</name>
+        <label>Opportunity Details &amp; Budget Lines</label>
+        <locationX>50</locationX>
+        <locationY>240</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>CreateOpportunityAction</targetReference>
+        </connector>
+
+        <!-- Account name banner -->
+        <fields>
+            <name>displayAccountName</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Account:&lt;/strong&gt; {!accountRecord.Name}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+
+        <!-- Opportunity header fields -->
+        <fields>
+            <name>inputStartDate</name>
+            <dataType>Date</dataType>
+            <fieldText>Start Date</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>inputEndDate</name>
+            <dataType>Date</dataType>
+            <fieldText>End Date</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>inputMarket</name>
+            <dataType>String</dataType>
+            <fieldText>Market</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>inputFiscalYear</name>
+            <dataType>String</dataType>
+            <fieldText>Fiscal Year</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <helpText>Format: FY2026</helpText>
+        </fields>
+        <fields>
+            <name>inputTotalBudget</name>
+            <dataType>Currency</dataType>
+            <fieldText>Total Budget</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <scale>2</scale>
+        </fields>
+
+        <!-- Budget line editor LWC -->
+        <fields>
+            <name>BudgetLineEditorComponent</name>
+            <extensionName>c:budgetLineEditor</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>budgetLinesJson</name>
+                <value>
+                    <elementReference>budgetLinesJson</elementReference>
+                </value>
+            </inputParameters>
+            <outputParameters>
+                <assignToReference>budgetLinesJson</assignToReference>
+                <name>budgetLinesJson</name>
+            </outputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>false</storeOutputAutomatically>
+        </fields>
+
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <!-- ═══ Step 3: Apex Action ═══ -->
+    <actionCalls>
+        <name>CreateOpportunityAction</name>
+        <label>Create Opportunity with Budget Lines</label>
+        <locationX>50</locationX>
+        <locationY>360</locationY>
+        <actionName>CreateOpportunityWithBudgetLines</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>CheckSuccess</targetReference>
+        </connector>
+        <inputParameters>
+            <name>accountId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>startDate</name>
+            <value>
+                <elementReference>OpportunityDetailsScreen.inputStartDate</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>endDate</name>
+            <value>
+                <elementReference>OpportunityDetailsScreen.inputEndDate</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>market</name>
+            <value>
+                <elementReference>OpportunityDetailsScreen.inputMarket</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>fiscalYear</name>
+            <value>
+                <elementReference>OpportunityDetailsScreen.inputFiscalYear</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>totalBudget</name>
+            <value>
+                <elementReference>OpportunityDetailsScreen.inputTotalBudget</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>budgetLinesJson</name>
+            <value>
+                <elementReference>budgetLinesJson</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>opportunityId</assignToReference>
+            <name>opportunityId</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>isSuccess</assignToReference>
+            <name>isSuccess</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>errorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputParameters>
+        <storeOutputAutomatically>false</storeOutputAutomatically>
+    </actionCalls>
+
+    <!-- ═══ Step 4: Decision ═══ -->
+    <decisions>
+        <name>CheckSuccess</name>
+        <label>Check Success</label>
+        <locationX>50</locationX>
+        <locationY>480</locationY>
+        <defaultConnector>
+            <targetReference>ErrorScreen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Error</defaultConnectorLabel>
+        <rules>
+            <name>SuccessRule</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>isSuccess</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SuccessScreen</targetReference>
+            </connector>
+            <label>Success</label>
+        </rules>
+    </decisions>
+
+    <!-- ═══ Step 5a: Success Screen ═══ -->
+    <screens>
+        <name>SuccessScreen</name>
+        <label>Opportunity Created</label>
+        <locationX>220</locationX>
+        <locationY>600</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>successMessage</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Advertising Opportunity created successfully.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;ID: {!opportunityId}&lt;/p&gt;&lt;p&gt;Click &lt;strong&gt;Finish&lt;/strong&gt; to return to the account.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <!-- ═══ Step 5b: Error Screen ═══ -->
+    <screens>
+        <name>ErrorScreen</name>
+        <label>Error Creating Opportunity</label>
+        <locationX>-120</locationX>
+        <locationY>600</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>errorDisplayMessage</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Something went wrong.&lt;/strong&gt; The opportunity could not be created.&lt;/p&gt;&lt;p&gt;Error: {!errorMessage}&lt;/p&gt;&lt;p&gt;Click &lt;strong&gt;Back&lt;/strong&gt; to correct your entries, or &lt;strong&gt;Finish&lt;/strong&gt; to exit and try again later.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+</Flow>
