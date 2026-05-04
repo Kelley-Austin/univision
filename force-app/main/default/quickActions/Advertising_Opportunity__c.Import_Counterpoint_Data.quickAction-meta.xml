@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
-    <actionSubtype>ScreenAction</actionSubtype>
-    <description>Upload and import a Counterpoint CSV file for this Advertising Opportunity. Supports both Calendar and Broadcast date types.</description>
-    <flowDefinition>Counterpoint_CSV_Import</flowDefinition>
-    <label>Import Counterpoint Data</label>
-    <optionsCreateFeedItem>false</optionsCreateFeedItem>
-    <type>Flow</type>
-</QuickAction>
