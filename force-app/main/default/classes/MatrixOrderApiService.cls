@@ -1,17 +1,17 @@
 /**
- * HTTP callout wrapper for the Matrix advertising system REST API.
+ * HTTP callout wrapper for the Matrix advertising system REST API — order operations
+ * plus incremental inventory polling. Companion to MatrixInventoryApiService (full inventory sync).
+ *
  * All methods assume they run in a context that allows callouts
  * (e.g., a Platform Event trigger or a Queueable implementing Database.AllowsCallouts).
  *
  * Authentication is handled by the "Matrix_API" Named Credential.
  * Configure the endpoint URL and credentials in Setup → Named Credentials before deploying.
  */
-public class MatrixAPIService {
+public class MatrixOrderApiService {
 
     private static final String NC = 'callout:Matrix_API';
     private static final Integer TIMEOUT_MS = 30000;
-
-    // ─── Inner types ──────────────────────────────────────────────────────────
 
     public class MatrixException extends Exception {}
 
@@ -22,8 +22,8 @@ public class MatrixAPIService {
         public String order_name;
         public String status;
         public Decimal total_budget;
-        public String start_date;   // yyyy-MM-dd
-        public String end_date;     // yyyy-MM-dd
+        public String start_date;
+        public String end_date;
         public List<LineItem> line_items = new List<LineItem>();
     }
 
@@ -31,7 +31,7 @@ public class MatrixAPIService {
         public String vehicle_code;
         public String channel_code;
         public Decimal planned_amount;
-        public String calendar_date; // yyyy-MM-dd
+        public String calendar_date;
     }
 
     /** Response body from Matrix order endpoints. */
@@ -45,15 +45,13 @@ public class MatrixAPIService {
     public class InventoryRecord {
         public String vehicle_external_id;
         public Integer available_units;
-        public String last_updated; // ISO-8601, e.g. "2024-01-15T10:30:00Z"
+        public String last_updated;
     }
 
     /** Wrapper around the Matrix /inventory response envelope. */
     public class InventoryResponse {
         public List<InventoryRecord> records;
     }
-
-    // ─── Order operations ─────────────────────────────────────────────────────
 
     public static OrderResponse createOrder(OrderPayload payload) {
         HttpRequest req = buildRequest('POST', NC + '/orders');
@@ -75,8 +73,6 @@ public class MatrixAPIService {
         return parseOrderResponse(execute(req));
     }
 
-    // ─── Inventory operations ─────────────────────────────────────────────────
-
     /**
      * Fetches inventory changes from Matrix since the given timestamp.
      * Returns an empty list when Matrix reports no changes.
@@ -85,7 +81,7 @@ public class MatrixAPIService {
         String sinceStr = since.formatGmt('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'');
         String path = NC + '/inventory?since=' + EncodingUtil.urlEncode(sinceStr, 'UTF-8');
         HttpRequest req = buildRequest('GET', path);
-        req.setTimeout(60000); // inventory poll can be slower
+        req.setTimeout(60000);
         HttpResponse res = execute(req);
         if (res.getStatusCode() != 200) {
             throw new MatrixException(
@@ -96,8 +92,6 @@ public class MatrixAPIService {
             (InventoryResponse) JSON.deserialize(res.getBody(), InventoryResponse.class);
         return parsed.records != null ? parsed.records : new List<InventoryRecord>();
     }
-
-    // ─── Private helpers ──────────────────────────────────────────────────────
 
     private static HttpRequest buildRequest(String method, String endpoint) {
         HttpRequest req = new HttpRequest();

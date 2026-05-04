@@ -39,7 +39,7 @@ public with sharing class MatrixPromoteToContractAction {
                     }
                 }
 
-                String planId = MatrixApiService.createMediaPlan(
+                String planId = MatrixInventoryApiService.createMediaPlan(
                     String.valueOf(req.opportunityId),
                     adSpaceIds
                 );

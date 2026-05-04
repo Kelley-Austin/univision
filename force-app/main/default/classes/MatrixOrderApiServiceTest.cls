@@ -1,7 +1,5 @@
 @isTest
-private class MatrixAPIServiceTest {
-
-    // ─── Mock implementations ────────────────────────────────────────────────
+private class MatrixOrderApiServiceTest {
 
     private class SuccessCreateMock implements HttpCalloutMock {
         public HttpResponse respond(HttpRequest req) {
@@ -57,13 +55,11 @@ private class MatrixAPIServiceTest {
         }
     }
 
-    // ─── Tests ───────────────────────────────────────────────────────────────
-
     @isTest
     static void testCreateOrder_success() {
         Test.setMock(HttpCalloutMock.class, new SuccessCreateMock());
 
-        MatrixAPIService.OrderPayload p = new MatrixAPIService.OrderPayload();
+        MatrixOrderApiService.OrderPayload p = new MatrixOrderApiService.OrderPayload();
         p.salesforce_id = 'a001000000000001';
         p.matrix_account_id = 'ACC-123';
         p.order_name = 'Test Campaign';
@@ -71,7 +67,7 @@ private class MatrixAPIServiceTest {
         p.total_budget = 50000;
 
         Test.startTest();
-        MatrixAPIService.OrderResponse resp = MatrixAPIService.createOrder(p);
+        MatrixOrderApiService.OrderResponse resp = MatrixOrderApiService.createOrder(p);
         Test.stopTest();
 
         System.assertEquals('MTX-001', resp.matrix_order_id);
@@ -82,12 +78,12 @@ private class MatrixAPIServiceTest {
     static void testUpdateOrder_success() {
         Test.setMock(HttpCalloutMock.class, new SuccessUpdateMock());
 
-        MatrixAPIService.OrderPayload p = new MatrixAPIService.OrderPayload();
+        MatrixOrderApiService.OrderPayload p = new MatrixOrderApiService.OrderPayload();
         p.salesforce_id = 'a001000000000001';
         p.order_name = 'Updated Campaign';
 
         Test.startTest();
-        MatrixAPIService.OrderResponse resp = MatrixAPIService.updateOrder('MTX-001', p);
+        MatrixOrderApiService.OrderResponse resp = MatrixOrderApiService.updateOrder('MTX-001', p);
         Test.stopTest();
 
         System.assertEquals('MTX-001', resp.matrix_order_id);
@@ -99,7 +95,7 @@ private class MatrixAPIServiceTest {
         Test.setMock(HttpCalloutMock.class, new SuccessCancelMock());
 
         Test.startTest();
-        MatrixAPIService.OrderResponse resp = MatrixAPIService.cancelOrder('MTX-001');
+        MatrixOrderApiService.OrderResponse resp = MatrixOrderApiService.cancelOrder('MTX-001');
         Test.stopTest();
 
         System.assertEquals('cancelled', resp.status);
@@ -110,8 +106,8 @@ private class MatrixAPIServiceTest {
         Test.setMock(HttpCalloutMock.class, new InventoryMock());
 
         Test.startTest();
-        List<MatrixAPIService.InventoryRecord> records =
-            MatrixAPIService.getInventoryChanges(Datetime.now().addHours(-1));
+        List<MatrixOrderApiService.InventoryRecord> records =
+            MatrixOrderApiService.getInventoryChanges(Datetime.now().addHours(-1));
         Test.stopTest();
 
         System.assertEquals(1, records.size());
@@ -124,8 +120,8 @@ private class MatrixAPIServiceTest {
         Test.setMock(HttpCalloutMock.class, new EmptyInventoryMock());
 
         Test.startTest();
-        List<MatrixAPIService.InventoryRecord> records =
-            MatrixAPIService.getInventoryChanges(Datetime.now().addHours(-1));
+        List<MatrixOrderApiService.InventoryRecord> records =
+            MatrixOrderApiService.getInventoryChanges(Datetime.now().addHours(-1));
         Test.stopTest();
 
         System.assertEquals(0, records.size());
@@ -135,14 +131,14 @@ private class MatrixAPIServiceTest {
     static void testApiError_throwsMatrixException() {
         Test.setMock(HttpCalloutMock.class, new ErrorMock());
 
-        MatrixAPIService.OrderPayload p = new MatrixAPIService.OrderPayload();
+        MatrixOrderApiService.OrderPayload p = new MatrixOrderApiService.OrderPayload();
         p.order_name = 'Fail Campaign';
 
         Test.startTest();
         Boolean exceptionThrown = false;
         try {
-            MatrixAPIService.createOrder(p);
-        } catch (MatrixAPIService.MatrixException ex) {
+            MatrixOrderApiService.createOrder(p);
+        } catch (MatrixOrderApiService.MatrixException ex) {
             exceptionThrown = true;
             System.assert(ex.getMessage().contains('500'));
         }
@@ -158,8 +154,8 @@ private class MatrixAPIServiceTest {
         Test.startTest();
         Boolean exceptionThrown = false;
         try {
-            MatrixAPIService.getInventoryChanges(Datetime.now());
-        } catch (MatrixAPIService.MatrixException ex) {
+            MatrixOrderApiService.getInventoryChanges(Datetime.now());
+        } catch (MatrixOrderApiService.MatrixException ex) {
             exceptionThrown = true;
         }
         Test.stopTest();

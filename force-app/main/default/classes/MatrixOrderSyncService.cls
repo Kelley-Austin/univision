@@ -22,7 +22,7 @@ public class MatrixOrderSyncService {
         Advertising_Opportunity__c opp = queryOpportunity(opportunityId);
         List<Budget_Line__c> budgetLines = queryBudgetLines(opportunityId);
 
-        MatrixAPIService.OrderResponse resp;
+        MatrixOrderApiService.OrderResponse resp;
         String newMatrixId = opp.Matrix_Order_ID__c;
         String syncStatus;
         String syncError;
@@ -33,17 +33,17 @@ public class MatrixOrderSyncService {
                     // Order was never sent to Matrix — nothing to cancel.
                     return;
                 }
-                resp = MatrixAPIService.cancelOrder(opp.Matrix_Order_ID__c);
+                resp = MatrixOrderApiService.cancelOrder(opp.Matrix_Order_ID__c);
             } else if (String.isNotBlank(opp.Matrix_Order_ID__c)) {
-                MatrixAPIService.OrderPayload payload = buildPayload(opp, budgetLines);
-                resp = MatrixAPIService.updateOrder(opp.Matrix_Order_ID__c, payload);
+                MatrixOrderApiService.OrderPayload payload = buildPayload(opp, budgetLines);
+                resp = MatrixOrderApiService.updateOrder(opp.Matrix_Order_ID__c, payload);
             } else {
-                MatrixAPIService.OrderPayload payload = buildPayload(opp, budgetLines);
-                resp = MatrixAPIService.createOrder(payload);
+                MatrixOrderApiService.OrderPayload payload = buildPayload(opp, budgetLines);
+                resp = MatrixOrderApiService.createOrder(payload);
             }
             newMatrixId = resp.matrix_order_id;
             syncStatus = 'Synced';
-        } catch (MatrixAPIService.MatrixException ex) {
+        } catch (MatrixOrderApiService.MatrixException ex) {
             syncStatus = 'Failed';
             syncError = ex.getMessage().abbreviate(1000);
         }
@@ -76,11 +76,11 @@ public class MatrixOrderSyncService {
         ];
     }
 
-    private static MatrixAPIService.OrderPayload buildPayload(
+    private static MatrixOrderApiService.OrderPayload buildPayload(
         Advertising_Opportunity__c opp,
         List<Budget_Line__c> lines
     ) {
-        MatrixAPIService.OrderPayload p = new MatrixAPIService.OrderPayload();
+        MatrixOrderApiService.OrderPayload p = new MatrixOrderApiService.OrderPayload();
         p.salesforce_id = opp.Id;
         p.matrix_account_id = opp.Account__r?.Matrix_Account_ID__c;
         p.order_name = opp.Name;
@@ -90,7 +90,7 @@ public class MatrixOrderSyncService {
         p.end_date = opp.End_Date__c != null ? String.valueOf(opp.End_Date__c) : null;
 
         for (Budget_Line__c bl : lines) {
-            MatrixAPIService.LineItem li = new MatrixAPIService.LineItem();
+            MatrixOrderApiService.LineItem li = new MatrixOrderApiService.LineItem();
             li.vehicle_code = bl.Vehicle__r?.Vehicle_Code__c;
             li.channel_code = bl.Channel__r?.Channel_Code__c;
             li.planned_amount = bl.Planned_Amount__c;

@@ -13,10 +13,10 @@ public class MatrixInventorySyncQueueable implements Queueable, Database.AllowsC
         String status = 'Success';
 
         try {
-            List<MatrixApiService.InventoryItem> items = MatrixApiService.fetchInventory();
+            List<MatrixInventoryApiService.InventoryItem> items = MatrixInventoryApiService.fetchInventory();
 
             Map<String, String> adSpaceByVehicleName = new Map<String, String>();
-            for (MatrixApiService.InventoryItem item : items) {
+            for (MatrixInventoryApiService.InventoryItem item : items) {
                 if (String.isNotBlank(item.vehicleName) && String.isNotBlank(item.adSpaceId)) {
                     adSpaceByVehicleName.put(item.vehicleName.toLowerCase().trim(), item.adSpaceId);
                 }
