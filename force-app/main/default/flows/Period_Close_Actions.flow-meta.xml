@@ -11,6 +11,24 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <status>Active</status>
+
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <start>
+        <locationX>50</locationX>
+        <locationY>30</locationY>
+        <connector>
+            <targetReference>Period_Close_Actions_Screen</targetReference>
+        </connector>
+    </start>
+
     <screens>
         <name>Period_Close_Actions_Screen</name>
         <label>Period Close Actions</label>
@@ -29,7 +47,6 @@
                     <elementReference>recordId</elementReference>
                 </value>
             </inputParameters>
-            <isRequired>false</isRequired>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>

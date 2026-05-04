@@ -5,69 +5,69 @@
     <sobjectType>Account</sobjectType>
     <type>RecordPage</type>
 
-    <!-- Header: account key fields and action bar -->
     <flexiPageRegions>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>variant</name>
-                <value>base</value>
-            </componentInstanceProperties>
-            <componentName>force:highlightsPanel</componentName>
-        </componentInstances>
-        <mode>AppDefault</mode>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>variant</name>
+                    <value>base</value>
+                </componentInstanceProperties>
+                <componentName>force:highlightsPanel</componentName>
+            </componentInstance>
+        </itemInstances>
+        <mode>Replace</mode>
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
 
-    <!-- Main body -->
     <flexiPageRegions>
-        <!-- Standard account fields -->
-        <componentInstances>
-            <componentName>force:recordDetail</componentName>
-        </componentInstances>
-
-        <!-- Budget vs. Projection vs. Actual 12-month grid -->
-        <componentInstances>
-            <componentName>c:accountBudgetGrid</componentName>
-        </componentInstances>
-
-        <!-- AE Reconciliation Worklist: unmatched staging records for this account -->
-        <componentInstances>
-            <componentName>c:aeReconciliationWorklist</componentName>
-        </componentInstances>
-
-        <!-- Budget Lines related list -->
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>heading</name>
-                <value>Budget Lines</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>relatedList</name>
-                <value>Budget_Lines</value>
-            </componentInstanceProperties>
-            <componentName>force:relatedListSingleContainer</componentName>
-        </componentInstances>
-
-        <!-- Actual Revenues related list: reconciled revenue records for this account -->
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>heading</name>
-                <value>Actual Revenues</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>relatedList</name>
-                <value>Actual_Revenues</value>
-            </componentInstanceProperties>
-            <componentName>force:relatedListSingleContainer</componentName>
-        </componentInstances>
-
-        <!-- All remaining related lists (opportunities, contacts, files, etc.) -->
-        <componentInstances>
-            <componentName>force:relatedListContainer</componentName>
-        </componentInstances>
-
-        <mode>AppDefault</mode>
+        <itemInstances>
+            <componentInstance>
+                <componentName>force:recordDetail</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>c:accountBudgetGrid</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>c:aeReconciliationWorklist</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>heading</name>
+                    <value>Budget Lines</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedList</name>
+                    <value>Budget_Lines</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>heading</name>
+                    <value>Actual Revenues</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedList</name>
+                    <value>Actual_Revenues</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>force:relatedListContainer</componentName>
+            </componentInstance>
+        </itemInstances>
+        <mode>Replace</mode>
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>

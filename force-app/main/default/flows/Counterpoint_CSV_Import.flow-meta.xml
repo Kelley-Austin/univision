@@ -114,6 +114,41 @@
 
     <!-- ── Screen 1: Upload ───────────────────────────────────────────── -->
 
+    <!-- ── Decision: did upload succeed? ─────────────────────────────── -->
+
+    <decisions>
+        <name>Check_Upload_Success</name>
+        <label>Import Successful?</label>
+        <locationX>176</locationX>
+        <locationY>288</locationY>
+        <defaultConnector>
+            <targetReference>Error_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Import_Succeeded</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varUploadSuccess</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Success_Screen</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+
+    <!-- ── Screen 2a: Success ─────────────────────────────────────────── -->
+
+    <!-- ── Screen 2b: Error ───────────────────────────────────────────── -->
+
+    <!-- ── Screen 2c: Uncaught system fault ──────────────────────────── -->
+
+
     <screens>
         <name>Upload_Screen</name>
         <label>Import Counterpoint Data</label>
@@ -195,8 +230,6 @@
         <showHeader>true</showHeader>
     </screens>
 
-    <!-- ── Screen 2b: Error ───────────────────────────────────────────── -->
-
     <screens>
         <name>Error_Screen</name>
         <label>Import Error</label>
@@ -216,8 +249,6 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
-
-    <!-- ── Screen 2c: Uncaught system fault ──────────────────────────── -->
 
     <screens>
         <name>System_Error_Screen</name>

@@ -6,6 +6,7 @@
     <referenceTo>Source_System__c</referenceTo>
     <relationshipLabel>Inbound Staging Records</relationshipLabel>
     <relationshipName>Inbound_Staging_Records</relationshipName>
+    <deleteConstraint>Restrict</deleteConstraint>
     <required>true</required>
     <type>Lookup</type>
 </CustomField>

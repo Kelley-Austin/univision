@@ -5,38 +5,38 @@
     <sobjectType>Pitch_Project__c</sobjectType>
     <type>RecordPage</type>
 
-    <!-- Header: pitch project key fields + action bar (New Pitch Project quick action appears here) -->
     <flexiPageRegions>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>variant</name>
-                <value>base</value>
-            </componentInstanceProperties>
-            <componentName>force:highlightsPanel</componentName>
-        </componentInstances>
-        <mode>AppDefault</mode>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>variant</name>
+                    <value>base</value>
+                </componentInstanceProperties>
+                <componentName>force:highlightsPanel</componentName>
+            </componentInstance>
+        </itemInstances>
+        <mode>Replace</mode>
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
 
-    <!-- Main body -->
     <flexiPageRegions>
-        <!-- Standard field detail -->
-        <componentInstances>
-            <componentName>force:recordDetail</componentName>
-        </componentInstances>
-
-        <!-- Pacing component: booked/pending/forecast vs. goal with progress bar -->
-        <componentInstances>
-            <componentName>c:pitchProjectPacing</componentName>
-        </componentInstances>
-
-        <!-- All related lists (Pitch Project Outlets junction, files, etc.) -->
-        <componentInstances>
-            <componentName>force:relatedListContainer</componentName>
-        </componentInstances>
-
-        <mode>AppDefault</mode>
+        <itemInstances>
+            <componentInstance>
+                <componentName>force:recordDetail</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>c:pitchProjectPacing</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>force:relatedListContainer</componentName>
+            </componentInstance>
+        </itemInstances>
+        <mode>Replace</mode>
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>

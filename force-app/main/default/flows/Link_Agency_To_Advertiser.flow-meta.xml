@@ -91,6 +91,34 @@
         <storeOutputAutomatically>false</storeOutputAutomatically>
     </recordLookups>
 
+    <!-- 3. Update the advertiser account with the selected agency -->
+    <recordUpdates>
+        <name>Update_AdvertiserAccount</name>
+        <label>Update Advertiser Account</label>
+        <locationX>176</locationX>
+        <locationY>408</locationY>
+        <connector>
+            <targetReference>Screen_Success</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Primary_Agency__c</field>
+            <value>
+                <elementReference>var_selectedAgencyId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
+
+
+
     <!-- 2. Screen: select or update the primary agency -->
     <screens>
         <name>Screen_SelectAgency</name>
@@ -152,31 +180,6 @@
         <showHeader>true</showHeader>
     </screens>
 
-    <!-- 3. Update the advertiser account with the selected agency -->
-    <recordUpdates>
-        <name>Update_AdvertiserAccount</name>
-        <label>Update Advertiser Account</label>
-        <locationX>176</locationX>
-        <locationY>408</locationY>
-        <connector>
-            <targetReference>Screen_Success</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Primary_Agency__c</field>
-            <value>
-                <elementReference>var_selectedAgencyId</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Account</object>
-    </recordUpdates>
 
     <!-- 4. Success screen -->
     <screens>

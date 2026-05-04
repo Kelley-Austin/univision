@@ -5,6 +5,7 @@
     <referenceTo>Account</referenceTo>
     <relationshipLabel>Budget Locks</relationshipLabel>
     <relationshipName>Budget_Locks</relationshipName>
+    <deleteConstraint>SetNull</deleteConstraint>
     <required>false</required>
     <type>Lookup</type>
 </CustomField>

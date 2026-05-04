@@ -319,6 +319,7 @@
         <showHeader>true</showHeader>
     </screens>
 
+
     <!-- 4b. Screen: business-logic error returned by Apex -->
     <screens>
         <name>Screen_BusinessError</name>
@@ -336,6 +337,7 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
+
 
     <!-- 5. Screen: uncaught Apex fault -->
     <screens>

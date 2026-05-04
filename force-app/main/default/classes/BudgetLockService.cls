@@ -15,7 +15,7 @@ public with sharing class BudgetLockService {
     @AuraEnabled(cacheable=true)
     public static LockResult checkLock(Id accountId, Id categoryId, String revenueType, Integer periodYear) {
         List<Budget_Lock__c> locks = [
-            SELECT Id, Scope_Level__c, Account__c, Category__c, Office__c,
+            SELECT Id, Scope_Level__c, Account__c, Category__c,
                    Revenue_Type__c, Is_Active__c, Lock_Message__c
             FROM   Budget_Lock__c
             WHERE  Is_Active__c = true

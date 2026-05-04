@@ -39,3 +39,4 @@ Many people on this team are comfortable in Salesforce Setup but new to working 
 Add anything specific to your project below this line — coding standards, naming conventions, sandbox aliases, branch strategy, deploy windows, anything else Claude should know.
 
 <!-- Add your project-specific instructions here -->
+Always wait for deploys to finish. Do not ask the user to check back.

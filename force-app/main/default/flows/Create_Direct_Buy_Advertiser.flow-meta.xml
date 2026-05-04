@@ -101,6 +101,63 @@
         <storeOutputAutomatically>false</storeOutputAutomatically>
     </recordLookups>
 
+    <!-- 3. Create the Direct Buy Advertiser account -->
+    <recordCreates>
+        <name>Create_AdvertiserAccount</name>
+        <label>Create Advertiser Account</label>
+        <locationX>176</locationX>
+        <locationY>408</locationY>
+        <assignRecordIdToReference>var_newAccountId</assignRecordIdToReference>
+        <connector>
+            <targetReference>Screen_Success</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>fi_AdvertiserName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>var_directBuyRT.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Market__c</field>
+            <value>
+                <elementReference>fi_Market</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Media_Type__c</field>
+            <value>
+                <elementReference>fi_MediaType</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Primary_Agency__c</field>
+            <value>
+                <elementReference>var_primaryAgencyId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Website</field>
+            <value>
+                <elementReference>fi_Website</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phone</field>
+            <value>
+                <elementReference>fi_Phone</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordCreates>
+
+
+
     <!-- 2. Screen: collect advertiser details -->
     <screens>
         <name>Screen_AdvertiserDetails</name>
@@ -188,60 +245,6 @@
         <showHeader>true</showHeader>
     </screens>
 
-    <!-- 3. Create the Direct Buy Advertiser account -->
-    <recordCreates>
-        <name>Create_AdvertiserAccount</name>
-        <label>Create Advertiser Account</label>
-        <locationX>176</locationX>
-        <locationY>408</locationY>
-        <assignRecordIdToReference>var_newAccountId</assignRecordIdToReference>
-        <connector>
-            <targetReference>Screen_Success</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>Name</field>
-            <value>
-                <elementReference>fi_AdvertiserName</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>RecordTypeId</field>
-            <value>
-                <elementReference>var_directBuyRT.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Market__c</field>
-            <value>
-                <elementReference>fi_Market</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Media_Type__c</field>
-            <value>
-                <elementReference>fi_MediaType</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Primary_Agency__c</field>
-            <value>
-                <elementReference>var_primaryAgencyId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Website</field>
-            <value>
-                <elementReference>fi_Website</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Phone</field>
-            <value>
-                <elementReference>fi_Phone</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Account</object>
-    </recordCreates>
 
     <!-- 4. Success screen -->
     <screens>

@@ -3,7 +3,7 @@ private class ProjectionServiceTest {
 
     @TestSetup
     static void makeData() {
-        Account acct = new Account(Name = 'Test Advertiser', RecordTypeId = advertiserRtId());
+        Account acct = new Account(Name = 'Test Advertiser');
         insert acct;
 
         Category__c cat = new Category__c(Name = 'Sports', Is_Active__c = true);

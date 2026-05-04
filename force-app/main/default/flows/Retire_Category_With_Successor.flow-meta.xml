@@ -52,14 +52,6 @@
     </variables>
 
     <variables>
-        <name>varSuccessorId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-
-    <variables>
         <name>varCategoryName</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -213,32 +205,7 @@
         <storeOutputAutomatically>false</storeOutputAutomatically>
     </recordLookups>
 
-    <!-- 4. Assign count variables from collections -->
-    <assignments>
-        <name>Assign_Counts</name>
-        <label>Assign Counts</label>
-        <locationX>176</locationX>
-        <locationY>528</locationY>
-        <assignmentItems>
-            <assignToReference>varAccountCategoryCount</assignToReference>
-            <operator>AssignCount</operator>
-            <value>
-                <elementReference>colAccountCategories</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varChildCategoryCount</assignToReference>
-            <operator>AssignCount</operator>
-            <value>
-                <elementReference>colChildCategories</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Has_Relationships</targetReference>
-        </connector>
-    </assignments>
-
-    <!-- 5. Decision: does it have relationships that need migration? -->
+    <!-- 4. Decision: does it have relationships that need migration? -->
     <decisions>
         <name>Has_Relationships</name>
         <label>Has Relationships?</label>
@@ -272,7 +239,66 @@
         </rules>
     </decisions>
 
-    <!-- 6a. Screen: select successor (when there are related records) -->
+    <!-- 5. Call CategoryRetireAction invocable -->
+    <actionCalls>
+        <name>Retire_Category_Action</name>
+        <label>Retire Category</label>
+        <locationX>176</locationX>
+        <locationY>888</locationY>
+        <actionName>CategoryRetireAction</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Screen_Result</targetReference>
+        </connector>
+        <inputParameters>
+            <name>categoryId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>successorCategoryId</name>
+            <value>
+                <elementReference>SuccessorPicker</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>varRetireSuccess</assignToReference>
+            <name>success</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>varResultMessage</assignToReference>
+            <name>message</name>
+        </outputParameters>
+        <storeOutputAutomatically>false</storeOutputAutomatically>
+    </actionCalls>
+
+    <!-- 6. Assign count variables from collections -->
+    <assignments>
+        <name>Assign_Counts</name>
+        <label>Assign Counts</label>
+        <locationX>176</locationX>
+        <locationY>528</locationY>
+        <assignmentItems>
+            <assignToReference>varAccountCategoryCount</assignToReference>
+            <operator>AssignCount</operator>
+            <value>
+                <elementReference>colAccountCategories</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varChildCategoryCount</assignToReference>
+            <operator>AssignCount</operator>
+            <value>
+                <elementReference>colChildCategories</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Has_Relationships</targetReference>
+        </connector>
+    </assignments>
+
+    <!-- 7a. Screen: select successor (when there are related records) -->
     <screens>
         <name>Screen_Select_Successor</name>
         <label>Select Successor Category</label>
@@ -301,7 +327,7 @@
         <showHeader>true</showHeader>
     </screens>
 
-    <!-- 6b. Screen: no-relationship confirmation -->
+    <!-- 7b. Screen: no-relationship confirmation -->
     <screens>
         <name>Screen_Confirm_No_Relations</name>
         <label>Confirm Retire</label>

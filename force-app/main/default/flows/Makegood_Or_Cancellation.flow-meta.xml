@@ -277,6 +277,7 @@
         <showHeader>true</showHeader>
     </screens>
 
+
     <!-- 5b. Screen: Cancellation success -->
     <screens>
         <name>Screen_CancellationSuccess</name>
@@ -295,6 +296,7 @@
         <showHeader>true</showHeader>
     </screens>
 
+
     <!-- 6. Screen: business-logic error (e.g. Non-Cancellable) -->
     <screens>
         <name>Screen_Error</name>
@@ -312,6 +314,7 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
+
 
     <!-- 7. Screen: uncaught Apex fault -->
     <screens>
