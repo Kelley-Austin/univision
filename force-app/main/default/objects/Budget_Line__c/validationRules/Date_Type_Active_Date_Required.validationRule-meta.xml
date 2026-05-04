@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Date_Type_Active_Date_Required</fullName>
+    <active>true</active>
+    <description>Ensures Date Type is selected and the corresponding date field is populated. Exactly one date type may govern billing per line.</description>
+    <errorConditionFormula>OR(
+    ISBLANK(TEXT(Date_Type__c)),
+    AND(ISPICKVAL(Date_Type__c, 'Calendar'), ISBLANK(Calendar_Date__c)),
+    AND(ISPICKVAL(Date_Type__c, 'Broadcast'), ISBLANK(Broadcast_Date__c))
+)</errorConditionFormula>
+    <errorDisplayField>Date_Type__c</errorDisplayField>
+    <errorMessage>Select a Date Type and populate the matching date field. Calendar Date is required when Date Type is Calendar; Broadcast Date is required when Date Type is Broadcast.</errorMessage>
+</ValidationRule>

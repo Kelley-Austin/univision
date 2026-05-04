@@ -130,5 +130,21 @@
         <members>Period_Snapshot_Forecast_Accuracy.reportType</members>
         <name>ReportType</name>
     </types>
+    <types>
+        <members>Advertising_Contract__c.Contract_Approval_Process</members>
+        <name>ApprovalProcess</name>
+    </types>
+    <types>
+        <members>Advertising_Contract__c</members>
+        <name>Workflow</name>
+    </types>
+    <types>
+        <members>Promote_Opportunity_to_Contract</members>
+        <name>Flow</name>
+    </types>
+    <types>
+        <members>Advertising_Opportunity__c.Promote_to_Contract</members>
+        <name>QuickAction</name>
+    </types>
     <version>62.0</version>
 </Package>
