@@ -1,0 +1,34 @@
+.proj-table {
+    width: 100%;
+    font-size: 0.8rem;
+}
+
+.month-col  { width: 80px;  min-width: 60px; }
+.amount-col { min-width: 80px; text-align: center; }
+.total-col  { width: 110px; text-align: right; font-weight: bold; }
+.amount-cell { padding: 4px; }
+.total-cell  { font-weight: bold; text-align: right; padding-right: 8px; }
+
+.amount-input {
+    width: 100%;
+    border: 1px solid #dddbda;
+    border-radius: 4px;
+    padding: 4px;
+    text-align: right;
+    font-size: 0.85rem;
+}
+
+.amount-input:focus {
+    outline: 2px solid #0176d3;
+    border-color: #0176d3;
+}
+
+.amount-input:disabled {
+    background-color: #f3f2f2;
+    color: #aeaeae;
+    cursor: not-allowed;
+}
+
+.grid-container {
+    overflow-x: auto;
+}

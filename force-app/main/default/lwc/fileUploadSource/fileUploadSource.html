@@ -1,0 +1,23 @@
+<template>
+    <lightning-card title="Upload Revenue File" icon-name="utility:upload">
+        <div class="slds-card__body slds-card__body_inner">
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Processing upload..." size="medium"></lightning-spinner>
+            </template>
+            <template if:false={isLoading}>
+                <lightning-file-upload
+                    label="Select revenue file to upload"
+                    name="revenueFile"
+                    accept=".csv,.tsv,.txt"
+                    record-id={recordId}
+                    onuploadfinished={handleUploadFinished}>
+                </lightning-file-upload>
+                <template if:true={lastUploadedAt}>
+                    <p class="slds-m-top_small slds-text-color_weak">
+                        Last uploaded: {formattedLastUploadedAt}
+                    </p>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template>

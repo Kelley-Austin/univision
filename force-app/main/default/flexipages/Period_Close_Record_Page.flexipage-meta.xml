@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Lightning Record Page for Period Close. Shows the period close dashboard with progress indicators per source, close/reopen action buttons, and late actuals worklist. The Close / Reopen Period quick action is accessible from the action bar in the highlights panel.</description>
+    <masterLabel>Period Close Record Page</masterLabel>
+    <sobjectType>Period_Close__c</sobjectType>
+    <type>RecordPage</type>
+
+    <!-- Header: period close key fields + action bar (Close / Reopen Period quick action appears here) -->
+    <flexiPageRegions>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>variant</name>
+                <value>base</value>
+            </componentInstanceProperties>
+            <componentName>force:highlightsPanel</componentName>
+        </componentInstances>
+        <mode>AppDefault</mode>
+        <name>header</name>
+        <type>Region</type>
+    </flexiPageRegions>
+
+    <!-- Main body -->
+    <flexiPageRegions>
+        <!-- Standard field detail (Status, close date, expected-close, etc.) -->
+        <componentInstances>
+            <componentName>force:recordDetail</componentName>
+        </componentInstances>
+
+        <!-- Period Close Dashboard: progress per source, expected-close date, staleness indicators -->
+        <componentInstances>
+            <componentName>c:periodCloseDashboard</componentName>
+        </componentInstances>
+
+        <!-- Period Close Actions: inline close/reopen buttons with confirmation modal -->
+        <componentInstances>
+            <componentName>c:periodCloseActions</componentName>
+        </componentInstances>
+
+        <!-- Late Actuals Worklist: actuals that arrived after this period closed -->
+        <componentInstances>
+            <componentName>c:lateActualsWorklist</componentName>
+        </componentInstances>
+
+        <!-- All related lists (period snapshots, files, etc.) -->
+        <componentInstances>
+            <componentName>force:relatedListContainer</componentName>
+        </componentInstances>
+
+        <mode>AppDefault</mode>
+        <name>main</name>
+        <type>Region</type>
+    </flexiPageRegions>
+
+</FlexiPage>

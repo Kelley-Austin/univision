@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Top-level budget record for an advertiser or campaign period. Private sharing — only the owning AE and users above in the role hierarchy can view without an explicit share. Fields added by the budget-planning slice.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <label>Budget</label>
+    <nameField>
+        <displayFormat>BDG-{0000000}</displayFormat>
+        <label>Budget Number</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Budgets</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>Private</sharingModel>
+</CustomObject>

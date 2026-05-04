@@ -1,0 +1,56 @@
+<template>
+    <lightning-card title="Upload Revenue File" icon-name="utility:upload">
+        <div class="slds-m-around_medium">
+
+            <!-- Source system selector -->
+            <div class="slds-form-element slds-m-bottom_medium">
+                <label class="slds-form-element__label" for="source-select">Source System</label>
+                <div class="slds-form-element__control">
+                    <lightning-combobox
+                        name="sourceSystem"
+                        label="Source System"
+                        value={selectedSourceId}
+                        options={sourceOptions}
+                        onchange={handleSourceChange}
+                        required>
+                    </lightning-combobox>
+                </div>
+            </div>
+
+            <!-- File upload -->
+            <template if:true={selectedSourceId}>
+                <div class="slds-form-element slds-m-bottom_medium">
+                    <lightning-file-upload
+                        label="Select File"
+                        name="fileUploader"
+                        accept={acceptedFormats}
+                        record-id={recordId}
+                        onuploadfinished={handleUploadFinished}>
+                    </lightning-file-upload>
+                </div>
+            </template>
+
+            <!-- Spinner -->
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Processing..." size="medium"></lightning-spinner>
+            </template>
+
+            <!-- Result banner -->
+            <template if:true={result}>
+                <div class={resultClass}>
+                    <p><strong>Total rows:</strong> {result.totalRows}</p>
+                    <p><strong>Pending:</strong> {result.pendingRows}</p>
+                    <p><strong>Excluded:</strong> {result.excludedRows}</p>
+                    <template if:true={hasErrors}>
+                        <p class="slds-text-color_error"><strong>Errors:</strong></p>
+                        <ul>
+                            <template for:each={result.errors} for:item="err">
+                                <li key={err}>{err}</li>
+                            </template>
+                        </ul>
+                    </template>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

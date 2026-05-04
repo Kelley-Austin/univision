@@ -1,0 +1,13 @@
+.slds-theme_success {
+    background-color: #ecf8ea;
+    border: 1px solid #4bca81;
+    border-radius: 4px;
+    padding: 1rem;
+}
+
+.slds-theme_warning {
+    background-color: #fdf6e3;
+    border: 1px solid #ffb75d;
+    border-radius: 4px;
+    padding: 1rem;
+}

@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <description>Admin tool to view Matrix inventory sync status, trigger a manual sync, or reschedule the nightly job. Requires the MatrixCore_AE or SalesOps_FullAccess permission set.</description>
+    <environments>Default</environments>
+    <interviewLabel>Matrix Inventory Admin Sync {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Matrix Inventory Admin Sync</label>
+    <processType>Flow</processType>
+    <runInMode>SystemModeWithSharing</runInMode>
+    <status>Active</status>
+
+    <variables>
+        <name>lastSyncLog</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Matrix_Sync_Log__c</objectType>
+    </variables>
+
+    <variables>
+        <name>isScheduled</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+
+    <variables>
+        <name>nextFireTimeText</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <variables>
+        <name>rescheduleSuccess</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <variables>
+        <name>rescheduleMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <choices>
+        <name>Choice_TriggerNow</name>
+        <choiceText>Trigger Sync Now</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>TriggerNow</stringValue>
+        </value>
+    </choices>
+
+    <choices>
+        <name>Choice_ChangeSchedule</name>
+        <choiceText>Change Schedule Time</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ChangeSchedule</stringValue>
+        </value>
+    </choices>
+
+    <formulas>
+        <name>fmtSyncTime</name>
+        <dataType>String</dataType>
+        <expression>IF(ISNULL({!lastSyncLog.CreatedDate}), "—", TEXT({!lastSyncLog.CreatedDate}))</expression>
+    </formulas>
+
+    <formulas>
+        <name>fmtScheduleStatus</name>
+        <dataType>String</dataType>
+        <expression>IF({!isScheduled}, "Scheduled — next run: " &amp; {!nextFireTimeText}, "Not scheduled")</expression>
+    </formulas>
+
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Last_Sync_Log</targetReference>
+        </connector>
+    </start>
+
+    <recordLookups>
+        <name>Get_Last_Sync_Log</name>
+        <label>Get Last Sync Log</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Schedule_Info</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Matrix_Sync_Log__c</object>
+        <outputReference>lastSyncLog</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Status__c</queriedFields>
+        <queriedFields>Records_Processed__c</queriedFields>
+        <queriedFields>Records_Failed__c</queriedFields>
+        <queriedFields>Error_Detail__c</queriedFields>
+        <queriedFields>Sync_Type__c</queriedFields>
+        <queriedFields>CreatedDate</queriedFields>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Desc</sortOrder>
+    </recordLookups>
+
+    <actionCalls>
+        <name>Get_Schedule_Info</name>
+        <label>Get Schedule Info</label>
+        <locationX>176</locationX>
+        <locationY>254</locationY>
+        <actionName>MatrixScheduleInfoInvocable</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Status_Dashboard</targetReference>
+        </connector>
+        <outputParameters>
+            <assignToReference>isScheduled</assignToReference>
+            <name>isScheduled</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>nextFireTimeText</assignToReference>
+            <name>nextFireTimeText</name>
+        </outputParameters>
+        <storeOutputAutomatically>false</storeOutputAutomatically>
+    </actionCalls>
+
+    <actionCalls>
+        <name>Trigger_Sync_Action</name>
+        <label>Trigger Manual Sync</label>
+        <locationX>176</locationX>
+        <locationY>614</locationY>
+        <actionName>MatrixSyncInvocable</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Sync_Queued_Screen</targetReference>
+        </connector>
+        <storeOutputAutomatically>false</storeOutputAutomatically>
+    </actionCalls>
+
+    <actionCalls>
+        <name>Reschedule_Action</name>
+        <label>Reschedule Nightly Sync</label>
+        <locationX>594</locationX>
+        <locationY>734</locationY>
+        <actionName>MatrixRescheduleInvocable</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Reschedule_Result_Screen</targetReference>
+        </connector>
+        <inputParameters>
+            <name>scheduleHour</name>
+            <value>
+                <elementReference>syncHour</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>rescheduleSuccess</assignToReference>
+            <name>success</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>rescheduleMessage</assignToReference>
+            <name>message</name>
+        </outputParameters>
+        <storeOutputAutomatically>false</storeOutputAutomatically>
+    </actionCalls>
+
+    <decisions>
+        <name>User_Choice_Decision</name>
+        <label>User Action</label>
+        <locationX>380</locationX>
+        <locationY>494</locationY>
+        <defaultConnector>
+            <targetReference>Schedule_Input_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Change Schedule</defaultConnectorLabel>
+        <rules>
+            <name>Choice_Is_Trigger_Now</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>userAction</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>TriggerNow</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Trigger_Sync_Action</targetReference>
+            </connector>
+            <label>Trigger Now</label>
+        </rules>
+    </decisions>
+
+    <screens>
+        <name>Status_Dashboard</name>
+        <label>Matrix Sync Status</label>
+        <locationX>176</locationX>
+        <locationY>374</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>false</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>User_Choice_Decision</targetReference>
+        </connector>
+        <fields>
+            <name>Display_Sync_Status</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Last Sync&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Status: {!lastSyncLog.Status__c}&lt;/p&gt;
+&lt;p&gt;Records Processed: {!lastSyncLog.Records_Processed__c}&lt;/p&gt;
+&lt;p&gt;Records Failed: {!lastSyncLog.Records_Failed__c}&lt;/p&gt;
+&lt;p&gt;Sync Type: {!lastSyncLog.Sync_Type__c}&lt;/p&gt;
+&lt;p&gt;Completed At: {!fmtSyncTime}&lt;/p&gt;
+&lt;p&gt;Error Detail: {!lastSyncLog.Error_Detail__c}&lt;/p&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;strong&gt;Nightly Schedule&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;{!fmtScheduleStatus}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>userAction</name>
+            <choiceReferences>Choice_TriggerNow</choiceReferences>
+            <choiceReferences>Choice_ChangeSchedule</choiceReferences>
+            <dataType>String</dataType>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+            <fieldText>What would you like to do?</fieldText>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <screens>
+        <name>Sync_Queued_Screen</name>
+        <label>Sync Queued</label>
+        <locationX>176</locationX>
+        <locationY>734</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Display_Sync_Queued</name>
+            <fieldText>&lt;p&gt;The Matrix inventory sync has been queued successfully.&lt;/p&gt;
+&lt;p&gt;Allow a few minutes for it to complete, then return to this flow to see the updated status.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <screens>
+        <name>Schedule_Input_Screen</name>
+        <label>Change Schedule Time</label>
+        <locationX>594</locationX>
+        <locationY>614</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>false</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Reschedule_Action</targetReference>
+        </connector>
+        <fields>
+            <name>Display_Schedule_Instructions</name>
+            <fieldText>&lt;p&gt;Enter the UTC hour (0–23) at which the nightly Matrix inventory sync should run.&lt;/p&gt;
+&lt;p&gt;For example, enter &lt;strong&gt;2&lt;/strong&gt; to run at 2:00 AM UTC (10:00 PM ET / 9:00 PM CT).&lt;/p&gt;
+&lt;p&gt;Current schedule: {!fmtScheduleStatus}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>syncHour</name>
+            <dataType>Number</dataType>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <fieldText>Run at hour (UTC, 0–23)</fieldText>
+            <scale>0</scale>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <screens>
+        <name>Reschedule_Result_Screen</name>
+        <label>Schedule Updated</label>
+        <locationX>594</locationX>
+        <locationY>854</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Display_Reschedule_Result</name>
+            <fieldText>&lt;p&gt;{!rescheduleMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+</Flow>

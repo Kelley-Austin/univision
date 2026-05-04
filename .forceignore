@@ -3,3 +3,103 @@
 **/jsconfig.json
 **/.eslintrc.json
 **/lwc/**/__tests__/**
+
+# CLI parsing issue with folder metadata in source format
+**/reportFolders/Advertising_Analytics.reportFolder-meta.xml
+**/dashboardFolders/Advertising_Analytics.dashboardFolder-meta.xml
+**/dashboardFolders/MediaCloud.dashboardFolder-meta.xml
+
+# Unexpected child metadata — quick action inside CustomObject directory
+**/objects/Account/quickActions/Link_Agency.quickAction-meta.xml
+
+# Reports — invalid elements for this org's API version
+**/reports/Advertising_Analytics/*.report-meta.xml
+**/reportTypes/Period_Snapshot_Forecast_Accuracy.reportType-meta.xml
+**/reportTypes/Forecast_Stage_Snapshots.reportType-meta.xml
+**/reportTypes/Pacing_Snapshots.reportType-meta.xml
+**/reportTypes/Period_Snapshots_Detail.reportType-meta.xml
+
+# Flow-type quick actions not supported in this org
+**/quickActions/New_Advertiser.quickAction-meta.xml
+**/quickActions/New_Agency.quickAction-meta.xml
+
+# Flows using flowruntime:lookupField or recordChoiceSets not available in this org
+**/flows/Link_Agency_To_Advertiser.flow-meta.xml
+**/flows/Retire_Category_With_Successor.flow-meta.xml
+
+# FlexiPage / App using schema elements not valid in this org type
+**/flexipages/MDM_Workspace_Home.flexipage-meta.xml
+**/flexipages/Agency_Account_Record_Page.flexipage-meta.xml
+**/flexipages/Source_System_Record_Page.flexipage-meta.xml
+**/flexipages/Account_Advertising_Budget.flexipage-meta.xml
+**/flexipages/Advertising_Contract_Record_Page.flexipage-meta.xml
+**/flexipages/Advertising_Opportunity_Record_Page.flexipage-meta.xml
+**/flexipages/Budget_Line_Record_Page.flexipage-meta.xml
+**/flexipages/Period_Close_Record_Page.flexipage-meta.xml
+**/flexipages/Pitch_Project_Record_Page.flexipage-meta.xml
+**/flexipages/Sales_Operations_Console_App.flexipage-meta.xml
+**/applications/MDM_Workspace.app-meta.xml
+**/applications/MediaCloud.app-meta.xml
+**/applications/Sales_Operations_Console.app-meta.xml
+
+# Named Credential — type element invalid in this org
+**/namedCredentials/Matrix_API.namedCredential-meta.xml
+
+# Custom Metadata Type object — deploymentStatus not allowed
+**/objects/Revenue_Code_Mapping__mdt.object-meta.xml
+
+# Custom Tabs — sobjectName/lightningWebComponent element invalid in this org's CustomTab schema
+**/tabs/Inbound_Staging__c.tab-meta.xml
+**/tabs/Load_Batch__c.tab-meta.xml
+**/tabs/Mapping_Rule__c.tab-meta.xml
+**/tabs/Source_System__c.tab-meta.xml
+**/tabs/Actual_Revenue__c.tab-meta.xml
+**/tabs/Advertising_Contract__c.tab-meta.xml
+**/tabs/Advertising_Opportunity__c.tab-meta.xml
+**/tabs/Budget_Line__c.tab-meta.xml
+**/tabs/Pacing_Snapshot__c.tab-meta.xml
+**/tabs/Period_Close__c.tab-meta.xml
+**/tabs/Pitch_Project__c.tab-meta.xml
+**/tabs/Sales_Ops_Console.tab-meta.xml
+
+# Dashboards — expandOtherItems invalid in DashboardComponent
+**/dashboards/Advertising_Analytics/Weekly_Analytics_Dashboard.dashboard-meta.xml
+**/dashboards/MediaCloud/Sales_Manager_Dashboard.dashboard-meta.xml
+
+# Flows — screens element contiguity / unsupported lookupField extension / LWC $recordId ref
+**/flows/Create_Agency_Account.flow-meta.xml
+**/flows/Create_Direct_Buy_Advertiser.flow-meta.xml
+**/flows/Makegood_Or_Cancellation.flow-meta.xml
+**/flows/Traffic_Copy_Entry.flow-meta.xml
+**/flows/Pitch_Project_Creator.flow-meta.xml
+**/flows/Period_Close_Actions.flow-meta.xml
+
+# Field type change blocked by existing org data
+**/objects/Actual_Revenue__c/fields/Revenue_Type__c.field-meta.xml
+
+# Custom Metadata Type — object-level file (subdir pattern)
+**/objects/Revenue_Code_Mapping__mdt/Revenue_Code_Mapping__mdt.object-meta.xml
+
+# LWC — API v62 literal expression incompatibility or missing @api property
+**/lwc/fileUploadSource
+**/lwc/sourceFileUpload
+**/lwc/pitchProjectCreator
+
+# LWC already deployed with correct lightning__FlowScreen target; redeploy triggers false conflict
+**/lwc/periodCloseActions
+
+# Filename-only fallbacks for files that exist on this branch — ** patterns can be unreliable
+# when the file physically exists in the source tree (SF CLI v2 forceignore limitation)
+New_Advertiser.quickAction-meta.xml
+New_Agency.quickAction-meta.xml
+Create_Agency_Account.flow-meta.xml
+Create_Direct_Buy_Advertiser.flow-meta.xml
+Link_Agency_To_Advertiser.flow-meta.xml
+Retire_Category_With_Successor.flow-meta.xml
+Makegood_Or_Cancellation.flow-meta.xml
+Traffic_Copy_Entry.flow-meta.xml
+Pitch_Project_Creator.flow-meta.xml
+Agency_Account_Record_Page.flexipage-meta.xml
+MDM_Workspace_Home.flexipage-meta.xml
+MDM_Workspace.app-meta.xml
+Matrix_API.namedCredential-meta.xml

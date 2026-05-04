@@ -1,0 +1,68 @@
+<template>
+    <div class="console-wrap">
+
+        <!-- Six-tile KPI banner -->
+        <div class="console-header slds-p-horizontal_medium slds-p-top_small">
+            <c-sales-ops-kpi-dashboard></c-sales-ops-kpi-dashboard>
+        </div>
+
+        <!-- Six-tab navigation -->
+        <lightning-tabset active-tab-value={activeTab} onactive={handleTabChange}
+            class="console-tabs">
+
+            <!-- 1. Load Batches -->
+            <lightning-tab label="Load Batches" value="load-batches"
+                icon-name="utility:upload">
+                <div class="tab-body">
+                    <c-load-batch-dashboard></c-load-batch-dashboard>
+                </div>
+            </lightning-tab>
+
+            <!-- 2. Reconciliation -->
+            <lightning-tab label="Reconciliation" value="reconciliation"
+                icon-name="utility:sync">
+                <div class="tab-body">
+                    <c-sales-ops-reconciliation-worklist></c-sales-ops-reconciliation-worklist>
+                </div>
+            </lightning-tab>
+
+            <!-- 3. MDM Queue -->
+            <lightning-tab label="MDM Queue" value="mdm-queue"
+                icon-name="utility:hierarchy">
+                <div class="tab-body slds-grid slds-gutters slds-wrap">
+                    <div class="slds-col slds-size_1-of-1 slds-p-bottom_medium">
+                        <c-mdm-kpi-tiles></c-mdm-kpi-tiles>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1">
+                        <c-mapping-rule-editor></c-mapping-rule-editor>
+                    </div>
+                </div>
+            </lightning-tab>
+
+            <!-- 4. Late Actuals -->
+            <lightning-tab label="Late Actuals" value="late-actuals"
+                icon-name="utility:clock">
+                <div class="tab-body">
+                    <c-late-actuals-worklist></c-late-actuals-worklist>
+                </div>
+            </lightning-tab>
+
+            <!-- 5. Period Close -->
+            <lightning-tab label="Period Close" value="period-close"
+                icon-name="utility:lock">
+                <div class="tab-body">
+                    <c-period-close-dashboard></c-period-close-dashboard>
+                </div>
+            </lightning-tab>
+
+            <!-- 6. Exclusion Log -->
+            <lightning-tab label="Exclusion Log" value="exclusion-log"
+                icon-name="utility:block_visitor">
+                <div class="tab-body">
+                    <c-exclusion-log-list-view></c-exclusion-log-list-view>
+                </div>
+            </lightning-tab>
+
+        </lightning-tabset>
+    </div>
+</template>

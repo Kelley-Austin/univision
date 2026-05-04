@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Counterpoint_Order_ID__c</fullName>
+    <label>Counterpoint Order ID</label>
+    <type>Text</type>
+    <length>255</length>
+    <required>false</required>
+    <unique>true</unique>
+    <caseSensitive>false</caseSensitive>
+    <externalId>true</externalId>
+    <description>Deduplication key. Sourced from the Order ID column in the Counterpoint CSV; derived as a SHA-256 hash of advertiser+station+period+type when no explicit Order ID column is present. CounterpointIngestionBatch rejects rows whose Counterpoint_Order_ID__c already exists on a Processed record from a prior batch.</description>
+</CustomField>

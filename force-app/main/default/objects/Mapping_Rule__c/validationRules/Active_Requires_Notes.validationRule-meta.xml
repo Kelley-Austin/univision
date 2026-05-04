@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Active_Requires_Notes</fullName>
+    <active>true</active>
+    <description>Requires a Notes value when a rule is marked Active.</description>
+    <errorConditionFormula>AND(Is_Active__c = TRUE, ISBLANK(Notes__c))</errorConditionFormula>
+    <errorMessage>Notes are required when a rule is Active.</errorMessage>
+</ValidationRule>

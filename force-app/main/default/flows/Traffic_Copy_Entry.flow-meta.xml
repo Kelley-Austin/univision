@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <description>Screen Flow Quick Action on Budget_Line__c. Traffic coordinators enter spot-level copy details and submit the order for transmission to the traffic system. Sets the parent contract Traffic_Status__c to Pending and enqueues TrafficOrderTransmitQueueable.</description>
+    <interviewLabel>Traffic Copy Entry {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Traffic Copy Entry</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <runInMode>DefaultMode</runInMode>
+    <status>Active</status>
+
+    <!-- ═══════════════════════════ VARIABLES ═══════════════════════════════ -->
+
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <variables>
+        <name>varSuccess</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+
+    <variables>
+        <name>varErrorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <variables>
+        <name>varJobId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <!-- ═══════════════════════════ CHOICES (Spot Length) ═══════════════════ -->
+
+    <choices>
+        <name>Choice_10sec</name>
+        <choiceText>:10</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>:10</stringValue>
+        </value>
+    </choices>
+
+    <choices>
+        <name>Choice_15sec</name>
+        <choiceText>:15</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>:15</stringValue>
+        </value>
+    </choices>
+
+    <choices>
+        <name>Choice_30sec</name>
+        <choiceText>:30</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>:30</stringValue>
+        </value>
+    </choices>
+
+    <choices>
+        <name>Choice_45sec</name>
+        <choiceText>:45</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>:45</stringValue>
+        </value>
+    </choices>
+
+    <choices>
+        <name>Choice_60sec</name>
+        <choiceText>:60</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>:60</stringValue>
+        </value>
+    </choices>
+
+    <choices>
+        <name>Choice_90sec</name>
+        <choiceText>:90</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>:90</stringValue>
+        </value>
+    </choices>
+
+    <choices>
+        <name>Choice_120sec</name>
+        <choiceText>:120</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>:120</stringValue>
+        </value>
+    </choices>
+
+    <!-- ═══════════════════════════ FLOW ELEMENTS ════════════════════════════ -->
+
+    <start>
+        <locationX>176</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Screen_CopyDetails</targetReference>
+        </connector>
+    </start>
+
+    <!-- 2. Apex action: TrafficOrderSubmitAction.submit() -->
+    <actionCalls>
+        <name>Action_SubmitTrafficOrder</name>
+        <label>Submit Traffic Copy Entry</label>
+        <locationX>176</locationX>
+        <locationY>288</locationY>
+        <actionName>TrafficOrderSubmitAction</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Decision_IsSuccess</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Screen_SystemError</targetReference>
+        </faultConnector>
+        <inputParameters>
+            <name>budgetLineId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>copyCode</name>
+            <value>
+                <elementReference>CopyCode</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>copyRotation</name>
+            <value>
+                <elementReference>CopyRotation</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>spotLength</name>
+            <value>
+                <elementReference>SpotLength</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>weeklySpots</name>
+            <value>
+                <elementReference>WeeklySpots</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>spotRate</name>
+            <value>
+                <elementReference>SpotRate</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>spotInstructions</name>
+            <value>
+                <elementReference>SpotInstructions</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>varSuccess</assignToReference>
+            <name>success</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>varErrorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>varJobId</assignToReference>
+            <name>jobId</name>
+        </outputParameters>
+        <storeOutputAutomatically>false</storeOutputAutomatically>
+    </actionCalls>
+
+    <!-- 3. Decision: did Apex return success? -->
+    <decisions>
+        <name>Decision_IsSuccess</name>
+        <label>Submission Succeeded?</label>
+        <locationX>176</locationX>
+        <locationY>408</locationY>
+        <defaultConnector>
+            <targetReference>Screen_BusinessError</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Error</defaultConnectorLabel>
+        <rules>
+            <name>Outcome_Success</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varSuccess</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_TrafficSubmitted</targetReference>
+            </connector>
+            <label>Success</label>
+        </rules>
+    </decisions>
+
+    <!-- 1. Screen: collect copy & spot details -->
+    <screens>
+        <name>Screen_CopyDetails</name>
+        <label>Enter Traffic Copy Details</label>
+        <locationX>176</locationX>
+        <locationY>168</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Action_SubmitTrafficOrder</targetReference>
+        </connector>
+        <fields>
+            <name>Intro_Text</name>
+            <fieldText>&lt;p&gt;Enter the spot-level copy details below and click &lt;strong&gt;Submit&lt;/strong&gt; to send this budget line to the traffic system. The contract &lt;strong&gt;Traffic Status&lt;/strong&gt; will be set to &lt;strong&gt;Pending&lt;/strong&gt; immediately; the traffic system will confirm or reject the order asynchronously.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>CopyCode</name>
+            <dataType>String</dataType>
+            <fieldText>Copy Code</fieldText>
+            <fieldType>InputField</fieldType>
+            <helpText>The traffic system copy code assigned to this spot (e.g., ABC1234).</helpText>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>CopyRotation</name>
+            <dataType>String</dataType>
+            <fieldText>Copy Rotation</fieldText>
+            <fieldType>InputField</fieldType>
+            <helpText>How copies rotate across spots. Examples: 100, 50/50, 33/33/34.</helpText>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>SpotLength</name>
+            <choiceReferences>Choice_10sec</choiceReferences>
+            <choiceReferences>Choice_15sec</choiceReferences>
+            <choiceReferences>Choice_30sec</choiceReferences>
+            <choiceReferences>Choice_45sec</choiceReferences>
+            <choiceReferences>Choice_60sec</choiceReferences>
+            <choiceReferences>Choice_90sec</choiceReferences>
+            <choiceReferences>Choice_120sec</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Spot Length</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>WeeklySpots</name>
+            <dataType>Number</dataType>
+            <fieldText>Weekly Spots</fieldText>
+            <fieldType>InputField</fieldType>
+            <helpText>Number of spots scheduled per week.</helpText>
+            <isRequired>false</isRequired>
+            <scale>0</scale>
+        </fields>
+        <fields>
+            <name>SpotRate</name>
+            <dataType>Currency</dataType>
+            <fieldText>Spot Rate</fieldText>
+            <fieldType>InputField</fieldType>
+            <helpText>Rate per individual spot.</helpText>
+            <isRequired>false</isRequired>
+            <scale>2</scale>
+        </fields>
+        <fields>
+            <name>SpotInstructions</name>
+            <dataType>String</dataType>
+            <fieldText>Special Instructions</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <helpText>Any special instructions for the traffic team (e.g., &quot;Run in prime time only&quot;, &quot;Do not air during news&quot;).</helpText>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <!-- 4a. Screen: success -->
+    <screens>
+        <name>Screen_TrafficSubmitted</name>
+        <label>Traffic Order Submitted</label>
+        <locationX>44</locationX>
+        <locationY>528</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Display_Success</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Traffic order submitted successfully.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Copy code &lt;strong&gt;{!CopyCode}&lt;/strong&gt; has been sent to the traffic system. The contract &lt;strong&gt;Traffic Status&lt;/strong&gt; is now &lt;strong&gt;Pending&lt;/strong&gt;. It will update to Confirmed once the traffic system processes the order.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <!-- 4b. Screen: business-logic error returned by Apex -->
+    <screens>
+        <name>Screen_BusinessError</name>
+        <label>Unable to Submit Traffic Order</label>
+        <locationX>308</locationX>
+        <locationY>528</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>false</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Display_BusinessError</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;The traffic order could not be submitted.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;{!varErrorMessage}&lt;/p&gt;&lt;p&gt;Click &lt;strong&gt;Back&lt;/strong&gt; to review your entries, or contact your Salesforce administrator.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <!-- 5. Screen: uncaught Apex fault -->
+    <screens>
+        <name>Screen_SystemError</name>
+        <label>System Error</label>
+        <locationX>572</locationX>
+        <locationY>408</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Display_SystemError</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;An unexpected system error occurred.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;&lt;p&gt;Please contact your Salesforce administrator.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+</Flow>

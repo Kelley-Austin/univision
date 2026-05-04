@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AE_Code__c</fullName>
+    <label>AE Code</label>
+    <type>Text</type>
+    <length>100</length>
+    <required>false</required>
+    <description>Account Executive identifier. CoxReps provides this in email format; transformer normalizes to username prefix.</description>
+</CustomField>

@@ -1,0 +1,159 @@
+<template>
+    <lightning-card title="Late Actuals Worklist" icon-name="standard:date_time">
+        <div class="slds-card__body slds-card__body_inner">
+
+            <!-- Summary bar -->
+            <div class="slds-grid slds-gutters slds-m-bottom_small">
+                <div class="slds-col">
+                    <span class="slds-badge slds-badge_lightest">
+                        {totalCount} pending late actual(s)
+                    </span>
+                    <template if:true={hasSelection}>
+                        <span class="slds-m-left_small slds-badge slds-theme_warning">
+                            {selectedCount} selected
+                        </span>
+                    </template>
+                </div>
+                <div class="slds-col slds-col_bump-left">
+                    <template if:true={hasSelection}>
+                        <lightning-button
+                            label="Bulk Accept"
+                            variant="brand"
+                            class="slds-m-right_x-small"
+                            onclick={handleBulkAccept}>
+                        </lightning-button>
+                        <lightning-button
+                            label="Bulk Reject"
+                            variant="destructive-text"
+                            class="slds-m-right_x-small"
+                            onclick={handleBulkReject}>
+                        </lightning-button>
+                    </template>
+                    <lightning-button
+                        label="Refresh"
+                        icon-name="utility:refresh"
+                        onclick={handleRefresh}
+                        variant="neutral">
+                    </lightning-button>
+                </div>
+            </div>
+
+            <!-- Loading spinner -->
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </template>
+
+            <!-- Error state -->
+            <template if:true={hasError}>
+                <div class="slds-notify slds-notify_alert slds-theme_error">
+                    <span>{errorMessage}</span>
+                </div>
+            </template>
+
+            <!-- Empty state -->
+            <template if:false={hasRows}>
+                <template if:false={isLoading}>
+                    <div class="slds-illustration slds-illustration_small slds-m-top_medium">
+                        <p class="slds-text-body_regular slds-text-color_weak">
+                            No pending late actuals — all clear!
+                        </p>
+                    </div>
+                </template>
+            </template>
+
+            <!-- Worklist table -->
+            <template if:true={hasRows}>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th scope="col">
+                                <lightning-input type="checkbox"
+                                    label="Select all"
+                                    variant="label-hidden"
+                                    checked={allSelected}
+                                    onchange={handleSelectAll}>
+                                </lightning-input>
+                            </th>
+                            <th scope="col">Advertiser</th>
+                            <th scope="col">AE Code</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Period</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Source</th>
+                            <th scope="col">Station</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={rows} for:item="row">
+                            <tr key={row.actualId} class="slds-hint-parent">
+                                <td>
+                                    <lightning-input type="checkbox"
+                                        label="Select row"
+                                        variant="label-hidden"
+                                        checked={row.isSelected}
+                                        data-actual-id={row.actualId}
+                                        onchange={handleRowSelect}>
+                                    </lightning-input>
+                                </td>
+                                <td>
+                                    <span class="slds-truncate" title={row.advertiserName}>
+                                        {row.advertiserName}
+                                    </span>
+                                </td>
+                                <td>{row.aeCode}</td>
+                                <td>
+                                    <lightning-formatted-number
+                                        value={row.revenueAmount}
+                                        format-style="currency"
+                                        currency-code="USD">
+                                    </lightning-formatted-number>
+                                </td>
+                                <td>{row.periodMonth}/{row.periodYear}</td>
+                                <td>{row.revenueType}</td>
+                                <td>{row.sourceSystem}</td>
+                                <td>{row.stationCode}</td>
+                                <td>
+                                    <lightning-button-group>
+                                        <lightning-button
+                                            label="Accept"
+                                            variant="brand"
+                                            data-actual-id={row.actualId}
+                                            onclick={handleAccept}>
+                                        </lightning-button>
+                                        <lightning-button
+                                            label="Reject"
+                                            variant="destructive-text"
+                                            data-actual-id={row.actualId}
+                                            onclick={handleReject}>
+                                        </lightning-button>
+                                    </lightning-button-group>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+
+                <!-- Pagination -->
+                <div class="slds-grid slds-grid_align-center slds-m-top_small">
+                    <lightning-button
+                        label="Previous"
+                        icon-name="utility:chevronleft"
+                        disabled={isPrevDisabled}
+                        onclick={handlePrev}>
+                    </lightning-button>
+                    <span class="slds-m-horizontal_small slds-align-middle">
+                        Page {currentPage}
+                    </span>
+                    <lightning-button
+                        label="Next"
+                        icon-name="utility:chevronright"
+                        icon-position="right"
+                        disabled={isNextDisabled}
+                        onclick={handleNext}>
+                    </lightning-button>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pitch_Project__c</fullName>
+    <label>Pitch Project</label>
+    <referenceTo>Opportunity</referenceTo>
+    <relationshipLabel>Pitch Projections</relationshipLabel>
+    <relationshipName>Pitch_Projections</relationshipName>
+    <required>false</required>
+    <type>Lookup</type>
+</CustomField>

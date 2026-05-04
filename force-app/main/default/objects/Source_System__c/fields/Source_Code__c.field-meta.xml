@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Source_Code__c</fullName>
+    <label>Source Code</label>
+    <type>Text</type>
+    <length>50</length>
+    <required>true</required>
+    <unique>true</unique>
+    <caseSensitive>false</caseSensitive>
+    <externalId>false</externalId>
+    <description>Short identifier used to look up transformer class (e.g., WIDEORBIT, STRATA, COXREPS, OPERATIVE, COUNTERPOINT).</description>
+</CustomField>

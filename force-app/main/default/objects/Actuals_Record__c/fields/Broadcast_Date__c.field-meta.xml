@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Broadcast_Date__c</fullName>
+    <label>Broadcast Date</label>
+    <type>Date</type>
+    <required>false</required>
+    <description>Start date of the broadcast week or first day of the broadcast month this actual covers. Populated when Date_Type__c = Broadcast; null when Date_Type__c = Calendar. Accepts "WK OF MM/DD/YY" broadcast-week strings and MM/YYYY broadcast-month strings from the Counterpoint Period column.</description>
+</CustomField>

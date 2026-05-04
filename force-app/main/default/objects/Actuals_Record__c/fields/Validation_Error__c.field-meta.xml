@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validation_Error__c</fullName>
+    <label>Validation Error</label>
+    <type>TextArea</type>
+    <required>false</required>
+    <description>Human-readable reason this row was marked Invalid or Duplicate. Populated by CounterpointIngestionService (parse failures) and CounterpointIngestionBatch (duplicate detection).</description>
+</CustomField>
