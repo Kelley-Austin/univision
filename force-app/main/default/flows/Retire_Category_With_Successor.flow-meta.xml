@@ -11,6 +11,33 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <dynamicChoiceSets>
+        <name>ActiveCategoryChoices</name>
+        <dataType>String</dataType>
+        <displayField>Name</displayField>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Is_Active__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Id</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <limit>200</limit>
+        <object>Category__c</object>
+        <outputAssignments>
+            <assignToReference>varSuccessorId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+        <valueField>Id</valueField>
+    </dynamicChoiceSets>
     <runInMode>DefaultMode</runInMode>
     <status>Active</status>
 
@@ -102,36 +129,6 @@
         <objectType>Category__c</objectType>
     </variables>
 
-    <!-- ═══════════════════════════ CHOICE SETS ══════════════════════════════ -->
-
-    <recordChoiceSets>
-        <name>ActiveCategoryChoices</name>
-        <dataType>String</dataType>
-        <displayField>Name</displayField>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Is_Active__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Id</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <limit>200</limit>
-        <object>Category__c</object>
-        <outputAssignments>
-            <assignToReference>varSuccessorId</assignToReference>
-            <field>Id</field>
-        </outputAssignments>
-        <valueField>Id</valueField>
-    </recordChoiceSets>
-
     <!-- ═══════════════════════════ FLOW ELEMENTS ════════════════════════════ -->
 
     <start>
@@ -165,8 +162,6 @@
             <assignToReference>varCategoryName</assignToReference>
             <field>Name</field>
         </outputAssignments>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Name</queriedFields>
         <storeOutputAutomatically>false</storeOutputAutomatically>
     </recordLookups>
 
@@ -301,10 +296,6 @@
             <fieldText>Successor Category</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>varSuccessorId</assignToReference>
-                <name>value</name>
-            </outputParameters>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -331,6 +322,24 @@
         <showHeader>true</showHeader>
     </screens>
 
+    <!-- 9. Result screen (moved adjacent for Flow schema contiguity) -->
+    <screens>
+        <name>Screen_Result</name>
+        <label>Done</label>
+        <locationX>176</locationX>
+        <locationY>1128</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Display_Result</name>
+            <fieldText>{!varResultMessage}</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
     <!-- 7. Call CategoryRetireAction invocable -->
     <actionCalls>
         <name>Retire_Category_Action</name>
@@ -340,7 +349,7 @@
         <actionName>CategoryRetireAction</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Assign_Result</targetReference>
+            <targetReference>Screen_Result</targetReference>
         </connector>
         <inputParameters>
             <name>categoryId</name>
@@ -365,33 +374,5 @@
         <storeOutputAutomatically>false</storeOutputAutomatically>
     </actionCalls>
 
-    <!-- 8. Assign result outputs -->
-    <assignments>
-        <name>Assign_Result</name>
-        <label>Assign Result</label>
-        <locationX>176</locationX>
-        <locationY>1008</locationY>
-        <connector>
-            <targetReference>Screen_Result</targetReference>
-        </connector>
-    </assignments>
-
-    <!-- 9. Result screen -->
-    <screens>
-        <name>Screen_Result</name>
-        <label>Done</label>
-        <locationX>176</locationX>
-        <locationY>1128</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>Display_Result</name>
-            <fieldText>{!varResultMessage}</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
 
 </Flow>

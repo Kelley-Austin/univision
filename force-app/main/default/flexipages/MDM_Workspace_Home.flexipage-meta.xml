@@ -1,50 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>MDM Workspace home page. Displays KPI tiles at the top, the category tree manager below, and supporting list views.</description>
-    <flexiPageType>AppPage</flexiPageType>
-    <masterLabel>MDM Workspace Home</masterLabel>
-    <template>
-        <name>lightning_cms_layout__fullWidthLayout</name>
-    </template>
-    <regions>
-        <name>main</name>
-        <type>Region</type>
-        <mode>replace</mode>
-    </regions>
     <flexiPageRegions>
-        <name>main</name>
-        <type>Region</type>
         <itemInstances>
-            <!-- KPI tiles — full width at top -->
             <componentInstance>
                 <componentName>c:mdmKpiTiles</componentName>
-                <visibilityRule>
-                    <booleanFilter/>
-                </visibilityRule>
+                <identifier>mdmKpiTiles</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
-            <!-- Category tree drag-to-reparent editor -->
             <componentInstance>
                 <componentName>c:categoryTreeManager</componentName>
-                <visibilityRule>
-                    <booleanFilter/>
-                </visibilityRule>
+                <identifier>categoryTreeManager</identifier>
             </componentInstance>
         </itemInstances>
-        <itemInstances>
-            <!-- Recent Accounts list view for quick triage -->
-            <componentInstance>
-                <componentName>force:recentItems</componentName>
-                <componentInstanceProperties>
-                    <name>sobjectApiName</name>
-                    <value>Account</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>title</name>
-                    <value>Recent Accounts</value>
-                </componentInstanceProperties>
-            </componentInstance>
-        </itemInstances>
+        <name>main</name>
+        <type>Region</type>
     </flexiPageRegions>
+    <masterLabel>MDM Workspace Home</masterLabel>
+    <template>
+        <name>flexipage:defaultAppHomeTemplate</name>
+    </template>
+    <type>AppPage</type>
 </FlexiPage>
