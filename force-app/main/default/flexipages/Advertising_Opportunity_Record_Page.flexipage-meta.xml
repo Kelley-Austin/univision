@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Lightning Record Page for Advertising Opportunity. Surfaces key fields, the AE projection grid, Budget Lines, and Contracts without leaving the record. Quick action Import Counterpoint Data is accessible from the action bar in the highlights panel.</description>
+    <description>Lightning Record Page for Advertising Opportunity. Surfaces key fields, the AE projection grid, Budget Lines, Contracts, and a generic source-system CSV upload (sourceFileUpload) so AEs can ingest actuals from Counterpoint, WideOrbit, etc. without leaving the record.</description>
     <masterLabel>Advertising Opportunity Record Page</masterLabel>
     <sobjectType>Advertising_Opportunity__c</sobjectType>
     <type>RecordPage</type>
@@ -55,6 +55,11 @@
                     <value>Advertising_Contracts</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>c:sourceFileUpload</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>
