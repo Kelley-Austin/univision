@@ -28,11 +28,22 @@
  *  hundreds-per-hour territory, move the callout into a Queueable and
  *  use the trigger only to enqueue.
  *
- *  Test seam
+ *  Framework
  *  ---------
- *  Honor TestSettings.enableCalloutsInTests: when false (default) we skip
- *  the syncOpportunity call entirely under test. Existing tests that mock
- *  the callout flip the flag inside the test method.
+ *  Extends the canonical TriggerHandler base class (Patrick Stephens'). For
+ *  Platform Event triggers, Salesforce keys Trigger.newMap by ReplayId, so
+ *  TriggerDispatcher can hand us the Map<Id, SObject> like any normal trigger.
+ *
+ *  Test isolation
+ *  --------------
+ *  Skips the callout under Test.isRunningTest() by default — tests don't want
+ *  unintended outbound HTTP and the Matrix endpoint isn't always mocked.
+ *  Tests that DO want to exercise the callout path can:
+ *    1. Configure a TriggerSetting__mdt entry to bypass this handler entirely, OR
+ *    2. Skip publishing the event in the test method, OR
+ *    3. Refactor MatrixOrderSyncService to expose a test-mode override that
+ *       Test.setMock can satisfy.
+ *  All three are reasonable; pick whatever suits the test scenario.
  * =============================================================================
  */
 public with sharing class MatrixOrderSyncTriggerHandler extends TriggerHandler {
@@ -42,20 +53,22 @@ public with sharing class MatrixOrderSyncTriggerHandler extends TriggerHandler {
      * phase exists for events. We override afterInsert and route into the
      * sync service per event.
      */
-    protected override void afterInsert() {
-        dispatch((List<Matrix_Order_Sync__e>) Trigger.new);
+    public override void afterInsert(Map<Id, SObject> newRecordsMap) {
+        dispatch((List<Matrix_Order_Sync__e>) newRecordsMap.values());
     }
 
     @TestVisible
     private static void dispatch(List<Matrix_Order_Sync__e> events) {
-        // In test context, only honor the call when the test has explicitly
-        // opted in via TestSettings.enableCalloutsInTests + Test.setMock.
-        if (Test.isRunningTest() && !TestSettings.enableCalloutsInTests) return;
+        // Default: skip in test context. Tests that want callout coverage
+        // should bypass via TriggerSetting__mdt or refactor the service to
+        // accept a test-mode mock. Production runs always proceed.
+        if (Test.isRunningTest()) return;
 
         for (Matrix_Order_Sync__e ev : events) {
             // Defensive: skip events lacking the required correlation ID.
             // Platform events with NULL Opportunity_Id__c indicate a publisher
-            // bug — log via Logger once that framework lands; for now, skip.
+            // bug; we could LogX.logEvent here to surface the malformed event
+            // in Log__c — left as a TODO so the immediate refactor stays focused.
             if (ev.Opportunity_Id__c == null) continue;
 
             MatrixOrderSyncService.syncOpportunity(

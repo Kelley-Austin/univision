@@ -44,12 +44,18 @@
  *    * Source_System__c that's been deleted between insert and trigger run:
  *      enqueue still fires; the queueable handles a missing parent.
  *
+ *  Framework
+ *  ---------
+ *  Extends the canonical TriggerHandler base class (Patrick Stephens'). Phase
+ *  methods receive Trigger.newMap as argument from TriggerDispatcher; we
+ *  cast to List<ContentDocumentLink> via .values() at the entry point.
+ *
  *  Tests
  *  -----
  *  No dedicated test class today. End-to-end coverage comes from
  *  IngestServiceTest and the per-transformer test classes that simulate
  *  ContentDocumentLink insert via DML. Adding a focused trigger test is on
- *  the docket once the TestDataFactory lands.
+ *  the docket once the TestDataFactory is in regular use.
  * =============================================================================
  */
 public with sharing class ContentDocumentLinkTriggerHandler extends TriggerHandler {
@@ -58,8 +64,8 @@ public with sharing class ContentDocumentLinkTriggerHandler extends TriggerHandl
     //  Phase methods
     // =========================================================================
 
-    protected override void afterInsert() {
-        enqueueIngestForUploadedFiles((List<ContentDocumentLink>) Trigger.new);
+    public override void afterInsert(Map<Id, SObject> newRecordsMap) {
+        enqueueIngestForUploadedFiles((List<ContentDocumentLink>) newRecordsMap.values());
     }
 
     // =========================================================================

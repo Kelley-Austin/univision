@@ -37,6 +37,13 @@
  *  isValidTransition(String, String) is invoked directly from
  *  PeriodCloseTriggerHandlerTest. Its signature is part of our test surface;
  *  do not rename or change visibility without updating the tests.
+ *
+ *  Framework
+ *  ---------
+ *  Extends the canonical TriggerHandler base class (Patrick Stephens'). Phase
+ *  methods receive Trigger.new / Trigger.newMap / Trigger.oldMap as arguments
+ *  from TriggerDispatcher; we cast to the typed sObject / map at the entry
+ *  point and pass through to the typed validation method.
  * =============================================================================
  */
 public with sharing class PeriodCloseTriggerHandler extends TriggerHandler {
@@ -45,10 +52,19 @@ public with sharing class PeriodCloseTriggerHandler extends TriggerHandler {
     //  Phase methods
     // =========================================================================
 
-    protected override void beforeUpdate() {
+    /**
+     * beforeUpdate is the only phase that needs validation; status transitions
+     * are only meaningful when an existing record changes. Insert paths
+     * accept any status (typically 'Open' from the UI default), and delete
+     * is gated by perm sets, not state.
+     */
+    public override void beforeUpdate(
+        Map<Id, SObject> newRecordsMap,
+        Map<Id, SObject> oldRecordsMap
+    ) {
         validateTransitions(
-            (List<Period_Close__c>) Trigger.new,
-            (Map<Id, Period_Close__c>) Trigger.oldMap
+            (List<Period_Close__c>) newRecordsMap.values(),
+            (Map<Id, Period_Close__c>) oldRecordsMap
         );
     }
 

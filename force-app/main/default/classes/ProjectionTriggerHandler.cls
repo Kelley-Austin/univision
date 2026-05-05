@@ -34,6 +34,12 @@
  *  the boolean result without provisioning the perm; null means "no override,
  *  use real check." Tests already rely on this contract — preserved verbatim.
  *
+ *  Framework
+ *  ---------
+ *  Extends the canonical TriggerHandler base class (Patrick Stephens'). Phase
+ *  methods receive Trigger.new / Trigger.newMap / Trigger.oldMap as arguments
+ *  from TriggerDispatcher.
+ *
  *  Public surface (do not change without updating callers)
  *  -------------------------------------------------------
  *      buildCompositeKey(Projection__c)  — used by:
@@ -79,23 +85,29 @@ public with sharing class ProjectionTriggerHandler extends TriggerHandler {
     //  Phase methods
     // =========================================================================
 
-    protected override void beforeInsert() {
-        List<Projection__c> records = (List<Projection__c>) Trigger.new;
+    public override void beforeInsert(List<SObject> newRecords) {
+        List<Projection__c> records = (List<Projection__c>) newRecords;
         stampCompositeKeys(records);
         // No oldMap on insert — regression check only meaningful on update.
     }
 
-    protected override void beforeUpdate() {
-        List<Projection__c> records = (List<Projection__c>) Trigger.new;
-        Map<Id, Projection__c> oldMap = (Map<Id, Projection__c>) Trigger.oldMap;
+    public override void beforeUpdate(
+        Map<Id, SObject> newRecordsMap,
+        Map<Id, SObject> oldRecordsMap
+    ) {
+        List<Projection__c> records  = (List<Projection__c>) newRecordsMap.values();
+        Map<Id, Projection__c> oldMap = (Map<Id, Projection__c>) oldRecordsMap;
         stampCompositeKeys(records);
         blockIllegalRegression(records, oldMap);
     }
 
-    protected override void afterUpdate() {
+    public override void afterUpdate(
+        Map<Id, SObject> newRecordsMap,
+        Map<Id, SObject> oldRecordsMap
+    ) {
         publishStageChangeEvents(
-            (List<Projection__c>) Trigger.new,
-            (Map<Id, Projection__c>) Trigger.oldMap
+            (List<Projection__c>) newRecordsMap.values(),
+            (Map<Id, Projection__c>) oldRecordsMap
         );
     }
 
