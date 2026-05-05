@@ -40,7 +40,8 @@
 **/flexipages/Sales_Operations_Console_App.flexipage-meta.xml
 **/applications/MDM_Workspace.app-meta.xml
 **/applications/MediaCloud.app-meta.xml
-**/applications/Sales_Operations_Console.app-meta.xml
+# TEMP-DIAGNOSTIC: un-ignored for check-only validate deploy 2026-05-05
+# **/applications/Sales_Operations_Console.app-meta.xml
 
 # Named Credential — type element invalid in this org
 **/namedCredentials/Matrix_API.namedCredential-meta.xml
