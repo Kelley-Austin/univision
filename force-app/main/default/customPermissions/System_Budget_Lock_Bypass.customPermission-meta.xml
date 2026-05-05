@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <isLicensed>false</isLicensed>
+    <label>System Budget Lock Bypass</label>
+    <description>Allows the holder to regress Projection__c.Forecast_Stage__c to an earlier stage (e.g., Stage 3 → Stage 1) and to write to Projections during periods locked by Budget_Lock__c. Reserved for finance / sales-ops admins handling corrections.</description>
+</CustomPermission>

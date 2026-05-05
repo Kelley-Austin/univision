@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Snapshot_Date__c</fullName>
+    <label>Snapshot Date</label>
+    <type>Date</type>
+    <required>true</required>
+    <description>Date the snapshot was taken (the Sunday end-of-day on which ForecastStageSnapshotBatch ran).</description>
+</CustomField>

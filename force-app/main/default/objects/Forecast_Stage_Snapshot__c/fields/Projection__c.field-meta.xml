@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Projection__c</fullName>
+    <label>Projection</label>
+    <required>false</required>
+    <type>MasterDetail</type>
+    <referenceTo>Projection__c</referenceTo>
+    <relationshipLabel>Forecast Stage Snapshots</relationshipLabel>
+    <relationshipName>Forecast_Stage_Snapshots</relationshipName>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    <description>Parent Projection. Master-detail; snapshots cascade-delete with the projection.</description>
+</CustomField>
