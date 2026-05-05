@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Self-healing alias table mapping raw AE codes from source files to Salesforce Users. Written by SalespersonMatcher when a Tier 2+ match succeeds, so the next occurrence resolves at Tier 1.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <label>AE Code Alias</label>
+    <nameField>
+        <label>Alias Code</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>AE Code Aliases</pluralLabel>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

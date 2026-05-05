@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Lightning Record Page for Account — Advertising Budget view. Shows the 12-month Budget vs. Projection vs. Actual grid, the AE reconciliation worklist for unmatched staging records, the Budget Lines related list, and Actual Revenues. Assigned to the Advertiser record type in Lightning App Builder.</description>
+    <masterLabel>Account Advertising Budget</masterLabel>
+    <sobjectType>Account</sobjectType>
+    <type>RecordPage</type>
+
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>variant</name>
+                    <value>base</value>
+                </componentInstanceProperties>
+                <componentName>force:highlightsPanel</componentName>
+            </componentInstance>
+        </itemInstances>
+        <mode>Replace</mode>
+        <name>header</name>
+        <type>Region</type>
+    </flexiPageRegions>
+
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>force:recordDetail</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>c:accountBudgetGrid</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>c:aeReconciliationWorklist</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>heading</name>
+                    <value>Budget Lines</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedList</name>
+                    <value>Budget_Lines</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>heading</name>
+                    <value>Actual Revenues</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedList</name>
+                    <value>Actual_Revenues</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>force:relatedListContainer</componentName>
+            </componentInstance>
+        </itemInstances>
+        <mode>Replace</mode>
+        <name>main</name>
+        <type>Region</type>
+    </flexiPageRegions>
+
+</FlexiPage>

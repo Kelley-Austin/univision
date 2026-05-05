@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Defines a budget lock at a configurable scope level (Global, Market, Region, Office, Account, Category). When an active lock exists that covers a given Account+Category+Year combination, the aeProjectionGrid rejects edits for that scope.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <label>Budget Lock</label>
+    <nameField>
+        <displayFormat>LOCK-{0000}</displayFormat>
+        <label>Lock Number</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Budget Locks</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>Private</sharingModel>
+</CustomObject>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <description>Screen Flow invoked from the Advertising Opportunity record page. Confirms with the user before queuing the ReconciliationBatch, which matches Budget Lines against Counterpoint actuals and updates Reconciliation Lines.</description>
+    <environments>Default</environments>
+    <interviewLabel>Run Reconciliation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Run Reconciliation</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value><stringValue>LightningFlowBuilder</stringValue></value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value><stringValue>AUTO_LAYOUT_CANVAS</stringValue></value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <start>
+        <locationX>176</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Confirm_Screen</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+
+    <!-- ── Input variable from the record page ── -->
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <description>Advertising Opportunity record ID passed automatically by the Quick Action.</description>
+    </variables>
+
+    <!-- ── Output variables populated by the Apex action ── -->
+    <variables>
+        <name>varSuccess</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <!-- ── Screen 1: Confirm ── -->
+    <screens>
+        <name>Confirm_Screen</name>
+        <label>Run Reconciliation</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Run_Reconciliation_Action</targetReference>
+        </connector>
+        <fields>
+            <name>Confirm_Text</name>
+            <fieldText>&lt;p&gt;This will compare all &lt;strong&gt;Budget Lines&lt;/strong&gt; on this Advertising Opportunity against &lt;strong&gt;Counterpoint actuals&lt;/strong&gt; and create or update &lt;strong&gt;Reconciliation Lines&lt;/strong&gt;.&lt;/p&gt;&lt;p&gt;Any existing reconciliation results for this opportunity will be replaced. The job runs in the background — click &lt;strong&gt;Run&lt;/strong&gt; to queue it.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Run</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <!-- ── Apex Action ── -->
+    <actionCalls>
+        <name>Run_Reconciliation_Action</name>
+        <label>Run Reconciliation Action</label>
+        <locationX>176</locationX>
+        <locationY>278</locationY>
+        <actionName>RunReconciliationAction</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Check_Result</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Error_Screen</targetReference>
+        </faultConnector>
+        <inputParameters>
+            <name>opportunityId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>varSuccess</assignToReference>
+            <name>success</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>varMessage</assignToReference>
+            <name>message</name>
+        </outputParameters>
+        <storeOutputAutomatically>false</storeOutputAutomatically>
+    </actionCalls>
+
+    <!-- ── Decision ── -->
+    <decisions>
+        <name>Check_Result</name>
+        <label>Check Result</label>
+        <locationX>176</locationX>
+        <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>Error_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Job Failed</defaultConnectorLabel>
+        <rules>
+            <name>Job_Queued</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varSuccess</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Success_Screen</targetReference>
+            </connector>
+            <label>Job Queued</label>
+        </rules>
+    </decisions>
+
+    <!-- ── Screen 2: Success ── -->
+    <screens>
+        <name>Success_Screen</name>
+        <label>Reconciliation Queued</label>
+        <locationX>0</locationX>
+        <locationY>518</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Success_Text</name>
+            <fieldText>&lt;p&gt;{!varMessage}&lt;/p&gt;&lt;p&gt;Open the &lt;strong&gt;Reconciliation Lines&lt;/strong&gt; related list on this page to view results once processing is complete (usually within a minute or two).&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <!-- ── Screen 3: Error ── -->
+    <screens>
+        <name>Error_Screen</name>
+        <label>Error</label>
+        <locationX>352</locationX>
+        <locationY>518</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Error_Text</name>
+            <fieldText>&lt;p&gt;There was a problem starting the reconciliation job.&lt;/p&gt;&lt;p&gt;{!varMessage}&lt;/p&gt;&lt;p&gt;Please contact your Salesforce administrator if this issue persists.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+</Flow>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Lightning Record Page for Advertising Opportunity. Surfaces key fields, the AE projection grid, Budget Lines, Contracts, and a generic source-system CSV upload (sourceFileUpload) so AEs can ingest actuals from Counterpoint, WideOrbit, etc. without leaving the record.</description>
+    <masterLabel>Advertising Opportunity Record Page</masterLabel>
+    <sobjectType>Advertising_Opportunity__c</sobjectType>
+    <type>RecordPage</type>
+
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>variant</name>
+                    <value>base</value>
+                </componentInstanceProperties>
+                <componentName>force:highlightsPanel</componentName>
+            </componentInstance>
+        </itemInstances>
+        <mode>Replace</mode>
+        <name>header</name>
+        <type>Region</type>
+    </flexiPageRegions>
+
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentName>force:recordDetail</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>c:aeProjectionGrid</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>heading</name>
+                    <value>Budget Lines</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedList</name>
+                    <value>Budget_Lines</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>heading</name>
+                    <value>Advertising Contracts</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedList</name>
+                    <value>Advertising_Contracts</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>c:sourceFileUpload</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>force:relatedListContainer</componentName>
+            </componentInstance>
+        </itemInstances>
+        <mode>Replace</mode>
+        <name>main</name>
+        <type>Region</type>
+    </flexiPageRegions>
+
+</FlexiPage>

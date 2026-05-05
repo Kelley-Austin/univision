@@ -1,0 +1,123 @@
+<template>
+    <div class="slds-m-around_medium">
+        <template if:true={error}>
+            <div class="slds-notify slds-notify_alert slds-theme_error slds-m-bottom_small" role="alert">
+                <span class="slds-assistive-text">Error</span>
+                {error}
+            </div>
+        </template>
+
+        <template if:true={hasLines}>
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th scope="col"><div class="slds-truncate">Channel *</div></th>
+                        <th scope="col"><div class="slds-truncate">Month *</div></th>
+                        <th scope="col"><div class="slds-truncate">Fiscal Year *</div></th>
+                        <th scope="col"><div class="slds-truncate">Planned Amount *</div></th>
+                        <th scope="col"><div class="slds-truncate">Notes</div></th>
+                        <th scope="col"><div class="slds-assistive-text">Remove</div></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={lines} for:item="line" for:key="line._id">
+                        <tr key={line._id}>
+                            <td>
+                                <lightning-combobox
+                                    value={line.channelId}
+                                    options={channelOptions}
+                                    data-row-id={line._id}
+                                    data-field="channelId"
+                                    onchange={handleFieldChange}
+                                    placeholder="Select Channel"
+                                    variant="label-hidden"
+                                ></lightning-combobox>
+                            </td>
+                            <td>
+                                <lightning-combobox
+                                    value={line.month}
+                                    options={monthOptions}
+                                    data-row-id={line._id}
+                                    data-field="month"
+                                    onchange={handleFieldChange}
+                                    placeholder="Select Month"
+                                    variant="label-hidden"
+                                ></lightning-combobox>
+                            </td>
+                            <td>
+                                <lightning-input
+                                    type="text"
+                                    value={line.fiscalYear}
+                                    data-row-id={line._id}
+                                    data-field="fiscalYear"
+                                    onchange={handleFieldChange}
+                                    placeholder="e.g. FY2026"
+                                    maxlength="10"
+                                    variant="label-hidden"
+                                    label="Fiscal Year"
+                                ></lightning-input>
+                            </td>
+                            <td>
+                                <lightning-input
+                                    type="number"
+                                    value={line.plannedAmount}
+                                    formatter="currency"
+                                    data-row-id={line._id}
+                                    data-field="plannedAmount"
+                                    onchange={handleFieldChange}
+                                    min="0.01"
+                                    step="0.01"
+                                    variant="label-hidden"
+                                    label="Planned Amount"
+                                ></lightning-input>
+                            </td>
+                            <td>
+                                <lightning-input
+                                    type="text"
+                                    value={line.notes}
+                                    data-row-id={line._id}
+                                    data-field="notes"
+                                    onchange={handleFieldChange}
+                                    placeholder="Optional"
+                                    variant="label-hidden"
+                                    label="Notes"
+                                ></lightning-input>
+                            </td>
+                            <td>
+                                <lightning-button-icon
+                                    icon-name="utility:delete"
+                                    variant="border-filled"
+                                    size="small"
+                                    data-row-id={line._id}
+                                    onclick={handleRemoveLine}
+                                    alternative-text="Remove line"
+                                ></lightning-button-icon>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </template>
+
+        <template if:false={hasLines}>
+            <div class="slds-align_absolute-center slds-m-vertical_medium slds-text-color_weak">
+                No budget lines added yet. Click &ldquo;Add Line&rdquo; to begin.
+            </div>
+        </template>
+
+        <div class="slds-grid slds-grid_align-spread slds-m-top_small">
+            <lightning-button
+                label="Add Line"
+                icon-name="utility:add"
+                icon-position="left"
+                onclick={handleAddLine}
+            ></lightning-button>
+
+            <template if:true={hasLines}>
+                <p class="slds-text-heading_small slds-m-top_x-small">
+                    Total Planned: <strong>{totalFormatted}</strong>
+                </p>
+            </template>
+        </div>
+    </div>
+</template>

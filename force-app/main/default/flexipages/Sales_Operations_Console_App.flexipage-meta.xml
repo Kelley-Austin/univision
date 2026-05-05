@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Sales Operations Console app page. Houses the salesOpsConsole LWC which renders the six-tab layout with KPI header.</description>
+    <masterLabel>Sales Operations Console</masterLabel>
+    <type>AppPage</type>
+
+    <flexiPageRegions>
+        <componentInstances>
+            <componentName>c:salesOpsConsole</componentName>
+        </componentInstances>
+        <mode>AppDefault</mode>
+        <name>main</name>
+        <type>Region</type>
+    </flexiPageRegions>
+
+</FlexiPage>

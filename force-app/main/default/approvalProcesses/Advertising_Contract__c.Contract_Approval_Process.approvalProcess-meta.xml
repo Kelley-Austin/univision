@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApprovalProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <allowRecall>true</allowRecall>
+
+    <!-- Who may submit: the record owner or the user who created it -->
+    <allowedSubmitters>
+        <type>owner</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
+        <type>creator</type>
+    </allowedSubmitters>
+
+    <!-- Fields displayed on the approval page for the reviewer -->
+    <approvalPageFields>
+        <field>Name</field>
+        <field>Advertising_Opportunity__c</field>
+        <field>Account__c</field>
+        <field>Contract_Status__c</field>
+        <field>Total_Contract_Value__c</field>
+        <field>Signatory_Name__c</field>
+        <field>Start_Date__c</field>
+        <field>End_Date__c</field>
+        <field>Cancellation_Policy__c</field>
+    </approvalPageFields>
+
+    <!-- Step 1: Route to Contract Approvers queue -->
+    <approvalStep>
+        <allowDelegate>true</allowDelegate>
+        <approvalActions>
+            <action>
+                <name>Contract_Approved_Status</name>
+                <type>FieldUpdate</type>
+            </action>
+            <action>
+                <name>Contract_Approved_Date</name>
+                <type>FieldUpdate</type>
+            </action>
+        </approvalActions>
+        <assignedApprover>
+            <approver>
+                <name>Contract_Approvers</name>
+                <type>queue</type>
+            </approver>
+            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
+        </assignedApprover>
+        <description>Route the contract to the Contract Approvers queue. Any member of the queue may approve or reject.</description>
+        <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
+        <label>Contract Review</label>
+        <name>Contract_Review</name>
+        <rejectBehavior>
+            <type>RejectRequest</type>
+        </rejectBehavior>
+        <rejectionActions>
+            <action>
+                <name>Contract_Draft_Status</name>
+                <type>FieldUpdate</type>
+            </action>
+        </rejectionActions>
+    </approvalStep>
+
+    <description>Routes an Advertising Contract to the Contract Approvers queue. On approval: sets status to Approved and stamps the date. On rejection or recall: returns to Draft.</description>
+    <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
+
+    <!-- Entry criteria: only contracts in Pending Approval status enter this process -->
+    <entryCriteria>
+        <criteriaItems>
+            <field>Advertising_Contract__c.Contract_Status__c</field>
+            <operation>equals</operation>
+            <value>Pending Approval</value>
+        </criteriaItems>
+    </entryCriteria>
+
+    <!-- Final approval actions: set Approved + stamp date -->
+    <finalApprovalActions>
+        <action>
+            <name>Contract_Approved_Status</name>
+            <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>Contract_Approved_Date</name>
+            <type>FieldUpdate</type>
+        </action>
+    </finalApprovalActions>
+    <finalApprovalRecordLock>true</finalApprovalRecordLock>
+
+    <!-- Final rejection actions: return to Draft -->
+    <finalRejectionActions>
+        <action>
+            <name>Contract_Draft_Status</name>
+            <type>FieldUpdate</type>
+        </action>
+    </finalRejectionActions>
+    <finalRejectionRecordLock>false</finalRejectionRecordLock>
+
+    <!-- Initial submission: set status to Pending Approval -->
+    <initialSubmissionActions>
+        <action>
+            <name>Contract_Pending_Status</name>
+            <type>FieldUpdate</type>
+        </action>
+    </initialSubmissionActions>
+
+    <label>Contract Approval Process</label>
+    <name>Contract_Approval_Process</name>
+
+    <!-- Recall actions: return to Draft -->
+    <recallActions>
+        <action>
+            <name>Contract_Draft_Status</name>
+            <type>FieldUpdate</type>
+        </action>
+    </recallActions>
+
+    <!-- Admins and the current approver may edit the record while in approval -->
+    <recordEditability>AdminOrCurrentApprover</recordEditability>
+    <showApprovalHistory>true</showApprovalHistory>
+</ApprovalProcess>

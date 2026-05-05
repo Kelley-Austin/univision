@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Variance_Pct__c</fullName>
+    <description>Forecast accuracy: (Actual_At_Close - Projected_At_Close) / Projected_At_Close. Null when Projected_At_Close is zero to avoid divide-by-zero.</description>
+    <formula>IF(Projected_At_Close__c = 0, NULL, (Actual_At_Close__c - Projected_At_Close__c) / Projected_At_Close__c)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Variance %</label>
+    <precision>18</precision>
+    <scale>4</scale>
+    <type>Percent</type>
+</CustomField>

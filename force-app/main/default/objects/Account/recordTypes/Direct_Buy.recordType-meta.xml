@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <description>Direct Buy Advertiser. An end advertiser that purchases media directly from TelevisaUnivision. May optionally be linked to a Primary Agency via the Primary_Agency__c field without requiring a strict parent-account hierarchy.</description>
+    <fullName>Direct_Buy</fullName>
+    <label>Direct Buy Advertiser</label>
+</RecordType>

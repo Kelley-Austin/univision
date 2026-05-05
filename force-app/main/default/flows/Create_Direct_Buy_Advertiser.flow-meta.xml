@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <description>Screen Flow for creating a Direct Buy Advertiser account. Collects advertiser name, market, media type, and an optional primary agency. Launched from the New Advertiser (Direct Buy) global quick action.</description>
+    <interviewLabel>Create Direct Buy Advertiser {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Create Direct Buy Advertiser</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <runInMode>DefaultMode</runInMode>
+    <status>Active</status>
+
+    <!-- ═══════════════════════════ VARIABLES ═══════════════════════════════ -->
+
+    <variables>
+        <name>var_newAccountId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+
+    <variables>
+        <name>var_primaryAgencyId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <variables>
+        <name>var_directBuyRT</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>RecordType</objectType>
+    </variables>
+
+    <!-- ═══════════════════════════ DYNAMIC CHOICE SETS ═════════════════════ -->
+
+    <dynamicChoiceSets>
+        <name>dcs_Market</name>
+        <dataType>Picklist</dataType>
+        <object>Account</object>
+        <picklistField>Market__c</picklistField>
+        <picklistObject>Account</picklistObject>
+    </dynamicChoiceSets>
+
+    <dynamicChoiceSets>
+        <name>dcs_MediaType</name>
+        <dataType>Picklist</dataType>
+        <object>Account</object>
+        <picklistField>Media_Type__c</picklistField>
+        <picklistObject>Account</picklistObject>
+    </dynamicChoiceSets>
+
+    <!-- ═══════════════════════════ FLOW ELEMENTS ════════════════════════════ -->
+
+    <start>
+        <locationX>176</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Get_DirectBuy_RT</targetReference>
+        </connector>
+    </start>
+
+    <!-- 1. Look up the Direct_Buy record type ID -->
+    <recordLookups>
+        <name>Get_DirectBuy_RT</name>
+        <label>Get Direct Buy Record Type</label>
+        <locationX>176</locationX>
+        <locationY>168</locationY>
+        <connector>
+            <targetReference>Screen_AdvertiserDetails</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Direct_Buy</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Account</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <outputReference>var_directBuyRT</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>DeveloperName</queriedFields>
+        <storeOutputAutomatically>false</storeOutputAutomatically>
+    </recordLookups>
+
+    <!-- 3. Create the Direct Buy Advertiser account -->
+    <recordCreates>
+        <name>Create_AdvertiserAccount</name>
+        <label>Create Advertiser Account</label>
+        <locationX>176</locationX>
+        <locationY>408</locationY>
+        <assignRecordIdToReference>var_newAccountId</assignRecordIdToReference>
+        <connector>
+            <targetReference>Screen_Success</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>fi_AdvertiserName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>var_directBuyRT.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Market__c</field>
+            <value>
+                <elementReference>fi_Market</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Media_Type__c</field>
+            <value>
+                <elementReference>fi_MediaType</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Primary_Agency__c</field>
+            <value>
+                <elementReference>var_primaryAgencyId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Website</field>
+            <value>
+                <elementReference>fi_Website</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phone</field>
+            <value>
+                <elementReference>fi_Phone</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordCreates>
+
+
+
+    <!-- 2. Screen: collect advertiser details -->
+    <screens>
+        <name>Screen_AdvertiserDetails</name>
+        <label>Advertiser Details</label>
+        <locationX>176</locationX>
+        <locationY>288</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Create_AdvertiserAccount</targetReference>
+        </connector>
+        <fields>
+            <name>fi_AdvertiserName</name>
+            <dataType>String</dataType>
+            <fieldText>Advertiser Name</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>fi_Market</name>
+            <choiceReferences>dcs_Market</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Market</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>fi_MediaType</name>
+            <choiceReferences>dcs_MediaType</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Media Type</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>fi_PrimaryAgency</name>
+            <extensionName>flowruntime:lookupField</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>fieldApiName</name>
+                <value>
+                    <stringValue>Primary_Agency__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Primary Agency (optional)</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectApiName</name>
+                <value>
+                    <stringValue>Account</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <isRequired>false</isRequired>
+            <outputParameters>
+                <assignToReference>var_primaryAgencyId</assignToReference>
+                <name>value</name>
+            </outputParameters>
+        </fields>
+        <fields>
+            <name>fi_Website</name>
+            <dataType>String</dataType>
+            <fieldText>Website</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>fi_Phone</name>
+            <dataType>String</dataType>
+            <fieldText>Phone</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+
+    <!-- 4. Success screen -->
+    <screens>
+        <name>Screen_Success</name>
+        <label>Account Created</label>
+        <locationX>176</locationX>
+        <locationY>528</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>fi_SuccessMessage</name>
+            <fieldText>&lt;p&gt;Direct Buy Advertiser account &lt;strong&gt;{!fi_AdvertiserName}&lt;/strong&gt; was created successfully.&lt;/p&gt;&lt;p&gt;Market: {!fi_Market} | Media Type: {!fi_MediaType}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+</Flow>

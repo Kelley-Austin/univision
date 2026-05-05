@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Matrix_Account_ID__c</fullName>
+    <description>The account identifier used by the Matrix advertising system. Populated during the initial account mapping setup. Required on the Account for the outbound order sync to succeed.</description>
+    <externalId>true</externalId>
+    <label>Matrix Account ID</label>
+    <length>50</length>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

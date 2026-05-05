@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <description>Record-Triggered Flow on Advertising_Opportunity__c. When Status changes to "Closed Won" for the first time, automatically creates a Draft Advertising_Contract__c pre-populated from the opportunity. The filterFormula guards against firing on subsequent edits while already Closed Won. The lookup guard prevents a second contract if the deal was re-won after being lost.</description>
+    <label>Create Contract on Close Won</label>
+    <processType>AutoLaunchedFlow</processType>
+    <status>Active</status>
+    <triggerOrder>1</triggerOrder>
+
+    <!-- ═══════════════════════════════════════════
+         TRIGGER — fires only when transitioning INTO Closed Won
+    ═══════════════════════════════════════════ -->
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>lookup_ExistingContract</targetReference>
+        </connector>
+        <filterFormula>AND(
+  {!$Record.Status__c} = "Closed Won",
+  OR(
+    ISNULL({!$Record__Prior.Status__c}),
+    {!$Record__Prior.Status__c} != "Closed Won"
+  )
+)</filterFormula>
+        <object>Advertising_Opportunity__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+
+    <!-- ═══════════════════════════════════════════
+         LOOKUP — check whether a contract already exists
+    ═══════════════════════════════════════════ -->
+    <recordLookups>
+        <name>lookup_ExistingContract</name>
+        <label>Check for Existing Contract</label>
+        <locationX>264</locationX>
+        <locationY>158</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>decision_NoDuplicateContract</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Advertising_Opportunity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Advertising_Contract__c</object>
+        <outputAssignments>
+            <assignToReference>varExistingContractId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+
+    <!-- ═══════════════════════════════════════════
+         DECISION — skip if contract already exists
+    ═══════════════════════════════════════════ -->
+    <decisions>
+        <name>decision_NoDuplicateContract</name>
+        <label>Contract Already Exists?</label>
+        <locationX>264</locationX>
+        <locationY>318</locationY>
+        <defaultConnector>
+            <targetReference>create_Contract</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Contract — Create One</defaultConnectorLabel>
+        <rules>
+            <name>outcome_ContractExists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varExistingContractId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Contract Already Exists — Skip</label>
+        </rules>
+    </decisions>
+
+    <!-- ═══════════════════════════════════════════
+         RECORD CREATE — Draft Contract
+    ═══════════════════════════════════════════ -->
+    <recordCreates>
+        <name>create_Contract</name>
+        <label>Create Draft Contract</label>
+        <locationX>264</locationX>
+        <locationY>478</locationY>
+        <inputAssignments>
+            <field>Advertising_Opportunity__c</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Account__c</field>
+            <value>
+                <elementReference>$Record.Account__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Agency_Account__c</field>
+            <value>
+                <elementReference>$Record.Agency_Account__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Market__c</field>
+            <value>
+                <elementReference>$Record.Market__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Start_Date__c</field>
+            <value>
+                <elementReference>$Record.Start_Date__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>End_Date__c</field>
+            <value>
+                <elementReference>$Record.End_Date__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Total_Contract_Value__c</field>
+            <value>
+                <elementReference>$Record.Estimated_Revenue__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Contract_Status__c</field>
+            <value>
+                <stringValue>Draft</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Advertising_Contract__c</object>
+    </recordCreates>
+
+    <!-- ═══════════════════════════════════════════
+         VARIABLES
+    ═══════════════════════════════════════════ -->
+    <variables>
+        <name>varExistingContractId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

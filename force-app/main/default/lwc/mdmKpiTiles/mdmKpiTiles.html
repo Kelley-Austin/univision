@@ -1,0 +1,40 @@
+<template>
+    <div class="kpi-strip">
+        <template lwc:if={isLoading}>
+            <div class="slds-align_absolute-center slds-p-around_medium">
+                <lightning-spinner alternative-text="Loading KPIs" size="small"></lightning-spinner>
+            </div>
+        </template>
+
+        <template lwc:if={hasError}>
+            <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                <lightning-icon icon-name="utility:error" alternative-text="Error" size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                {errorMessage}
+            </div>
+        </template>
+
+        <template lwc:if={hasData}>
+            <template for:each={kpiTiles} for:item="tile">
+                <div key={tile.id} class={tile.cardClass}>
+                    <div class="kpi-icon-wrap">
+                        <lightning-icon
+                            icon-name={tile.icon}
+                            size="medium"
+                            variant={tile.iconVariant}>
+                        </lightning-icon>
+                    </div>
+                    <div class="kpi-body">
+                        <div class="kpi-value">{tile.value}</div>
+                        <div class="kpi-label">{tile.label}</div>
+                        <template lwc:if={tile.alertMessage}>
+                            <div class="kpi-alert">
+                                <lightning-icon icon-name="utility:warning" size="xx-small" class="slds-m-right_xx-small"></lightning-icon>
+                                {tile.alertMessage}
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </template>
+        </template>
+    </div>
+</template>

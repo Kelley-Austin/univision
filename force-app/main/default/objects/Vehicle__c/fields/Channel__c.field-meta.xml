@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Channel__c</fullName>
+    <description>Optional primary station for this vehicle. For vehicles that air on multiple stations, use Vehicle_Channel__c junction records instead.</description>
+    <label>Primary Channel</label>
+    <referenceTo>Channel__c</referenceTo>
+    <relationshipLabel>Vehicles (Primary)</relationshipLabel>
+    <relationshipName>Vehicles_Primary</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

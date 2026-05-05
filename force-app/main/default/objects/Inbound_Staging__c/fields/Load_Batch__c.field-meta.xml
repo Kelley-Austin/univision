@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Load_Batch__c</fullName>
+    <label>Load Batch</label>
+    <referenceTo>Load_Batch__c</referenceTo>
+    <relationshipLabel>Inbound Staging Records</relationshipLabel>
+    <relationshipName>Inbound_Staging_Records</relationshipName>
+    <required>false</required>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <description>Fires after an Advertising Contract is updated to Active status. Calls the TrafficOrderService Apex action to enqueue transmission of the order to the traffic/scheduling system. Runs only when the Contract Status field changes to Active (not on re-saves of already-Active records).</description>
+    <interviewLabel>Transmit Traffic Order on Contract Activation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Transmit Traffic Order on Contract Activation</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Enqueue_Traffic_Transmission</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Contract_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Active</stringValue>
+            </value>
+        </filters>
+        <object>Advertising_Contract__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <requiresRecordChangedToMeetCriteria>true</requiresRecordChangedToMeetCriteria>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+
+    <!-- ═══════════════════════════════════════════
+         ACTION: Enqueue Traffic Order Transmission
+         Calls TrafficOrderService.enqueueTransmission via @InvocableMethod.
+         Sets Traffic_Status__c = Pending and enqueues the Queueable callout.
+    ═══════════════════════════════════════════ -->
+
+    <actionCalls>
+        <name>Enqueue_Traffic_Transmission</name>
+        <label>Enqueue Traffic Transmission</label>
+        <locationX>56</locationX>
+        <locationY>120</locationY>
+        <actionName>TrafficOrderService</actionName>
+        <actionType>apex</actionType>
+        <faultConnector>
+            <isGoTo>false</isGoTo>
+            <targetReference>Log_Flow_Fault</targetReference>
+        </faultConnector>
+        <inputParameters>
+            <name>contractId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+
+    <!-- ═══════════════════════════════════════════
+         FAULT PATH: If the Apex action itself throws an unhandled exception,
+         stamp the Traffic Status to Rejected so traffic coordinators are alerted.
+    ═══════════════════════════════════════════ -->
+
+    <recordUpdates>
+        <name>Log_Flow_Fault</name>
+        <label>Log Flow Fault on Contract</label>
+        <locationX>264</locationX>
+        <locationY>120</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Traffic_Status__c</field>
+            <value>
+                <stringValue>Rejected</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Traffic_Error_Message__c</field>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Advertising_Contract__c</object>
+    </recordUpdates>
+
+</Flow>

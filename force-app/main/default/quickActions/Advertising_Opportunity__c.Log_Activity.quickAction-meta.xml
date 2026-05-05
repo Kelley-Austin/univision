@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionSubtype>ScreenAction</actionSubtype>
+    <description>Log a sales activity (call, meeting, email, presentation) against this opportunity. Creates a completed Task and optionally updates the Next Step.</description>
+    <flow>Log_Sales_Activity</flow>
+    <label>Log Activity</label>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <targetObject>Advertising_Opportunity__c</targetObject>
+    <type>Flow</type>
+</QuickAction>

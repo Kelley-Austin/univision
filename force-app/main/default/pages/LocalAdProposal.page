@@ -1,0 +1,328 @@
+<apex:page controller="LocalAdProposalController"
+           renderAs="pdf"
+           applyHtmlTag="true"
+           showHeader="false"
+           sidebar="false"
+           standardStylesheets="false">
+
+<head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        font-size: 11pt;
+        color: #1a1a1a;
+        margin: 0;
+        padding: 0;
+    }
+    .page-wrap {
+        padding: 36pt 48pt;
+    }
+    /* ── Header ── */
+    .header {
+        border-bottom: 3pt solid #c8102e;
+        padding-bottom: 10pt;
+        margin-bottom: 16pt;
+    }
+    .header-top {
+        display: table;
+        width: 100%;
+    }
+    .header-left  { display: table-cell; vertical-align: bottom; }
+    .header-right { display: table-cell; vertical-align: bottom; text-align: right; }
+    .logo-text {
+        font-size: 22pt;
+        font-weight: bold;
+        color: #c8102e;
+        letter-spacing: 1px;
+    }
+    .proposal-title {
+        font-size: 14pt;
+        font-weight: bold;
+        color: #1a1a1a;
+        margin-top: 4pt;
+    }
+    .proposal-meta {
+        font-size: 9pt;
+        color: #666;
+    }
+    /* ── Section headings ── */
+    .section-heading {
+        background-color: #c8102e;
+        color: #ffffff;
+        font-size: 10pt;
+        font-weight: bold;
+        padding: 4pt 8pt;
+        margin-top: 14pt;
+        margin-bottom: 6pt;
+    }
+    /* ── Two-column info grid ── */
+    .info-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .info-table td {
+        padding: 3pt 6pt;
+        font-size: 10pt;
+        vertical-align: top;
+    }
+    .info-label {
+        font-weight: bold;
+        width: 35%;
+        color: #444;
+    }
+    /* ── Budget lines table ── */
+    .lines-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 4pt;
+    }
+    .lines-table th {
+        background-color: #f0f0f0;
+        border: 0.5pt solid #ccc;
+        padding: 4pt 6pt;
+        font-size: 9pt;
+        text-align: left;
+    }
+    .lines-table td {
+        border: 0.5pt solid #ccc;
+        padding: 4pt 6pt;
+        font-size: 9.5pt;
+    }
+    .lines-table tr.alt {
+        background-color: #fafafa;
+    }
+    .lines-table .num {
+        text-align: right;
+    }
+    /* ── Totals row ── */
+    .totals-row td {
+        border-top: 1.5pt solid #1a1a1a;
+        font-weight: bold;
+        padding: 5pt 6pt;
+        font-size: 10pt;
+    }
+    /* ── Footer ── */
+    .footer {
+        border-top: 1pt solid #ccc;
+        margin-top: 24pt;
+        padding-top: 6pt;
+        font-size: 8pt;
+        color: #888;
+        text-align: center;
+    }
+    /* ── Signature block ── */
+    .sig-table {
+        width: 100%;
+        margin-top: 20pt;
+        border-collapse: collapse;
+    }
+    .sig-table td {
+        width: 48%;
+        padding: 4pt 6pt;
+        vertical-align: bottom;
+    }
+    .sig-line {
+        border-top: 1pt solid #1a1a1a;
+        margin-top: 28pt;
+        font-size: 9pt;
+        color: #555;
+        padding-top: 3pt;
+    }
+    /* ── Error ── */
+    .error-box {
+        border: 1pt solid #c23934;
+        padding: 12pt;
+        color: #c23934;
+        font-size: 11pt;
+    }
+</style>
+</head>
+
+<body>
+<div class="page-wrap">
+
+<apex:outputPanel rendered="{!hasError}">
+    <div class="error-box">
+        <strong>Cannot render proposal.</strong><br/><apex:outputText value="{!errorMessage}"/>
+    </div>
+</apex:outputPanel>
+
+<apex:outputPanel rendered="{!!hasError}">
+
+    <!-- ── HEADER ── -->
+    <div class="header">
+        <div class="header-top">
+            <div class="header-left">
+                <div class="logo-text">UNIVISION</div>
+                <div class="proposal-title">Local Advertising Proposal</div>
+            </div>
+            <div class="header-right">
+                <div class="proposal-meta">
+                    Proposal #: <strong><apex:outputText value="{!opp.Name}"/></strong><br/>
+                    Date: <strong><apex:outputText value="{0,date,MMMM d, yyyy}">
+                        <apex:param value="{!opp.CreatedDate}"/>
+                    </apex:outputText></strong><br/>
+                    Status: <strong><apex:outputText value="{!opp.Status__c}"/></strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── ADVERTISER INFO ── -->
+    <div class="section-heading">Advertiser</div>
+    <table class="info-table">
+        <tr>
+            <td class="info-label">Company:</td>
+            <td><apex:outputText value="{!advertiser.Name}"/></td>
+            <td class="info-label">Phone:</td>
+            <td><apex:outputText value="{!advertiser.Phone}"/></td>
+        </tr>
+        <tr>
+            <td class="info-label">Address:</td>
+            <td colspan="3">
+                <apex:outputText value="{!advertiser.BillingStreet}"/>
+                <apex:outputPanel rendered="{!NOT(ISBLANK(advertiser.BillingCity))}">
+                    , <apex:outputText value="{!advertiser.BillingCity}"/>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!NOT(ISBLANK(advertiser.BillingState))}">
+                    , <apex:outputText value="{!advertiser.BillingState}"/>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!NOT(ISBLANK(advertiser.BillingPostalCode))}">
+                    &nbsp;<apex:outputText value="{!advertiser.BillingPostalCode}"/>
+                </apex:outputPanel>
+            </td>
+        </tr>
+    </table>
+
+    <!-- ── CAMPAIGN DETAILS ── -->
+    <div class="section-heading">Campaign Details</div>
+    <table class="info-table">
+        <tr>
+            <td class="info-label">Market:</td>
+            <td><apex:outputText value="{!opp.Market__c}"/></td>
+            <td class="info-label">Total Budget:</td>
+            <td>
+                <apex:outputText value="{0,number,$#,##0.00}">
+                    <apex:param value="{!opp.Total_Budget__c}"/>
+                </apex:outputText>
+            </td>
+        </tr>
+        <tr>
+            <td class="info-label">Flight Start:</td>
+            <td><apex:outputText value="{0,date,MMMM d, yyyy}">
+                <apex:param value="{!opp.Start_Date__c}"/>
+            </apex:outputText></td>
+            <td class="info-label">Flight End:</td>
+            <td><apex:outputText value="{0,date,MMMM d, yyyy}">
+                <apex:param value="{!opp.End_Date__c}"/>
+            </apex:outputText></td>
+        </tr>
+        <tr>
+            <td class="info-label">Primary Demo:</td>
+            <td><apex:outputText value="{!opp.Primary_Demo__c}"/></td>
+            <td class="info-label">Secondary Demo:</td>
+            <td><apex:outputText value="{!opp.Secondary_Demo__c}"/></td>
+        </tr>
+    </table>
+
+    <apex:outputPanel rendered="{!NOT(ISBLANK(opp.Proposal_Notes__c))}">
+        <table class="info-table" style="margin-top:4pt;">
+            <tr>
+                <td class="info-label" style="width:18%;">Notes:</td>
+                <td><apex:outputText value="{!opp.Proposal_Notes__c}" escape="false"/></td>
+            </tr>
+        </table>
+    </apex:outputPanel>
+
+    <!-- ── BUDGET SCHEDULE ── -->
+    <div class="section-heading">Budget Schedule</div>
+    <apex:outputPanel rendered="{!budgetLines.size == 0}">
+        <p style="font-size:10pt;color:#888;padding:4pt 6pt;">No budget lines have been added to this proposal.</p>
+    </apex:outputPanel>
+
+    <apex:outputPanel rendered="{!budgetLines.size > 0}">
+        <table class="lines-table">
+            <thead>
+                <tr>
+                    <th>Vehicle / Program</th>
+                    <th>Day Part</th>
+                    <th>Channel</th>
+                    <th>Month</th>
+                    <th>Fiscal Year</th>
+                    <th style="text-align:right;">Rate Card</th>
+                    <th style="text-align:right;">Planned Amount</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <apex:repeat value="{!budgetLines}" var="bl">
+                    <tr>
+                        <td><apex:outputText value="{!bl.Vehicle__r.Name}"/></td>
+                        <td><apex:outputText value="{!bl.Vehicle__r.Day_Part__c}"/></td>
+                        <td><apex:outputText value="{!bl.Channel__r.Name}"/></td>
+                        <td><apex:outputText value="{!bl.Month__c}"/></td>
+                        <td><apex:outputText value="{!bl.Fiscal_Year__c}"/></td>
+                        <td class="num">
+                            <apex:outputText value="{0,number,$#,##0.00}">
+                                <apex:param value="{!bl.Vehicle__r.Rate_Card__c}"/>
+                            </apex:outputText>
+                        </td>
+                        <td class="num">
+                            <apex:outputText value="{0,number,$#,##0.00}">
+                                <apex:param value="{!bl.Planned_Amount__c}"/>
+                            </apex:outputText>
+                        </td>
+                        <td><apex:outputText value="{!bl.Notes__c}"/></td>
+                    </tr>
+                </apex:repeat>
+            </tbody>
+            <tfoot>
+                <tr class="totals-row">
+                    <td colspan="6">Total Planned</td>
+                    <td class="num">
+                        <apex:outputText value="{0,number,$#,##0.00}">
+                            <apex:param value="{!totalPlanned}"/>
+                        </apex:outputText>
+                    </td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+    </apex:outputPanel>
+
+    <!-- ── SIGNATURE BLOCK ── -->
+    <div class="section-heading">Authorization</div>
+    <p style="font-size:9pt;color:#555;">
+        This proposal is subject to standard Univision advertising terms and conditions. Authorized signature below constitutes acceptance of all terms.
+    </p>
+    <table class="sig-table">
+        <tr>
+            <td>
+                <div class="sig-line">Authorized Signature — Advertiser</div>
+            </td>
+            <td style="width:4%;"></td>
+            <td>
+                <div class="sig-line">Authorized Signature — Univision Sales Representative</div>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-top:12pt;font-size:9pt;color:#555;">
+                Name: __________________________ &nbsp;&nbsp; Date: ____________
+            </td>
+            <td></td>
+            <td style="padding-top:12pt;font-size:9pt;color:#555;">
+                Name: __________________________ &nbsp;&nbsp; Date: ____________
+            </td>
+        </tr>
+    </table>
+
+    <!-- ── FOOTER ── -->
+    <div class="footer">
+        Univision Communications Inc. &bull; This proposal is confidential and intended solely for the named advertiser.
+        &bull; Proposal # <apex:outputText value="{!opp.Name}"/>
+    </div>
+
+</apex:outputPanel>
+</div>
+</body>
+</apex:page>

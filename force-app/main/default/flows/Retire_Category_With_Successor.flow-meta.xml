@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <description>Screen Flow launched from a Category__c quick action. Checks for related Account_Category__c junctions and child categories, requires the user to designate a successor if any exist, then calls CategoryRetireAction to migrate relationships and mark the category inactive.</description>
+    <interviewLabel>Retire Category With Successor {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Retire Category With Successor</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <dynamicChoiceSets>
+        <name>ActiveCategoryChoices</name>
+        <dataType>String</dataType>
+        <displayField>Name</displayField>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Is_Active__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Id</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <limit>200</limit>
+        <object>Category__c</object>
+        <outputAssignments>
+            <assignToReference>varSuccessorId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+        <valueField>Id</valueField>
+    </dynamicChoiceSets>
+    <runInMode>DefaultMode</runInMode>
+    <status>Active</status>
+
+    <!-- ═══════════════════════════ VARIABLES ═══════════════════════════════ -->
+
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <variables>
+        <name>varCategoryName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <variables>
+        <name>varRetireSuccess</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+
+    <variables>
+        <name>varResultMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <variables>
+        <name>varAccountCategoryCount</name>
+        <dataType>Number</dataType>
+        <scale>0</scale>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <numberValue>0</numberValue>
+        </value>
+    </variables>
+
+    <variables>
+        <name>varChildCategoryCount</name>
+        <dataType>Number</dataType>
+        <scale>0</scale>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <numberValue>0</numberValue>
+        </value>
+    </variables>
+
+    <!-- Collections for counting related records -->
+    <variables>
+        <name>colAccountCategories</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account_Category__c</objectType>
+    </variables>
+
+    <variables>
+        <name>colChildCategories</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Category__c</objectType>
+    </variables>
+
+    <!-- ═══════════════════════════ FLOW ELEMENTS ════════════════════════════ -->
+
+    <start>
+        <locationX>176</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Get_Category</targetReference>
+        </connector>
+    </start>
+
+    <!-- 1. Get the category being retired -->
+    <recordLookups>
+        <name>Get_Category</name>
+        <label>Get Category</label>
+        <locationX>176</locationX>
+        <locationY>168</locationY>
+        <connector>
+            <targetReference>Get_Account_Categories</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Category__c</object>
+        <outputAssignments>
+            <assignToReference>varCategoryName</assignToReference>
+            <field>Name</field>
+        </outputAssignments>
+        <storeOutputAutomatically>false</storeOutputAutomatically>
+    </recordLookups>
+
+    <!-- 2. Get related Account_Category__c records -->
+    <recordLookups>
+        <name>Get_Account_Categories</name>
+        <label>Get Account Categories</label>
+        <locationX>176</locationX>
+        <locationY>288</locationY>
+        <connector>
+            <targetReference>Get_Child_Categories</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Category__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Account_Category__c</object>
+        <outputReference>colAccountCategories</outputReference>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>false</storeOutputAutomatically>
+    </recordLookups>
+
+    <!-- 3. Get child Category records -->
+    <recordLookups>
+        <name>Get_Child_Categories</name>
+        <label>Get Child Categories</label>
+        <locationX>176</locationX>
+        <locationY>408</locationY>
+        <connector>
+            <targetReference>Assign_Counts</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Parent_Category__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Category__c</object>
+        <outputReference>colChildCategories</outputReference>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>false</storeOutputAutomatically>
+    </recordLookups>
+
+    <!-- 4. Decision: does it have relationships that need migration? -->
+    <decisions>
+        <name>Has_Relationships</name>
+        <label>Has Relationships?</label>
+        <locationX>176</locationX>
+        <locationY>648</locationY>
+        <defaultConnector>
+            <targetReference>Screen_Confirm_No_Relations</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No relationships</defaultConnectorLabel>
+        <rules>
+            <name>Has_Relations_True</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>varAccountCategoryCount</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>varChildCategoryCount</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Select_Successor</targetReference>
+            </connector>
+            <label>Yes — has relationships</label>
+        </rules>
+    </decisions>
+
+    <!-- 5. Call CategoryRetireAction invocable -->
+    <actionCalls>
+        <name>Retire_Category_Action</name>
+        <label>Retire Category</label>
+        <locationX>176</locationX>
+        <locationY>888</locationY>
+        <actionName>CategoryRetireAction</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Screen_Result</targetReference>
+        </connector>
+        <inputParameters>
+            <name>categoryId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>successorCategoryId</name>
+            <value>
+                <elementReference>SuccessorPicker</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>varRetireSuccess</assignToReference>
+            <name>success</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>varResultMessage</assignToReference>
+            <name>message</name>
+        </outputParameters>
+        <storeOutputAutomatically>false</storeOutputAutomatically>
+    </actionCalls>
+
+    <!-- 6. Assign count variables from collections -->
+    <assignments>
+        <name>Assign_Counts</name>
+        <label>Assign Counts</label>
+        <locationX>176</locationX>
+        <locationY>528</locationY>
+        <assignmentItems>
+            <assignToReference>varAccountCategoryCount</assignToReference>
+            <operator>AssignCount</operator>
+            <value>
+                <elementReference>colAccountCategories</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varChildCategoryCount</assignToReference>
+            <operator>AssignCount</operator>
+            <value>
+                <elementReference>colChildCategories</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Has_Relationships</targetReference>
+        </connector>
+    </assignments>
+
+    <!-- 7a. Screen: select successor (when there are related records) -->
+    <screens>
+        <name>Screen_Select_Successor</name>
+        <label>Select Successor Category</label>
+        <locationX>44</locationX>
+        <locationY>768</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Retire_Category_Action</targetReference>
+        </connector>
+        <fields>
+            <name>Display_Impact_Header</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Retiring: {!varCategoryName}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;This category has &lt;strong&gt;{!varAccountCategoryCount}&lt;/strong&gt; account assignment(s) and &lt;strong&gt;{!varChildCategoryCount}&lt;/strong&gt; child category(s) that will be moved to the successor.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>SuccessorPicker</name>
+            <choiceReferences>ActiveCategoryChoices</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Successor Category</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <!-- 7b. Screen: no-relationship confirmation -->
+    <screens>
+        <name>Screen_Confirm_No_Relations</name>
+        <label>Confirm Retire</label>
+        <locationX>308</locationX>
+        <locationY>768</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Retire_Category_Action</targetReference>
+        </connector>
+        <fields>
+            <name>Display_Confirm_Text</name>
+            <fieldText>&lt;p&gt;You are about to retire &lt;strong&gt;{!varCategoryName}&lt;/strong&gt;.&lt;/p&gt;&lt;p&gt;This category has no account assignments or child categories. It will simply be marked inactive.&lt;/p&gt;&lt;p&gt;Click &lt;strong&gt;Finish&lt;/strong&gt; to continue.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <!-- 9. Result screen (moved adjacent for Flow schema contiguity) -->
+    <screens>
+        <name>Screen_Result</name>
+        <label>Done</label>
+        <locationX>176</locationX>
+        <locationY>1128</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Display_Result</name>
+            <fieldText>{!varResultMessage}</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <!-- 7. Call CategoryRetireAction invocable -->
+    <actionCalls>
+        <name>Retire_Category_Action</name>
+        <label>Retire Category</label>
+        <locationX>176</locationX>
+        <locationY>888</locationY>
+        <actionName>CategoryRetireAction</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Screen_Result</targetReference>
+        </connector>
+        <inputParameters>
+            <name>categoryId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>successorCategoryId</name>
+            <value>
+                <elementReference>varSuccessorId</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>varRetireSuccess</assignToReference>
+            <name>success</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>varResultMessage</assignToReference>
+            <name>message</name>
+        </outputParameters>
+        <storeOutputAutomatically>false</storeOutputAutomatically>
+    </actionCalls>
+
+
+</Flow>

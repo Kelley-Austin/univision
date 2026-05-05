@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Source System</label>
+    <pluralLabel>Source Systems</pluralLabel>
+    <nameField>
+        <label>Source System Name</label>
+        <type>Text</type>
+    </nameField>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <sharingModel>ReadWrite</sharingModel>
+    <enableActivities>false</enableActivities>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <description>Configuration record for each inbound revenue data source (WideOrbit, Strata, CoxReps, Operative, Counterpoint). Drives transformer selection and encoding settings.</description>
+</CustomObject>

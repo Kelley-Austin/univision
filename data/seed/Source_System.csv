@@ -1,0 +1,8 @@
+Code__c,Name,Is_Active__c,Expected_Frequency_Days__c
+WIDEORBIT_TV,WideOrbit TV,true,7
+WIDEORBIT_RADIO,WideOrbit Radio,true,7
+STRATA,Strata,true,7
+COXREPS,CoxReps,true,7
+OPERATIVE,Operative,true,7
+COUNTERPOINT_CALENDAR,Counterpoint Calendar,true,7
+COUNTERPOINT_BROADCAST,Counterpoint Broadcast,true,7

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <defaultLandingTab>standard-home</defaultLandingTab>
+    <description>TelevisaUnivision Matrix — advertising sales, forecasting, reconciliation, and period close.</description>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <label>MediaCloud</label>
+    <navType>Standard</navType>
+
+    <!-- Core navigation -->
+    <tabs>standard-home</tabs>
+    <tabs>standard-Account</tabs>
+
+    <!-- Sales pipeline -->
+    <tabs>Advertising_Opportunity__c</tabs>
+    <tabs>Advertising_Contract__c</tabs>
+    <tabs>Budget_Line__c</tabs>
+    <tabs>Pitch_Project__c</tabs>
+
+    <!-- Revenue & reconciliation -->
+    <tabs>Actual_Revenue__c</tabs>
+
+    <!-- Period management -->
+    <tabs>Period_Close__c</tabs>
+
+    <!-- Pipeline / ingestion -->
+    <tabs>Source_System__c</tabs>
+    <tabs>Inbound_Staging__c</tabs>
+    <tabs>Load_Batch__c</tabs>
+    <tabs>Mapping_Rule__c</tabs>
+
+    <!-- Reference data -->
+    <tabs>Outlet__c</tabs>
+    <tabs>Medium__c</tabs>
+    <tabs>Office__c</tabs>
+    <tabs>Category__c</tabs>
+
+    <uiType>Lightning</uiType>
+    <formFactors>Large</formFactors>
+</CustomApplication>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Platform event fired when an Advertising Opportunity requires synchronization to the Matrix advertising system. Consumed by MatrixOrderSyncTrigger to make the outbound REST callout asynchronously.</description>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <eventType>HighVolume</eventType>
+    <label>Matrix Order Sync</label>
+    <pluralLabel>Matrix Order Syncs</pluralLabel>
+    <publishBehavior>PublishAfterCommit</publishBehavior>
+</CustomObject>

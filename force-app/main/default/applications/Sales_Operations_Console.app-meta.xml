@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <defaultLandingTab>Sales_Ops_Console</defaultLandingTab>
+    <description>TelevisaUnivision Sales Operations Console — pacing oversight, reconciliation, MDM queue, late actuals, period close, and exclusion log in one workspace.</description>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <label>Sales Operations Console</label>
+    <navType>Standard</navType>
+
+    <!-- Primary console tab -->
+    <tabs>Sales_Ops_Console</tabs>
+
+    <!-- Reporting & analytics -->
+    <tabs>Pacing_Snapshot__c</tabs>
+
+    <!-- Cross-reference to operational objects -->
+    <tabs>Load_Batch__c</tabs>
+    <tabs>Inbound_Staging__c</tabs>
+    <tabs>Actual_Revenue__c</tabs>
+    <tabs>Period_Close__c</tabs>
+    <tabs>Mapping_Rule__c</tabs>
+    <tabs>Source_System__c</tabs>
+
+    <uiType>Lightning</uiType>
+    <workspaceType>Standard</workspaceType>
+</CustomApplication>

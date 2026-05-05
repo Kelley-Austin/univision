@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Day_Part__c</fullName>
+    <label>Day Part</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Early Morning</fullName>
+                <default>false</default>
+                <label>Early Morning</label>
+            </value>
+            <value>
+                <fullName>Daytime</fullName>
+                <default>false</default>
+                <label>Daytime</label>
+            </value>
+            <value>
+                <fullName>Early Fringe</fullName>
+                <default>false</default>
+                <label>Early Fringe</label>
+            </value>
+            <value>
+                <fullName>Prime Access</fullName>
+                <default>false</default>
+                <label>Prime Access</label>
+            </value>
+            <value>
+                <fullName>Prime</fullName>
+                <default>false</default>
+                <label>Prime</label>
+            </value>
+            <value>
+                <fullName>Late News</fullName>
+                <default>false</default>
+                <label>Late News</label>
+            </value>
+            <value>
+                <fullName>Late Fringe</fullName>
+                <default>false</default>
+                <label>Late Fringe</label>
+            </value>
+            <value>
+                <fullName>Overnight</fullName>
+                <default>false</default>
+                <label>Overnight</label>
+            </value>
+            <value>
+                <fullName>Weekend</fullName>
+                <default>false</default>
+                <label>Weekend</label>
+            </value>
+            <value>
+                <fullName>N/A</fullName>
+                <default>false</default>
+                <label>N/A</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

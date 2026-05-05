@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Snapshot_Composite_Key__c</fullName>
+    <description>System-managed unique key: PeriodCloseId|ProjectionId. Populated by PeriodCloseBatch. Used as ExternalId to prevent duplicate snapshots on re-close.</description>
+    <externalId>true</externalId>
+    <label>Snapshot Composite Key</label>
+    <length>50</length>
+    <required>false</required>
+    <type>Text</type>
+    <unique>true</unique>
+</CustomField>
