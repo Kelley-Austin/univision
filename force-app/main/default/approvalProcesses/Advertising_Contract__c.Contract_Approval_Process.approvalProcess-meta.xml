@@ -45,7 +45,6 @@
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
         <description>Route the contract to the Contract Approvers queue. Any member of the queue may approve or reject.</description>
-        <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
         <label>Contract Review</label>
         <name>Contract_Review</name>
         <rejectBehavior>
@@ -102,7 +101,6 @@
     </initialSubmissionActions>
 
     <label>Contract Approval Process</label>
-    <name>Contract_Approval_Process</name>
 
     <!-- Recall actions: return to Draft -->
     <recallActions>

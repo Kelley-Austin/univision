@@ -18,7 +18,7 @@ private class StrataTransformerTest {
         'bad_data_row\n';
 
     private static Id makeSourceSystem() {
-        Source_System__c ss = new Source_System__c(Name = 'Strata', Code__c = 'STRATA', Is_Active__c = true);
+        Source_System__c ss = new Source_System__c(Name = 'Strata', Code__c = 'STRATA', Source_Code__c = 'STRATA', Transformer_Class__c = 'StrataTransformer', Is_Active__c = true);
         insert ss;
         Load_Batch__c lb = new Load_Batch__c(Source_System__c = ss.Id, Status__c = 'Processing');
         insert lb;

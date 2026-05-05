@@ -6,6 +6,7 @@
         <description>Set Contract Status to Pending Approval on initial submission to the approval process.</description>
         <field>Contract_Status__c</field>
         <literalValue>Pending Approval</literalValue>
+        <name>Contract Pending Status</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -16,6 +17,7 @@
         <description>Set Contract Status to Approved on final approval.</description>
         <field>Contract_Status__c</field>
         <literalValue>Approved</literalValue>
+        <name>Contract Approved Status</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -26,6 +28,7 @@
         <description>Stamp Approved Date to the current datetime on final approval.</description>
         <field>Approved_Date__c</field>
         <formula>NOW()</formula>
+        <name>Contract Approved Date</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
@@ -36,6 +39,7 @@
         <description>Return Contract Status to Draft on rejection or recall.</description>
         <field>Contract_Status__c</field>
         <literalValue>Draft</literalValue>
+        <name>Contract Draft Status</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>

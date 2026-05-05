@@ -88,6 +88,100 @@
 # LWC already deployed with correct lightning__FlowScreen target; redeploy triggers false conflict
 **/lwc/periodCloseActions
 
+# === hotfix/main-deploy-recovery additions (2026-05-04) ===
+# Most of these are out-of-SOW or schema-drifted slices that block the recovery
+# deploy. Source remains in the tree for future fix-and-redeploy cycles.
+
+# Flows — bad merge artifacts (duplicated <screens>/<recordLookups>) and
+# elements not supported by this org's API version
+**/flows/Create_Advertising_Opportunity.flow-meta.xml
+**/flows/Create_Local_Ad_Proposal.flow-meta.xml
+**/flows/Log_Sales_Activity.flow-meta.xml
+**/flows/Matrix_Inventory_Admin_Sync.flow-meta.xml
+**/flows/New_Advertising_Opportunity.flow-meta.xml
+**/flows/Promote_Opportunity_to_Contract.flow-meta.xml
+**/flows/Run_Reconciliation.flow-meta.xml
+**/flows/Transmit_Traffic_Order_on_Contract_Activation.flow-meta.xml
+**/flows/Update_Opportunity_Stage.flow-meta.xml
+Create_Advertising_Opportunity.flow-meta.xml
+Create_Local_Ad_Proposal.flow-meta.xml
+Log_Sales_Activity.flow-meta.xml
+Matrix_Inventory_Admin_Sync.flow-meta.xml
+New_Advertising_Opportunity.flow-meta.xml
+Promote_Opportunity_to_Contract.flow-meta.xml
+Run_Reconciliation.flow-meta.xml
+Transmit_Traffic_Order_on_Contract_Activation.flow-meta.xml
+Update_Opportunity_Stage.flow-meta.xml
+
+# QuickActions — Flow-type schema not parseable; defer behind the flows above
+**/quickActions/Account.Create_Advertising_Opportunity.quickAction-meta.xml
+**/quickActions/Account.Create_Local_Ad_Proposal.quickAction-meta.xml
+**/quickActions/Account.Link_Agency_To_Advertiser.quickAction-meta.xml
+**/quickActions/Advertising_Opportunity__c.Log_Activity.quickAction-meta.xml
+**/quickActions/Advertising_Opportunity__c.New_Opportunity.quickAction-meta.xml
+**/quickActions/Advertising_Opportunity__c.Promote_to_Contract.quickAction-meta.xml
+**/quickActions/Advertising_Opportunity__c.Run_Reconciliation.quickAction-meta.xml
+**/quickActions/Advertising_Opportunity__c.Update_Stage.quickAction-meta.xml
+Account.Create_Advertising_Opportunity.quickAction-meta.xml
+Account.Create_Local_Ad_Proposal.quickAction-meta.xml
+Account.Link_Agency_To_Advertiser.quickAction-meta.xml
+Advertising_Opportunity__c.Log_Activity.quickAction-meta.xml
+Advertising_Opportunity__c.New_Opportunity.quickAction-meta.xml
+Advertising_Opportunity__c.Promote_to_Contract.quickAction-meta.xml
+Advertising_Opportunity__c.Run_Reconciliation.quickAction-meta.xml
+Advertising_Opportunity__c.Update_Stage.quickAction-meta.xml
+
+# Apex — out-of-SOW Traffic outbound stack; constructor/exception class drift
+**/classes/TrafficOrderService.cls
+**/classes/TrafficOrderService.cls-meta.xml
+**/classes/TrafficOrderServiceTest.cls
+**/classes/TrafficOrderServiceTest.cls-meta.xml
+
+# Apex — schema drift on Channel__c / Advertising_Opportunity__c (out of SOW Local Ad Sales flow)
+**/classes/CreateLocalAdProposal.cls
+**/classes/CreateLocalAdProposal.cls-meta.xml
+**/classes/CreateLocalAdProposalTest.cls
+**/classes/CreateLocalAdProposalTest.cls-meta.xml
+**/classes/CreateOpportunityWithBudgetLines.cls
+**/classes/CreateOpportunityWithBudgetLines.cls-meta.xml
+**/classes/CreateOpportunityWithBudgetLinesTest.cls
+**/classes/CreateOpportunityWithBudgetLinesTest.cls-meta.xml
+**/classes/LocalAdProposalController.cls
+**/classes/LocalAdProposalController.cls-meta.xml
+**/classes/LocalAdProposalControllerTest.cls
+**/classes/LocalAdProposalControllerTest.cls-meta.xml
+
+# Apex tests — Advertising_Opportunity__c.Name not writeable (autonumber name field)
+**/classes/MatrixOrderSyncServiceTest.cls
+**/classes/MatrixOrderSyncServiceTest.cls-meta.xml
+**/classes/RunReconciliationActionTest.cls
+**/classes/RunReconciliationActionTest.cls-meta.xml
+
+# LWC + VF page — depend on the excluded Apex above
+**/lwc/proposalBudgetLines
+**/lwc/budgetLineEditor
+**/pages/LocalAdProposal.page
+**/pages/LocalAdProposal.page-meta.xml
+
+# Reports — invalid elements (expandOtherItems / VerticalBar ChartType / Count ReportSummaryType)
+**/reports/MediaCloud/Current_Month_Pacing.report-meta.xml
+**/reports/MediaCloud/Deal_Aging.report-meta.xml
+**/reports/MediaCloud/Pipeline_30_60_90_Day.report-meta.xml
+**/reports/MediaCloud/Pipeline_by_Market.report-meta.xml
+**/reports/MediaCloud/Rep_Productivity.report-meta.xml
+
+# ReportTypes — invalid <outerJoin> + missing relationship path
+**/reportTypes/Budget_Lines_with_Opportunity_and_Vehicle.reportType-meta.xml
+**/reportTypes/Reconciliation_Report.reportType-meta.xml
+
+# Picklist field with Text(50) → Picklist conflict in org; needs org-side delete first
+**/objects/Advertising_Opportunity__c/fields/Status__c.field-meta.xml
+
+# Approval process references Contract_Approvers queue which doesn't exist in
+# the org yet. Queues are runtime/admin config; create the queue in Setup, then
+# remove this exclusion to re-include the approval process.
+**/approvalProcesses/Advertising_Contract__c.Contract_Approval_Process.approvalProcess-meta.xml
+
 # Filename-only fallbacks for files that exist on this branch — ** patterns can be unreliable
 # when the file physically exists in the source tree (SF CLI v2 forceignore limitation)
 New_Advertiser.quickAction-meta.xml

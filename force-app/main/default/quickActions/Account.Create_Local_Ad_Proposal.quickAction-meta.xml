@@ -2,7 +2,7 @@
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionSubtype>ScreenAction</actionSubtype>
     <description>Launches the Create Local Ad Proposal guided flow. Collects flight dates, daypart via vehicle selection, demographic targets, and budget lines — then generates a printable proposal PDF in one pass with no data re-entry.</description>
-    <flow>Create_Local_Ad_Proposal</flow>
+    <flowDefinition>Create_Local_Ad_Proposal</flowDefinition>
     <label>New Local Ad Proposal</label>
     <optionsCreateFeedItem>false</optionsCreateFeedItem>
     <type>Flow</type>

@@ -6,7 +6,6 @@
     <referenceTo>Account</referenceTo>
     <relationshipLabel>Budgets</relationshipLabel>
     <relationshipName>Budgets</relationshipName>
-    <deleteConstraint>Restrict</deleteConstraint>
     <required>true</required>
     <type>Lookup</type>
 </CustomField>

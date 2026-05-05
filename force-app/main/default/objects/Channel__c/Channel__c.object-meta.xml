@@ -22,7 +22,7 @@
         <columns>Channel_Type__c</columns>
         <columns>Market__c</columns>
         <columns>Channel_Code__c</columns>
-        <filterLogic>and</filterLogic>
+        <filterScope>Everything</filterScope>
         <filters>
             <field>Status__c</field>
             <operation>equals</operation>

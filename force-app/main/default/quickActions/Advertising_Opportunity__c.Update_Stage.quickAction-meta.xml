@@ -2,9 +2,8 @@
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionSubtype>ScreenAction</actionSubtype>
     <description>Update the sales stage on this opportunity, with Lost Reason capture when moving to Closed Lost.</description>
-    <flow>Update_Opportunity_Stage</flow>
+    <flowDefinition>Update_Opportunity_Stage</flowDefinition>
     <label>Update Stage</label>
     <optionsCreateFeedItem>false</optionsCreateFeedItem>
-    <targetObject>Advertising_Opportunity__c</targetObject>
     <type>Flow</type>
 </QuickAction>

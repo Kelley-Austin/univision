@@ -5,6 +5,7 @@
     <referenceTo>Account</referenceTo>
     <relationshipLabel>Advertising Opportunities</relationshipLabel>
     <relationshipName>Advertising_Opportunities</relationshipName>
+    <deleteConstraint>Restrict</deleteConstraint>
     <required>true</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

@@ -2,9 +2,8 @@
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionSubtype>ScreenAction</actionSubtype>
     <description>Sets or updates the Primary Agency on a Direct Buy Advertiser account. Launches the Link Agency To Advertiser screen flow, pre-populated with the existing agency if one is already set.</description>
-    <flow>Link_Agency_To_Advertiser</flow>
+    <flowDefinition>Link_Agency_To_Advertiser</flowDefinition>
     <label>Link Agency</label>
     <optionsCreateFeedItem>false</optionsCreateFeedItem>
-    <targetObject>Account</targetObject>
     <type>Flow</type>
 </QuickAction>

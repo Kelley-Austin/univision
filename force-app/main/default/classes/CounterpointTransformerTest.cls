@@ -14,7 +14,7 @@ private class CounterpointTransformerTest {
         'TooShort\n';
 
     private static Id makeSourceSystem(String code) {
-        Source_System__c ss = new Source_System__c(Name = code, Code__c = code, Is_Active__c = true);
+        Source_System__c ss = new Source_System__c(Name = code, Code__c = code, Source_Code__c = code, Transformer_Class__c = 'CounterpointTransformer', Is_Active__c = true);
         insert ss;
         Load_Batch__c lb = new Load_Batch__c(Source_System__c = ss.Id, Status__c = 'Processing');
         insert lb;
