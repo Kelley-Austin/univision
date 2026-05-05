@@ -3,4 +3,5 @@
     <label>Revenue Code Mapping</label>
     <pluralLabel>Revenue Code Mappings</pluralLabel>
     <description>Custom metadata type mapping source-system revenue codes to canonical Revenue_Type labels.</description>
+    <visibility>Public</visibility>
 </CustomObject>
