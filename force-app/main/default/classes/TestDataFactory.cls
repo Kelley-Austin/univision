@@ -216,20 +216,20 @@ public class TestDataFactory {
     }
 
     /**
-     * Build the junction record linking an Account to a Category. The
-     * Is_Primary__c flag drives downstream snapshot/derivation logic; default
-     * is true since the typical test wants a primary association.
+     * Build the junction record linking an Account to a Category.
+     * (The original method also set Is_Primary__c, but that field doesn't
+     * exist on Account_Category__c in this org. If/when it's added, the
+     * isPrimary parameter can be reintroduced.)
      */
-    public static Account_Category__c buildAccountCategory(Id accountId, Id categoryId, Boolean isPrimary) {
+    public static Account_Category__c buildAccountCategory(Id accountId, Id categoryId) {
         return new Account_Category__c(
-            Account__c   = accountId,
-            Category__c  = categoryId,
-            Is_Primary__c = isPrimary
+            Account__c  = accountId,
+            Category__c = categoryId
         );
     }
 
-    public static Account_Category__c createAccountCategory(Id accountId, Id categoryId, Boolean isPrimary) {
-        Account_Category__c ac = buildAccountCategory(accountId, categoryId, isPrimary);
+    public static Account_Category__c createAccountCategory(Id accountId, Id categoryId) {
+        Account_Category__c ac = buildAccountCategory(accountId, categoryId);
         insert ac;
         return ac;
     }

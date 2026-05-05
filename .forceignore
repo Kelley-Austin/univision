@@ -244,3 +244,14 @@ Pitch_Project__c.Create_Pitch_Project.quickAction-meta.xml
 **/flows/New_Opportunity.flow-meta.xml
 Create_Opportunity.flow-meta.xml
 New_Opportunity.flow-meta.xml
+
+# FlexiPage references force:recordDetail design-time component which can't
+# be resolved in this org. Out of scope for the trigger-handler refactor;
+# defer until the page is rebuilt or the component dependency is restored.
+**/flexipages/Opportunity_Record_Page.flexipage-meta.xml
+Opportunity_Record_Page.flexipage-meta.xml
+
+# Flow-type quickAction whose target Flow is excluded above. Pair-locked
+# with the Create_Opportunity.flow exclusion.
+**/quickActions/Account.Create_Opportunity.quickAction-meta.xml
+Account.Create_Opportunity.quickAction-meta.xml
