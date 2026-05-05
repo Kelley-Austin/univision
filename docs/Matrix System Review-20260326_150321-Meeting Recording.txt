@@ -1,0 +1,3975 @@
+1
+00:00:04,530 --> 00:00:06,590
+Hi, um, well,
+
+2
+00:00:06,610 --> 00:00:09,150
+how are you guys for joining. I'm good. Thank you so much for joining
+
+3
+00:00:09,151 --> 00:00:11,810
+today. Uh,
+
+4
+00:00:11,830 --> 00:00:13,850
+so I'll be doing your matrix, um,
+
+5
+00:00:14,030 --> 00:00:16,050
+overview. I'm part of the local.
+
+6
+00:00:16,510 --> 00:00:21,270
+I'm sorry. Yeah, amazing. I'm part of the local
+
+7
+00:00:21,271 --> 00:00:24,710
+media analytics. I report to Steven Lasher.
+
+8
+00:00:25,350 --> 00:00:28,570
+Uh, local has been using matrix for.
+
+9
+00:00:30,090 --> 00:00:33,090
+decade. Probably a couple of decades,
+
+10
+00:00:33,290 --> 00:00:37,830
+right, because I've been with Univision 17 years and I've been using many variations
+
+11
+00:00:37,831 --> 00:00:42,490
+of it since then. So I'm kind of your matrix
+
+12
+00:00:42,491 --> 00:00:44,990
+expert at this point, but I will,
+
+13
+00:00:44,991 --> 00:00:48,090
+I will kind of have to preface this a little bit.
+
+14
+00:00:48,490 --> 00:00:51,870
+And a couple faces look familiar. I feel like I did an overview maybe
+
+15
+00:00:51,871 --> 00:00:54,070
+with some of you last year. Yeah,
+
+16
+00:00:54,071 --> 00:00:58,710
+done. Yeah so I know I mentioned it last time
+
+17
+00:00:58,711 --> 00:01:03,470
+the CRM portion right of Matrix is not my strong suit right
+
+18
+00:01:03,471 --> 00:01:08,790
+over the years. We've had to kind of split up what our
+
+19
+00:01:08,791 --> 00:01:13,370
+internal support members kind of you know oversee because we've brought in
+
+20
+00:01:13,371 --> 00:01:17,830
+radio sellers and digital and you know you just started to get very massive
+
+21
+00:01:17,831 --> 00:01:22,910
+application supports in my strong suits really been like the reporting aspect
+
+22
+00:01:22,911 --> 00:01:25,630
+of it, not so much the CRM,
+
+23
+00:01:25,750 --> 00:01:28,550
+but I will try to do my best to kind of show you things
+
+24
+00:01:28,551 --> 00:01:31,870
+around. And then whatever I can answer,
+
+25
+00:01:32,190 --> 00:01:34,370
+we can kind of figure out with, of course,
+
+26
+00:01:34,530 --> 00:01:36,670
+not really letting the vendor know,
+
+27
+00:01:36,850 --> 00:01:39,070
+but maybe I can kind of preface it, me trying to,
+
+28
+00:01:39,071 --> 00:01:42,210
+you know, dip my hands a little bit more in the CRM portion.
+
+29
+00:01:43,930 --> 00:01:48,590
+Great. So we are in my matrix test environment
+
+30
+00:01:48,591 --> 00:01:52,230
+because I am not going to move with anybody's cheese or any of that.
+
+31
+00:01:52,330 --> 00:01:54,490
+Yes, Kelly, I see you. Yes. No,
+
+32
+00:01:54,630 --> 00:01:57,990
+I just want to make sure we really shouldn't do the intellectual property.
+
+33
+00:01:58,150 --> 00:02:00,830
+We shouldn't be sharing the matrix screens.
+
+34
+00:02:03,390 --> 00:02:06,470
+Why? We'll repeat them before Kelly. I need to review the matrix screens in
+
+35
+00:02:06,471 --> 00:02:09,530
+order to do this. If I can't do matrix,
+
+36
+00:02:09,550 --> 00:02:12,450
+I'm going to be working blind. I need to be able to get on
+
+37
+00:02:12,451 --> 00:02:14,950
+the application with you guys to map it together.
+
+38
+00:02:15,550 --> 00:02:20,150
+Okay, is there any way we can stop the recording when when we have
+
+39
+00:02:20,151 --> 00:02:24,670
+the screens up? You can do that and then talk through.
+
+40
+00:02:24,690 --> 00:02:26,850
+We can't they're my reference material.
+
+41
+00:02:27,250 --> 00:02:29,990
+I mean, okay, Kelly,
+
+42
+00:02:30,110 --> 00:02:32,850
+are you concerned with people data? Yeah,
+
+43
+00:02:32,851 --> 00:02:36,410
+are you concerned with people data or is it more matrix itself?
+
+44
+00:02:36,790 --> 00:02:40,950
+It's intellectual property data with the matrix application.
+
+45
+00:02:40,951 --> 00:02:45,750
+if matrix, if matrix found out that we were sharing their
+
+46
+00:02:45,751 --> 00:02:49,230
+screens and their application with a competitor,
+
+47
+00:02:49,570 --> 00:02:51,970
+we could. They might come back.
+
+48
+00:02:52,270 --> 00:02:54,750
+Yeah. We're not a competitor. We're your consulting partner.
+
+49
+00:02:55,130 --> 00:02:58,530
+We're not a software development firm. We're consulting partner that's giving you advice Kelly.
+
+50
+00:02:58,690 --> 00:03:02,050
+It's not. I don't have a vendor on the phone with. Sales force would
+
+51
+00:03:02,051 --> 00:03:03,970
+be the vendor of record. And I didn't let them come to this call
+
+52
+00:03:03,971 --> 00:03:06,650
+for that very reason. So this is just consulting.
+
+53
+00:03:06,690 --> 00:03:10,050
+It would be no different than you're showing your consultants internally that you work
+
+54
+00:03:10,051 --> 00:03:13,910
+with the applications. Okay.
+
+55
+00:03:13,911 --> 00:03:17,790
+Okay. Okay. I just want to make sure we're all on the up and
+
+56
+00:03:17,791 --> 00:03:21,470
+up. I don't I don't want to stop any progress or anything like that.
+
+57
+00:03:21,510 --> 00:03:24,270
+I just want to make sure I want to make sure I want to
+
+58
+00:03:24,271 --> 00:03:26,610
+make sure I want to make sure 100% here's what you should do.
+
+59
+00:03:27,570 --> 00:03:31,790
+Yeah, but there is you right there is that delineation between you guys are
+
+60
+00:03:31,791 --> 00:03:37,070
+not Salesforce and so that you're not Salesforce will
+
+61
+00:03:37,071 --> 00:03:41,290
+will be this will will make this OK OK yeah.
+
+62
+00:03:41,750 --> 00:03:45,290
+I'm not building software. I mean,
+
+63
+00:03:45,510 --> 00:03:48,770
+I mean, I was here back maybe like a decade ago,
+
+64
+00:03:48,990 --> 00:03:51,810
+when we, when local was working with Salesforce,
+
+65
+00:03:51,850 --> 00:03:56,390
+right? Like they went, we went with them as the subject matter experts
+
+66
+00:03:56,391 --> 00:03:59,390
+to our training and stuff,
+
+67
+00:03:59,391 --> 00:04:02,650
+and we never let them see Matrix back then.
+
+68
+00:04:02,890 --> 00:04:06,270
+They tried building reports using Tableau and all of that,
+
+69
+00:04:06,570 --> 00:04:09,330
+and my then boss and I never shared matrix,
+
+70
+00:04:09,690 --> 00:04:13,130
+but we helped build the reports in Tableau.
+
+71
+00:04:13,290 --> 00:04:15,730
+So I get the distinction. I get it.
+
+72
+00:04:15,810 --> 00:04:17,850
+So I'm going to begin screen sharing then.
+
+73
+00:04:18,590 --> 00:04:23,290
+We align on that. I have the phone with the webcam
+
+74
+00:04:23,291 --> 00:04:26,370
+here and then my laptop over here and the screen here.
+
+75
+00:04:27,110 --> 00:04:29,510
+So like I said, this is the test environment.
+
+76
+00:04:29,730 --> 00:04:34,450
+So data is a little outdated. I'm sure you've heard locals going
+
+77
+00:04:34,451 --> 00:04:39,690
+through a transformation of sorts with how agencies are
+
+78
+00:04:39,691 --> 00:04:42,750
+businesses being handled through our local sellers.
+
+79
+00:04:43,150 --> 00:04:45,550
+We just have a portion of testing in here,
+
+80
+00:04:45,551 --> 00:04:50,170
+so sometimes things will seem a little weirdy with offices and things like
+
+81
+00:04:50,171 --> 00:04:54,450
+that, so I just wanted to point that out. I just logged in and
+
+82
+00:04:54,451 --> 00:04:57,450
+this is what we call the little sales outlook view that kind of gives
+
+83
+00:04:57,451 --> 00:05:02,130
+me like a little top level view of revenue for whatever quarter
+
+84
+00:05:02,131 --> 00:05:04,310
+or timeframe I'm looking at, However,
+
+85
+00:05:04,610 --> 00:05:09,150
+um, I click on things and this is very much like interactive,
+
+86
+00:05:09,151 --> 00:05:11,890
+you know, as you saw, I clicked on something. It just refreshed.
+
+87
+00:05:12,390 --> 00:05:17,090
+Um, I guess what I should know is what would you like me
+
+88
+00:05:17,091 --> 00:05:21,730
+to show you on this, if we're looking at taking Salesforce and then
+
+89
+00:05:21,731 --> 00:05:25,270
+we're going to use Salesforce instead of this what I want to try and
+
+90
+00:05:25,271 --> 00:05:28,470
+understand is a little bit like I'm a sales person I'm going in here.
+
+91
+00:05:29,010 --> 00:05:32,030
+and I'm putting in a deal. And is there a rate curve in here?
+
+92
+00:05:32,170 --> 00:05:34,750
+Are there products in here like how much of that?
+
+93
+00:05:34,970 --> 00:05:37,610
+And then I also know at the same point from the diagrams you guys
+
+94
+00:05:37,611 --> 00:05:40,070
+are getting stuck in the system it's automatically getting dropped in.
+
+95
+00:05:40,170 --> 00:05:42,750
+I'd love to see some examples of that as well like what's coming in
+
+96
+00:05:42,751 --> 00:05:46,750
+and how is it represented? So the idea around this one just to make
+
+97
+00:05:46,751 --> 00:05:50,570
+sense is that I've already got like the monarch or the matrix data model
+
+98
+00:05:50,571 --> 00:05:53,430
+in a document. I've got the whole data model document. What I've identified is
+
+99
+00:05:53,431 --> 00:05:57,210
+gaps in the Salesforce model in this data model.
+
+100
+00:05:57,211 --> 00:06:00,210
+And so it's like, how do you bring those together? But that's dependent on
+
+101
+00:06:00,211 --> 00:06:03,330
+how you're using it and things like that.
+
+102
+00:06:03,470 --> 00:06:05,710
+So I just, I'm trying to, I'm trying to figure out like,
+
+103
+00:06:05,890 --> 00:06:08,610
+and I know I think right now it's like two stages from sales.
+
+104
+00:06:08,611 --> 00:06:10,810
+It's like literally one stage, one stage, two, and then it's done.
+
+105
+00:06:11,090 --> 00:06:13,370
+So that understanding a little bit of the life cycle.
+
+106
+00:06:13,550 --> 00:06:17,910
+No, no, no, we've actually changed that since I last showed it to you.
+
+107
+00:06:17,990 --> 00:06:20,090
+We are now five stages in.
+
+108
+00:06:20,570 --> 00:06:25,270
+So I'll show kids, so I'll show kids that right now
+
+109
+00:06:25,271 --> 00:06:27,370
+as well. like almost like day in the life. Like on a salary,
+
+110
+00:06:27,570 --> 00:06:29,730
+I came into the application and then started to,
+
+111
+00:06:29,850 --> 00:06:32,390
+you know, I've got it the older, yeah, that would be a great way
+
+112
+00:06:32,391 --> 00:06:37,210
+to stop if that's okay. Okay, so I will also very limited
+
+113
+00:06:37,211 --> 00:06:41,870
+in time to kind of show you everything. So I know questions
+
+114
+00:06:41,871 --> 00:06:44,050
+will arise that we can table for later and stuff.
+
+115
+00:06:44,210 --> 00:06:48,150
+So we have many years worth of information in Matrix.
+
+116
+00:06:48,990 --> 00:06:51,270
+Right now it's like going back to 2015.
+
+117
+00:06:51,470 --> 00:06:53,910
+We love our history in this company.
+
+118
+00:06:53,911 --> 00:06:57,010
+So we will need that history wherever we go.
+
+119
+00:06:57,230 --> 00:07:00,090
+This is a sales analytical tool.
+
+120
+00:07:00,670 --> 00:07:04,810
+So there is no right card info in here and it's top-level info.
+
+121
+00:07:05,050 --> 00:07:08,070
+What we get from the systems and I will let you know which ones
+
+122
+00:07:08,071 --> 00:07:10,290
+is we're pretty much getting the account,
+
+123
+00:07:10,490 --> 00:07:13,190
+the agency, the seller, the office, the outlet,
+
+124
+00:07:13,710 --> 00:07:17,050
+the revenue type, right? What type of business is it?
+
+125
+00:07:17,070 --> 00:07:19,310
+Is it political? Is it advocacy? because see,
+
+126
+00:07:20,010 --> 00:07:22,790
+and you know, further details on that as well.
+
+127
+00:07:23,290 --> 00:07:26,110
+We don't have low level like order, program,
+
+128
+00:07:26,350 --> 00:07:28,950
+what day part, none of that. Oh my God,
+
+129
+00:07:29,010 --> 00:07:32,710
+that's gonna make it so much easier. Okay. Yeah. And this is in turn,
+
+130
+00:07:33,250 --> 00:07:37,970
+we live in die matrix because this is our one stop shop
+
+131
+00:07:37,971 --> 00:07:40,730
+for the various pieces. We've got,
+
+132
+00:07:40,890 --> 00:07:44,130
+and I get, the name doesn't really tell you what it is,
+
+133
+00:07:44,210 --> 00:07:48,910
+but I know it. So we've got counterpoint radio network in
+
+134
+00:07:48,911 --> 00:07:52,550
+here. We've got the Cox locality portion, right? What they sell for us for
+
+135
+00:07:52,551 --> 00:07:55,510
+affiliates. We've got the wide orbit world,
+
+136
+00:07:55,511 --> 00:07:59,930
+which is TV radio. We've got operative in here.
+
+137
+00:08:00,570 --> 00:08:02,910
+And that is all the, you know, system.
+
+138
+00:08:02,950 --> 00:08:06,190
+So like I said, this is the one stop shop for all of us
+
+139
+00:08:06,191 --> 00:08:09,690
+in here. Now, strata to correct.
+
+140
+00:08:10,770 --> 00:08:14,370
+Yes, affiliates. I'm sorry, yes, strata as well for affiliates.
+
+141
+00:08:14,371 --> 00:08:16,590
+Yes, I missed that one. So,
+
+142
+00:08:16,830 --> 00:08:21,150
+day in the life of a seller and a manager is pretty much as
+
+143
+00:08:21,151 --> 00:08:23,350
+soon as we import last,
+
+144
+00:08:23,650 --> 00:08:26,390
+you know, the prior days full business activity,
+
+145
+00:08:26,770 --> 00:08:29,090
+this is where I get to see my book revenue,
+
+146
+00:08:29,290 --> 00:08:32,530
+how I'm measuring against with my forecast,
+
+147
+00:08:32,790 --> 00:08:35,770
+right? My pipeline and even against my budget.
+
+148
+00:08:36,070 --> 00:08:40,390
+This is our forecasting and budget tool that we,
+
+149
+00:08:40,690 --> 00:08:43,550
+you know, local breeds and die because it's all in here.
+
+150
+00:08:43,551 --> 00:08:45,770
+Yes, just a quick question and Kelly.
+
+151
+00:08:46,270 --> 00:08:48,670
+So no smart data is in here. Correct.
+
+152
+00:08:48,910 --> 00:08:54,650
+Is this like independent of smart because it feels pretty duplicative right now Well,
+
+153
+00:08:54,651 --> 00:08:58,210
+it does have operative data in it.
+
+154
+00:08:58,310 --> 00:09:01,450
+So that's why I'm which is the same thing that's going from smart.
+
+155
+00:09:01,630 --> 00:09:05,130
+So you're going to get into places right now, correct? I don't think so.
+
+156
+00:09:05,131 --> 00:09:07,350
+I think this is smart as national only exactly.
+
+157
+00:09:07,810 --> 00:09:13,050
+Yeah Thank you split the house on that smart as national They're
+
+158
+00:09:13,051 --> 00:09:16,210
+they're they're full and on matrix for local for all day.
+
+159
+00:09:16,390 --> 00:09:18,870
+So it's all just a local stuff.
+
+160
+00:09:19,210 --> 00:09:23,730
+Okay. Got it. Okay. Now
+
+161
+00:09:23,731 --> 00:09:27,470
+what I'm going to, I guess kind of toggle over as you mentioned,
+
+162
+00:09:27,471 --> 00:09:29,530
+like if I'm a seller,
+
+163
+00:09:29,531 --> 00:09:32,010
+am I entering deals and by deal,
+
+164
+00:09:32,150 --> 00:09:36,370
+it's my pending, right? And how much am I expecting to bring in for
+
+165
+00:09:36,371 --> 00:09:40,710
+one of my clients? Or maybe they're done with their annual buy but they've
+
+166
+00:09:40,711 --> 00:09:44,570
+got a I don't know a Latin Grammy additional buy they want to purchase
+
+167
+00:09:44,571 --> 00:09:48,730
+I want to you know start telling my manager how much I expect so
+
+168
+00:09:48,731 --> 00:09:51,650
+I'm going to go into the deal portion of it and I'm going to
+
+169
+00:09:51,651 --> 00:09:56,370
+show you our new sales stages right and in
+
+170
+00:09:56,371 --> 00:10:00,350
+there let me go into here I'm going to pick an AE mind you
+
+171
+00:10:00,351 --> 00:10:05,030
+have corporate you know access so it's like setup with way
+
+172
+00:10:05,031 --> 00:10:09,530
+too much data. And this just I hone in on one little deal here.
+
+173
+00:10:09,670 --> 00:10:12,950
+Let me just pick an AE to actually like show you things real quick.
+
+174
+00:10:13,770 --> 00:10:18,810
+Okay, I've got some here already. Let's pick this
+
+175
+00:10:18,811 --> 00:10:21,810
+one. Okay, so right off the bat,
+
+176
+00:10:22,010 --> 00:10:25,510
+too, in this like little quick deal view as a seller.
+
+177
+00:10:25,690 --> 00:10:27,930
+As you can see, I carry picked, you know,
+
+178
+00:10:27,931 --> 00:10:31,890
+quite a few in here as a seller. I only see my own business
+
+179
+00:10:31,891 --> 00:10:35,230
+that I handle my own revenue, you, right? But in here,
+
+180
+00:10:35,370 --> 00:10:37,810
+it kind of allows me to see where things are at.
+
+181
+00:10:38,670 --> 00:10:41,510
+And then I can even do like a little pipeline view.
+
+182
+00:10:41,850 --> 00:10:45,790
+I love this little pipeline view because it allows you to kind of just
+
+183
+00:10:45,791 --> 00:10:48,690
+see where everything's in our stages. So as you can see,
+
+184
+00:10:48,830 --> 00:10:53,770
+we've got five stages. And the weight is associated.
+
+185
+00:10:54,310 --> 00:10:56,850
+If I do kind of like this little use weight here,
+
+186
+00:10:56,851 --> 00:10:59,230
+you can see we've got zero, 10, 30, 16,
+
+187
+00:10:59,470 --> 00:11:03,010
+90, and whatnot. When I say use weights,
+
+188
+00:11:03,210 --> 00:11:05,890
+notice how the zero applied the zero.
+
+189
+00:11:06,110 --> 00:11:09,610
+So now that section, so if I want to actually see them out,
+
+190
+00:11:09,611 --> 00:11:13,790
+I can turn into that. If you want a further detail on what each
+
+191
+00:11:13,791 --> 00:11:18,530
+one means, I can go ahead and send you that that
+
+192
+00:11:18,531 --> 00:11:21,150
+Scott and team piece together of what each one kind of entails.
+
+193
+00:11:21,151 --> 00:11:23,810
+We can send that to you after the call.
+
+194
+00:11:24,610 --> 00:11:27,250
+This is actually pretty, this is like weighted pipeline versus the full.
+
+195
+00:11:27,810 --> 00:11:30,110
+I almost described this as a bit of a canned ban where I am
+
+196
+00:11:30,111 --> 00:11:32,130
+in my deal cycle. So this is very straightforward.
+
+197
+00:11:32,390 --> 00:11:37,510
+This is great. Thank you. I'm going to pick maybe this big $100,000
+
+198
+00:11:37,511 --> 00:11:40,790
+one in stage zero so we can look at it.
+
+199
+00:11:41,050 --> 00:11:44,150
+I'm going to do a little quick open link to let it open,
+
+200
+00:11:44,151 --> 00:11:47,250
+zip, opens it up on another tab and then I can kind of open
+
+201
+00:11:47,251 --> 00:11:52,730
+a couple really quickly So we can just toggle back and forth and
+
+202
+00:11:52,731 --> 00:11:56,430
+then also show you how many you would create one if you want to
+
+203
+00:11:56,431 --> 00:11:58,930
+see that you let me know, but I think you kind of get a
+
+204
+00:11:58,931 --> 00:12:01,970
+sense of what I'm going to show you here is technically everything they have
+
+205
+00:12:01,971 --> 00:12:06,570
+to enter. There's also like little shortcuts here and there
+
+206
+00:12:06,571 --> 00:12:09,710
+as we're waiting for data to build up where I can always use like
+
+207
+00:12:09,711 --> 00:12:14,230
+a little clone button to help me like quickly create another deal if I
+
+208
+00:12:14,231 --> 00:12:17,330
+need to and whatnot. So right now,
+
+209
+00:12:17,470 --> 00:12:20,150
+what we're looking at is for the AE SESOT,
+
+210
+00:12:20,270 --> 00:12:24,010
+right? He would have created this deal. He can call the deal anything he
+
+211
+00:12:24,011 --> 00:12:26,530
+wants. Again, maybe this would have been, I don't know,
+
+212
+00:12:26,630 --> 00:12:29,690
+my 2Q3Q,
+
+213
+00:12:30,130 --> 00:12:32,190
+you know, you can call it anything you want. That's just the deal.
+
+214
+00:12:32,490 --> 00:12:35,010
+The account is Pro Colombia. So in here,
+
+215
+00:12:35,150 --> 00:12:38,410
+you know, they always enter their office.
+
+216
+00:12:39,310 --> 00:12:41,430
+Again, we're going through the transformations.
+
+217
+00:12:41,431 --> 00:12:46,270
+So we're going into this SMB small medium-sized business agencies versus
+
+218
+00:12:46,271 --> 00:12:49,950
+independent agencies world. And so that will be changing.
+
+219
+00:12:50,470 --> 00:12:53,610
+And then in here, they can put an expected due date of when they
+
+220
+00:12:53,611 --> 00:12:57,390
+think this is going to close. And here's where they choose the stages.
+
+221
+00:12:57,610 --> 00:13:01,130
+Now, mind you typically, it should be progressing the stages,
+
+222
+00:13:01,131 --> 00:13:04,130
+again, depending on the description we'll send you later.
+
+223
+00:13:04,910 --> 00:13:06,930
+Sometimes it does jump, right?
+
+224
+00:13:07,150 --> 00:13:11,930
+It doesn't always follow that. There is like a cool feature within the application
+
+225
+00:13:11,931 --> 00:13:16,630
+that does track. It's like a forecast change report So from the beginning
+
+226
+00:13:16,631 --> 00:13:20,730
+of a quarter Versus the end we can kind of see if it even
+
+227
+00:13:20,731 --> 00:13:23,810
+materialized and and things like that Again,
+
+228
+00:13:23,970 --> 00:13:26,270
+the stages are fairly new to us, right?
+
+229
+00:13:26,370 --> 00:13:30,910
+We've expanded it from basically all or nothing stage one zero
+
+230
+00:13:30,911 --> 00:13:35,630
+Stage three we called it was all in So it's been a bit
+
+231
+00:13:35,631 --> 00:13:37,870
+of a learning curve this quarter for local.
+
+232
+00:13:38,530 --> 00:13:41,370
+And then everything we enter is always open pending.
+
+233
+00:13:41,710 --> 00:13:45,430
+And then when they're done, they can mark something closed one or closed lost,
+
+234
+00:13:45,870 --> 00:13:49,190
+or they can wait when the revenue materializes.
+
+235
+00:13:49,590 --> 00:13:51,950
+If all the features that make up an account,
+
+236
+00:13:52,190 --> 00:13:54,290
+account, outlet, AE, all of those,
+
+237
+00:13:54,730 --> 00:13:59,670
+the system will auto reconcil and your pending becomes zero and
+
+238
+00:13:59,671 --> 00:14:06,550
+closed one by the system down
+
+239
+00:14:06,551 --> 00:14:11,150
+below
+
+240
+00:14:11,151 --> 00:14:16,070
+they'll get to see obviously the pending if they have an additional outlet
+
+241
+00:14:16,071 --> 00:14:20,190
+they need to start you know adding pending to you saw me add the
+
+242
+00:14:20,191 --> 00:14:24,770
+little KUVN is my TV Dallas I'm going to pick that And
+
+243
+00:14:24,771 --> 00:14:28,650
+then they would just like start entering the dollar here.
+
+244
+00:14:28,810 --> 00:14:31,370
+It's kind of like a little Excel. This is very budget.
+
+245
+00:14:31,570 --> 00:14:33,690
+This is like the budget really that the client's giving us.
+
+246
+00:14:33,691 --> 00:14:38,290
+Yeah, unfortunately, so everything in Matrix resides on their
+
+247
+00:14:38,291 --> 00:14:40,330
+own separate tables, right? The billing,
+
+248
+00:14:40,550 --> 00:14:43,390
+the pending, the budget. So everything's like a little scattered.
+
+249
+00:14:43,810 --> 00:14:46,550
+So even since if we're cleaning up a category,
+
+250
+00:14:47,030 --> 00:14:50,650
+I'm going to pretend to change it. Like I'm cleaning the deal,
+
+251
+00:14:50,651 --> 00:14:52,990
+not necessarily changing the budget. Again,
+
+252
+00:14:52,991 --> 00:14:57,770
+that's the a little annoying part about everything resides in different tables part.
+
+253
+00:15:00,150 --> 00:15:03,550
+Do you ever have different categories at the line-out of level?
+
+254
+00:15:04,210 --> 00:15:07,050
+So that we have the MDM team,
+
+255
+00:15:07,290 --> 00:15:11,950
+I'm sure you've maybe been talking to them, the master data management team
+
+256
+00:15:11,951 --> 00:15:14,690
+who cleans up our clients across the board.
+
+257
+00:15:14,770 --> 00:15:18,970
+I'm just for local, I believe they do it for Salesforce and National as
+
+258
+00:15:18,971 --> 00:15:23,570
+well, correct me if I'm wrong team, but they clean up accounts in
+
+259
+00:15:23,571 --> 00:15:26,510
+here and they help us maintain categories as well.
+
+260
+00:15:27,310 --> 00:15:30,830
+So we strive to have one category per client.
+
+261
+00:15:31,330 --> 00:15:34,570
+The P and Gs of the world are kind of hard right because we've
+
+262
+00:15:34,571 --> 00:15:38,710
+got like corporate multi product and drugs and vitamins and stuff,
+
+263
+00:15:38,870 --> 00:15:42,310
+but for the most part we need one to make reporting,
+
+264
+00:15:42,730 --> 00:15:45,070
+you know, pretty standard for us.
+
+265
+00:15:45,510 --> 00:15:48,950
+This is almost an attribute of the This is where you put the accounts
+
+266
+00:15:48,951 --> 00:15:51,950
+in the categories. Gotcha. Okay. That's fair. Yeah. By default though,
+
+267
+00:15:51,951 --> 00:15:54,490
+obviously before you even get to put a deal,
+
+268
+00:15:54,610 --> 00:15:59,110
+this one's already existing so I could clone it and create another when I'm
+
+269
+00:15:59,111 --> 00:16:02,990
+in seller and I need to create a brand new prospect,
+
+270
+00:16:03,010 --> 00:16:06,910
+right? My claim in order to even begin creating a deal.
+
+271
+00:16:07,150 --> 00:16:10,990
+I had to click on the, but you saw the ad account to create
+
+272
+00:16:10,991 --> 00:16:14,110
+that and I would follow the the motions of putting in,
+
+273
+00:16:14,170 --> 00:16:17,370
+you know, on the teeth. I use my usual empty flower shop.
+
+274
+00:16:17,530 --> 00:16:20,370
+By now I have like five billion within Univision.
+
+275
+00:16:20,970 --> 00:16:24,550
+But, and then, you know, I'll assign it the category I pick,
+
+276
+00:16:24,570 --> 00:16:27,250
+you know, what outlets I'm kind of going after.
+
+277
+00:16:27,770 --> 00:16:32,650
+In the last like, around fourth quarter of last year,
+
+278
+00:16:32,970 --> 00:16:36,950
+we kind of scaled back a little on items we used to enforce,
+
+279
+00:16:36,951 --> 00:16:41,630
+right? Because we were about to expand the stages,
+
+280
+00:16:41,631 --> 00:16:45,670
+it was a lot for our sellers. So if before we used to force
+
+281
+00:16:45,671 --> 00:16:49,090
+them to enter the address on a process, we kind of scaled back on
+
+282
+00:16:49,091 --> 00:16:51,830
+a few items, just to kind of speed things up and make them a
+
+283
+00:16:51,831 --> 00:16:55,970
+little bit happy. But one of our things was we were trying to force
+
+284
+00:16:55,971 --> 00:17:00,450
+our sellers to put in phone numbers and contacts and addresses and stuff.
+
+285
+00:17:00,610 --> 00:17:02,930
+So when they leave, we retained that place.
+
+286
+00:17:03,110 --> 00:17:05,810
+Like that was a big push, you know,
+
+287
+00:17:05,930 --> 00:17:08,410
+push last quarter.
+
+288
+00:17:09,030 --> 00:17:11,930
+but this kind of shows you here and I have that.
+
+289
+00:17:11,931 --> 00:17:14,770
+And just to make sure, on the outlets here,
+
+290
+00:17:14,990 --> 00:17:18,170
+just to make sure you're putting them in here as,
+
+291
+00:17:18,210 --> 00:17:22,190
+again, an attribute against it, like this is where they typically buy into which
+
+292
+00:17:22,191 --> 00:17:26,090
+local stations and digital are. Well, here's one of the little things I kind
+
+293
+00:17:26,091 --> 00:17:30,170
+of hate, right? If I'm a seller and I'm gonna be selling multiple markets,
+
+294
+00:17:30,570 --> 00:17:35,270
+sometimes I just need to pick one in order for me to create that,
+
+295
+00:17:35,390 --> 00:17:39,930
+you know, that my claim. But that's just me putting in let's say
+
+296
+00:17:39,931 --> 00:17:44,470
+one really quickly or five or five I don't even see five let's just
+
+297
+00:17:44,471 --> 00:17:48,950
+ignore that But if I do that I can still even if I do
+
+298
+00:17:48,951 --> 00:17:53,570
+this I I'm still in the deal itself going to be allowed to
+
+299
+00:17:53,571 --> 00:17:58,130
+put 10 Right When I budget I'm still going to
+
+300
+00:17:58,131 --> 00:18:02,190
+be able to budget more like every market I have access to to sell
+
+301
+00:18:02,191 --> 00:18:05,990
+I can still budget for them even though my prospect has one little outlet
+
+302
+00:18:05,991 --> 00:18:09,010
+only, you know that's kind of like it works.
+
+303
+00:18:09,170 --> 00:18:12,950
+I wish it kind of forced you to put an outlet,
+
+304
+00:18:13,290 --> 00:18:17,550
+the same outlet on everything to kind of make things flowing smoothly,
+
+305
+00:18:17,790 --> 00:18:21,750
+but really they just need one outlet and they can just be in forecasting.
+
+306
+00:18:22,250 --> 00:18:26,690
+And then down below, uh-huh. I was going to ask the time sales general,
+
+307
+00:18:26,950 --> 00:18:31,410
+the time sales general. Is that a category that got chosen at someone who
+
+308
+00:18:31,411 --> 00:18:35,590
+chose the outlet? That's a revenue It's a revenue type.
+
+309
+00:18:35,710 --> 00:18:38,370
+As you can see, we've got the generic time sales.
+
+310
+00:18:38,371 --> 00:18:40,470
+We kind of break out,
+
+311
+00:18:40,490 --> 00:18:42,610
+you know, political in here.
+
+312
+00:18:42,830 --> 00:18:47,610
+If it's retranssocial, there's a little hindrance we have right now with digital
+
+313
+00:18:47,611 --> 00:18:51,910
+that for a while now. We've been trying to expand on the revenue types,
+
+314
+00:18:51,911 --> 00:18:55,290
+which I think warrants a different conversation of,
+
+315
+00:18:55,330 --> 00:18:58,530
+you know, that. But this is where we kind of separate the type of
+
+316
+00:18:58,531 --> 00:19:01,750
+buy it is, basically. By default,
+
+317
+00:19:02,030 --> 00:19:04,090
+as you saw, it went to the star,
+
+318
+00:19:04,410 --> 00:19:08,890
+the asterisk time cell. We just kind of asked the vendor to do that
+
+319
+00:19:08,891 --> 00:19:11,530
+for us to kind of speed things up for our sellers.
+
+320
+00:19:11,531 --> 00:19:14,750
+If it's not time sales, if it was going to be audio streaming,
+
+321
+00:19:14,751 --> 00:19:17,370
+then they would need to change it. If not, they would leave it and
+
+322
+00:19:17,371 --> 00:19:21,710
+speed things up. Project, which is probably going to be your next question,
+
+323
+00:19:22,290 --> 00:19:27,050
+so this is something fairly knew we've started a couple years
+
+324
+00:19:27,051 --> 00:19:31,570
+ago where we want to be able to track some of our big
+
+325
+00:19:31,571 --> 00:19:37,130
+sport and temples, right? Not just like one annual Dallas
+
+326
+00:19:37,131 --> 00:19:39,730
+digital forecast line.
+
+327
+00:19:41,110 --> 00:19:45,210
+These are corporate, so like me and another person will create them for a
+
+328
+00:19:45,211 --> 00:19:48,230
+team when the leaders approve them.
+
+329
+00:19:48,590 --> 00:19:50,750
+But if I was doing something, I'd be able to say,
+
+330
+00:19:50,910 --> 00:19:53,230
+okay, I'm actually going to expect this on that.
+
+331
+00:19:53,231 --> 00:19:59,270
+And then for, again, DFW digital,
+
+332
+00:19:59,770 --> 00:20:03,470
+I'm actually going to expect some Latin Grammy revenue.
+
+333
+00:20:03,610 --> 00:20:05,730
+Let me actually put that in November.
+
+334
+00:20:06,770 --> 00:20:09,930
+And this is our way of kind of tracking that,
+
+335
+00:20:10,070 --> 00:20:14,770
+where I come in is if it is a big property
+
+336
+00:20:14,771 --> 00:20:18,410
+where we have an initiative or a unit code and traffic associated,
+
+337
+00:20:18,870 --> 00:20:21,650
+I'll make that connection in the back end,
+
+338
+00:20:21,930 --> 00:20:25,130
+so that when the specific client,
+
+339
+00:20:25,350 --> 00:20:27,690
+AE, DFW digital,
+
+340
+00:20:28,430 --> 00:20:33,130
+audio streaming, and the Latin Grammy money comes in,
+
+341
+00:20:33,230 --> 00:20:35,310
+the system will be smart enough to say, oh,
+
+342
+00:20:35,530 --> 00:20:38,710
+the initiative materialized, let me update this one,
+
+343
+00:20:39,050 --> 00:20:43,170
+and not this one, and let me clear out the pending meaning reconciled it.
+
+344
+00:20:44,190 --> 00:20:47,630
+But yeah, our sales team loves tracking by projects,
+
+345
+00:20:48,090 --> 00:20:50,950
+we try to limit them because the more we have,
+
+346
+00:20:51,350 --> 00:20:55,410
+we feel bad for the AES having to have so many to track,
+
+347
+00:20:55,570 --> 00:20:59,970
+it is a lot. And there are some little weird cases where if things
+
+348
+00:20:59,971 --> 00:21:03,330
+do not line up, the system won't reconcile it.
+
+349
+00:21:03,470 --> 00:21:06,550
+And then that just means it's manual work for our sellers that they'll have
+
+350
+00:21:06,551 --> 00:21:10,050
+to come in and, you know, update it if they typed in the wrong
+
+351
+00:21:10,051 --> 00:21:12,190
+revenue type or whatnot, you know,
+
+352
+00:21:12,310 --> 00:21:16,310
+then it's manual work for them. Please stop me.
+
+353
+00:21:16,590 --> 00:21:19,550
+I speak fast because it's like, you're good.
+
+354
+00:21:19,551 --> 00:21:21,830
+You're good. And I'm also like, I'm like,
+
+355
+00:21:21,831 --> 00:21:23,870
+oh my God, we have so much to talk about. And I only have
+
+356
+00:21:23,871 --> 00:21:28,290
+35 minutes left. You can't speak faster than Jonathan can take in.
+
+357
+00:21:28,291 --> 00:21:30,550
+No, don't. Don't worry about it. Okay, good. Let me,
+
+358
+00:21:30,610 --> 00:21:32,830
+let me trust me. If you just go,
+
+359
+00:21:32,831 --> 00:21:36,190
+so just so I got, so I've got outlets, I've got revenue category.
+
+360
+00:21:36,570 --> 00:21:39,410
+And these are almost like events if I'm, if I'm really thinking.
+
+361
+00:21:39,411 --> 00:21:42,030
+right? Like specialty events that you guys have. I'm going to have one in
+
+362
+00:21:42,031 --> 00:21:45,190
+here that is not, it's just, hey, I'm just doing general advertising,
+
+363
+00:21:45,191 --> 00:21:47,310
+too, correct? And that's more of a general.
+
+364
+00:21:47,630 --> 00:21:49,990
+So some of them are tied to saying, so if I went and looked,
+
+365
+00:21:50,010 --> 00:21:52,290
+I can spit it and saying, hey, how much revenue did we do to
+
+366
+00:21:52,291 --> 00:21:55,370
+the 2026 MNT TV digital?
+
+367
+00:21:55,550 --> 00:21:59,490
+I can now pull revenue in those categories, so Phil can see exactly what's
+
+368
+00:21:59,491 --> 00:22:01,710
+going on in each one of those categories, how much of a video,
+
+369
+00:22:01,850 --> 00:22:04,830
+how much was his audio, what was done by what outlet you could spin
+
+370
+00:22:04,831 --> 00:22:07,910
+the data across those three accesses for lack of a better word,
+
+371
+00:22:07,970 --> 00:22:10,790
+correct? And then just to be clear on the,
+
+372
+00:22:10,910 --> 00:22:13,530
+and then just be clear, on the actual, when you said, it's interesting,
+
+373
+00:22:13,531 --> 00:22:15,830
+you're like, we replace it with what happens.
+
+374
+00:22:15,831 --> 00:22:20,030
+So the concept of forecast, I think we're going to generate 100 grand in
+
+375
+00:22:20,031 --> 00:22:22,530
+March for this. We didn't,
+
+376
+00:22:22,531 --> 00:22:27,410
+we generated 50 grand. Did suddenly now April and May increase or
+
+377
+00:22:27,411 --> 00:22:32,510
+did you decrease what happens? So if $50,000 materialized
+
+378
+00:22:32,511 --> 00:22:35,650
+in the system identified everything was the same.
+
+379
+00:22:35,651 --> 00:22:39,710
+the system will then automatically bring it down to 50,000,
+
+380
+00:22:39,830 --> 00:22:43,330
+right? Because we brought in booked revenue of 50,000.
+
+381
+00:22:43,510 --> 00:22:46,990
+If everything lines up, it updates it for us.
+
+382
+00:22:47,830 --> 00:22:50,610
+Okay. On the same table. Yeah.
+
+383
+00:22:50,750 --> 00:22:54,070
+In here. Right in here. Okay. So you're not keeping the store.
+
+384
+00:22:54,190 --> 00:22:56,330
+The reason I'm asking is I'm not forecasting actual,
+
+385
+00:22:56,350 --> 00:22:58,990
+which is giving me the old value and what the actual value is.
+
+386
+00:22:59,030 --> 00:23:03,150
+You replace them. Yeah. This is the pending.
+
+387
+00:23:03,590 --> 00:23:05,770
+To us, a deal is the the pending.
+
+388
+00:23:06,290 --> 00:23:10,950
+When I'm going to now go, which is different than if I go back
+
+389
+00:23:10,951 --> 00:23:14,070
+out to the home tab and we go to that little sales revenue,
+
+390
+00:23:14,470 --> 00:23:19,270
+we've got the forecast, which is the both revenue plus the pending,
+
+391
+00:23:19,470 --> 00:23:21,530
+the pending that resides in the deal. Yeah,
+
+392
+00:23:21,550 --> 00:23:25,650
+that's close one versus plus your weighted schedule pipe or your weighted pipeline.
+
+393
+00:23:25,850 --> 00:23:28,930
+Exactly. We've got full forecast and weighted forecast view,
+
+394
+00:23:28,931 --> 00:23:32,830
+which is you have a little checkbox right that lets me toggle between the
+
+395
+00:23:32,831 --> 00:23:37,670
+two. Everything we do as if you've heard is we really focus
+
+396
+00:23:37,671 --> 00:23:40,670
+on weighted forecasts because the weights matter,
+
+397
+00:23:40,671 --> 00:23:44,590
+right? But we do look at what's sitting in everything so we can kind
+
+398
+00:23:44,591 --> 00:23:47,030
+of speculate what everybody's working on.
+
+399
+00:23:47,330 --> 00:23:51,710
+Every broadcasters listen that way. They all want weighted info and schedule too.
+
+400
+00:23:51,870 --> 00:23:54,030
+So they want to look at that. They want to look at the revenue
+
+401
+00:23:54,031 --> 00:23:56,830
+month over a month based on those deals and what we're going to expect
+
+402
+00:23:56,831 --> 00:23:59,370
+and the total value the deal. So if I'm looking for that dimension as
+
+403
+00:23:59,371 --> 00:24:02,310
+well. Perfect. If there was any historical revenue,
+
+404
+00:24:02,311 --> 00:24:04,950
+I'd kind of be able to see it here like a little quick snap
+
+405
+00:24:04,951 --> 00:24:09,050
+view. As our AEs though progress things,
+
+406
+00:24:09,370 --> 00:24:13,170
+they have to have this certain fields like a contact and whatnot.
+
+407
+00:24:13,550 --> 00:24:15,850
+So if I move it, I believe there we go.
+
+408
+00:24:15,990 --> 00:24:19,510
+There's my little RMS is saying, hey before you move it,
+
+409
+00:24:19,770 --> 00:24:21,970
+I need you to go and create a contact.
+
+410
+00:24:22,410 --> 00:24:25,170
+If I already had a contact, I'd be able to click on that little
+
+411
+00:24:25,171 --> 00:24:28,530
+button and go find it. I don't. So now I got to go create
+
+412
+00:24:28,531 --> 00:24:31,010
+it. I can show you how we would create a contact.
+
+413
+00:24:31,410 --> 00:24:33,470
+That's okay. That's okay. I'm not worried about that. That's cool.
+
+414
+00:24:33,570 --> 00:24:37,610
+Let's see. One question I have here is when you're thinking about a given
+
+415
+00:24:37,611 --> 00:24:41,790
+account over a year, are you going to have many opportunities or do you
+
+416
+00:24:41,791 --> 00:24:46,010
+kind of come back to the same one and manipulate these tables over time?
+
+417
+00:24:46,870 --> 00:24:50,510
+So great question. Usually are local local settlers,
+
+418
+00:24:50,650 --> 00:24:54,990
+like what we call the hyperlocal sellers, pretty much like to do like annual
+
+419
+00:24:54,991 --> 00:24:59,770
+buys. Sometimes like when I'm trying to clean up a category because I'm analytics,
+
+420
+00:25:00,010 --> 00:25:03,210
+I need matrix to be cleaned up and sometimes I notice things and I
+
+421
+00:25:03,211 --> 00:25:06,970
+come in to clean it up. And then I see an AE has like
+
+422
+00:25:06,971 --> 00:25:09,670
+20 deals. Let me show you what,
+
+423
+00:25:09,850 --> 00:25:12,290
+you know, I, I mean buy that.
+
+424
+00:25:12,430 --> 00:25:16,550
+Let me actually search for a big client, which is I'm hoping McDonald's pops
+
+425
+00:25:16,551 --> 00:25:20,710
+up fairly quickly in my little search field on top.
+
+426
+00:25:21,330 --> 00:25:25,190
+And they could potentially have so many deals for a client.
+
+427
+00:25:25,590 --> 00:25:28,630
+Now we do have our holding company offices,
+
+428
+00:25:28,830 --> 00:25:31,230
+the hold code team. They,
+
+429
+00:25:31,630 --> 00:25:34,470
+for the most part, from what I've seen is they love,
+
+430
+00:25:34,790 --> 00:25:37,830
+let me see, they love splitting things out by quarter.
+
+431
+00:25:38,030 --> 00:25:41,870
+So you would see some of their deals, right? So to answer your question,
+
+432
+00:25:42,190 --> 00:25:44,950
+we got both. It's a little bit about all of the above.
+
+433
+00:25:45,230 --> 00:25:49,310
+It's depending on how they're buying it also probably comes down to when they
+
+434
+00:25:49,311 --> 00:25:53,890
+actually buy they're signing a contract or
+
+435
+00:25:53,891 --> 00:25:58,610
+what's happening from a contractual perspective on what they say
+
+436
+00:25:58,611 --> 00:26:00,850
+they're going to do or what the planned amount is.
+
+437
+00:26:00,910 --> 00:26:04,570
+Is there any contractual language for that? Does that make sense?
+
+438
+00:26:05,050 --> 00:26:09,650
+So like what where we're prompt they're being promised reading impressions and
+
+439
+00:26:09,651 --> 00:26:14,490
+things like that. That I probably have to differ to like to go close
+
+440
+00:26:14,491 --> 00:26:17,590
+one. Does anybody have to sign paper or is it a verb?
+
+441
+00:26:18,110 --> 00:26:23,290
+No. Okay. So to
+
+442
+00:26:23,291 --> 00:26:25,630
+get to close one, do I need to sign paper?
+
+443
+00:26:26,290 --> 00:26:30,770
+No, I think so. Do and do I ever sign paper?
+
+444
+00:26:30,990 --> 00:26:33,530
+Do I ever sign paper to say that I made that million dollar commitment
+
+445
+00:26:33,531 --> 00:26:36,430
+to you guys over the course of the year? If they do,
+
+446
+00:26:36,650 --> 00:26:41,650
+I don't think as a standard process. And it's not like kept anywhere for
+
+447
+00:26:41,651 --> 00:26:43,670
+everybody. And Shelley,
+
+448
+00:26:43,850 --> 00:26:46,050
+is it because you're essentially when the orders get done,
+
+449
+00:26:46,170 --> 00:26:49,470
+you're getting it from the agency. So because it's being pushed to us from
+
+450
+00:26:49,471 --> 00:26:53,590
+the actual agency themselves, that isn't of itself is your commitment of the process.
+
+451
+00:26:53,591 --> 00:26:55,910
+And that's coming through media's national, Jonathan,
+
+452
+00:26:55,970 --> 00:26:58,190
+which is opposite media. So media oceans, the buyer system,
+
+453
+00:26:58,191 --> 00:27:02,110
+yeah, but we process it for ONOs through white orbit connect and through rapid
+
+454
+00:27:02,111 --> 00:27:06,570
+express for affiliates. So does wide orbit push it into here,
+
+455
+00:27:07,050 --> 00:27:09,130
+or does it go into wide orbit and then you get it from the
+
+456
+00:27:09,131 --> 00:27:11,870
+file drop? Yeah. Right?
+
+457
+00:27:12,130 --> 00:27:16,090
+Right in T, it goes from wide orbit into matrix,
+
+458
+00:27:16,091 --> 00:27:18,610
+yeah. And that's through that file drop.
+
+459
+00:27:18,890 --> 00:27:22,790
+And also through affiliate, from strata for the affiliates.
+
+460
+00:27:23,350 --> 00:27:26,330
+That's what I was gonna ask. Yeah, so it all gets planned here.
+
+461
+00:27:26,430 --> 00:27:29,110
+We plan all this out and then we come in, drop the files in,
+
+462
+00:27:29,430 --> 00:27:32,870
+files update the actuals, and then we're able to see what we actually did
+
+463
+00:27:32,871 --> 00:27:36,990
+and then what's remaining based on pipe. So that makes sense,
+
+464
+00:27:37,290 --> 00:27:39,370
+yeah. So right here,
+
+465
+00:27:39,490 --> 00:27:42,170
+I'm showing you like, I'm in the account detail,
+
+466
+00:27:42,350 --> 00:27:44,630
+right? So if I wanted to see who's been, you know,
+
+467
+00:27:44,710 --> 00:27:48,310
+making updates, do I have any agency relationships?
+
+468
+00:27:48,670 --> 00:27:51,890
+Does anybody have any activities which I think we should kind of go into
+
+469
+00:27:51,891 --> 00:27:56,670
+as well, right? Meetings, like logging meetings and calls and things like that,
+
+470
+00:27:56,850 --> 00:28:01,450
+who are my contacts and he are the deals that you know I showed
+
+471
+00:28:01,451 --> 00:28:05,470
+you the deal in its you know entry state and here I see and
+
+472
+00:28:05,471 --> 00:28:10,090
+since and some like Gracielo why do you have three which ones the
+
+473
+00:28:10,091 --> 00:28:14,650
+one I'm looking for right so again everybody can create as many as they
+
+474
+00:28:14,651 --> 00:28:17,610
+need to and give it its own name but here's all my McDonald's as
+
+475
+00:28:17,611 --> 00:28:21,990
+you can see we're a little different than the network we for such a
+
+476
+00:28:21,991 --> 00:28:26,990
+big client like we've probably it's being handled by like every
+
+477
+00:28:26,991 --> 00:28:29,630
+AE in our market and things like that. As you can see,
+
+478
+00:28:29,830 --> 00:28:32,630
+we don't just have one. We have a lot. Yeah.
+
+479
+00:28:33,810 --> 00:28:37,610
+Yeah, so the bottom ones are the closed ones,
+
+480
+00:28:37,750 --> 00:28:40,310
+right? They're no longer have active pending,
+
+481
+00:28:40,311 --> 00:28:42,410
+so they're close and they're at the bottom.
+
+482
+00:28:43,010 --> 00:28:45,850
+If I'm an AE and I want to mark something,
+
+483
+00:28:46,050 --> 00:28:48,790
+lose or win here, I can do that as well in here.
+
+484
+00:28:49,070 --> 00:28:53,110
+Did I am am I losing it? why did it win?
+
+485
+00:28:53,630 --> 00:28:55,990
+You know, I can mark it, you know, closed one in here and you
+
+486
+00:28:55,991 --> 00:28:59,670
+saw it disappear. That's in the one category.
+
+487
+00:29:00,230 --> 00:29:04,890
+I got it. Yeah. Okay. So you've also been mentioning
+
+488
+00:29:04,891 --> 00:29:07,390
+like outlets, revenue types and all of that.
+
+489
+00:29:07,530 --> 00:29:10,490
+I think you can kind of see that a little bit better if I
+
+490
+00:29:11,630 --> 00:29:14,390
+pull a report. But before I pull a report,
+
+491
+00:29:14,630 --> 00:29:18,250
+I can kind of show you all the filters of what we can choose
+
+492
+00:29:18,251 --> 00:29:22,590
+to run in a report. What I see is basically what we import.
+
+493
+00:29:23,730 --> 00:29:28,010
+So I don't want to like deviate from I wanted to show you activities,
+
+494
+00:29:28,270 --> 00:29:31,710
+but let me show you one or the big things is the reports in
+
+495
+00:29:31,711 --> 00:29:36,230
+here, right? I'm gonna kind of give it a second for everything to
+
+496
+00:29:36,231 --> 00:29:41,030
+finish loading and then I'll show you. But we have revenue reports.
+
+497
+00:29:41,870 --> 00:29:46,510
+We've got forecast and activities and a little miscellaneous
+
+498
+00:29:46,511 --> 00:29:50,670
+is one where I complained. When we complain to the vendor that we want
+
+499
+00:29:50,671 --> 00:29:53,950
+something, one of the great things is that they deliver,
+
+500
+00:29:54,170 --> 00:29:58,870
+right? So I wanted a report that gave me everything in one
+
+501
+00:29:58,871 --> 00:30:03,390
+multiple years forecast budget for many years.
+
+502
+00:30:03,670 --> 00:30:07,650
+So they build the build your own financials report that kind of lets me
+
+503
+00:30:07,651 --> 00:30:12,270
+choose so many columns of information that I could potentially want.
+
+504
+00:30:12,590 --> 00:30:15,290
+But very simply, I'm going to go into a very simple,
+
+505
+00:30:15,291 --> 00:30:19,210
+what we call multi-year report just so that I can show you the filters
+
+506
+00:30:19,211 --> 00:30:23,730
+of info. Every filter you see is pretty much what we're ingesting from the
+
+507
+00:30:23,731 --> 00:30:26,610
+traffic systems. Like I mentioned, the count, agency,
+
+508
+00:30:27,070 --> 00:30:29,850
+and whatnot. So let me go to filters. So here,
+
+509
+00:30:29,990 --> 00:30:32,170
+we would see all the sales people,
+
+510
+00:30:32,570 --> 00:30:35,410
+you know, everybody belongs in, you know, where they're selling.
+
+511
+00:30:36,010 --> 00:30:39,750
+The outlets, Matrix calls them outlets,
+
+512
+00:30:39,751 --> 00:30:41,890
+but it's like it's our stations, right?
+
+513
+00:30:42,050 --> 00:30:44,650
+So if I show you, you know, we've got that kind of layout,
+
+514
+00:30:45,150 --> 00:30:49,090
+we've got the offices. So even though we're local media,
+
+515
+00:30:49,290 --> 00:30:52,170
+we still call it within our group, local national,
+
+516
+00:30:52,750 --> 00:30:56,230
+you're going to see a couple of our new offices that we've been,
+
+517
+00:30:56,470 --> 00:30:58,650
+you know, creating, which is the SMB Independent,
+
+518
+00:30:58,651 --> 00:31:04,930
+I briefly mentioned to you. We've got unique codes on
+
+519
+00:31:04,931 --> 00:31:07,930
+the offices. Where is that delineated?
+
+520
+00:31:08,110 --> 00:31:12,630
+Where at the op level or is that like an attribute
+
+521
+00:31:12,631 --> 00:31:17,190
+of the user? All of this is coming from the traffic system and
+
+522
+00:31:17,191 --> 00:31:21,650
+yeah, a user is usually associated to an office selling.
+
+523
+00:31:21,830 --> 00:31:27,890
+We do have some sellers like in NorCal who sell
+
+524
+00:31:27,891 --> 00:31:31,570
+various offices is because like Sacramento Bakersfield are smaller,
+
+525
+00:31:31,810 --> 00:31:36,130
+right? So an AE there is dual AE for both market slash offices.
+
+526
+00:31:36,410 --> 00:31:38,550
+That's okay, that's okay.
+
+527
+00:31:38,750 --> 00:31:42,070
+The revenue types, like again, if you want to be able to see what
+
+528
+00:31:42,071 --> 00:31:46,090
+all of this are, maybe you know, like a massive report and you could
+
+529
+00:31:46,091 --> 00:31:48,130
+pivot table in and see it if you need to.
+
+530
+00:31:48,131 --> 00:31:53,470
+We've got our categories. I call this the parent child
+
+531
+00:31:53,471 --> 00:31:56,550
+relationship. It's all in here.
+
+532
+00:31:59,550 --> 00:32:01,830
+Let me, I mean,
+
+533
+00:32:01,930 --> 00:32:04,030
+do you want me to pull some? This is actually all,
+
+534
+00:32:04,310 --> 00:32:07,330
+no, because this is all straightforward. Like, everything is showing is expected.
+
+535
+00:32:07,550 --> 00:32:11,930
+So I'm like, this is, this is what I've been expecting. What I'm trying
+
+536
+00:32:11,931 --> 00:32:14,630
+to get, I guess, through. So we've, you've entered sort of a deal in.
+
+537
+00:32:14,850 --> 00:32:18,390
+We have the notion of being one. You got,
+
+538
+00:32:18,650 --> 00:32:21,570
+and now you got data to reconcile against it.
+
+539
+00:32:21,750 --> 00:32:23,850
+So I'm trying to figure out like I almost like the patch, right?
+
+540
+00:32:24,030 --> 00:32:26,970
+Which says we got a commitment. Now you know there was a spend.
+
+541
+00:32:27,510 --> 00:32:29,190
+Show me how you figured out there was a spend. Do you know there's
+
+542
+00:32:29,191 --> 00:32:31,390
+something close one? Where did you get the spend? Where did, like, are you
+
+543
+00:32:31,391 --> 00:32:36,330
+running a report? It came in from and reconciled against based
+
+544
+00:32:36,331 --> 00:32:39,470
+on X key. Because you were talking a little bit about that.
+
+545
+00:32:39,570 --> 00:32:42,350
+You're like, oh, well, I use this and this to figure out which line
+
+546
+00:32:42,351 --> 00:32:44,990
+item it is. That's, you know, the 100 grand for that month.
+
+547
+00:32:44,991 --> 00:32:48,010
+Is there an actual key to do not or is it like a fuzzy
+
+548
+00:32:48,011 --> 00:32:52,570
+match? Be following me by what the system does itself?
+
+549
+00:32:53,170 --> 00:32:55,530
+Yeah, yeah, like another question. Who's doing it?
+
+550
+00:32:55,550 --> 00:32:59,890
+I think it sounded like the system's doing it and There's probably some methodology
+
+551
+00:32:59,891 --> 00:33:03,650
+behind the scenes like there's a key that gets set on that spin that
+
+552
+00:33:03,651 --> 00:33:07,290
+key must go somewhere So that when the revenue comes back in the revenues
+
+553
+00:33:07,291 --> 00:33:10,730
+tied to a key Which then allows you to say all right this key
+
+554
+00:33:10,731 --> 00:33:17,990
+matches to this projected budget. That's updated something like that Yeah,
+
+555
+00:33:17,991 --> 00:33:20,310
+it's not us doing anything manual.
+
+556
+00:33:20,430 --> 00:33:22,450
+It's the system right because I mean,
+
+557
+00:33:22,570 --> 00:33:24,710
+there's even reports here to see, you know,
+
+558
+00:33:24,990 --> 00:33:29,550
+how your Budget and even in that little sales outlook
+
+559
+00:33:29,551 --> 00:33:32,550
+view I showed you here. You've got last year money,
+
+560
+00:33:32,770 --> 00:33:36,470
+L.Y TY the pending from the deals.
+
+561
+00:33:36,670 --> 00:33:41,210
+We've got weighted item right the weighted projects those projects that I
+
+562
+00:33:41,211 --> 00:33:45,110
+was showing you about the 10 pulls and whatnot And then the budget and
+
+563
+00:33:45,111 --> 00:33:48,010
+if you notice here is telling you, okay, how is your forecast,
+
+564
+00:33:48,870 --> 00:33:52,550
+your expected BOP plus pending measuring up against the budget?
+
+565
+00:33:52,551 --> 00:33:55,610
+Like the system is doing all of that.
+
+566
+00:33:55,710 --> 00:33:58,730
+Like we don't. So is this all based on just what was booked?
+
+567
+00:33:58,930 --> 00:34:02,450
+Just to be clear, is this just booked? Is there an actualization against this?
+
+568
+00:34:02,530 --> 00:34:05,690
+I'm trying to figure out like this to me feels like everything I've booked,
+
+569
+00:34:05,970 --> 00:34:08,050
+what? But what happened?
+
+570
+00:34:08,370 --> 00:34:12,290
+What's happened? So Kelly or Lee, this is my assumption is We're taking all
+
+571
+00:34:12,291 --> 00:34:16,190
+order data from the core order systems and it's feet and I'm assuming it's
+
+572
+00:34:16,191 --> 00:34:19,110
+a nightly overnight in just from the system from I got it from Shada
+
+573
+00:34:19,650 --> 00:34:24,130
+Tap scan. What have you I'm not sure how many things into matrix correct
+
+574
+00:34:24,131 --> 00:34:27,570
+operative. That's correct I mean, if you're looking for a key,
+
+575
+00:34:27,770 --> 00:34:31,290
+I'm not sure if this is the key But there are like AE codes
+
+576
+00:34:31,291 --> 00:34:35,970
+that go in to match the salespeople I'm not sure the compensation of
+
+577
+00:34:35,971 --> 00:34:39,110
+keys that they use that I don't know, but I know a echo gets
+
+578
+00:34:39,111 --> 00:34:43,890
+in there outlets and I know it does match and
+
+579
+00:34:43,891 --> 00:34:48,330
+it does compare and if all the keys aligned are the same they will
+
+580
+00:34:48,331 --> 00:34:52,730
+not duplicate. So if you try to, I remember they said if you try
+
+581
+00:34:52,731 --> 00:34:57,810
+to split an order between two AEs and if they make that header information
+
+582
+00:34:57,811 --> 00:35:02,650
+it will not allow that. So you have to introduce something different
+
+583
+00:35:02,651 --> 00:35:05,050
+which is the unit code. So that I'm,
+
+584
+00:35:06,030 --> 00:35:09,770
+if that's what you're looking for, that's the combination of things that they match.
+
+585
+00:35:10,150 --> 00:35:13,210
+And then if they're in that ingest process, anything can't make a match.
+
+586
+00:35:13,211 --> 00:35:17,850
+Is there like a kind of a file of all the things
+
+587
+00:35:17,851 --> 00:35:20,230
+that could not make a match in Matrix?
+
+588
+00:35:20,610 --> 00:35:23,010
+It can reconcile. Thank you. It can find my words. Yeah,
+
+589
+00:35:23,090 --> 00:35:25,610
+so picture. No, I like something.
+
+590
+00:35:26,010 --> 00:35:29,830
+So we don't know we're missing potentially. It's not that it's missing.
+
+591
+00:35:29,930 --> 00:35:32,090
+There's no missing anything, right?
+
+592
+00:35:32,250 --> 00:35:36,830
+Again, it goes back to. No, if you're not getting a fully reconciled report
+
+593
+00:35:36,831 --> 00:35:38,850
+it after an ingest. You don't know or you don't know.
+
+594
+00:35:39,090 --> 00:35:42,550
+I'm not saying I'm just, Oh no. What I'm trying to say is that
+
+595
+00:35:42,551 --> 00:35:46,290
+if the revenue existed in any of our traffic system applications,
+
+596
+00:35:46,850 --> 00:35:49,610
+it's in here. With the exception of trade,
+
+597
+00:35:49,611 --> 00:35:51,990
+we don't bring in trade into Matrix.
+
+598
+00:35:52,190 --> 00:35:54,630
+That's don't, I hear you. Everything else. It's a technical question.
+
+599
+00:35:55,250 --> 00:35:59,410
+I hear you completely. But if no one is running a reconciliation report of
+
+600
+00:35:59,411 --> 00:36:03,270
+the ingest files that go into Matrix, how do you know everything you needed
+
+601
+00:36:03,271 --> 00:36:07,910
+made it into Matrix as an update? So with With my expertise
+
+602
+00:36:07,911 --> 00:36:10,510
+on television at the end of every quarter,
+
+603
+00:36:10,790 --> 00:36:14,950
+I am in charge of the holding company team's SIC,
+
+604
+00:36:15,610 --> 00:36:18,090
+so meaning the manager and the AES.
+
+605
+00:36:18,510 --> 00:36:22,410
+So I get financial data for TV,
+
+606
+00:36:23,150 --> 00:36:25,790
+I pull matrix to verify that it's like,
+
+607
+00:36:26,110 --> 00:36:30,750
+you know, there. The only caveat to that is that in our financials from
+
+608
+00:36:30,751 --> 00:36:33,150
+Oracle, we have credits and adjustments.
+
+609
+00:36:33,151 --> 00:36:37,850
+We do not we have never brought in credits and adjustments to matrix.
+
+610
+00:36:38,330 --> 00:36:42,350
+This is our sales reporting tool not our financials,
+
+611
+00:36:42,351 --> 00:36:46,930
+right, but to your point, I do obviously look at it to compare it.
+
+612
+00:36:46,931 --> 00:36:50,210
+Oh, no one is questioning that. I'm saying you should have asked you should
+
+613
+00:36:50,211 --> 00:36:53,130
+there should be a violation on the technical side,
+
+614
+00:36:53,131 --> 00:36:56,890
+not your side that. I'm sure that you know,
+
+615
+00:36:57,370 --> 00:37:01,970
+that it's nothing, whenever we launch something new with matrix here
+
+616
+00:37:01,971 --> 00:37:06,710
+I come not trusting anybody and I am going to do my own vetting
+
+617
+00:37:06,711 --> 00:37:10,750
+that what it's in the extract is what I see in matrix rather than
+
+618
+00:37:10,751 --> 00:37:14,830
+you by month by office by everything I do do that before like even
+
+619
+00:37:14,831 --> 00:37:19,530
+with this transformation I had to test to make sure that I shouldn't have
+
+620
+00:37:19,531 --> 00:37:23,770
+to but I'm not going to trust that I'm missing information in here but
+
+621
+00:37:23,771 --> 00:37:27,850
+as it pertains to the reconciliation. If something doesn't line up,
+
+622
+00:37:28,170 --> 00:37:30,670
+this system is not going to reconcile the pending.
+
+623
+00:37:30,990 --> 00:37:33,270
+The Bob, the book revenue, the pacing,
+
+624
+00:37:33,470 --> 00:37:36,250
+will flow into matrix, but my pending,
+
+625
+00:37:36,510 --> 00:37:40,250
+if the AE forecast it against the wrong station,
+
+626
+00:37:41,270 --> 00:37:45,890
+the system's going to know, hey, you said it was coming in under KUVN
+
+627
+00:37:45,891 --> 00:37:48,750
+or DFW dig and it came under KMEX.
+
+628
+00:37:49,010 --> 00:37:51,750
+I'm bringing you the book driving you but the pending is still here because
+
+629
+00:37:51,751 --> 00:37:56,410
+you put the wrong outlet and who looks at
+
+630
+00:37:56,411 --> 00:38:00,830
+that? Do you look at that or is that somewhere stored where people can
+
+631
+00:38:00,831 --> 00:38:04,950
+say oh look here's this it's almost like an accounting you know you know
+
+632
+00:38:04,951 --> 00:38:09,650
+here's a charge here's an invoice and there's almost no reconciliation does anybody look
+
+633
+00:38:09,651 --> 00:38:13,630
+at that? So no no invoice none of that info in matrix remember it's
+
+634
+00:38:13,631 --> 00:38:18,170
+top level we don't have a low level but no it really is just
+
+635
+00:38:18,171 --> 00:38:22,310
+the AE knowing hey My order got approved in traffic,
+
+636
+00:38:22,610 --> 00:38:26,890
+you know, two days ago, I should no longer see pending what happened.
+
+637
+00:38:26,990 --> 00:38:31,530
+And since it's Alaska's an Alaska vendor. Why didn't it reconcile go look into
+
+638
+00:38:31,531 --> 00:38:33,950
+it? And most of the time it's human error.
+
+639
+00:38:34,570 --> 00:38:37,590
+Yeah. So how do they fix that?
+
+640
+00:38:38,770 --> 00:38:41,930
+If it's then the AE will go in zero out the pending.
+
+641
+00:38:42,830 --> 00:38:44,970
+Oh, that's that little that's that little man.
+
+642
+00:38:44,971 --> 00:38:47,930
+I'm not going to want to, but yeah, that's what the question is.
+
+643
+00:38:48,210 --> 00:38:50,430
+Yeah, you guys kept asking questions of,
+
+644
+00:38:50,431 --> 00:38:53,130
+and Lee was explaining of everything we bring in.
+
+645
+00:38:53,290 --> 00:38:58,390
+So I was actually vetting my TV traffic data yesterday
+
+646
+00:38:58,391 --> 00:39:00,610
+because of the transformation. Again,
+
+647
+00:39:01,170 --> 00:39:04,590
+we're going through a transformation. You bet I am going to make sure that
+
+648
+00:39:04,591 --> 00:39:09,390
+every single scent is in the new offices in my matrix environment.
+
+649
+00:39:09,810 --> 00:39:12,210
+So I just wanted to give you a glimpse. This is what our TV,
+
+650
+00:39:12,690 --> 00:39:15,370
+our wide orbit TV extract looks like,
+
+651
+00:39:15,610 --> 00:39:17,630
+and if you notice, again, no day part,
+
+652
+00:39:17,910 --> 00:39:20,470
+no impressions, no ratings, like, unfortunately,
+
+653
+00:39:20,830 --> 00:39:24,050
+like, that's just way too much detail. That's still in the traffic system.
+
+654
+00:39:24,650 --> 00:39:28,410
+But this is kind of what you see here is what we're able to
+
+655
+00:39:28,411 --> 00:39:31,210
+pull in matrix the month, the year.
+
+656
+00:39:31,670 --> 00:39:36,490
+We don't bring in advertiser number or demo or agency
+
+657
+00:39:36,491 --> 00:39:41,190
+number, AE code to least mention like
+
+658
+00:39:41,191 --> 00:39:45,530
+she and her team will map the AE code and we'll give it a
+
+659
+00:39:45,531 --> 00:39:50,050
+nice little pretty seller name. We do bring in categories into
+
+660
+00:39:50,051 --> 00:39:55,010
+Matrix and we can clean up categories if it was you know entered incorrectly.
+
+661
+00:39:55,530 --> 00:39:59,090
+The revenue type combinations we've got revenue codes 1,
+
+662
+00:39:59,290 --> 00:40:03,610
+2 and 3 in traffic. These we map in the backend to tell very
+
+663
+00:40:03,611 --> 00:40:08,470
+simply to our sellers oh this combination TSTS AGY
+
+664
+00:40:08,471 --> 00:40:13,270
+is our time sales revenue that you guys saw in my deal.
+
+665
+00:40:13,870 --> 00:40:18,530
+We do have broadcasting calendar spending and we do have net
+
+666
+00:40:18,531 --> 00:40:23,270
+and gross. The only thing that we are not able to do in
+
+667
+00:40:23,271 --> 00:40:28,010
+the net world in wide orbit right now is forecast or budget.
+
+668
+00:40:28,330 --> 00:40:31,410
+But I have been brainstorming with the vendor on,
+
+669
+00:40:31,650 --> 00:40:35,310
+how could we do that? Because we are so big on doing everything net
+
+670
+00:40:35,311 --> 00:40:39,890
+in the last year or so in the local world,
+
+671
+00:40:40,350 --> 00:40:43,610
+but everything we kind of are right now doing matrix is gross based just
+
+672
+00:40:43,611 --> 00:40:47,470
+so you know. And call X here is order ID.
+
+673
+00:40:47,630 --> 00:40:54,010
+I'm assuming that's coming from that's the way we.
+
+674
+00:40:57,070 --> 00:41:01,490
+It helps me troubleshoot when I have somebody saying hey where's my order.
+
+675
+00:41:01,870 --> 00:41:04,390
+I'll go and see what they're talking about.
+
+676
+00:41:07,290 --> 00:41:10,490
+I'll the order number and then I can go in a traffic and see
+
+677
+00:41:10,491 --> 00:41:15,390
+what's going on. Now, another big thing that Matrix allows us to do is
+
+678
+00:41:15,391 --> 00:41:17,610
+read assignments.
+
+679
+00:41:18,250 --> 00:41:21,970
+Jonathan, you may have had the account in Q1 of this year,
+
+680
+00:41:22,250 --> 00:41:25,350
+but I am going to now have it for the rest of the year.
+
+681
+00:41:25,870 --> 00:41:28,210
+In traffic, well, let me specify,
+
+682
+00:41:28,630 --> 00:41:32,010
+in wide orbit TV radio,
+
+683
+00:41:32,310 --> 00:41:36,950
+we would usually endate the order and you would still see your one-key revenue
+
+684
+00:41:36,951 --> 00:41:41,730
+and fine and dandy. Now I will take on two Q moving forward under
+
+685
+00:41:41,731 --> 00:41:45,170
+my name and traffic and we get paid out that way,
+
+686
+00:41:45,270 --> 00:41:48,550
+right? It flows into Oracle and everybody's compensated that way and stuff.
+
+687
+00:41:48,810 --> 00:41:53,490
+In metrics, I would take all of your billing and
+
+688
+00:41:53,491 --> 00:41:57,430
+move it to me so I can see all the historicals and you shake
+
+689
+00:41:57,431 --> 00:42:00,410
+your head but we haven't got to stress that.
+
+690
+00:42:00,670 --> 00:42:04,790
+Wherever this is going in the future world for any application.
+
+691
+00:42:04,990 --> 00:42:07,470
+You want to get problems? You want to get problems?
+
+692
+00:42:07,750 --> 00:42:10,050
+I'll do it. I'll do it. I'll it. Stop this.
+
+693
+00:42:10,170 --> 00:42:12,830
+Stop that you just talked about. Won't be a problem.
+
+694
+00:42:12,990 --> 00:42:15,290
+Like you can change your own ownership and then it's going to take the
+
+695
+00:42:15,291 --> 00:42:17,330
+revenue from that stuff forward and because of people,
+
+696
+00:42:17,410 --> 00:42:20,810
+this integrity of all the history, there's there are things you guys are doing
+
+697
+00:42:20,811 --> 00:42:25,010
+that I'm like, I'm like, why? But the most important thing is that older
+
+698
+00:42:25,011 --> 00:42:28,510
+member because that's the idea I was looking for that it takes me from
+
+699
+00:42:28,511 --> 00:42:31,550
+matrix to wide orbit to what actually happened and all the way back.
+
+700
+00:42:31,710 --> 00:42:34,110
+I needed, that was the key. I was looking for, that's the key.
+
+701
+00:42:34,590 --> 00:42:37,090
+Okay, perfect. Let me come back over here. I just want to make sure
+
+702
+00:42:37,091 --> 00:42:39,970
+we can still reassign because we,
+
+703
+00:42:39,971 --> 00:42:43,250
+You can have multiple account owners. You can have one account owner.
+
+704
+00:42:43,410 --> 00:42:46,190
+You can have a kit list. You can have, there's a lot you can
+
+705
+00:42:46,191 --> 00:42:50,710
+do with the platform that will overcome some of the challenges that you're
+
+706
+00:42:50,711 --> 00:42:53,210
+doing today. There's a lot,
+
+707
+00:42:53,370 --> 00:42:55,390
+even when you're creating an account and you're like,
+
+708
+00:42:55,490 --> 00:42:58,570
+what outlet? So I'm like, who cares? Let them pick that when they're building
+
+709
+00:42:58,571 --> 00:43:01,110
+the plan. Like, does it really matter? Right?
+
+710
+00:43:01,690 --> 00:43:04,770
+I can roll that data back up anytime. If you want to know what
+
+711
+00:43:04,771 --> 00:43:08,410
+a company spent and which, let's say, spent on in which categories and which
+
+712
+00:43:08,411 --> 00:43:10,490
+events I can give you that, we don't need.
+
+713
+00:43:10,890 --> 00:43:14,710
+So there's lots of efficiency that we can gain through the process.
+
+714
+00:43:15,810 --> 00:43:18,310
+I love it. You actually don't have a formal rate card.
+
+715
+00:43:18,470 --> 00:43:21,050
+It actually quite honestly makes it a lot easier to be frank,
+
+716
+00:43:21,170 --> 00:43:24,410
+because it sounds like all that. Like that, it's a lot simpler than I
+
+717
+00:43:24,411 --> 00:43:29,110
+thought it would be. What I try and understand is a little bit is,
+
+718
+00:43:29,210 --> 00:43:33,850
+is I see like, so when I see something coming in from
+
+719
+00:43:33,851 --> 00:43:36,630
+that diagram that I was looking at, where you've got like,
+
+720
+00:43:37,450 --> 00:43:40,690
+does it actually just show up in here? Is there,
+
+721
+00:43:40,810 --> 00:43:43,370
+is anybody done anything before something comes in and goes,
+
+722
+00:43:43,470 --> 00:43:46,430
+oh my God, there's a deal in here for me? Like has something happened?
+
+723
+00:43:47,270 --> 00:43:49,670
+You mean a deal or what order? Deal or what?
+
+724
+00:43:49,830 --> 00:43:53,070
+Let's call it, I'm gonna say order, but the deal getting to the order
+
+725
+00:43:53,071 --> 00:43:57,530
+if you follow the deal in the salesperson puts the deal in but then
+
+726
+00:43:57,531 --> 00:44:00,990
+and then they put in their budget and then behind that order just gets
+
+727
+00:44:00,991 --> 00:44:04,930
+loaded in and then the magic happens behind the scene and then it connects
+
+728
+00:44:04,931 --> 00:44:09,550
+and then it connects and and that's going to be done is matrix handling
+
+729
+00:44:09,551 --> 00:44:13,130
+that record it's all done through file drops on the matrix side but is
+
+730
+00:44:13,131 --> 00:44:17,190
+there a team on y'all's in that that handles that as well like the
+
+731
+00:44:17,191 --> 00:44:20,030
+actual tech side of this or is it matrix that does most of the
+
+732
+00:44:20,031 --> 00:44:22,110
+matrix. You mean the reconciliation,
+
+733
+00:44:22,630 --> 00:44:25,350
+like bringing the, Yeah, it's like, if there's a problem,
+
+734
+00:44:25,351 --> 00:44:27,770
+who do you call? Like, oh, the file didn't load today,
+
+735
+00:44:28,410 --> 00:44:31,430
+you know? Yeah. Yeah, so we would,
+
+736
+00:44:31,431 --> 00:44:35,990
+So we have partners that sends the files that we would
+
+737
+00:44:35,991 --> 00:44:38,350
+be reaching out. So for example,
+
+738
+00:44:38,470 --> 00:44:41,690
+today we had some files that didn't load. So we would reach out to
+
+739
+00:44:41,691 --> 00:44:43,930
+those partners. Okay. You know, for me,
+
+740
+00:44:44,190 --> 00:44:47,650
+white orbits, one of them, right? To get white orbit files into matrix.
+
+741
+00:44:47,651 --> 00:44:50,890
+So it's automated,
+
+742
+00:44:51,490 --> 00:44:54,210
+but if things fail, we do have to have support,
+
+743
+00:44:54,330 --> 00:44:56,450
+and we know who the support people are. Yeah,
+
+744
+00:44:56,451 --> 00:44:58,590
+but it's internal support, right? Kelly,
+
+745
+00:44:58,850 --> 00:45:01,370
+the white orbit that you reach out to is internal support.
+
+746
+00:45:01,590 --> 00:45:03,850
+It's not a team in the team. Yes,
+
+747
+00:45:03,930 --> 00:45:06,030
+it's all in the team. It's all, yes,
+
+748
+00:45:06,130 --> 00:45:10,850
+it's all internal internal processes and internal to you personnel.
+
+749
+00:45:11,490 --> 00:45:14,030
+Yeah. So if I may, right,
+
+750
+00:45:14,290 --> 00:45:16,930
+each application has to Kelly's point and Shelley,
+
+751
+00:45:17,150 --> 00:45:19,290
+like their own internal person that,
+
+752
+00:45:19,310 --> 00:45:22,930
+you know, oversees the system. It has to give us a file and whatnot.
+
+753
+00:45:23,270 --> 00:45:26,870
+But to least question when we have a matrix problem,
+
+754
+00:45:27,010 --> 00:45:29,610
+we go to the vendor. Yeah. Now,
+
+755
+00:45:29,611 --> 00:45:32,030
+as a seller, I showed you this little,
+
+756
+00:45:32,031 --> 00:45:36,510
+you know, chat right here. Sometimes we're so busy because we have real day-to-day
+
+757
+00:45:36,511 --> 00:45:40,930
+jobs in just supporting the application. I call myself a matrix volunteer,
+
+758
+00:45:41,250 --> 00:45:45,950
+right? so sometimes we'll guide them to like hey you know send a
+
+759
+00:45:45,951 --> 00:45:50,470
+little chat real quickly or they'll come to our internal what we call matrix
+
+760
+00:45:50,471 --> 00:45:55,130
+web support which is TU people but if I need help because I need
+
+761
+00:45:55,131 --> 00:46:00,570
+help really quickly I will go directly to our like client manager
+
+762
+00:46:00,571 --> 00:46:05,150
+Gabby let's call her or one of their you know product support
+
+763
+00:46:05,151 --> 00:46:08,430
+members I am not gonna go through chat I am gonna go to my
+
+764
+00:46:08,431 --> 00:46:12,710
+my go to people and I do love having that because sometimes the chat
+
+765
+00:46:12,711 --> 00:46:15,150
+people are not the, you know, true experts.
+
+766
+00:46:15,370 --> 00:46:18,910
+So I I still want to be able to have someone for like us
+
+767
+00:46:18,911 --> 00:46:22,030
+to still go to but kind of wanted to show you that.
+
+768
+00:46:22,270 --> 00:46:24,330
+That's great. Do you guys have examples of those files?
+
+769
+00:46:24,730 --> 00:46:26,910
+Just curious like what they look like and what their structure is?
+
+770
+00:46:26,990 --> 00:46:31,370
+Yeah. It's in a totally important like deep job we'd have to do on
+
+771
+00:46:31,371 --> 00:46:33,610
+every ingest, every file who's getting it?
+
+772
+00:46:33,650 --> 00:46:38,570
+How they're getting it. I think another
+
+773
+00:46:38,571 --> 00:46:44,950
+conversation. I was asking if you have them because
+
+774
+00:46:44,951 --> 00:46:49,050
+we can take that into a very similar function where you're putting all this
+
+775
+00:46:49,051 --> 00:46:52,430
+stuff in platform and all I'm doing is picking up files and ingesting it.
+
+776
+00:46:52,610 --> 00:46:56,650
+Again, we've simplified a lot of this stuff because I'm trying to take away
+
+777
+00:46:56,651 --> 00:46:59,490
+a lot of the complication with this migration and saying,
+
+778
+00:46:59,491 --> 00:47:02,590
+how can we simplify things. How can we get to a unified pipeline top
+
+779
+00:47:02,591 --> 00:47:05,390
+line for you while at the same time making sure that this lives in
+
+780
+00:47:05,391 --> 00:47:09,510
+breeds the way you need it. Everything you're showing me so far feels very
+
+781
+00:47:09,511 --> 00:47:12,730
+doable. The file drops are going to be the the elephant in the room
+
+782
+00:47:12,731 --> 00:47:14,810
+if you will because that's reconciliation, right? What's happening?
+
+783
+00:47:15,090 --> 00:47:16,930
+How much is it? And that's a very, very important thing. Well, and that
+
+784
+00:47:16,931 --> 00:47:20,330
+mapping because you're going to be mapping it to in the source. Correct.
+
+785
+00:47:20,331 --> 00:47:23,730
+Yes, so Baytrix always remembers everything we move,
+
+786
+00:47:23,731 --> 00:47:25,750
+right? Like I showed you a little extra.
+
+787
+00:47:25,770 --> 00:47:29,230
+We would too. We would too. I think you would want to take like
+
+788
+00:47:29,231 --> 00:47:32,290
+a copy of some of these files and drop them in somewhere that were
+
+789
+00:47:32,291 --> 00:47:34,690
+not topping into a live one. So I downloaded,
+
+790
+00:47:34,910 --> 00:47:38,690
+downloaded one yesterday. But it remembers,
+
+791
+00:47:38,750 --> 00:47:43,230
+right? Like matrix will show Jonathan that we moved this one account to me.
+
+792
+00:47:43,410 --> 00:47:46,250
+I have everything in matrix. But if we go into the extract,
+
+793
+00:47:46,251 --> 00:47:50,870
+you would still see, I would still see that Jonathan you still
+
+794
+00:47:50,871 --> 00:47:55,570
+have Q1 and possibly like 2025 because some of these files go
+
+795
+00:47:55,571 --> 00:47:59,690
+back like six months or a month and like you get to see how
+
+796
+00:47:59,691 --> 00:48:04,490
+far back like you know is it is it duplicative and compounding meaning like
+
+797
+00:48:04,491 --> 00:48:08,010
+if it's going back six months it's incrementing the revenue month over month for
+
+798
+00:48:08,011 --> 00:48:12,650
+those long so it's just historical data no the reason is because if
+
+799
+00:48:12,651 --> 00:48:15,790
+it's change I mean this could just go back three months I know we
+
+800
+00:48:15,791 --> 00:48:18,490
+just at some point chose six months I mean it can change.
+
+801
+00:48:18,810 --> 00:48:23,130
+But yeah, we can change that. When you get a sample of the operative
+
+802
+00:48:23,131 --> 00:48:25,450
+one, you'll see that one only goes back one month. Why?
+
+803
+00:48:25,670 --> 00:48:28,850
+I don't know. You said operative,
+
+804
+00:48:28,851 --> 00:48:33,610
+that was enough. From this data
+
+805
+00:48:33,611 --> 00:48:36,850
+set, does it ever replace data instead of uploading it?
+
+806
+00:48:37,430 --> 00:48:41,850
+Does it ever replace data? No. If for some reason there was a hiccup
+
+807
+00:48:41,851 --> 00:48:46,610
+in the extract we received and it dropped off a month in here
+
+808
+00:48:46,611 --> 00:48:51,450
+we would use all our billing in matrix so the building
+
+809
+00:48:51,451 --> 00:48:55,810
+has to exist for whatever time frame is here it just nothing happens matrix
+
+810
+00:48:55,811 --> 00:49:00,170
+knows who hasn't now and it just always just updates where it needs to
+
+811
+00:49:00,171 --> 00:49:04,170
+be I do want to make sure I stress though I don't know like
+
+812
+00:49:04,171 --> 00:49:08,770
+I said where this new future application world is going but
+
+813
+00:49:08,771 --> 00:49:13,630
+we are big on reporting so I want to make sure I
+
+814
+00:49:13,631 --> 00:49:16,550
+like I bring that up. I remember full session Maria,
+
+815
+00:49:16,770 --> 00:49:19,850
+we're going full session on reporting and making sure all of you reporting needs
+
+816
+00:49:19,851 --> 00:49:23,950
+are captured and documented so we know and if there's something we can't do,
+
+817
+00:49:24,210 --> 00:49:27,410
+we'll call it out and we'll figure it out but that like this today
+
+818
+00:49:27,411 --> 00:49:29,750
+was for me which is I needed to get the top level.
+
+819
+00:49:30,190 --> 00:49:32,210
+I needed to see what are your outlets and stuff like that. I needed
+
+820
+00:49:32,211 --> 00:49:35,930
+to know that there's no rate card so it was like thank goodness and
+
+821
+00:49:35,931 --> 00:49:38,830
+I need to see kind of how you're bringing the data in. I will
+
+822
+00:49:38,831 --> 00:49:41,210
+one follow up is going to be looking at the data sets that you're
+
+823
+00:49:41,211 --> 00:49:44,030
+pulling them in So we can look at that and I could basically remap
+
+824
+00:49:44,031 --> 00:49:46,870
+that to another application if you will right and do the same thing and
+
+825
+00:49:46,871 --> 00:49:49,310
+just make it simple So I want to look at that and some of
+
+826
+00:49:49,311 --> 00:49:52,390
+the reporting as well that you're getting out of it. You mentioned activities I'm
+
+827
+00:49:52,391 --> 00:49:55,630
+going to just go down that this is just phone calls emails things like
+
+828
+00:49:55,631 --> 00:49:58,070
+that that are all just logged in the system that I can go see
+
+829
+00:49:59,250 --> 00:50:03,630
+Yeah, and capture We get to call it whatever we want so I don't
+
+830
+00:50:03,631 --> 00:50:07,370
+think that's a problem and you know it just kind of you know like
+
+831
+00:50:07,371 --> 00:50:10,130
+we can do I can just pop on open really quickly.
+
+832
+00:50:10,131 --> 00:50:12,710
+I won't go through the motions, but this is kind of showing you.
+
+833
+00:50:12,990 --> 00:50:15,230
+And the backend, it kind of shows me if I'm a manager,
+
+834
+00:50:15,450 --> 00:50:19,430
+what everybody's calling and whatnot. And then me as a seller,
+
+835
+00:50:19,431 --> 00:50:22,870
+this is where I would, you know, log that activity in mind you.
+
+836
+00:50:22,990 --> 00:50:25,870
+I can log in. So they're manually logging this.
+
+837
+00:50:26,190 --> 00:50:30,010
+There's like a manual effort. I can't like send an email and suddenly it
+
+838
+00:50:30,011 --> 00:50:31,990
+shows and they'll see around that I send. Phil and email me. I'll let
+
+839
+00:50:31,991 --> 00:50:34,310
+me answer that because my job's CRM.
+
+840
+00:50:34,311 --> 00:50:36,650
+There is functionality to do that.
+
+841
+00:50:37,910 --> 00:50:43,150
+Television is not using that. But there is functionality to hook in Outlook calendar,
+
+842
+00:50:43,710 --> 00:50:45,890
+so that when the sellers do something,
+
+843
+00:50:46,970 --> 00:50:49,250
+it was going through, I think, a security review,
+
+844
+00:50:49,590 --> 00:50:51,850
+and it just got dropped at some point.
+
+845
+00:50:52,530 --> 00:50:54,670
+But there needs to be a lot of security around it,
+
+846
+00:50:54,730 --> 00:50:58,750
+because we don't want any emails to be captured. It has to be sales-specific
+
+847
+00:50:58,751 --> 00:51:02,410
+that's captured. So all those things has to be done before.
+
+848
+00:51:02,411 --> 00:51:05,230
+or but yes, there is functionality to do that,
+
+849
+00:51:05,390 --> 00:51:07,550
+but we just never used it. Okay, got it.
+
+850
+00:51:07,551 --> 00:51:10,070
+Okay, I mean, I like having it on, but it does have to be
+
+851
+00:51:10,071 --> 00:51:13,530
+user initiated. There was a scenario where one of my clients let all the
+
+852
+00:51:13,531 --> 00:51:16,470
+emails sink. And to be honest with you, his wife found out that there
+
+853
+00:51:16,471 --> 00:51:19,370
+was an affair going on with all the other staff through the activities on
+
+854
+00:51:19,371 --> 00:51:21,930
+and the counseling. So we definitely agree with that.
+
+855
+00:51:21,931 --> 00:51:24,010
+I don't want to be a person with that. That's crazy.
+
+856
+00:51:24,750 --> 00:51:28,810
+There's two events through at ships that we experience that we're basically two,
+
+857
+00:51:28,910 --> 00:51:32,490
+one, two businesses falling apart and one marriage falling apart because of Salesforce activity
+
+858
+00:51:32,491 --> 00:51:36,870
+capture. That's crazy. I would like to also talk.
+
+859
+00:51:37,110 --> 00:51:40,570
+I think maybe at some point in the future too, you could pick my
+
+860
+00:51:40,571 --> 00:51:43,730
+brain and I could tell you what's so clunky and what I would love
+
+861
+00:51:43,731 --> 00:51:47,350
+got better. I think last time you Jonathan pointed out like,
+
+862
+00:51:47,810 --> 00:51:51,230
+oh my god, we have so many duplicated contacts for 180.
+
+863
+00:51:51,630 --> 00:51:55,690
+Like why does the system allow it? And it's because one has the title
+
+864
+00:51:55,691 --> 00:51:59,950
+one doesn't. One has a phone like I just want to remind you We
+
+865
+00:51:59,951 --> 00:52:02,670
+can claim that you made a comment last time.
+
+866
+00:52:02,790 --> 00:52:05,010
+Don't forget about that. No, no, no, to be honest,
+
+867
+00:52:05,150 --> 00:52:07,410
+I did this. I want one customer. I want one contact.
+
+868
+00:52:07,870 --> 00:52:10,830
+And that customer exists here. And it exists in all of your systems,
+
+869
+00:52:10,831 --> 00:52:13,830
+but it's one customer, right? And they can have trial accounts and stuff like
+
+870
+00:52:13,831 --> 00:52:15,890
+that, but it all got to roll up.
+
+871
+00:52:15,891 --> 00:52:19,350
+And even on a contact level, there's this is easy stuff.
+
+872
+00:52:19,450 --> 00:52:21,770
+This is like the easiest stuff to do. You have an ambient.
+
+873
+00:52:21,771 --> 00:52:24,510
+With that, that makes it easier.
+
+874
+00:52:24,650 --> 00:52:28,790
+What? Would it be able to flow with a new like a new advertiser
+
+875
+00:52:28,791 --> 00:52:32,490
+to be able to be able to put in here and flow to a
+
+876
+00:52:32,491 --> 00:52:36,710
+wide orbit instead of from wide orbit flowing backwards.
+
+877
+00:52:36,930 --> 00:52:39,590
+On the integration as they modernize their infrastructure,
+
+878
+00:52:40,330 --> 00:52:43,070
+which is in the what's Derek's working on right now, there would be an
+
+879
+00:52:43,071 --> 00:52:47,830
+integration that yes, accounts would always think you could so that and and
+
+880
+00:52:47,831 --> 00:52:50,030
+and and and more. Lots of other more. But yes,
+
+881
+00:52:50,130 --> 00:52:54,310
+the answer is yes, but they are in the process of updating it because
+
+882
+00:52:54,311 --> 00:52:58,390
+they've got different versions and stuff like that that they're updating it to more
+
+883
+00:52:58,391 --> 00:53:00,590
+something that does master data management, if you will,
+
+884
+00:53:00,750 --> 00:53:03,670
+that picture. So one of the things you can almost imagine is a key
+
+885
+00:53:03,671 --> 00:53:05,870
+in those systems. I got a wider of a key and I've got a
+
+886
+00:53:05,871 --> 00:53:10,230
+Salesforce key and I can see them on the account record. I think we
+
+887
+00:53:10,231 --> 00:53:14,990
+have a lot of inconsistencies around that process too where
+
+888
+00:53:14,991 --> 00:53:17,170
+things get a title different in,
+
+889
+00:53:17,171 --> 00:53:21,330
+yes, and TV versus radio and stuff.
+
+890
+00:53:21,331 --> 00:53:23,890
+I don't let sellers, I don't let sellers name opportunities.
+
+891
+00:53:24,210 --> 00:53:26,250
+Like, sorry, there's an auto naming convention. Sorry,
+
+892
+00:53:26,330 --> 00:53:28,350
+you can't do that. Like, there's a lot of rules that I put in
+
+893
+00:53:28,351 --> 00:53:32,490
+place. Believe it or not, those rules allow them to do things faster because
+
+894
+00:53:32,491 --> 00:53:34,570
+it's one less feel I had to fill it. Like,
+
+895
+00:53:34,590 --> 00:53:36,650
+like, things like that. Like, so,
+
+896
+00:53:36,790 --> 00:53:41,370
+yeah, I have to do a lot of like manual new loss returning
+
+897
+00:53:41,371 --> 00:53:44,790
+reports offline because when we get to reports in here,
+
+898
+00:53:44,850 --> 00:53:47,930
+Jonathan, and I will show you how much I hate their new loss.
+
+899
+00:53:47,931 --> 00:53:51,330
+It does not work for TU. So I have to do a lot of
+
+900
+00:53:51,331 --> 00:53:53,910
+it offline. And the naming convention thing,
+
+901
+00:53:54,050 --> 00:53:56,110
+Shelley, I can't catch,
+
+902
+00:53:56,490 --> 00:54:00,370
+Jonathan, we have thousands of advertisers unlike network.
+
+903
+00:54:00,630 --> 00:54:03,430
+So I can't catch a wrong, a different one.
+
+904
+00:54:03,431 --> 00:54:06,590
+And I'm calling something new that shouldn't be new and whatnot.
+
+905
+00:54:07,170 --> 00:54:09,350
+But also let's not forget to,
+
+906
+00:54:09,351 --> 00:54:13,510
+at some point, when we talk about this, to talk about budgets.
+
+907
+00:54:13,511 --> 00:54:16,230
+It's like I said, it resides in a different table.
+
+908
+00:54:16,430 --> 00:54:20,230
+Don't forget about me. I am like the lead of everything,
+
+909
+00:54:20,370 --> 00:54:23,190
+local media budgets, as it pertains to Matrix.
+
+910
+00:54:24,890 --> 00:54:28,950
+I'm like really strict with things, but it's locked obviously,
+
+911
+00:54:29,090 --> 00:54:32,570
+because 26 is locked, but when it's open,
+
+912
+00:54:33,310 --> 00:54:36,110
+it's like a little Excel, you know, you could be punched in the number,
+
+913
+00:54:36,250 --> 00:54:40,790
+but it's like not the greatest. So just don't
+
+914
+00:54:40,791 --> 00:54:44,070
+forget about that. that is a budget. Okay,
+
+915
+00:54:44,310 --> 00:54:46,970
+so a budget typically is a combination of a seller.
+
+916
+00:54:47,630 --> 00:54:50,810
+An advertiser maybe in an agency. That is,
+
+917
+00:54:50,910 --> 00:54:53,610
+this is how much I'm going to spend with you this year,
+
+918
+00:54:53,710 --> 00:54:55,750
+for example, or with the target goal is for you this year,
+
+919
+00:54:55,770 --> 00:54:58,290
+maybe with a maybe a quarterly goal and things like that.
+
+920
+00:54:58,390 --> 00:55:00,710
+Is that consistent with the way this is set up?
+
+921
+00:55:01,130 --> 00:55:05,670
+Yes, bottoms up. I'll let everything you see here is what needs to
+
+922
+00:55:05,671 --> 00:55:10,190
+be entered. We do not do budgets by agency Jonathan because on the
+
+923
+00:55:10,191 --> 00:55:12,850
+local site, they switch like crazy.
+
+924
+00:55:13,730 --> 00:55:16,830
+And we don't. So what you see here is a subject.
+
+925
+00:55:17,470 --> 00:55:20,690
+So it's like a subset of Bab Trish. Right?
+
+926
+00:55:21,050 --> 00:55:24,450
+It's a subset of Bab really. Okay. Okay.
+
+927
+00:55:24,670 --> 00:55:26,890
+Yeah. It's funny to show you. So in case you're minding.
+
+928
+00:55:27,690 --> 00:55:30,370
+This is what I was expecting as well.
+
+929
+00:55:30,470 --> 00:55:33,610
+Like this, this I'm kind of used to and we've done some implementations in
+
+930
+00:55:33,611 --> 00:55:36,150
+the past that we're exactly around managing the stuff. Top line.
+
+931
+00:55:36,710 --> 00:55:39,130
+And then upfronts and scatter and a whole bunch of other things that have
+
+932
+00:55:39,131 --> 00:55:41,270
+to get rolled into it as well. So get that.
+
+933
+00:55:41,590 --> 00:55:44,090
+That's cool. OK. All right. What?
+
+934
+00:55:45,270 --> 00:55:48,150
+So some of the integrations,
+
+935
+00:55:48,151 --> 00:55:53,050
+once we start talking about integrations, there are certain things that are massaged,
+
+936
+00:55:53,150 --> 00:55:57,630
+certain data. I would like to look for an opportunity to sort of clean
+
+937
+00:55:57,631 --> 00:56:01,070
+some of that up if it's possible, so that you don't have like a
+
+938
+00:56:01,071 --> 00:56:03,350
+lot of these things breaking points within the system.
+
+939
+00:56:04,530 --> 00:56:06,890
+So I'm going to do two follow-up calls. One is going to be around
+
+940
+00:56:06,891 --> 00:56:09,150
+reporting. So we can just get all that in there and I think we
+
+941
+00:56:09,151 --> 00:56:11,010
+need to and I'd like to do the other one around integrations and all
+
+942
+00:56:11,011 --> 00:56:13,710
+the file-based stuff So we can look at where it's coming from what does
+
+943
+00:56:13,711 --> 00:56:16,490
+it look like? What do you have like specifically?
+
+944
+00:56:16,870 --> 00:56:19,430
+What do you have to manipulate like if there's scenarios in this guy's that
+
+945
+00:56:19,431 --> 00:56:22,750
+you have to take something? Change it before it has to get ingested anywhere.
+
+946
+00:56:22,970 --> 00:56:26,650
+I really need to know What that is and what that looks like because
+
+947
+00:56:26,651 --> 00:56:29,650
+if I want to automate things for you or not Right,
+
+948
+00:56:29,870 --> 00:56:32,110
+I need to know what I can and I can't and then who like
+
+949
+00:56:32,111 --> 00:56:35,010
+wears the downstream sources up Is that a problem because the source is getting
+
+950
+00:56:35,011 --> 00:56:38,430
+at or whatnot? So those would be the next two calls that I'd like
+
+951
+00:56:38,431 --> 00:56:42,430
+to schedule ideally early next week if you guys are open to that And
+
+952
+00:56:42,431 --> 00:56:45,210
+we can keep moving this thing along because that's this was a great first
+
+953
+00:56:45,211 --> 00:56:49,410
+call. I wanted to conscious of everybody's time But I'm gonna do two one
+
+954
+00:56:49,411 --> 00:56:52,630
+hour calls one hour for file based and then one hour for reporting It's
+
+955
+00:56:52,631 --> 00:56:55,230
+not so okay, and then Trish can I quarterback that with you scheduling?
+
+956
+00:56:55,970 --> 00:57:01,010
+Yep Awesome. If I may just keep in mind that We
+
+957
+00:57:01,011 --> 00:57:05,030
+are fully in the transformation So even right now,
+
+958
+00:57:05,230 --> 00:57:08,030
+Shelley Lee, thank you for like making time today.
+
+959
+00:57:08,610 --> 00:57:12,690
+But next week is supposed to be my time where I come into matrix
+
+960
+00:57:12,691 --> 00:57:17,290
+and I reassign forecasts and budgets and historical and all of that.
+
+961
+00:57:17,750 --> 00:57:21,870
+And I was not given a lot of manpower to help me with that.
+
+962
+00:57:22,310 --> 00:57:25,170
+So I don't know if I could do two sessions next week.
+
+963
+00:57:25,630 --> 00:57:28,110
+But I could host your reporting one.
+
+964
+00:57:28,190 --> 00:57:30,410
+And then maybe I can listen on the other one. Yeah,
+
+965
+00:57:30,411 --> 00:57:34,350
+I just I just need you for reporting and the rest of the team
+
+966
+00:57:34,351 --> 00:57:36,890
+can sit there on the other stuff. So yeah, okay, I'll be quiet on
+
+967
+00:57:36,891 --> 00:57:39,610
+the other one. For sure for sure for sure.
+
+968
+00:57:39,750 --> 00:57:43,090
+We're gonna. We're gonna keep these tight and just just this team for now
+
+969
+00:57:43,930 --> 00:57:46,410
+Salesforce is desperate. We're trying to get it on this and I said no,
+
+970
+00:57:46,510 --> 00:57:52,010
+definitely not It's not that the All
+
+971
+00:57:52,011 --> 00:57:54,510
+they care about is one thing. They only care about one thing and we
+
+972
+00:57:54,511 --> 00:57:57,270
+know what they care about well the crates been a lot of spin We
+
+973
+00:57:57,271 --> 00:57:59,430
+don't need yeah Okay,
+
+974
+00:57:59,910 --> 00:58:01,930
+this has been incredibly, incredibly helpful. Trish,
+
+975
+00:58:01,931 --> 00:58:03,870
+I will shoot you an email in a couple of minutes just with some
+
+976
+00:58:03,871 --> 00:58:06,670
+times next week or maybe I'll just give you a call and we can
+
+977
+00:58:06,671 --> 00:58:08,830
+knock him out and schedule him right away. That's how it works.
+
+978
+00:58:09,190 --> 00:58:11,550
+Okay, cool. Everybody, thank you,
+
+979
+00:58:11,610 --> 00:58:14,910
+thank you so much. Incredible, great first session looking forward to a few more.
+
+980
+00:58:15,230 --> 00:58:17,970
+And we're going to figure this out. But I will tell you,
+
+981
+00:58:18,250 --> 00:58:20,310
+I was thought it was going to be harder. I'd right now, I thought
+
+982
+00:58:20,311 --> 00:58:24,170
+there was going to be a lot more complex. Right now, it's simplified more
+
+983
+00:58:24,171 --> 00:58:26,550
+than I thought it was going to be. So my nightmare. hoarding.
+
+984
+00:58:27,750 --> 00:58:30,970
+Well, hoarding doesn't bother me. Like that doesn't bother me as much,
+
+985
+00:58:31,070 --> 00:58:34,310
+you know, to be honest, it's more of the data structures and can we
+
+986
+00:58:34,311 --> 00:58:36,950
+get this team using it every day and give you guys a day you
+
+987
+00:58:36,951 --> 00:58:40,230
+want? Like that's really what it is, right? And so far,
+
+988
+00:58:40,231 --> 00:58:42,770
+I'm feeling pretty confident. I, you know,
+
+989
+00:58:42,870 --> 00:58:45,050
+I spent the past couple weeks researching it, but it's just good.
+
+990
+00:58:45,310 --> 00:58:47,290
+All right, I'll call you in a couple of minutes, for sure. Thank you.
+
+991
+00:58:47,490 --> 00:58:49,710
+Everybody, thank you so much. Happy Thursday, take care. Bye.
+
+992
+00:58:50,410 --> 00:58:52,610
+Bye. Thanks, everybody. Thank you. Thank you.
+
+993
+00:58:52,670 --> 00:58:53,010
+Thank you, everyone.
+
+994
+00:58:57,470 --> 00:58:58,170
+You

@@ -58,9 +58,12 @@ public with sharing class CreateLocalAdProposal {
             ProposalResult result = new ProposalResult();
 
             try {
+                // Local Ad Sales legacy RT retired; default to TV_Linear (most common
+                // local-ad use case). Caller can override via a future ProposalRequest
+                // field if other RTs are needed.
                 Id rtId = Schema.SObjectType.Opportunity
                     .getRecordTypeInfosByDeveloperName()
-                    .get('Local_Ad_Sales')
+                    .get('TV_Linear')
                     .getRecordTypeId();
 
                 // Standard Opportunity requires Name, StageName, and CloseDate.
@@ -77,7 +80,7 @@ public with sharing class CreateLocalAdProposal {
                     Secondary_Demo__c = req.secondaryDemo,
                     Proposal_Notes__c = req.proposalNotes,
                     Total_Budget__c   = req.totalBudget,
-                    StageName         = 'Draft'
+                    StageName         = 'Stage 1 - Lead'
                 );
                 insert opp;
 

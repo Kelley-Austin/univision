@@ -16,7 +16,7 @@ private class RunReconciliationActionTest {
         Opportunity opp = new Opportunity(
             Name      = 'Q1 Buy',
             AccountId = adv.Id,
-            StageName = 'Working',
+            StageName = 'Stage 3 - Pipeline/Deal',
             CloseDate = Date.newInstance(2026, 3, 31)
         );
         insert opp;
@@ -72,7 +72,7 @@ private class RunReconciliationActionTest {
         Opportunity opp = new Opportunity(
             Name      = 'Empty Opp',
             AccountId = adv2.Id,
-            StageName = 'Working',
+            StageName = 'Stage 3 - Pipeline/Deal',
             CloseDate = Date.newInstance(2026, 3, 31)
         );
         insert opp;
@@ -95,7 +95,7 @@ private class RunReconciliationActionTest {
         // AccountId intentionally null to exercise the "no Account" branch.
         Opportunity opp = new Opportunity(
             Name      = 'Orphan Opp',
-            StageName = 'Working',
+            StageName = 'Stage 3 - Pipeline/Deal',
             CloseDate = Date.today().addDays(30)
         );
         insert opp;
