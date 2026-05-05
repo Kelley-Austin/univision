@@ -255,3 +255,12 @@ Opportunity_Record_Page.flexipage-meta.xml
 # with the Create_Opportunity.flow exclusion.
 **/quickActions/Account.Create_Opportunity.quickAction-meta.xml
 Account.Create_Opportunity.quickAction-meta.xml
+
+# BusinessProcess references picklist values (Working/Pitched/Committed/etc.)
+# that don't currently exist on the org's Opportunity.StageName picklist.
+# Defer until the StandardValueSet is updated org-side or a separate PR
+# adds those custom stages. The 3 Opportunity record types that referenced
+# this BusinessProcess have had their <businessProcess> element removed in
+# the same commit so they deploy without the dependency.
+**/objects/Opportunity/businessProcesses/Default_Sales_Process.businessProcess-meta.xml
+Default_Sales_Process.businessProcess-meta.xml
