@@ -161,6 +161,40 @@
         <showHeader>true</showHeader>
     </screens>
 
+    <screens>
+        <name>SuccessScreen</name>
+        <label>Opportunity Created</label>
+        <locationX>220</locationX>
+        <locationY>600</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>successMessage</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Opportunity created successfully.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;ID: {!opportunityId}&lt;/p&gt;&lt;p&gt;Click &lt;strong&gt;Finish&lt;/strong&gt; to return to the account.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <screens>
+        <name>ErrorScreen</name>
+        <label>Error Creating Opportunity</label>
+        <locationX>-120</locationX>
+        <locationY>600</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>errorDisplayMessage</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Something went wrong.&lt;/strong&gt; The opportunity could not be created.&lt;/p&gt;&lt;p&gt;Error: {!errorMessage}&lt;/p&gt;&lt;p&gt;Click &lt;strong&gt;Back&lt;/strong&gt; to correct your entries, or &lt;strong&gt;Finish&lt;/strong&gt; to exit and try again later.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
     <actionCalls>
         <name>CreateOpportunityAction</name>
         <label>Create Opportunity with Budget Lines</label>
@@ -247,39 +281,5 @@
             <label>Success</label>
         </rules>
     </decisions>
-
-    <screens>
-        <name>SuccessScreen</name>
-        <label>Opportunity Created</label>
-        <locationX>220</locationX>
-        <locationY>600</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>successMessage</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Opportunity created successfully.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;ID: {!opportunityId}&lt;/p&gt;&lt;p&gt;Click &lt;strong&gt;Finish&lt;/strong&gt; to return to the account.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-
-    <screens>
-        <name>ErrorScreen</name>
-        <label>Error Creating Opportunity</label>
-        <locationX>-120</locationX>
-        <locationY>600</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>errorDisplayMessage</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Something went wrong.&lt;/strong&gt; The opportunity could not be created.&lt;/p&gt;&lt;p&gt;Error: {!errorMessage}&lt;/p&gt;&lt;p&gt;Click &lt;strong&gt;Back&lt;/strong&gt; to correct your entries, or &lt;strong&gt;Finish&lt;/strong&gt; to exit and try again later.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
 
 </Flow>

@@ -17,10 +17,10 @@
             <targetReference>lookup_ExistingContract</targetReference>
         </connector>
         <filterFormula>AND(
-  {!$Record.StageName} = "Closed Won",
+  ISPICKVAL({!$Record.StageName}, "Closed Won"),
   OR(
-    ISNULL({!$Record__Prior.StageName}),
-    {!$Record__Prior.StageName} != "Closed Won"
+    ISNULL(TEXT({!$Record__Prior.StageName})),
+    NOT(ISPICKVAL({!$Record__Prior.StageName}, "Closed Won"))
   )
 )</filterFormula>
         <object>Opportunity</object>
