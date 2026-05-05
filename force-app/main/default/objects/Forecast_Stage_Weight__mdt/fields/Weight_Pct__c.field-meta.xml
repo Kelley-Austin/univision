@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Weight_Pct__c</fullName>
+    <label>Weight (%)</label>
+    <required>true</required>
+    <type>Number</type>
+    <precision>5</precision>
+    <scale>2</scale>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <description>Probability weight applied to projection amount when computing weighted forecast. Whole-number percent (0–100); ForecastStageSnapshotBatch divides by 100 when applying.</description>
+</CustomField>

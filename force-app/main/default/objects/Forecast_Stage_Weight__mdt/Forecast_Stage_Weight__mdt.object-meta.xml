@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Weighted probability per Forecast Stage. One record per stage (Stage 0–5, Booked, NA). Editable in-app without deploy so finance can retune weighting curves.</description>
+    <label>Forecast Stage Weight</label>
+    <pluralLabel>Forecast Stage Weights</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

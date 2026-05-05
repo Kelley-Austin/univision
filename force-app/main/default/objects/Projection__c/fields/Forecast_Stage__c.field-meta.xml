@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Forecast_Stage__c</fullName>
+    <label>Forecast Stage</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <description>AE-managed forecast lifecycle stage. Drives weighted forecast via Forecast_Stage_Weight__mdt and the weekly Forecast_Stage_Snapshot__c history. Stages may not regress (e.g., Stage 3 → Stage 1) without the System_Budget_Lock_Bypass custom permission. Distinct from the coarser Stage__c pacing field consumed by PacingSnapshotBatch.</description>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value><fullName>Stage 0</fullName><default>true</default><label>Stage 0</label></value>
+            <value><fullName>Stage 1</fullName><default>false</default><label>Stage 1</label></value>
+            <value><fullName>Stage 2</fullName><default>false</default><label>Stage 2</label></value>
+            <value><fullName>Stage 3</fullName><default>false</default><label>Stage 3</label></value>
+            <value><fullName>Stage 4</fullName><default>false</default><label>Stage 4</label></value>
+            <value><fullName>Stage 5</fullName><default>false</default><label>Stage 5</label></value>
+            <value><fullName>Booked</fullName><default>false</default><label>Booked</label></value>
+            <value><fullName>NA</fullName><default>false</default><label>NA</label></value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
