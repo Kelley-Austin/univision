@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>EventKey__c</field>
+    </columns>
+    <columns>
+        <field>LogEventName__c</field>
+    </columns>
+    <columns>
+        <field>Type__c</field>
+    </columns>
+    <columns>
+        <field>Message__c</field>
+    </columns>
+    <columns>
+        <field>ComposedDateTime__c</field>
+    </columns>
+    <columns>
+        <field>CorrelationId__c</field>
+    </columns>
+    <aggregates>
+        <calculatedFormula>MAX(Log__c.ComposedDateTime__c)</calculatedFormula>
+        <datatype>datetime</datatype>
+        <description>Most recent ingest event timestamp per source system code. Drives the "Last Imported Date" panel on the Sales Ops Console.</description>
+        <developerName>LAST_IMPORT_AT</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <label>Last Import At</label>
+        <reportType>Log__c</reportType>
+        <scale>0</scale>
+    </aggregates>
+    <description>Last Imported Date — Matrix-style health panel showing the most recent ingest event per revenue source. Sourced from Log__c entries emitted by IngestService and IngestBatch (LogEventName starts with 'Ingest.'). Replaces the deprecated Load_Batch__c-backed view.</description>
+    <filter>
+        <criterias>
+            <column>LogEventName__c</column>
+            <filterType>filterItem</filterType>
+            <isUnlocked>true</isUnlocked>
+            <operator>contains</operator>
+            <value>Ingest.</value>
+        </criterias>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <field>EventKey__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Last Imported Date</name>
+    <reportType>Log__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <sortColumn>ComposedDateTime__c</sortColumn>
+    <sortOrder>Desc</sortOrder>
+</Report>

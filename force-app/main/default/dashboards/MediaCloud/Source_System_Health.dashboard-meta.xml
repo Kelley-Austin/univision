@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Dashboard xmlns="http://soap.sforce.com/2006/04/metadata">
+    <backgroundEndColor>#FFFFFF</backgroundEndColor>
+    <backgroundFadeDirection>Diagonal</backgroundFadeDirection>
+    <backgroundStartColor>#FFFFFF</backgroundStartColor>
+    <dashboardType>LoggedInUser</dashboardType>
+    <description>Source System Health — Matrix-style "Last Imported Date" panel. One row per revenue source (EventKey on Log__c) with the most recent ingest timestamp. Replaces the prior Load_Batch__c-based view — Log__c is the canonical observability surface across all integrations.</description>
+    <leftSection>
+        <columnSize>WIDE</columnSize>
+        <components>
+            <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
+            <chartAxisRange>Auto</chartAxisRange>
+            <componentType>Table</componentType>
+            <displayUnits>Auto</displayUnits>
+            <drillEnabled>true</drillEnabled>
+            <drillToDetailEnabled>true</drillToDetailEnabled>
+            <enableHover>false</enableHover>
+            <header>Last Imported Date by Source</header>
+            <maxValuesDisplayed>20</maxValuesDisplayed>
+            <report>MediaCloud/Last_Imported_Date</report>
+            <showPercentage>false</showPercentage>
+            <showTotal>false</showTotal>
+            <showValues>true</showValues>
+            <sortBy>RowLabelAscending</sortBy>
+            <title>Last Imported Date</title>
+        </components>
+    </leftSection>
+    <textColor>#000000</textColor>
+    <title>Source System Health</title>
+    <titleColor>#003366</titleColor>
+    <titleSize>14</titleSize>
+</Dashboard>
