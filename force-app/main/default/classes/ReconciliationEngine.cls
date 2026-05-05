@@ -95,6 +95,11 @@ public with sharing class ReconciliationEngine {
         // ── Update staging rows ───────────────────────────────────────────────
         update stagingToUpdate;
 
+        // ── Detect preempt → booked supersedes / cancellations ────────────────
+        if (!upsertedActualIds.isEmpty()) {
+            PreemptTransitionService.process(upsertedActualIds);
+        }
+
         // ── Enqueue projection rollup ─────────────────────────────────────────
         if (!upsertedActualIds.isEmpty()) {
             System.enqueueJob(new ProjectionRollupQueueable(upsertedActualIds));
@@ -119,6 +124,13 @@ public with sharing class ReconciliationEngine {
         a.Broadcast_Period__c = row.Broadcast_Period__c;
         a.Source_System__c   = row.Source_System__c;
         a.Inbound_Staging__c = row.Id;
+        a.Calendar_Type__c   = row.Calendar_Type__c;
+        a.Is_Preempt__c      = row.Is_Preempt__c == true;
+        a.Source_Order_Number__c = row.Source_Order_Number__c;
+        // Preempt rows default to Active when source didn't specify (only Cancelled is meaningful from upstream)
+        if (a.Is_Preempt__c) {
+            a.Preempt_Status__c = String.isNotBlank(row.Preempt_Status__c) ? row.Preempt_Status__c : 'Active';
+        }
         return a;
     }
 }

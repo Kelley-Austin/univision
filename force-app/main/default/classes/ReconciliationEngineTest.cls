@@ -29,8 +29,10 @@ private class ReconciliationEngineTest {
         insert aeUser;
 
         Source_System__c ss = new Source_System__c(
-            Name      = 'WideOrbit',
-            Code__c   = 'WIDEORBIT'
+            Name                = 'WideOrbit',
+            Code__c             = 'WIDEORBIT',
+            Source_Code__c      = 'WIDEORBIT',
+            Transformer_Class__c = 'WideOrbitTransformer'
         );
         insert ss;
 
@@ -65,7 +67,9 @@ private class ReconciliationEngineTest {
                    Source_System__c, Load_Batch__c,
                    Account__c, AE_User__c,
                    Match_Account_Tier__c, Match_AE_Tier__c,
-                   Excluding_Rule__c
+                   Excluding_Rule__c,
+                   Calendar_Type__c, Is_Preempt__c, Preempt_Status__c,
+                   Source_Order_Number__c
             FROM Inbound_Staging__c
             WHERE Status__c = 'Pending'
         ];
@@ -106,6 +110,7 @@ private class ReconciliationEngineTest {
 
     @IsTest
     static void testReconcileBatch_unmatchedRow() {
+        Source_System__c ss = [SELECT Id FROM Source_System__c LIMIT 1];
         Inbound_Staging__c row = new Inbound_Staging__c(
             Raw_Advertiser_Name__c  = 'Zzz Completely Unknown Advertiser XYZQQ',
             Raw_Salesperson_Code__c = 'UNKNOWN_AE',
@@ -114,7 +119,8 @@ private class ReconciliationEngineTest {
             Period_Month__c         = 1,
             Period_Year__c          = 2026,
             External_Key__c         = 'EXT-UNMATCHED-001',
-            Status__c               = 'Pending'
+            Status__c               = 'Pending',
+            Source_System__c        = ss.Id
         );
         insert row;
 
@@ -128,7 +134,9 @@ private class ReconciliationEngineTest {
                    Source_System__c, Load_Batch__c,
                    Account__c, AE_User__c,
                    Match_Account_Tier__c, Match_AE_Tier__c,
-                   Excluding_Rule__c
+                   Excluding_Rule__c,
+                   Calendar_Type__c, Is_Preempt__c, Preempt_Status__c,
+                   Source_Order_Number__c
             FROM Inbound_Staging__c
             WHERE External_Key__c = 'EXT-UNMATCHED-001'
         ];
@@ -160,6 +168,79 @@ private class ReconciliationEngineTest {
         Assert.areEqual(0, result.unmatched);
     }
 
+    // ── Preempt → booked supersede flows through engine ───────────────────────
+
+    @IsTest
+    static void testReconcileBatch_preemptSupersede() {
+        Source_System__c ss = [SELECT Id FROM Source_System__c LIMIT 1];
+
+        // Pre-existing preempt Actual (loaded outside this batch — e.g., earlier ingest)
+        Account adv = [SELECT Id FROM Account WHERE Name = 'WideOrbit Test Advertiser' LIMIT 1];
+        Actual_Revenue__c preempt = new Actual_Revenue__c(
+            External_Key__c        = 'EXT-PREEMPT-001',
+            Account__c             = adv.Id,
+            Revenue_Amount__c      = 4000,
+            Revenue_Type__c        = 'National TV',
+            Period_Month__c        = 5,
+            Period_Year__c         = 2026,
+            Calendar_Type__c       = 'Calendar',
+            Is_Preempt__c          = true,
+            Preempt_Status__c      = 'Active',
+            Source_Order_Number__c = 'WO-ORDER-77'
+        );
+        insert preempt;
+
+        // New booked staging row that will land via the engine
+        Inbound_Staging__c booked = new Inbound_Staging__c(
+            Raw_Advertiser_Name__c  = 'WideOrbit Test Advertiser',
+            Raw_Advertiser_Code__c  = 'WO-ADV-001',
+            Raw_Salesperson_Code__c = 'AE100',
+            Revenue_Amount__c       = 4500,
+            Revenue_Type__c         = 'National TV',
+            Period_Month__c         = 5,
+            Period_Year__c          = 2026,
+            External_Key__c         = 'EXT-BOOKED-001',
+            Status__c               = 'Pending',
+            Source_System__c        = ss.Id,
+            Calendar_Type__c        = 'Calendar',
+            Is_Preempt__c           = false,
+            Source_Order_Number__c  = 'WO-ORDER-77'
+        );
+        insert booked;
+
+        List<Inbound_Staging__c> rows = [
+            SELECT Id, Status__c, External_Key__c,
+                   Raw_Advertiser_Name__c, Raw_Advertiser_Code__c,
+                   Raw_Salesperson_Code__c, Advertiser_Name__c,
+                   Revenue_Amount__c, Revenue_Type__c,
+                   Period_Month__c, Period_Year__c,
+                   Station_Code__c, Outlet_Code__c, Broadcast_Period__c,
+                   Source_System__c, Load_Batch__c,
+                   Account__c, AE_User__c,
+                   Match_Account_Tier__c, Match_AE_Tier__c,
+                   Excluding_Rule__c,
+                   Calendar_Type__c, Is_Preempt__c, Preempt_Status__c,
+                   Source_Order_Number__c
+            FROM Inbound_Staging__c
+            WHERE External_Key__c = 'EXT-BOOKED-001'
+        ];
+
+        Test.startTest();
+        ReconciliationEngine.reconcileBatch(rows, 'WIDEORBIT');
+        Test.stopTest();
+
+        Actual_Revenue__c reloadedPreempt = [
+            SELECT Preempt_Status__c FROM Actual_Revenue__c WHERE Id = :preempt.Id
+        ];
+        Assert.areEqual('Superseded', reloadedPreempt.Preempt_Status__c,
+            'Engine should have invoked PreemptTransitionService and superseded the prior preempt');
+
+        Assert.areEqual(1, [
+            SELECT COUNT() FROM Preempt_Transition_Log__c
+            WHERE Source_Order_Number__c = 'WO-ORDER-77'
+        ]);
+    }
+
     // ── Idempotency: re-reconciling same rows doesn't duplicate actuals ────────
 
     @IsTest
@@ -174,7 +255,9 @@ private class ReconciliationEngineTest {
                    Source_System__c, Load_Batch__c,
                    Account__c, AE_User__c,
                    Match_Account_Tier__c, Match_AE_Tier__c,
-                   Excluding_Rule__c
+                   Excluding_Rule__c,
+                   Calendar_Type__c, Is_Preempt__c, Preempt_Status__c,
+                   Source_Order_Number__c
             FROM Inbound_Staging__c
             WHERE External_Key__c = 'EXT-RECON-001'
         ];

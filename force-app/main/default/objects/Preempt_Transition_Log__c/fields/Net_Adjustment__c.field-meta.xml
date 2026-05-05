@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Net_Adjustment__c</fullName>
+    <label>Net Adjustment</label>
+    <type>Currency</type>
+    <precision>18</precision>
+    <scale>2</scale>
+    <required>false</required>
+    <formula>NULLVALUE(Applied_Amount__c, 0) - NULLVALUE(Reversed_Amount__c, 0)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <description>Net dollar impact of this transition on projection actuals (Applied - Reversed).</description>
+</CustomField>

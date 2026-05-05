@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Reversed_Amount__c</fullName>
+    <label>Reversed Amount</label>
+    <required>false</required>
+    <type>Currency</type>
+    <precision>18</precision>
+    <scale>2</scale>
+    <description>Dollar amount removed from projection rollup when the preempt was superseded or cancelled.</description>
+</CustomField>

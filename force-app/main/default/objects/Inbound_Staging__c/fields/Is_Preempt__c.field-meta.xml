@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Preempt__c</fullName>
+    <defaultValue>false</defaultValue>
+    <label>Is Preempt</label>
+    <required>false</required>
+    <type>Checkbox</type>
+    <description>Set by source-system transformer when the row represents preempted inventory; carried to Actual_Revenue__c by ReconciliationEngine.</description>
+</CustomField>

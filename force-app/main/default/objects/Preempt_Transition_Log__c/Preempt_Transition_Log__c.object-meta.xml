@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Immutable audit record written by PreemptTransitionService each time a preempt actual is superseded by a booked actual or marked cancelled. One row per state transition; never updated after insert.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <label>Preempt Transition Log</label>
+    <nameField>
+        <displayFormat>PLT-{000000}</displayFormat>
+        <label>Preempt Transition Log</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Preempt Transition Logs</pluralLabel>
+    <sharingModel>ReadWrite</sharingModel>
+
+    <listViews>
+        <fullName>All_Preempt_Transitions</fullName>
+        <columns>NAME</columns>
+        <columns>Transition_Type__c</columns>
+        <columns>Source_Order_Number__c</columns>
+        <columns>Period_Year__c</columns>
+        <columns>Period_Month__c</columns>
+        <columns>Calendar_Type__c</columns>
+        <columns>Reversed_Amount__c</columns>
+        <columns>Applied_Amount__c</columns>
+        <columns>Net_Adjustment__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Preempt Transitions</label>
+    </listViews>
+</CustomObject>
