@@ -40,3 +40,9 @@ Add anything specific to your project below this line — coding standards, nami
 
 <!-- Add your project-specific instructions here -->
 Always wait for deploys to finish. Do not ask the user to check back.
+
+<!-- BEGIN cheese:decisions -->
+## Project Decisions
+
+- **2026-05-05** — _from [Platform Foundation & Master Data Model](docs/slices/conv-1777471362028-platform-foundation-master-data-model.md)_ — **Account/Projection/Budget set to Private OWD with role-hierarchy rollup** — *Why:* HoldCo/Agency/Advertiser data must be isolated by team while still rolling up to managers; Public Read/Write would leak competitive account data.
+<!-- END cheese:decisions -->
