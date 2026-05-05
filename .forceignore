@@ -77,7 +77,13 @@
 **/flows/Period_Close_Actions.flow-meta.xml
 
 # Field type change blocked by existing org data
-**/objects/Actual_Revenue__c/fields/Revenue_Type__c.field-meta.xml
+# 2026-05-05 hotfix: removing exclusion. Production describe shows the field
+# doesn't currently exist on Actual_Revenue__c, so deploying the source's
+# Picklist definition should create it fresh rather than conflict. If the
+# original "field type change blocked" issue resurfaces, restore this line
+# AND audit Apex callers to either match the org's existing type or stop
+# referencing the field.
+# **/objects/Actual_Revenue__c/fields/Revenue_Type__c.field-meta.xml
 
 # Custom Metadata Type — object-level file (subdir pattern)
 # (no longer applies — object-meta.xml is now cleanly defined with
@@ -202,3 +208,39 @@ Agency_Account_Record_Page.flexipage-meta.xml
 MDM_Workspace_Home.flexipage-meta.xml
 MDM_Workspace.app-meta.xml
 Matrix_API.namedCredential-meta.xml
+
+# === 2026-05-05 deployment hotfix additions ===
+# Tab references a CustomObject (Actuals_Record__c) that doesn't exist in source
+# nor in the org. Either rename the tab or remove. Excluded for now so the
+# rest of the deploy can proceed.
+**/tabs/Actuals_Record__c.tab-meta.xml
+
+# Flow-type QuickActions whose target Flow files are excluded above; the
+# QuickAction metadata is unparseable without the flow it references.
+# Pair-locked with the corresponding Flow exclusions earlier in this file.
+**/quickActions/Advertising_Contract__c.Makegood_Or_Cancellation.quickAction-meta.xml
+**/quickActions/Budget_Line__c.Traffic_Copy_Entry.quickAction-meta.xml
+**/quickActions/Opportunity.Log_Activity.quickAction-meta.xml
+**/quickActions/Opportunity.New_Opportunity.quickAction-meta.xml
+**/quickActions/Opportunity.Promote_to_Contract.quickAction-meta.xml
+**/quickActions/Opportunity.Run_Reconciliation.quickAction-meta.xml
+**/quickActions/Opportunity.Update_Stage.quickAction-meta.xml
+**/quickActions/Period_Close__c.Close_Period.quickAction-meta.xml
+**/quickActions/Pitch_Project__c.Create_Pitch_Project.quickAction-meta.xml
+# Filename-only fallbacks (per the SF CLI v2 forceignore limitation note above)
+Advertising_Contract__c.Makegood_Or_Cancellation.quickAction-meta.xml
+Budget_Line__c.Traffic_Copy_Entry.quickAction-meta.xml
+Opportunity.Log_Activity.quickAction-meta.xml
+Opportunity.New_Opportunity.quickAction-meta.xml
+Opportunity.Promote_to_Contract.quickAction-meta.xml
+Opportunity.Run_Reconciliation.quickAction-meta.xml
+Opportunity.Update_Stage.quickAction-meta.xml
+Period_Close__c.Close_Period.quickAction-meta.xml
+Pitch_Project__c.Create_Pitch_Project.quickAction-meta.xml
+
+# Flow files with deploy-blocking issues (parsing errors / references to
+# excluded LWCs). Defer behind underlying fixes. Source kept for context.
+**/flows/Create_Opportunity.flow-meta.xml
+**/flows/New_Opportunity.flow-meta.xml
+Create_Opportunity.flow-meta.xml
+New_Opportunity.flow-meta.xml

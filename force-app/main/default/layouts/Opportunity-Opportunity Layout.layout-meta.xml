@@ -177,7 +177,6 @@
                 <field>Description</field>
             </layoutItems>
         </layoutColumns>
-        <layoutColumns/>
         <style>OneColumn</style>
     </layoutSections>
 
