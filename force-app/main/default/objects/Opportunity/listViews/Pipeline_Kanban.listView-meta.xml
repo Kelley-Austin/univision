@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Pipeline_Kanban</fullName>
-    <columns>NAME</columns>
+    <columns>OPPORTUNITY.NAME</columns>
     <columns>ACCOUNT.NAME</columns>
-    <columns>STAGE_NAME</columns>
-    <columns>AMOUNT</columns>
-    <columns>CLOSE_DATE</columns>
-    <columns>OWNER.ALIAS</columns>
+    <columns>OPPORTUNITY.STAGE_NAME</columns>
+    <columns>OPPORTUNITY.AMOUNT</columns>
+    <columns>OPPORTUNITY.CLOSE_DATE</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        <field>IS_CLOSED</field>
-        <operation>equals</operation>
-        <value>false</value>
+        <field>OPPORTUNITY.STAGE_NAME</field>
+        <operation>notEqual</operation>
+        <value>Closed Won,Closed Lost</value>
     </filters>
     <label>Pipeline Kanban</label>
 </ListView>

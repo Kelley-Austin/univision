@@ -4,23 +4,25 @@
     <backgroundFadeDirection>Diagonal</backgroundFadeDirection>
     <backgroundStartColor>#FFFFFF</backgroundStartColor>
     <dashboardType>LoggedInUser</dashboardType>
-    <description>Matrix-style Sales Outlook — pipeline pacing by channel record type for the current fiscal year. Rows = channel RT (TV-Linear, Digital, Radio-Linear, etc.); columns = Budget, TY$, Forecast, Pending, FC to Budget. LY$ and % Change deferred until prior-year actuals are linkable to Opportunity.</description>
+    <description>Pipeline pacing by channel record type. Columns: Budget, TY$, Forecast, Pending, FC to Budget. LY$ deferred.</description>
     <leftSection>
         <columnSize>WIDE</columnSize>
         <components>
             <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
-            <chartAxisRange>Auto</chartAxisRange>
             <componentType>Table</componentType>
             <displayUnits>Auto</displayUnits>
             <drillEnabled>true</drillEnabled>
             <drillToDetailEnabled>false</drillToDetailEnabled>
             <enableHover>false</enableHover>
             <header>Sales Outlook by Channel</header>
+            <indicatorBreakpoint1>0.0</indicatorBreakpoint1>
+            <indicatorBreakpoint2>0.0</indicatorBreakpoint2>
+            <indicatorHighColor>#54C254</indicatorHighColor>
+            <indicatorLowColor>#C25454</indicatorLowColor>
+            <indicatorMiddleColor>#C2C254</indicatorMiddleColor>
             <maxValuesDisplayed>20</maxValuesDisplayed>
             <report>MediaCloud/Sales_Outlook_Matrix</report>
             <showPercentage>false</showPercentage>
-            <showTotal>true</showTotal>
-            <showValues>true</showValues>
             <sortBy>RowLabelAscending</sortBy>
             <title>Sales Outlook — Current FY</title>
         </components>

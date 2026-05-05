@@ -15,3 +15,5 @@ Use `git log -p docs/Activity.md` to audit changes over time.
 - `2026-05-05T20:38:50.011Z` · **context-fed** · Fed project context to slice conv-1778004962585 · chars=16029 · sections=2
 - `2026-05-05T22:13:46.950Z` · **target-org-switched** · Target org switched to univision-production · source=watcher
 - `2026-05-05T22:13:47.479Z` · **branch-switched** · Branch switched to demo-prep-5-5 · source=watcher
+- `2026-05-05T23:06:20.825Z` · **target-org-switched** · Target org switched to univision-production · source=watcher
+- `2026-05-05T23:06:22.307Z` · **branch-switched** · Branch switched to demo-prep-5-5 · source=watcher

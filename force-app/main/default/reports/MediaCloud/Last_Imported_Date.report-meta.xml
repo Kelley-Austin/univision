@@ -13,31 +13,19 @@
         <field>Message__c</field>
     </columns>
     <columns>
+        <aggregateTypes>Maximum</aggregateTypes>
         <field>ComposedDateTime__c</field>
     </columns>
     <columns>
         <field>CorrelationId__c</field>
     </columns>
-    <aggregates>
-        <calculatedFormula>MAX(Log__c.ComposedDateTime__c)</calculatedFormula>
-        <datatype>datetime</datatype>
-        <description>Most recent ingest event timestamp per source system code. Drives the "Last Imported Date" panel on the Sales Ops Console.</description>
-        <developerName>LAST_IMPORT_AT</developerName>
-        <isActive>true</isActive>
-        <isCrossBlock>false</isCrossBlock>
-        <label>Last Import At</label>
-        <reportType>Log__c</reportType>
-        <scale>0</scale>
-    </aggregates>
-    <description>Last Imported Date — Matrix-style health panel showing the most recent ingest event per revenue source. Sourced from Log__c entries emitted by IngestService and IngestBatch (LogEventName starts with 'Ingest.'). Replaces the deprecated Load_Batch__c-backed view.</description>
+    <description>Most recent ingest event per revenue source. Sourced from Log__c (LogEventName contains 'Ingest.'). Replaces the Load_Batch__c view.</description>
     <filter>
-        <criterias>
-            <column>LogEventName__c</column>
-            <filterType>filterItem</filterType>
-            <isUnlocked>true</isUnlocked>
+        <criteriaItems>
+            <column>Log__c.LogEventName__c</column>
             <operator>contains</operator>
             <value>Ingest.</value>
-        </criterias>
+        </criteriaItems>
     </filter>
     <format>Summary</format>
     <groupingsDown>

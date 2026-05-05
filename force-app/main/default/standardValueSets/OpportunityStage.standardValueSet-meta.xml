@@ -37,7 +37,7 @@
     <standardValue>
         <fullName>Stage 5 - Contract Pending</fullName>
         <closed>false</closed>
-        <forecastCategory>Commit</forecastCategory>
+        <forecastCategory>Forecast</forecastCategory>
         <probability>90</probability>
         <won>false</won>
         <isActive>true</isActive>
@@ -79,7 +79,7 @@
     <standardValue>
         <fullName>Committed</fullName>
         <closed>false</closed>
-        <forecastCategory>Commit</forecastCategory>
+        <forecastCategory>Forecast</forecastCategory>
         <probability>75</probability>
         <won>false</won>
         <isActive>false</isActive>
@@ -87,7 +87,7 @@
     <standardValue>
         <fullName>Booked</fullName>
         <closed>false</closed>
-        <forecastCategory>Commit</forecastCategory>
+        <forecastCategory>Forecast</forecastCategory>
         <probability>90</probability>
         <won>false</won>
         <isActive>false</isActive>
