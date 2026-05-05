@@ -78,8 +78,8 @@ public with sharing class PitchProjectController {
     /**
      * Returns Goal, Booked, Pending, and Forecast (Weighted) for a Pitch_Project__c.
      *
-     * Booked   = SUM(Total_Planned_Amount__c) on linked Opps with Status = Active | Closed
-     * Pending  = SUM on linked Opps with Status = Submitted | Approved
+     * Booked   = SUM(Total_Planned_Amount__c) on linked Opps with StageName = Active | Closed
+     * Pending  = SUM on linked Opps with StageName = Submitted | Approved
      * Forecast = probability-weighted sum across all non-Cancelled linked Opps
      *            (Draft=10%, Submitted=30%, Approved=60%, Active/Closed=100%)
      */
@@ -96,17 +96,17 @@ public with sharing class PitchProjectController {
 
         AggregateResult[] bookedAgg = [
             SELECT SUM(Total_Planned_Amount__c) total
-            FROM   Advertising_Opportunity__c
+            FROM   Opportunity
             WHERE  Pitch_Project__c = :projectId
-              AND  Status__c IN ('Active', 'Closed')
+              AND  StageName IN ('Active', 'Closed')
         ];
         Decimal booked = safeDecimal(bookedAgg[0].get('total'));
 
         AggregateResult[] pendingAgg = [
             SELECT SUM(Total_Planned_Amount__c) total
-            FROM   Advertising_Opportunity__c
+            FROM   Opportunity
             WHERE  Pitch_Project__c = :projectId
-              AND  Status__c IN ('Submitted', 'Approved')
+              AND  StageName IN ('Submitted', 'Approved')
         ];
         Decimal pending = safeDecimal(pendingAgg[0].get('total'));
 
@@ -118,13 +118,13 @@ public with sharing class PitchProjectController {
             'Closed'    => 1.00
         };
         Decimal forecast = 0;
-        for (Advertising_Opportunity__c opp : [
-            SELECT Total_Planned_Amount__c, Status__c
-            FROM   Advertising_Opportunity__c
+        for (Opportunity opp : [
+            SELECT Total_Planned_Amount__c, StageName
+            FROM   Opportunity
             WHERE  Pitch_Project__c = :projectId
-              AND  Status__c        != 'Cancelled'
+              AND  StageName        != 'Cancelled'
         ]) {
-            Decimal w = weights.containsKey(opp.Status__c) ? weights.get(opp.Status__c) : 0;
+            Decimal w = weights.containsKey(opp.StageName) ? weights.get(opp.StageName) : 0;
             forecast += safeDecimal(opp.Total_Planned_Amount__c) * w;
         }
 

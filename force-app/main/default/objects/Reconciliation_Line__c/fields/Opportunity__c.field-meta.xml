@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Advertising_Opportunity__c</fullName>
-    <description>The Advertising Opportunity this reconciliation line belongs to. Null for Unmatched Actual rows with no linked contract.</description>
-    <label>Advertising Opportunity</label>
-    <referenceTo>Advertising_Opportunity__c</referenceTo>
+    <fullName>Opportunity__c</fullName>
+    <description>The Opportunity this reconciliation line belongs to. Null for Unmatched Actual rows with no linked contract.</description>
+    <label>Opportunity</label>
+    <referenceTo>Opportunity</referenceTo>
     <relationshipLabel>Reconciliation Lines</relationshipLabel>
     <relationshipName>Reconciliation_Lines</relationshipName>
     <required>false</required>

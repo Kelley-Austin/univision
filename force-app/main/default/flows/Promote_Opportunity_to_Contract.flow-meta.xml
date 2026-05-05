@@ -172,7 +172,7 @@
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Advertising_Opportunity__c</object>
+        <object>Opportunity</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
 
@@ -193,7 +193,7 @@
             <name>outcomeIsApproved</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>getOpportunity.Status__c</leftValueReference>
+                <leftValueReference>getOpportunity.StageName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Approved</stringValue>
@@ -221,7 +221,7 @@
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Advertising_Opportunity__c</field>
+            <field>Opportunity__c</field>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>recordId</elementReference>
@@ -474,7 +474,7 @@
             <targetReference>screenErrorCreate</targetReference>
         </faultConnector>
         <inputAssignments>
-            <field>Advertising_Opportunity__c</field>
+            <field>Opportunity__c</field>
             <value>
                 <elementReference>recordId</elementReference>
             </value>
@@ -482,7 +482,7 @@
         <inputAssignments>
             <field>Account__c</field>
             <value>
-                <elementReference>getOpportunity.Account__c</elementReference>
+                <elementReference>getOpportunity.AccountId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -657,7 +657,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>dispErrorNotApproved</name>
-            <fieldText>&lt;div style="padding:16px;"&gt;&lt;h2 style="color:#c23934;"&gt;Cannot Create Contract&lt;/h2&gt;&lt;p&gt;This opportunity must be in &lt;strong&gt;Approved&lt;/strong&gt; status before it can be promoted to a contract.&lt;/p&gt;&lt;p&gt;Current status: &lt;strong&gt;{!getOpportunity.Status__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Please route the opportunity through the standard approval process first, then return here.&lt;/p&gt;&lt;/div&gt;</fieldText>
+            <fieldText>&lt;div style="padding:16px;"&gt;&lt;h2 style="color:#c23934;"&gt;Cannot Create Contract&lt;/h2&gt;&lt;p&gt;This opportunity must be in &lt;strong&gt;Approved&lt;/strong&gt; status before it can be promoted to a contract.&lt;/p&gt;&lt;p&gt;Current status: &lt;strong&gt;{!getOpportunity.StageName}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Please route the opportunity through the standard approval process first, then return here.&lt;/p&gt;&lt;/div&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>

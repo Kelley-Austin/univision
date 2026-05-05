@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>62.0</apiVersion>
-    <description>Record-Triggered Flow on Advertising_Opportunity__c. When Status changes to "Closed Won" for the first time, automatically creates a Draft Advertising_Contract__c pre-populated from the opportunity. The filterFormula guards against firing on subsequent edits while already Closed Won. The lookup guard prevents a second contract if the deal was re-won after being lost.</description>
+    <description>Record-Triggered Flow on Opportunity. When StageName changes to "Closed Won" for the first time, automatically creates a Draft Advertising_Contract__c pre-populated from the opportunity. The filterFormula guards against firing on subsequent edits while already Closed Won. The lookup guard prevents a second contract if the deal was re-won after being lost.</description>
     <label>Create Contract on Close Won</label>
     <processType>AutoLaunchedFlow</processType>
     <status>Active</status>
@@ -17,13 +17,13 @@
             <targetReference>lookup_ExistingContract</targetReference>
         </connector>
         <filterFormula>AND(
-  {!$Record.Status__c} = "Closed Won",
+  {!$Record.StageName} = "Closed Won",
   OR(
-    ISNULL({!$Record__Prior.Status__c}),
-    {!$Record__Prior.Status__c} != "Closed Won"
+    ISNULL({!$Record__Prior.StageName}),
+    {!$Record__Prior.StageName} != "Closed Won"
   )
 )</filterFormula>
-        <object>Advertising_Opportunity__c</object>
+        <object>Opportunity</object>
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
@@ -42,7 +42,7 @@
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Advertising_Opportunity__c</field>
+            <field>Opportunity__c</field>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>$Record.Id</elementReference>
@@ -91,7 +91,7 @@
         <locationX>264</locationX>
         <locationY>478</locationY>
         <inputAssignments>
-            <field>Advertising_Opportunity__c</field>
+            <field>Opportunity__c</field>
             <value>
                 <elementReference>$Record.Id</elementReference>
             </value>
@@ -99,7 +99,7 @@
         <inputAssignments>
             <field>Account__c</field>
             <value>
-                <elementReference>$Record.Account__c</elementReference>
+                <elementReference>$Record.AccountId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -129,7 +129,7 @@
         <inputAssignments>
             <field>Total_Contract_Value__c</field>
             <value>
-                <elementReference>$Record.Estimated_Revenue__c</elementReference>
+                <elementReference>$Record.Amount</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

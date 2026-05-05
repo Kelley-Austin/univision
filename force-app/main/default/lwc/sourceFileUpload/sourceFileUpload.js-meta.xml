@@ -11,7 +11,7 @@
         <targetConfig targets="lightning__RecordPage">
             <objects>
                 <object>Source_System__c</object>
-                <object>Advertising_Opportunity__c</object>
+                <object>Opportunity</object>
             </objects>
         </targetConfig>
     </targetConfigs>

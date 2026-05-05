@@ -1,23 +1,25 @@
 @IsTest
 private class CancellationPolicyServiceTest {
 
-    // Assumes Advertising_Opportunity__c (from the budget-planning slice) exists in the org.
+    // Assumes standard Opportunity (from the budget-planning slice) exists in the org.
 
     @TestSetup
     static void makeData() {
         Account acct = new Account(Name = 'Test Advertiser');
         insert acct;
 
-        Advertising_Opportunity__c opp = new Advertising_Opportunity__c(
-            Account__c = acct.Id,
-            Status__c = 'Draft'
+        Opportunity opp = new Opportunity(
+            Name      = 'Cancellation Policy Test Opp',
+            AccountId = acct.Id,
+            StageName = 'Draft',
+            CloseDate = Date.today().addDays(90)
         );
         insert opp;
 
         List<Advertising_Contract__c> contracts = new List<Advertising_Contract__c>{
             // Standard 30-Day — start 60 days out, notice IS met (60 >= 30)
             new Advertising_Contract__c(
-                Advertising_Opportunity__c = opp.Id,
+                Opportunity__c = opp.Id,
                 Contract_Status__c = 'Active',
                 Cancellation_Policy__c = 'Standard 30-Day',
                 Total_Contract_Value__c = 100000,
@@ -25,7 +27,7 @@ private class CancellationPolicyServiceTest {
             ),
             // Standard 30-Day — start 10 days out, notice NOT met (10 < 30), fee = 30%
             new Advertising_Contract__c(
-                Advertising_Opportunity__c = opp.Id,
+                Opportunity__c = opp.Id,
                 Contract_Status__c = 'Active',
                 Cancellation_Policy__c = 'Standard 30-Day',
                 Total_Contract_Value__c = 50000,
@@ -33,7 +35,7 @@ private class CancellationPolicyServiceTest {
             ),
             // Standard 60-Day — start 45 days out, notice NOT met (45 < 60), fee = 60%
             new Advertising_Contract__c(
-                Advertising_Opportunity__c = opp.Id,
+                Opportunity__c = opp.Id,
                 Contract_Status__c = 'Active',
                 Cancellation_Policy__c = 'Standard 60-Day',
                 Total_Contract_Value__c = 120000,
@@ -41,7 +43,7 @@ private class CancellationPolicyServiceTest {
             ),
             // Non-Cancellable
             new Advertising_Contract__c(
-                Advertising_Opportunity__c = opp.Id,
+                Opportunity__c = opp.Id,
                 Contract_Status__c = 'Active',
                 Cancellation_Policy__c = 'Non-Cancellable',
                 Total_Contract_Value__c = 75000,
@@ -49,7 +51,7 @@ private class CancellationPolicyServiceTest {
             ),
             // Custom — 45 days notice required, 25% fee, start 30 days out → notice NOT met
             new Advertising_Contract__c(
-                Advertising_Opportunity__c = opp.Id,
+                Opportunity__c = opp.Id,
                 Contract_Status__c = 'Active',
                 Cancellation_Policy__c = 'Custom',
                 Cancellation_Notice_Days__c = 45,

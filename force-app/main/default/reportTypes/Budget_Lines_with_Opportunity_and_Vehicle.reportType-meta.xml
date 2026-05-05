@@ -3,7 +3,7 @@
     <baseObject>Budget_Line__c</baseObject>
     <category>other</category>
     <deployed>true</deployed>
-    <description>Budget Lines with related Advertising Opportunity (for market, status, and opportunity-level amounts) and Vehicle (for vehicle type and day part). Used for all media analytics reports.</description>
+    <description>Budget Lines with related Opportunity (for market, stage, and opportunity-level amounts) and Vehicle (for vehicle type and day part). Used for all media analytics reports.</description>
     <label>Budget Lines with Opportunity and Vehicle</label>
 
     <!-- Budget Line fields -->
@@ -71,53 +71,49 @@
         <masterLabel>Budget Line Fields</masterLabel>
     </sections>
 
-    <!-- Advertising Opportunity fields (accessed via Budget_Line__c.Advertising_Opportunity__c lookup) -->
+    <!-- Opportunity fields (accessed via Budget_Line__c.Opportunity__c lookup) -->
     <sections>
         <columns>
             <checkedByDefault>true</checkedByDefault>
-            <field>Advertising_Opportunity__r.NAME</field>
+            <field>Opportunity__r.NAME</field>
         </columns>
         <columns>
             <checkedByDefault>true</checkedByDefault>
-            <field>Advertising_Opportunity__r.Market__c</field>
+            <field>Opportunity__r.Market__c</field>
         </columns>
         <columns>
             <checkedByDefault>true</checkedByDefault>
-            <field>Advertising_Opportunity__r.Status__c</field>
+            <field>Opportunity__r.StageName</field>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Advertising_Opportunity__r.Fiscal_Year__c</field>
+            <field>Opportunity__r.Total_Budget__c</field>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Advertising_Opportunity__r.Total_Budget__c</field>
+            <field>Opportunity__r.Total_Planned_Amount__c</field>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Advertising_Opportunity__r.Total_Planned_Amount__c</field>
+            <field>Opportunity__r.Total_Actual_Amount__c</field>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Advertising_Opportunity__r.Total_Actual_Amount__c</field>
+            <field>Opportunity__r.Total_Variance_Amount__c</field>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Advertising_Opportunity__r.Total_Variance_Amount__c</field>
+            <field>Opportunity__r.Start_Date__c</field>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Advertising_Opportunity__r.Start_Date__c</field>
+            <field>Opportunity__r.End_Date__c</field>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Advertising_Opportunity__r.End_Date__c</field>
+            <field>Opportunity__r.AccountId</field>
         </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Advertising_Opportunity__r.Account__c</field>
-        </columns>
-        <masterLabel>Advertising Opportunity Fields</masterLabel>
+        <masterLabel>Opportunity Fields</masterLabel>
         <outerJoin>true</outerJoin>
     </sections>
 

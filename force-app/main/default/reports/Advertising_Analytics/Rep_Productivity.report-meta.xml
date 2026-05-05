@@ -4,7 +4,7 @@
         <field>Market__c</field>
     </columns>
     <columns>
-        <field>Status__c</field>
+        <field>STAGE_NAME</field>
     </columns>
     <columns>
         <field>Total_Budget__c</field>
@@ -18,7 +18,7 @@
         <developerName>TOTAL_BUDGET_SUM</developerName>
         <isActive>true</isActive>
         <isCrossBlock>false</isCrossBlock>
-        <reportType>Advertising_Opportunity__c</reportType>
+        <reportType>Opportunity</reportType>
         <scale>2</scale>
     </aggregates>
     <aggregates>
@@ -27,7 +27,7 @@
         <developerName>ACTUAL_SUM</developerName>
         <isActive>true</isActive>
         <isCrossBlock>false</isCrossBlock>
-        <reportType>Advertising_Opportunity__c</reportType>
+        <reportType>Opportunity</reportType>
         <scale>2</scale>
     </aggregates>
     <aggregates>
@@ -36,7 +36,7 @@
         <developerName>ROWCOUNT</developerName>
         <isActive>true</isActive>
         <isCrossBlock>false</isCrossBlock>
-        <reportType>Advertising_Opportunity__c</reportType>
+        <reportType>Opportunity</reportType>
         <scale>0</scale>
     </aggregates>
     <description>YTD pipeline and actual revenue by sales rep — primary input for the rep vs. goal tile in Sales Manager Dashboard.</description>
@@ -50,7 +50,7 @@
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Rep Productivity</name>
-    <reportType>Advertising_Opportunity__c</reportType>
+    <reportType>Opportunity</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <timeFrameFilter>

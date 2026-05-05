@@ -8,16 +8,18 @@ private class TrafficOrderServiceTest {
         Account advertiser = new Account(Name = 'Test Advertiser Co');
         insert advertiser;
 
-        Advertising_Opportunity__c opp = new Advertising_Opportunity__c(
-            Account__c = advertiser.Id,
-            Status__c  = 'Approved'
+        Opportunity opp = new Opportunity(
+            Name       = 'Test Opp',
+            AccountId  = advertiser.Id,
+            StageName  = 'Approved',
+            CloseDate  = Date.today().addDays(30)
         );
         insert opp;
 
         Advertising_Contract__c contract = new Advertising_Contract__c(
-            Advertising_Opportunity__c = opp.Id,
-            Account__c                 = advertiser.Id,
-            Contract_Status__c         = 'Approved'
+            Opportunity__c     = opp.Id,
+            Account__c         = advertiser.Id,
+            Contract_Status__c = 'Approved'
         );
         insert contract;
 
@@ -29,7 +31,7 @@ private class TrafficOrderServiceTest {
         insert vehicle;
 
         Budget_Line__c line = new Budget_Line__c(
-            Advertising_Opportunity__c = opp.Id,
+            Opportunity__c             = opp.Id,
             Vehicle__c                 = vehicle.Id,
             Date_Type__c               = 'Broadcast',
             Broadcast_Date__c          = Date.today().addDays(7),
@@ -79,16 +81,18 @@ private class TrafficOrderServiceTest {
         Account advertiser2 = new Account(Name = 'Second Advertiser');
         insert advertiser2;
 
-        Advertising_Opportunity__c opp2 = new Advertising_Opportunity__c(
-            Account__c = advertiser2.Id,
-            Status__c  = 'Approved'
+        Opportunity opp2 = new Opportunity(
+            Name       = 'Second Test Opp',
+            AccountId  = advertiser2.Id,
+            StageName  = 'Approved',
+            CloseDate  = Date.today().addDays(30)
         );
         insert opp2;
 
         Advertising_Contract__c contract2 = new Advertising_Contract__c(
-            Advertising_Opportunity__c = opp2.Id,
-            Account__c                 = advertiser2.Id,
-            Contract_Status__c         = 'Approved'
+            Opportunity__c     = opp2.Id,
+            Account__c         = advertiser2.Id,
+            Contract_Status__c = 'Approved'
         );
         insert contract2;
 
@@ -199,12 +203,15 @@ private class TrafficOrderServiceTest {
         // Contract with opportunity that has no budget lines
         Account acct = new Account(Name = 'No Spots Advertiser');
         insert acct;
-        Advertising_Opportunity__c opp = new Advertising_Opportunity__c(
-            Account__c = acct.Id, Status__c = 'Approved'
+        Opportunity opp = new Opportunity(
+            Name      = 'No Spots Opp',
+            AccountId = acct.Id,
+            StageName = 'Approved',
+            CloseDate = Date.today().addDays(30)
         );
         insert opp;
         Advertising_Contract__c contract = new Advertising_Contract__c(
-            Advertising_Opportunity__c = opp.Id,
+            Opportunity__c             = opp.Id,
             Account__c                 = acct.Id,
             Contract_Status__c         = 'Active',
             Traffic_Callback_Token__c  = 'testtoken00000000000000000000001'
@@ -223,7 +230,7 @@ private class TrafficOrderServiceTest {
     // ── Helpers ───────────────────────────────────────────────────────────────
 
     private static Advertising_Contract__c getContract() {
-        return [SELECT Id, Advertising_Opportunity__c FROM Advertising_Contract__c LIMIT 1];
+        return [SELECT Id, Opportunity__c FROM Advertising_Contract__c LIMIT 1];
     }
 
     private static Advertising_Contract__c getContractById(Id contractId) {

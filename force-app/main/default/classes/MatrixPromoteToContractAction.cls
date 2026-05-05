@@ -44,7 +44,7 @@ public with sharing class MatrixPromoteToContractAction {
                     adSpaceIds
                 );
 
-                update new Advertising_Opportunity__c(
+                update new Opportunity(
                     Id = req.opportunityId,
                     Media_Cloud_Media_Plan_ID__c = planId
                 );

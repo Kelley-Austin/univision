@@ -31,13 +31,13 @@
         <field>NAME</field>
     </columns>
     <columns>
-        <field>Account__r.Name</field>
+        <field>ACCOUNT_NAME</field>
     </columns>
     <columns>
         <field>Market__c</field>
     </columns>
     <columns>
-        <field>Status__c</field>
+        <field>STAGE_NAME</field>
     </columns>
     <columns>
         <field>Start_Date__c</field>
@@ -56,7 +56,7 @@
     <description>Open advertising pipeline grouped by market and status. Excludes Closed Lost opportunities. Requires Market__c and Total_Budget__c from the data model slice.</description>
     <filter>
         <criterias>
-            <column>Status__c</column>
+            <column>STAGE_NAME</column>
             <filterType>filterItem</filterType>
             <isUnlocked>true</isUnlocked>
             <operator>notEqual</operator>
@@ -69,11 +69,11 @@
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <groupingsDown>
-        <field>Status__c</field>
+        <field>STAGE_NAME</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Pipeline by Market</name>
-    <reportType>Advertising_Opportunity__c</reportType>
+    <reportType>Opportunity</reportType>
     <scope>organization</scope>
     <showDetails>false</showDetails>
     <timeFrameFilter>

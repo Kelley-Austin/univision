@@ -48,7 +48,7 @@ public with sharing class CreateLocalAdProposal {
 
     @InvocableMethod(
         label='Create Local Ad Proposal'
-        description='Creates an Advertising Opportunity (Local Ad Sales record type) with linked Budget Lines in a single transaction. Rolls back on any failure.'
+        description='Creates an Opportunity (Local Ad Sales record type) with linked Budget Lines in a single transaction. Rolls back on any failure.'
     )
     public static List<ProposalResult> createProposal(List<ProposalRequest> requests) {
         List<ProposalResult> results = new List<ProposalResult>();
@@ -58,22 +58,26 @@ public with sharing class CreateLocalAdProposal {
             ProposalResult result = new ProposalResult();
 
             try {
-                Id rtId = Schema.SObjectType.Advertising_Opportunity__c
+                Id rtId = Schema.SObjectType.Opportunity
                     .getRecordTypeInfosByDeveloperName()
                     .get('Local_Ad_Sales')
                     .getRecordTypeId();
 
-                Advertising_Opportunity__c opp = new Advertising_Opportunity__c(
-                    RecordTypeId   = rtId,
-                    Account__c     = req.accountId,
-                    Market__c      = req.market,
-                    Start_Date__c  = req.startDate,
-                    End_Date__c    = req.endDate,
+                // Standard Opportunity requires Name, StageName, and CloseDate.
+                // CloseDate defaults to the proposal end date when present.
+                Opportunity opp = new Opportunity(
+                    Name              = 'Local Ad Proposal ' + Date.today().format(),
+                    RecordTypeId      = rtId,
+                    AccountId         = req.accountId,
+                    CloseDate         = req.endDate != null ? req.endDate : Date.today().addDays(30),
+                    Market__c         = req.market,
+                    Start_Date__c     = req.startDate,
+                    End_Date__c       = req.endDate,
                     Primary_Demo__c   = req.primaryDemo,
                     Secondary_Demo__c = req.secondaryDemo,
                     Proposal_Notes__c = req.proposalNotes,
                     Total_Budget__c   = req.totalBudget,
-                    Status__c         = 'Draft'
+                    StageName         = 'Draft'
                 );
                 insert opp;
 
@@ -93,7 +97,7 @@ public with sharing class CreateLocalAdProposal {
                         totalPlanned += amount;
 
                         Budget_Line__c bl = new Budget_Line__c(
-                            Advertising_Opportunity__c = opp.Id,
+                            Opportunity__c = opp.Id,
                             Account__c     = req.accountId,
                             Vehicle__c     = req.vehicleId,
                             Channel__c     = line.get('channelId') != null
@@ -116,9 +120,9 @@ public with sharing class CreateLocalAdProposal {
                 opp.Total_Planned_Amount__c = totalPlanned;
                 update opp;
 
-                Advertising_Opportunity__c requeried = [
+                Opportunity requeried = [
                     SELECT Id, Name
-                    FROM Advertising_Opportunity__c
+                    FROM Opportunity
                     WHERE Id = :opp.Id
                 ];
 

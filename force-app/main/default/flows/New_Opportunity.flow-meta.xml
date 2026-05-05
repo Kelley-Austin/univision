@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>62.0</apiVersion>
-    <description>Guided 3-screen flow for reps to create a new Advertising Opportunity. Walks through account/buy type, opportunity details, and campaign timeline. Defaults Status to Prospecting.</description>
-    <label>New Advertising Opportunity</label>
+    <description>Guided 3-screen flow for reps to create a new Opportunity. Walks through account/buy type, opportunity details, and campaign timeline. Defaults StageName to Prospecting.</description>
+    <interviewLabel>New Opportunity {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>New Opportunity</label>
     <processType>Flow</processType>
     <status>Active</status>
 
@@ -32,25 +33,25 @@
         <name>dcs_Status</name>
         <dataType>Picklist</dataType>
         <displayField>label</displayField>
-        <object>Advertising_Opportunity__c</object>
-        <picklistField>Status__c</picklistField>
-        <picklistObjectAndField>Advertising_Opportunity__c.Status__c</picklistObjectAndField>
+        <object>Opportunity</object>
+        <picklistField>StageName</picklistField>
+        <picklistObjectAndField>Opportunity.StageName</picklistObjectAndField>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
         <name>dcs_MediaType</name>
         <dataType>Picklist</dataType>
         <displayField>label</displayField>
-        <object>Advertising_Opportunity__c</object>
+        <object>Opportunity</object>
         <picklistField>Media_Type__c</picklistField>
-        <picklistObjectAndField>Advertising_Opportunity__c.Media_Type__c</picklistObjectAndField>
+        <picklistObjectAndField>Opportunity.Media_Type__c</picklistObjectAndField>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
         <name>dcs_LeadSource</name>
         <dataType>Picklist</dataType>
         <displayField>label</displayField>
-        <object>Advertising_Opportunity__c</object>
-        <picklistField>Lead_Source__c</picklistField>
-        <picklistObjectAndField>Advertising_Opportunity__c.Lead_Source__c</picklistObjectAndField>
+        <object>Opportunity</object>
+        <picklistField>LeadSource</picklistField>
+        <picklistObjectAndField>Opportunity.LeadSource</picklistObjectAndField>
     </dynamicChoiceSets>
 
     <!-- ═══════════════════════════════════════════
@@ -79,12 +80,12 @@
     <formulas>
         <name>formula_DirectBuyRecordTypeId</name>
         <dataType>String</dataType>
-        <expression>$ObjectType.Advertising_Opportunity__c.RecordTypeInfos.Direct_Buy.RecordTypeId</expression>
+        <expression>$ObjectType.Opportunity.RecordTypeInfos.Direct_Buy.RecordTypeId</expression>
     </formulas>
     <formulas>
         <name>formula_AgencyBuyRecordTypeId</name>
         <dataType>String</dataType>
-        <expression>$ObjectType.Advertising_Opportunity__c.RecordTypeInfos.Agency_Buy.RecordTypeId</expression>
+        <expression>$ObjectType.Opportunity.RecordTypeInfos.Agency_Buy.RecordTypeId</expression>
     </formulas>
     <formulas>
         <name>formula_RecordTypeId</name>
@@ -129,7 +130,7 @@
             <inputParameters>
                 <name>fieldApiName</name>
                 <value>
-                    <stringValue>Advertising_Opportunity__c.Account__c</stringValue>
+                    <stringValue>Opportunity.AccountId</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -173,7 +174,7 @@
             <inputParameters>
                 <name>fieldApiName</name>
                 <value>
-                    <stringValue>Advertising_Opportunity__c.Agency_Account__c</stringValue>
+                    <stringValue>Opportunity.Agency_Account__c</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -254,7 +255,7 @@
             <inputParameters>
                 <name>fieldApiName</name>
                 <value>
-                    <stringValue>Advertising_Opportunity__c.Primary_Contact__c</stringValue>
+                    <stringValue>Opportunity.Primary_Contact__c</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -340,13 +341,6 @@
             <label>Campaign End Date</label>
         </fields>
         <fields>
-            <name>input_FiscalYear</name>
-            <dataType>String</dataType>
-            <fieldType>InputField</fieldType>
-            <isRequired>false</isRequired>
-            <label>Fiscal Year (e.g. FY2025-26)</label>
-        </fields>
-        <fields>
             <name>input_Competition</name>
             <dataType>String</dataType>
             <fieldType>InputField</fieldType>
@@ -367,7 +361,7 @@
     ═══════════════════════════════════════════ -->
     <recordCreates>
         <name>create_Opportunity</name>
-        <label>Create Advertising Opportunity</label>
+        <label>Create Opportunity</label>
         <locationX>264</locationX>
         <locationY>878</locationY>
         <assignRecordIdToReference>varCreatedOpportunityId</assignRecordIdToReference>
@@ -387,7 +381,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Account__c</field>
+            <field>AccountId</field>
             <value>
                 <elementReference>varAccountId</elementReference>
             </value>
@@ -405,7 +399,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Status__c</field>
+            <field>StageName</field>
             <value>
                 <stringValue>Prospecting</stringValue>
             </value>
@@ -423,25 +417,25 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Estimated_Revenue__c</field>
+            <field>Amount</field>
             <value>
                 <elementReference>screen_OpportunityDetails.input_EstimatedRevenue</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Lead_Source__c</field>
+            <field>LeadSource</field>
             <value>
                 <elementReference>screen_OpportunityDetails.input_LeadSource</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Description__c</field>
+            <field>Description</field>
             <value>
                 <elementReference>screen_OpportunityDetails.input_Description</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Close_Date__c</field>
+            <field>CloseDate</field>
             <value>
                 <elementReference>screen_Timeline.input_CloseDate</elementReference>
             </value>
@@ -459,24 +453,18 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Fiscal_Year__c</field>
-            <value>
-                <elementReference>screen_Timeline.input_FiscalYear</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Competition__c</field>
             <value>
                 <elementReference>screen_Timeline.input_Competition</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Next_Step__c</field>
+            <field>NextStep</field>
             <value>
                 <elementReference>screen_Timeline.input_NextStep</elementReference>
             </value>
         </inputAssignments>
-        <object>Advertising_Opportunity__c</object>
+        <object>Opportunity</object>
     </recordCreates>
 
     <!-- ═══════════════════════════════════════════
@@ -492,7 +480,7 @@
         <allowPause>false</allowPause>
         <fields>
             <name>display_ConfirmationMsg</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Opportunity created successfully.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Your opportunity &lt;strong&gt;{!screen_OpportunityDetails.input_OpportunityName}&lt;/strong&gt; has been created with a status of &lt;em&gt;Prospecting&lt;/em&gt;. You can now add budget lines, log activities, and advance the stage from the opportunity record.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Opportunity created successfully.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Your opportunity &lt;strong&gt;{!screen_OpportunityDetails.input_OpportunityName}&lt;/strong&gt; has been created with a stage of &lt;em&gt;Prospecting&lt;/em&gt;. You can now add budget lines, log activities, and advance the stage from the opportunity record.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
     </screens>

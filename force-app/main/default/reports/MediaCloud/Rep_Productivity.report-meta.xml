@@ -45,7 +45,7 @@
     <description>Rep productivity showing total budget, planned, and actual amounts per sales rep for the current fiscal year. Excludes Cancelled opportunities.</description>
     <filter>
         <criterias>
-            <column>Status__c</column>
+            <column>STAGE_NAME</column>
             <filterType>filterItem</filterType>
             <isUnlocked>true</isUnlocked>
             <operator>notEqual</operator>
@@ -58,7 +58,7 @@
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Rep Productivity</name>
-    <reportType>Advertising_Opportunity__c</reportType>
+    <reportType>Opportunity</reportType>
     <scope>organization</scope>
     <showDetails>false</showDetails>
     <timeFrameFilter>

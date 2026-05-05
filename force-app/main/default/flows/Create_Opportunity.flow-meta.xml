@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>62.0</apiVersion>
-    <description>Screen flow for creating an Advertising Opportunity with Budget Lines. Launched from the Account record page via quick action.</description>
-    <interviewLabel>Create Advertising Opportunity {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Create Advertising Opportunity</label>
+    <description>Screen flow for creating an Opportunity with Budget Lines. Launched from the Account record page via quick action.</description>
+    <interviewLabel>Create Opportunity {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Create Opportunity</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -21,7 +21,6 @@
     </start>
     <status>Active</status>
 
-    <!-- ═══ Variables ═══ -->
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>
@@ -69,7 +68,6 @@
         <objectType>Account</objectType>
     </variables>
 
-    <!-- ═══ Step 1: Get Account ═══ -->
     <recordLookups>
         <name>GetAccount</name>
         <label>Get Account</label>
@@ -93,7 +91,6 @@
         <queriedFields>Name</queriedFields>
     </recordLookups>
 
-    <!-- ═══ Step 2: Screen — Opportunity Details + Budget Lines ═══ -->
     <screens>
         <name>OpportunityDetailsScreen</name>
         <label>Opportunity Details &amp; Budget Lines</label>
@@ -106,14 +103,12 @@
             <targetReference>CreateOpportunityAction</targetReference>
         </connector>
 
-        <!-- Account name banner -->
         <fields>
             <name>displayAccountName</name>
             <fieldText>&lt;p&gt;&lt;strong&gt;Account:&lt;/strong&gt; {!accountRecord.Name}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
 
-        <!-- Opportunity header fields -->
         <fields>
             <name>inputStartDate</name>
             <dataType>Date</dataType>
@@ -136,14 +131,6 @@
             <isRequired>false</isRequired>
         </fields>
         <fields>
-            <name>inputFiscalYear</name>
-            <dataType>String</dataType>
-            <fieldText>Fiscal Year</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>false</isRequired>
-            <helpText>Format: FY2026</helpText>
-        </fields>
-        <fields>
             <name>inputTotalBudget</name>
             <dataType>Currency</dataType>
             <fieldText>Total Budget</fieldText>
@@ -152,7 +139,6 @@
             <scale>2</scale>
         </fields>
 
-        <!-- Budget line editor LWC -->
         <fields>
             <name>BudgetLineEditorComponent</name>
             <extensionName>c:budgetLineEditor</extensionName>
@@ -175,7 +161,6 @@
         <showHeader>true</showHeader>
     </screens>
 
-    <!-- ═══ Step 3: Apex Action ═══ -->
     <actionCalls>
         <name>CreateOpportunityAction</name>
         <label>Create Opportunity with Budget Lines</label>
@@ -211,12 +196,6 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>fiscalYear</name>
-            <value>
-                <elementReference>OpportunityDetailsScreen.inputFiscalYear</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
             <name>totalBudget</name>
             <value>
                 <elementReference>OpportunityDetailsScreen.inputTotalBudget</elementReference>
@@ -243,7 +222,6 @@
         <storeOutputAutomatically>false</storeOutputAutomatically>
     </actionCalls>
 
-    <!-- ═══ Step 4: Decision ═══ -->
     <decisions>
         <name>CheckSuccess</name>
         <label>Check Success</label>
@@ -270,7 +248,6 @@
         </rules>
     </decisions>
 
-    <!-- ═══ Step 5a: Success Screen ═══ -->
     <screens>
         <name>SuccessScreen</name>
         <label>Opportunity Created</label>
@@ -281,14 +258,13 @@
         <allowPause>false</allowPause>
         <fields>
             <name>successMessage</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Advertising Opportunity created successfully.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;ID: {!opportunityId}&lt;/p&gt;&lt;p&gt;Click &lt;strong&gt;Finish&lt;/strong&gt; to return to the account.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Opportunity created successfully.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;ID: {!opportunityId}&lt;/p&gt;&lt;p&gt;Click &lt;strong&gt;Finish&lt;/strong&gt; to return to the account.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
 
-    <!-- ═══ Step 5b: Error Screen ═══ -->
     <screens>
         <name>ErrorScreen</name>
         <label>Error Creating Opportunity</label>

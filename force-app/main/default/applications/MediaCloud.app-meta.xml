@@ -12,7 +12,7 @@
     <tabs>standard-Account</tabs>
 
     <!-- Sales pipeline -->
-    <tabs>Advertising_Opportunity__c</tabs>
+    <tabs>standard-Opportunity</tabs>
     <tabs>Advertising_Contract__c</tabs>
     <tabs>Budget_Line__c</tabs>
     <tabs>Pitch_Project__c</tabs>

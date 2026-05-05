@@ -1,6 +1,6 @@
 public with sharing class LocalAdProposalController {
 
-    public Advertising_Opportunity__c opp   { get; private set; }
+    public Opportunity opp                  { get; private set; }
     public Account advertiser               { get; private set; }
     public List<Budget_Line__c> budgetLines { get; private set; }
     public Decimal totalPlanned             { get; private set; }
@@ -19,12 +19,12 @@ public with sharing class LocalAdProposalController {
 
         try {
             opp = [
-                SELECT Id, Name, Account__c, Market__c,
+                SELECT Id, Name, AccountId, Market__c,
                        Start_Date__c, End_Date__c,
                        Primary_Demo__c, Secondary_Demo__c,
                        Proposal_Notes__c, Total_Budget__c,
-                       Total_Planned_Amount__c, Status__c, CreatedDate
-                FROM Advertising_Opportunity__c
+                       Total_Planned_Amount__c, StageName, CreatedDate
+                FROM Opportunity
                 WHERE Id = :oppId
                 LIMIT 1
             ];
@@ -33,7 +33,7 @@ public with sharing class LocalAdProposalController {
                 SELECT Id, Name, Phone,
                        BillingStreet, BillingCity, BillingState, BillingPostalCode
                 FROM Account
-                WHERE Id = :opp.Account__c
+                WHERE Id = :opp.AccountId
                 LIMIT 1
             ];
 
@@ -44,7 +44,7 @@ public with sharing class LocalAdProposalController {
                        Vehicle__r.Rate_Card__c, Vehicle__r.Program__c,
                        Month__c, Fiscal_Year__c, Planned_Amount__c, Notes__c
                 FROM Budget_Line__c
-                WHERE Advertising_Opportunity__c = :oppId
+                WHERE Opportunity__c = :oppId
                 ORDER BY Month__c, Channel__r.Name
             ];
 

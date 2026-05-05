@@ -15,7 +15,7 @@
         <developerName>BUDGET_SUM</developerName>
         <isActive>true</isActive>
         <isCrossBlock>false</isCrossBlock>
-        <reportType>Advertising_Opportunity__c</reportType>
+        <reportType>Opportunity</reportType>
         <scale>2</scale>
     </aggregates>
     <aggregates>
@@ -24,7 +24,7 @@
         <developerName>ACTUAL_SUM</developerName>
         <isActive>true</isActive>
         <isCrossBlock>false</isCrossBlock>
-        <reportType>Advertising_Opportunity__c</reportType>
+        <reportType>Opportunity</reportType>
         <scale>2</scale>
     </aggregates>
     <description>Budget vs. actual revenue by market and fiscal year — drives the Revenue by Market tile in Weekly Analytics Dashboard.</description>
@@ -34,11 +34,11 @@
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <groupingsDown>
-        <field>Fiscal_Year__c</field>
+        <field>FISCAL_YEAR</field>
         <sortOrder>Desc</sortOrder>
     </groupingsDown>
     <name>Revenue by Market</name>
-    <reportType>Advertising_Opportunity__c</reportType>
+    <reportType>Opportunity</reportType>
     <scope>organization</scope>
     <showDetails>false</showDetails>
     <timeFrameFilter>
