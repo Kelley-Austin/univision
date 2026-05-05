@@ -32,47 +32,79 @@ public with sharing class MatrixInventoryApiService {
     }
 
     public static List<InventoryItem> fetchInventory() {
-        String cred = resolveCredential();
-        HttpRequest req = new HttpRequest();
-        req.setEndpoint('callout:' + cred + '/inventory');
-        req.setMethod('GET');
-        req.setTimeout(120000);
+        // Per-call correlationId so each callout's Log__c entry is independently
+        // traceable. Callers (MatrixInventorySyncQueueable etc.) generate their
+        // OWN correlationId for batch-level logging; the two streams aren't
+        // joined today. Acceptable cost of service-level error coverage that
+        // also protects callers we haven't audited yet (e.g. test code paths).
+        String correlationId = LogX.getGuid();
+        try {
+            String cred = resolveCredential();
+            HttpRequest req = new HttpRequest();
+            req.setEndpoint('callout:' + cred + '/inventory');
+            req.setMethod('GET');
+            req.setTimeout(120000);
 
-        HttpResponse res = new Http().send(req);
-        if (res.getStatusCode() != 200) {
-            throw new CalloutException(
-                'Matrix API /inventory returned HTTP ' + res.getStatusCode() + ': ' + res.getBody()
+            HttpResponse res = new Http().send(req);
+            if (res.getStatusCode() != 200) {
+                throw new CalloutException(
+                    'Matrix API /inventory returned HTTP ' + res.getStatusCode() + ': ' + res.getBody()
+                );
+            }
+
+            InventoryResponse parsed = (InventoryResponse) JSON.deserialize(res.getBody(), InventoryResponse.class);
+            return parsed.inventory != null ? parsed.inventory : new List<InventoryItem>();
+        } catch (Exception ex) {
+            // Log + rethrow. Callers may catch the CalloutException to convert
+            // to user-facing messages; the Log__c entry preserves stack trace
+            // + status code for operator triage. doEmit=true so the entry
+            // survives any transaction rollback the rethrow triggers.
+            LogX.logException(
+                ex,
+                'MatrixInventoryApiService.fetchInventory failed',
+                correlationId,
+                /* doEmit */ true
             );
+            throw ex;
         }
-
-        InventoryResponse parsed = (InventoryResponse) JSON.deserialize(res.getBody(), InventoryResponse.class);
-        return parsed.inventory != null ? parsed.inventory : new List<InventoryItem>();
     }
 
     public static String createMediaPlan(String opportunityId, List<String> adSpaceIds) {
-        String cred = resolveCredential();
-        MediaPlanRequest payload = new MediaPlanRequest();
-        payload.opportunityId = opportunityId;
-        payload.adSpaceIds = adSpaceIds != null ? adSpaceIds : new List<String>();
+        String correlationId = LogX.getGuid();
+        try {
+            String cred = resolveCredential();
+            MediaPlanRequest payload = new MediaPlanRequest();
+            payload.opportunityId = opportunityId;
+            payload.adSpaceIds = adSpaceIds != null ? adSpaceIds : new List<String>();
 
-        HttpRequest req = new HttpRequest();
-        req.setEndpoint('callout:' + cred + '/plans');
-        req.setMethod('POST');
-        req.setHeader('Content-Type', 'application/json');
-        req.setBody(JSON.serialize(payload));
-        req.setTimeout(120000);
+            HttpRequest req = new HttpRequest();
+            req.setEndpoint('callout:' + cred + '/plans');
+            req.setMethod('POST');
+            req.setHeader('Content-Type', 'application/json');
+            req.setBody(JSON.serialize(payload));
+            req.setTimeout(120000);
 
-        HttpResponse res = new Http().send(req);
-        if (res.getStatusCode() != 200 && res.getStatusCode() != 201) {
-            throw new CalloutException(
-                'Matrix API /plans returned HTTP ' + res.getStatusCode() + ': ' + res.getBody()
+            HttpResponse res = new Http().send(req);
+            if (res.getStatusCode() != 200 && res.getStatusCode() != 201) {
+                throw new CalloutException(
+                    'Matrix API /plans returned HTTP ' + res.getStatusCode() + ': ' + res.getBody()
+                );
+            }
+
+            MediaPlanResponse parsed = (MediaPlanResponse) JSON.deserialize(res.getBody(), MediaPlanResponse.class);
+            if (String.isBlank(parsed.mediaPlanId)) {
+                throw new CalloutException('Matrix API /plans response did not contain a mediaPlanId.');
+            }
+            return parsed.mediaPlanId;
+        } catch (Exception ex) {
+            LogX.logException(
+                ex,
+                'MatrixInventoryApiService.createMediaPlan failed (opportunityId=' + opportunityId +
+                    ', adSpaceCount=' + (adSpaceIds == null ? 0 : adSpaceIds.size()) + ')',
+                correlationId,
+                /* doEmit */ true
             );
+            throw ex;
         }
-
-        MediaPlanResponse parsed = (MediaPlanResponse) JSON.deserialize(res.getBody(), MediaPlanResponse.class);
-        if (String.isBlank(parsed.mediaPlanId)) {
-            throw new CalloutException('Matrix API /plans response did not contain a mediaPlanId.');
-        }
-        return parsed.mediaPlanId;
     }
 }
