@@ -2,7 +2,7 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <!-- Field updates used exclusively by the Contract Approval Process steps. -->
     <fieldUpdates>
-        <name>Contract_Pending_Status</name>
+        <fullName>Contract_Pending_Status</fullName>
         <description>Set Contract Status to Pending Approval on initial submission to the approval process.</description>
         <field>Contract_Status__c</field>
         <literalValue>Pending Approval</literalValue>
@@ -12,7 +12,7 @@
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
-        <name>Contract_Approved_Status</name>
+        <fullName>Contract_Approved_Status</fullName>
         <description>Set Contract Status to Approved on final approval.</description>
         <field>Contract_Status__c</field>
         <literalValue>Approved</literalValue>
@@ -22,7 +22,7 @@
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
-        <name>Contract_Approved_Date</name>
+        <fullName>Contract_Approved_Date</fullName>
         <description>Stamp Approved Date to the current datetime on final approval.</description>
         <field>Approved_Date__c</field>
         <formula>NOW()</formula>
@@ -32,7 +32,7 @@
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
-        <name>Contract_Draft_Status</name>
+        <fullName>Contract_Draft_Status</fullName>
         <description>Return Contract Status to Draft on rejection or recall.</description>
         <field>Contract_Status__c</field>
         <literalValue>Draft</literalValue>
