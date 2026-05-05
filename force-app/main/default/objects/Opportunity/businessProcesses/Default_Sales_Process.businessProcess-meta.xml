@@ -2,12 +2,38 @@
 <BusinessProcess xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Default_Sales_Process</fullName>
     <isActive>true</isActive>
-    <description>Default sales process for the Univision advertising opportunity pipeline. Stages map from the legacy Status__c picklist.</description>
+    <description>Univision advertising sales pipeline. Matrix-aligned 5-stage funnel + required closed states. Legacy stages retained during cutover; deactivate after data migration.</description>
+    <values>
+        <fullName>Stage 1 - Lead</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Stage 2 - Discovery/CNA</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Stage 3 - Pipeline/Deal</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Stage 4 - Negotiation</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Stage 5 - Contract Pending</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Closed Won</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Closed Lost</fullName>
+        <default>false</default>
+    </values>
+    <!-- Legacy stages retained during cutover. Deactivate in Slice I after data migration. -->
     <values>
         <fullName>Working</fullName>
-        <!-- Note: <default>true</default> rejected by Salesforce on standard Opportunity
-             ("Cannot specify a default on: Opportunity"). The default StageName is set on
-             the Opportunity.StageName field metadata, not on the BusinessProcess. -->
         <default>false</default>
     </values>
     <values>
@@ -20,14 +46,6 @@
     </values>
     <values>
         <fullName>Booked</fullName>
-        <default>false</default>
-    </values>
-    <values>
-        <fullName>Closed Won</fullName>
-        <default>false</default>
-    </values>
-    <values>
-        <fullName>Closed Lost</fullName>
         <default>false</default>
     </values>
     <values>
