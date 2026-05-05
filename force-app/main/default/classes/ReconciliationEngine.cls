@@ -43,8 +43,18 @@ public with sharing class ReconciliationEngine {
             SalespersonMatcher.matchBulk(rawCodes, sourceSystemCode);
 
         // ── Build Actual_Revenue__c upsert list ───────────────────────────────
-        List<Actual_Revenue__c> actualsToUpsert = new List<Actual_Revenue__c>();
-        List<Inbound_Staging__c> stagingToUpdate = new List<Inbound_Staging__c>();
+        // actualsToUpsert and stagingToUpdate are parallel-but-different lists:
+        //   * stagingToUpdate contains EVERY row in the batch (matched + unmatched).
+        //   * actualsToUpsert contains only the matched rows that produce an
+        //     Actual_Revenue__c. Lengths diverge as soon as any row is unmatched.
+        // To keep error results from Database.upsert(actualsToUpsert) lined up
+        // with the *correct* staging row (so we can stamp 'Error' + the failure
+        // message on the right one), maintain an explicit map keyed by the
+        // actuals-list index. Without this map, error stamping uses the wrong
+        // index and corrupts unrelated rows.
+        List<Actual_Revenue__c>            actualsToUpsert        = new List<Actual_Revenue__c>();
+        List<Inbound_Staging__c>           stagingToUpdate        = new List<Inbound_Staging__c>();
+        Map<Integer, Inbound_Staging__c>   actualIdxToStagingRow  = new Map<Integer, Inbound_Staging__c>();
 
         for (Integer i = 0; i < rows.size(); i++) {
             Inbound_Staging__c row = rows[i];
@@ -61,9 +71,14 @@ public with sharing class ReconciliationEngine {
             row.AE_User__c            = aeMatch != null ? aeMatch.userId : null;
 
             if (accMatch.tier <= 2 && accMatch.accountId != null) {
-                // Matched — build Actual_Revenue__c
+                // Matched — build Actual_Revenue__c.
+                // Record the parallel index BEFORE adding to actualsToUpsert so
+                // size() returns the index this actual will land at. The map
+                // lets us identify the source staging row from a UpsertResult
+                // index, which is essential when partial-success errors happen.
                 row.Status__c = 'Matched';
                 result.matched++;
+                actualIdxToStagingRow.put(actualsToUpsert.size(), row);
                 actualsToUpsert.add(buildActual(row, accMatch.accountId));
             } else {
                 // Unmatched — surface in worklist
@@ -81,14 +96,23 @@ public with sharing class ReconciliationEngine {
             for (Integer i = 0; i < uResults.size(); i++) {
                 if (uResults[i].isSuccess()) {
                     upsertedActualIds.add(uResults[i].getId());
-                } else {
-                    // Mark staging row back to Error if actual upsert failed
-                    stagingToUpdate[i].Status__c      = 'Error';
-                    stagingToUpdate[i].Excluding_Rule__c =
-                        uResults[i].getErrors()[0].getMessage().abbreviate(255);
-                    result.matched--;
-                    result.errors++;
+                    continue;
                 }
+
+                // Failure path — look up the staging row that produced this
+                // actual via the parallel index map. NEVER use stagingToUpdate[i]
+                // here: that list also holds unmatched rows, so its index has
+                // diverged from uResults' index by the count of unmatched rows
+                // encountered before this point. Using it would corrupt an
+                // arbitrary unmatched row's status and message.
+                Inbound_Staging__c failedRow = actualIdxToStagingRow.get(i);
+                if (failedRow != null) {
+                    failedRow.Status__c = 'Error';
+                    failedRow.Excluding_Rule__c =
+                        uResults[i].getErrors()[0].getMessage().abbreviate(255);
+                }
+                result.matched--;
+                result.errors++;
             }
         }
 
