@@ -17,7 +17,7 @@ private class MatrixPromoteToContractActionTest {
     static void setup() {
         insert new Opportunity(
             Name      = 'Matrix Promote Test Opp',
-            StageName = 'Working',
+            StageName = 'Stage 3 - Pipeline/Deal',
             CloseDate = Date.today().addDays(30)
         );
     }
@@ -85,7 +85,7 @@ private class MatrixPromoteToContractActionTest {
     static void registerMediaPlan_bulkRequests_processedIndependently() {
         insert new Opportunity(
             Name      = 'Matrix Promote Bulk Opp',
-            StageName = 'Working',
+            StageName = 'Stage 3 - Pipeline/Deal',
             CloseDate = Date.today().addDays(30)
         );
         List<Opportunity> opps = [SELECT Id FROM Opportunity LIMIT 2];

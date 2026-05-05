@@ -48,7 +48,7 @@ public class CreateOpportunityWithBudgetLinesTest {
             FROM Opportunity
             WHERE Id = :results[0].opportunityId
         ];
-        System.assertEquals('Draft', opp.StageName);
+        System.assertEquals('Stage 1 - Lead', opp.StageName);
         System.assertEquals(5000, opp.Total_Planned_Amount__c);
 
         List<Budget_Line__c> lines = [
@@ -124,7 +124,7 @@ public class CreateOpportunityWithBudgetLinesTest {
         Opportunity opp = [
             SELECT StageName FROM Opportunity WHERE Id = :results[0].opportunityId
         ];
-        System.assertEquals('Draft', opp.StageName);
+        System.assertEquals('Stage 1 - Lead', opp.StageName);
     }
 
     @isTest

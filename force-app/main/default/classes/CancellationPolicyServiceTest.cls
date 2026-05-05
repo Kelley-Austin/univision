@@ -11,7 +11,7 @@ private class CancellationPolicyServiceTest {
         Opportunity opp = new Opportunity(
             Name      = 'Cancellation Policy Test Opp',
             AccountId = acct.Id,
-            StageName = 'Draft',
+            StageName = 'Stage 1 - Lead',
             CloseDate = Date.today().addDays(90)
         );
         insert opp;

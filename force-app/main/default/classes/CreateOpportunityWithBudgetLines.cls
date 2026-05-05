@@ -73,7 +73,7 @@ public with sharing class CreateOpportunityWithBudgetLines {
                     End_Date__c       = req.endDate,
                     Market__c         = req.market,
                     Total_Budget__c   = req.totalBudget,
-                    StageName         = String.isBlank(req.status) ? 'Draft' : req.status
+                    StageName         = String.isBlank(req.status) ? 'Stage 1 - Lead' : req.status
                 );
                 insert opp;
 
