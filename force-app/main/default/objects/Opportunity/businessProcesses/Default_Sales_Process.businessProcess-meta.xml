@@ -31,29 +31,4 @@
         <fullName>Closed Lost</fullName>
         <default>false</default>
     </values>
-    <!-- Legacy stages retained during cutover. Deactivate in Slice I after data migration. -->
-    <values>
-        <fullName>Working</fullName>
-        <default>false</default>
-    </values>
-    <values>
-        <fullName>Pitched</fullName>
-        <default>false</default>
-    </values>
-    <values>
-        <fullName>Committed</fullName>
-        <default>false</default>
-    </values>
-    <values>
-        <fullName>Booked</fullName>
-        <default>false</default>
-    </values>
-    <values>
-        <fullName>Draft</fullName>
-        <default>false</default>
-    </values>
-    <values>
-        <fullName>Prospecting</fullName>
-        <default>false</default>
-    </values>
 </BusinessProcess>

@@ -58,14 +58,15 @@
         <won>false</won>
         <isActive>true</isActive>
     </standardValue>
-    <!-- Legacy stages kept active during cutover; deactivated in Slice I after data migration. -->
+    <!-- Legacy stages — deactivated 2026-05-05 (Slice I). Values retained for
+         historical Opportunity references; new Opps must use Stage 1 - 5 / Closed. -->
     <standardValue>
         <fullName>Working</fullName>
         <closed>false</closed>
         <forecastCategory>Pipeline</forecastCategory>
         <probability>30</probability>
         <won>false</won>
-        <isActive>true</isActive>
+        <isActive>false</isActive>
     </standardValue>
     <standardValue>
         <fullName>Pitched</fullName>
@@ -73,7 +74,7 @@
         <forecastCategory>BestCase</forecastCategory>
         <probability>50</probability>
         <won>false</won>
-        <isActive>true</isActive>
+        <isActive>false</isActive>
     </standardValue>
     <standardValue>
         <fullName>Committed</fullName>
@@ -81,7 +82,7 @@
         <forecastCategory>Commit</forecastCategory>
         <probability>75</probability>
         <won>false</won>
-        <isActive>true</isActive>
+        <isActive>false</isActive>
     </standardValue>
     <standardValue>
         <fullName>Booked</fullName>
@@ -89,7 +90,7 @@
         <forecastCategory>Commit</forecastCategory>
         <probability>90</probability>
         <won>false</won>
-        <isActive>true</isActive>
+        <isActive>false</isActive>
     </standardValue>
     <standardValue>
         <fullName>Draft</fullName>
@@ -97,7 +98,7 @@
         <forecastCategory>Pipeline</forecastCategory>
         <probability>5</probability>
         <won>false</won>
-        <isActive>true</isActive>
+        <isActive>false</isActive>
     </standardValue>
     <standardValue>
         <fullName>Prospecting</fullName>
@@ -105,6 +106,6 @@
         <forecastCategory>Pipeline</forecastCategory>
         <probability>10</probability>
         <won>false</won>
-        <isActive>true</isActive>
+        <isActive>false</isActive>
     </standardValue>
 </StandardValueSet>
