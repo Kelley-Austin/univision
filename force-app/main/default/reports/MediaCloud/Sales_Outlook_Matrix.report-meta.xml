@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>RECORD_TYPE</field>
+    </columns>
+    <columns>
+        <field>NAME</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT_NAME</field>
+    </columns>
+    <columns>
+        <field>STAGE_NAME</field>
+    </columns>
+    <columns>
+        <aggregateTypes>SUM</aggregateTypes>
+        <field>Total_Budget__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>SUM</aggregateTypes>
+        <field>Total_Actual_Amount__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>SUM</aggregateTypes>
+        <field>AMOUNT</field>
+    </columns>
+    <columns>
+        <aggregateTypes>SUM</aggregateTypes>
+        <field>EXPECTED_REVENUE</field>
+    </columns>
+    <aggregates>
+        <calculatedFormula>(IF(ISPICKVAL(Opportunity.StageName, "Stage 5 - Contract Pending"), AMOUNT:SUM, 0))</calculatedFormula>
+        <datatype>currency</datatype>
+        <description>Sum of Amount for opportunities in Stage 5 - Contract Pending. Approximates Matrix "Pending" column.</description>
+        <developerName>PENDING_SUM</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <label>Pending</label>
+        <reportType>Opportunity</reportType>
+        <scale>2</scale>
+    </aggregates>
+    <aggregates>
+        <calculatedFormula>EXPECTED_REVENUE:SUM - Total_Budget__c:SUM</calculatedFormula>
+        <datatype>currency</datatype>
+        <description>Forecast (weighted by stage probability via ExpectedRevenue) minus Budget. Matrix "FC to Budget" column.</description>
+        <developerName>FC_TO_BUDGET</developerName>
+        <isActive>true</isActive>
+        <isCrossBlock>false</isCrossBlock>
+        <label>FC to Budget</label>
+        <reportType>Opportunity</reportType>
+        <scale>2</scale>
+    </aggregates>
+    <description>Sales Outlook — Matrix-style pacing matrix. Rows: Opportunity Record Type (channel). Columns: Budget, TY$ (actuals), Forecast (Amount), Weighted Forecast (ExpectedRevenue), Pending (Stage 5 only), FC to Budget. LY$ and % Change deferred (no Opportunity↔Actual_Revenue link in current data model).</description>
+    <filter>
+        <criterias>
+            <column>STAGE_NAME</column>
+            <filterType>filterItem</filterType>
+            <isUnlocked>true</isUnlocked>
+            <operator>notEqual</operator>
+            <value>Closed Lost</value>
+        </criterias>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <field>RECORD_TYPE</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Sales Outlook Matrix</name>
+    <reportType>Opportunity</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <timeFrameFilter>
+        <dateColumn>CloseDate</dateColumn>
+        <interval>INTERVAL_CURFY</interval>
+    </timeFrameFilter>
+</Report>
