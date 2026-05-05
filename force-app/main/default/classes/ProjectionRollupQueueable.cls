@@ -45,19 +45,57 @@ public with sharing class ProjectionRollupQueueable implements Queueable {
     static void rollup(List<Id> actualIds) {
         if (actualIds == null || actualIds.isEmpty()) return;
 
-        // Fetch actuals with all dimension fields
-        List<Actual_Revenue__c> actuals = [
-            SELECT Id, Account__c, Category__c, Revenue_Type__c,
-                   Period_Year__c, Period_Month__c, Revenue_Amount__c
+        // 1. Identify the composite keys affected by this batch and the dimension
+        //    sets we need to re-query. We constrain the recompute query by these
+        //    dimensions (rather than scanning the whole Actual_Revenue__c table)
+        //    so it stays selective at scale.
+        Set<String> affectedKeys  = new Set<String>();
+        Set<Id>     affectedAccts = new Set<Id>();
+        Set<Decimal> affectedYrs  = new Set<Decimal>();
+        Set<Decimal> affectedMos  = new Set<Decimal>();
+        for (Actual_Revenue__c a : [
+            SELECT Account__c, Category__c, Revenue_Type__c, Period_Year__c, Period_Month__c
             FROM   Actual_Revenue__c
             WHERE  Id IN :actualIds
               AND  Account__c  != null
               AND  Category__c != null
-        ];
+        ]) {
+            affectedKeys.add(ProjectionTriggerHandler.buildCompositeKey(
+                new Projection__c(
+                    Account__c      = a.Account__c,
+                    Category__c     = a.Category__c,
+                    Revenue_Type__c = a.Revenue_Type__c,
+                    Period_Year__c  = a.Period_Year__c,
+                    Period_Month__c = a.Period_Month__c
+                )
+            ));
+            affectedAccts.add(a.Account__c);
+            affectedYrs.add(a.Period_Year__c);
+            affectedMos.add(a.Period_Month__c);
+        }
 
-        // Aggregate amounts by composite key
+        if (affectedKeys.isEmpty()) return;
+
+        // 2. Recompute Actual_Amount__c per affected key from ALL non-superseded
+        //    Actuals on the same dimensions — not just this batch. This makes the
+        //    rollup idempotent so PreemptTransitionService supersedes and
+        //    cancellations land correctly even when the prior preempt is not in
+        //    the current batch.
         Map<String, Decimal> keyToAmount = new Map<String, Decimal>();
-        for (Actual_Revenue__c a : actuals) {
+        for (String key : affectedKeys) keyToAmount.put(key, 0);
+
+        for (Actual_Revenue__c a : [
+            SELECT Account__c, Category__c, Revenue_Type__c,
+                   Period_Year__c, Period_Month__c, Revenue_Amount__c,
+                   Preempt_Status__c
+            FROM   Actual_Revenue__c
+            WHERE  Account__c     IN :affectedAccts
+              AND  Period_Year__c  IN :affectedYrs
+              AND  Period_Month__c IN :affectedMos
+              AND  Category__c != null
+              AND  ( Preempt_Status__c = null
+                  OR Preempt_Status__c = 'Active' )
+        ]) {
             String key = ProjectionTriggerHandler.buildCompositeKey(
                 new Projection__c(
                     Account__c      = a.Account__c,
@@ -67,11 +105,9 @@ public with sharing class ProjectionRollupQueueable implements Queueable {
                     Period_Month__c = a.Period_Month__c
                 )
             );
-            Decimal existing = keyToAmount.containsKey(key) ? keyToAmount.get(key) : 0;
-            keyToAmount.put(key, existing + (a.Revenue_Amount__c != null ? a.Revenue_Amount__c : 0));
+            if (!keyToAmount.containsKey(key)) continue;
+            keyToAmount.put(key, keyToAmount.get(key) + (a.Revenue_Amount__c != null ? a.Revenue_Amount__c : 0));
         }
-
-        if (keyToAmount.isEmpty()) return;
 
         // Find existing Projection__c rows that match
         List<Projection__c> existingProjs = [

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Preempt__c</fullName>
+    <defaultValue>false</defaultValue>
+    <label>Is Preempt</label>
+    <required>false</required>
+    <type>Checkbox</type>
+    <description>True when this Actual represents a preempt (held inventory awaiting booked replacement). Drives PreemptTransitionService supersede/cancellation logic.</description>
+</CustomField>

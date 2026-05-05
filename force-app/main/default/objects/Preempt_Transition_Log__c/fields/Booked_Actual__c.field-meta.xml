@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Booked_Actual__c</fullName>
+    <label>Booked Actual</label>
+    <required>false</required>
+    <type>Lookup</type>
+    <referenceTo>Actual_Revenue__c</referenceTo>
+    <relationshipLabel>Preempt Transitions (Booked)</relationshipLabel>
+    <relationshipName>Preempt_Transitions_Booked</relationshipName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>The booked Actual_Revenue__c that superseded the preempt. Null on Cancellation transitions.</description>
+</CustomField>
