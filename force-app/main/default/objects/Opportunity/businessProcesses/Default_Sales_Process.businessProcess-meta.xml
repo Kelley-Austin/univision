@@ -5,7 +5,10 @@
     <description>Default sales process for the Univision advertising opportunity pipeline. Stages map from the legacy Status__c picklist.</description>
     <values>
         <fullName>Working</fullName>
-        <default>true</default>
+        <!-- Note: <default>true</default> rejected by Salesforce on standard Opportunity
+             ("Cannot specify a default on: Opportunity"). The default StageName is set on
+             the Opportunity.StageName field metadata, not on the BusinessProcess. -->
+        <default>false</default>
     </values>
     <values>
         <fullName>Pitched</fullName>

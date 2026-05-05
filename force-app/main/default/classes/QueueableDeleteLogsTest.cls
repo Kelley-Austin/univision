@@ -3,16 +3,25 @@ public class QueueableDeleteLogsTest {
     
     @testSetup
     static void setupTestData() {
-        List<Log__c> logs = new List<Log__c>();
-        Datetime oldDate = System.now().addDays(-31); // Logs older than 30 days to trigger deletion
-        
+        // CreatedDate is system-managed and not directly writeable on insert.
+        // Insert first, then back-date via Test.setCreatedDate so the
+        // QueueableDeleteLogs job sees rows older than its 30-day cutoff.
+        Datetime oldDate = System.now().addDays(-31);
+
+        List<Log__c> oldLogs = new List<Log__c>();
         for (Integer i = 0; i < 10; i++) {
-            logs.add(new Log__c(CreatedDate = oldDate, Type__c = 'INFO'));
+            oldLogs.add(new Log__c(Type__c = 'INFO'));
         }
+        insert oldLogs;
+        for (Log__c lg : oldLogs) {
+            Test.setCreatedDate(lg.Id, oldDate);
+        }
+
+        List<Log__c> currentLogs = new List<Log__c>();
         for (Integer i = 0; i < 5; i++) {
-            logs.add(new Log__c(Type__c = 'DELETE'));
+            currentLogs.add(new Log__c(Type__c = 'DELETE'));
         }
-        insert logs;
+        insert currentLogs;
     }
     
     @isTest
