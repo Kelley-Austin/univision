@@ -35,7 +35,6 @@
         <displayField>label</displayField>
         <object>Opportunity</object>
         <picklistField>StageName</picklistField>
-        <picklistObjectAndField>Opportunity.StageName</picklistObjectAndField>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
         <name>dcs_MediaType</name>
@@ -43,7 +42,6 @@
         <displayField>label</displayField>
         <object>Opportunity</object>
         <picklistField>Media_Type__c</picklistField>
-        <picklistObjectAndField>Opportunity.Media_Type__c</picklistObjectAndField>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
         <name>dcs_LeadSource</name>
@@ -51,7 +49,6 @@
         <displayField>label</displayField>
         <object>Opportunity</object>
         <picklistField>LeadSource</picklistField>
-        <picklistObjectAndField>Opportunity.LeadSource</picklistObjectAndField>
     </dynamicChoiceSets>
 
     <!-- ═══════════════════════════════════════════

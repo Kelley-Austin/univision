@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Lightning Record Page for Advertising Opportunity. Surfaces key fields, the AE projection grid, Budget Lines, Contracts, and a generic source-system CSV upload (sourceFileUpload) so AEs can ingest actuals from Counterpoint, WideOrbit, etc. without leaving the record.</description>
-    <masterLabel>Advertising Opportunity Record Page</masterLabel>
+    <masterLabel>Opportunity Record Page</masterLabel>
     <sobjectType>Opportunity</sobjectType>
+    <template>
+        <name>flexipage:recordHomeTemplateDesktop</name>
+    </template>
     <type>RecordPage</type>
 
     <flexiPageRegions>

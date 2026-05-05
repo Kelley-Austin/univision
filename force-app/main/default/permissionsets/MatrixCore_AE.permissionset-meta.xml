@@ -20,6 +20,11 @@
         <field>Account.Primary_Agency__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Opportunity_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 
     <objectPermissions>
         <allowCreate>true</allowCreate>
@@ -48,11 +53,6 @@
         <object>Opportunity</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Opportunity.Opportunity_Number__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
