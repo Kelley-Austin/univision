@@ -11,66 +11,96 @@ public without sharing class TrafficOrderTransmitQueueable implements Queueable,
     }
 
     public void execute(QueueableContext ctx) {
-        List<Budget_Line__c> lines = [
-            SELECT Id, Name, Copy_Code__c, Copy_Rotation__c, Spot_Length__c,
-                   Weekly_Spots__c, Spot_Rate__c, Spot_Instructions__c,
-                   Opportunity__c
-            FROM Budget_Line__c
-            WHERE Id IN :budgetLineIds
-        ];
+        // Per-job correlationId threads every Log__c entry from this Queueable
+        // run together. callout() reads it from a static so we don't need to
+        // pass it through the private method's signature.
+        String correlationId = LogX.getGuid();
+        currentCorrelationId = correlationId;
 
-        if (lines.isEmpty()) {
-            return;
-        }
+        try {
+            List<Budget_Line__c> lines = [
+                SELECT Id, Name, Copy_Code__c, Copy_Rotation__c, Spot_Length__c,
+                       Weekly_Spots__c, Spot_Rate__c, Spot_Instructions__c,
+                       Opportunity__c
+                FROM Budget_Line__c
+                WHERE Id IN :budgetLineIds
+            ];
 
-        // Collect opportunity IDs for a single contract lookup after all callouts
-        Set<Id> oppIds = new Set<Id>();
-        for (Budget_Line__c line : lines) {
-            if (line.Opportunity__c != null) {
-                oppIds.add(line.Opportunity__c);
+            if (lines.isEmpty()) {
+                return;
             }
-        }
 
-        Map<Id, Advertising_Contract__c> contractByOpp = queryContractsByOpp(oppIds);
-
-        // Perform all callouts first, collect results, then do DML
-        List<Budget_Line__c> lineUpdates = new List<Budget_Line__c>();
-        Map<Id, Advertising_Contract__c> contractUpdates = new Map<Id, Advertising_Contract__c>();
-
-        for (Budget_Line__c line : lines) {
-            TransmitResult result = callout(line);
-
-            Budget_Line__c lu = new Budget_Line__c(Id = line.Id);
-            if (result.trafficOrderId != null) {
-                lu.Traffic_Order_ID__c = result.trafficOrderId;
+            // Collect opportunity IDs for a single contract lookup after all callouts
+            Set<Id> oppIds = new Set<Id>();
+            for (Budget_Line__c line : lines) {
+                if (line.Opportunity__c != null) {
+                    oppIds.add(line.Opportunity__c);
+                }
             }
-            if (result.errorMessage != null) {
-                lu.Traffic_Status__c = 'Error';
-                lu.Traffic_Error_Message__c = result.errorMessage;
-            }
-            lineUpdates.add(lu);
 
-            if (line.Opportunity__c != null
-                    && contractByOpp.containsKey(line.Opportunity__c)) {
-                Advertising_Contract__c c = contractByOpp.get(line.Opportunity__c);
+            Map<Id, Advertising_Contract__c> contractByOpp = queryContractsByOpp(oppIds);
+
+            // Perform all callouts first, collect results, then do DML
+            List<Budget_Line__c> lineUpdates = new List<Budget_Line__c>();
+            Map<Id, Advertising_Contract__c> contractUpdates = new Map<Id, Advertising_Contract__c>();
+
+            for (Budget_Line__c line : lines) {
+                TransmitResult result = callout(line);
+
+                Budget_Line__c lu = new Budget_Line__c(Id = line.Id);
                 if (result.trafficOrderId != null) {
-                    c.Traffic_Order_ID__c = result.trafficOrderId;
+                    lu.Traffic_Order_ID__c = result.trafficOrderId;
                 }
                 if (result.errorMessage != null) {
-                    c.Traffic_Status__c = 'Error';
-                    c.Traffic_Error_Message__c = result.errorMessage;
+                    lu.Traffic_Status__c = 'Error';
+                    lu.Traffic_Error_Message__c = result.errorMessage;
                 }
-                contractUpdates.put(c.Id, c);
-            }
-        }
+                lineUpdates.add(lu);
 
-        if (!lineUpdates.isEmpty()) {
-            update lineUpdates;
-        }
-        if (!contractUpdates.isEmpty()) {
-            update contractUpdates.values();
+                if (line.Opportunity__c != null
+                        && contractByOpp.containsKey(line.Opportunity__c)) {
+                    Advertising_Contract__c c = contractByOpp.get(line.Opportunity__c);
+                    if (result.trafficOrderId != null) {
+                        c.Traffic_Order_ID__c = result.trafficOrderId;
+                    }
+                    if (result.errorMessage != null) {
+                        c.Traffic_Status__c = 'Error';
+                        c.Traffic_Error_Message__c = result.errorMessage;
+                    }
+                    contractUpdates.put(c.Id, c);
+                }
+            }
+
+            if (!lineUpdates.isEmpty()) {
+                update lineUpdates;
+            }
+            if (!contractUpdates.isEmpty()) {
+                update contractUpdates.values();
+            }
+        } catch (Exception ex) {
+            // Top-level: log + rethrow so Salesforce's Apex Job table still sees
+            // the failure (and any configured retry / batch-size policy applies).
+            // doEmit=true uses LogEvent__e platform event path so the Log__c
+            // entry survives the rollback caused by the rethrow.
+            LogX.logException(
+                ex,
+                'TrafficOrderTransmitQueueable.execute failed (budgetLineIds=' +
+                    (budgetLineIds == null ? 0 : budgetLineIds.size()) + ')',
+                correlationId,
+                /* doEmit */ true
+            );
+            throw ex;
         }
     }
+
+    /**
+     * Static slot for the current run's correlationId so callout() can attach
+     * its per-row LogX entries without us threading the id through every
+     * method signature. Set at the top of execute(); reset implicitly when
+     * the next Queueable instance runs (statics reset between transactions).
+     */
+    @TestVisible
+    private static String currentCorrelationId;
 
     private TransmitResult callout(Budget_Line__c line) {
         TransmitResult result = new TransmitResult();
@@ -105,6 +135,16 @@ public without sharing class TrafficOrderTransmitQueueable implements Queueable,
                     'Traffic system returned HTTP ' + res.getStatusCode() + ': ' + res.getBody();
             }
         } catch (Exception e) {
+            // Log the per-callout failure to Log__c via LogX (correlationId
+            // threaded from execute()'s static slot). The errorMessage stamp
+            // on the Budget_Line__c row gives in-UI visibility; the Log__c
+            // entry preserves the full exception detail + stack trace.
+            LogX.logException(
+                e,
+                'TrafficOrderTransmitQueueable.callout failed (budgetLineId=' + line.Id + ')',
+                currentCorrelationId,
+                /* doEmit */ true
+            );
             result.errorMessage = 'Callout failed: ' + e.getMessage();
         }
 

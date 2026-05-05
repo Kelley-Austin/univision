@@ -12,6 +12,12 @@ public class MatrixInventorySyncQueueable implements Queueable, Database.AllowsC
         String errorDetail = null;
         String status = 'Success';
 
+        // Per-job correlationId threads every Log__c entry from this run.
+        // The Matrix_Sync_Log__c custom object keeps its existing summary row
+        // for the admin sync-history UI; LogX adds the full exception detail
+        // (stack trace, error type) to Log__c for cross-system correlation.
+        String correlationId = LogX.getGuid();
+
         try {
             List<MatrixInventoryApiService.InventoryItem> items = MatrixInventoryApiService.fetchInventory();
 
@@ -66,6 +72,16 @@ public class MatrixInventorySyncQueueable implements Queueable, Database.AllowsC
             }
 
         } catch (Exception e) {
+            // Log the full exception to Log__c via LogX before recording the
+            // summary row in Matrix_Sync_Log__c. doEmit=true uses the
+            // LogEvent__e platform event path so the Log__c entry survives
+            // even if the host transaction would otherwise hide context.
+            LogX.logException(
+                e,
+                'MatrixInventorySyncQueueable.execute failed (isManual=' + isManual + ')',
+                correlationId,
+                /* doEmit */ true
+            );
             status = 'Error';
             errorDetail = e.getMessage();
         }

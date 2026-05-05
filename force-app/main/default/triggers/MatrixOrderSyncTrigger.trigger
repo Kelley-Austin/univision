@@ -1,21 +1,13 @@
 /**
- * Subscribes to Matrix_Order_Sync__e platform events and invokes
- * MatrixOrderSyncService to make the outbound REST callout to Matrix.
+ * MatrixOrderSyncTrigger — 3-line dispatcher for the Matrix_Order_Sync__e
+ * platform event. Delegates to MatrixOrderSyncTriggerHandler via
+ * TriggerDispatcher.
  *
- * Platform Event triggers run in their own asynchronous transaction after the
- * publishing transaction commits, so callouts are permitted here without any
- * additional queueable indirection.
- *
- * Governor limit note: Each Platform Event batch produces one trigger execution.
- * At the expected volume for an advertising ops team (a handful of status changes
- * per hour), one callout per event is well within the 100-callout-per-transaction
- * limit. If volume grows significantly, consider moving to a Queueable pattern.
+ * Platform Event triggers only fire on afterInsert; no other phase is
+ * available. The dispatcher's TriggerSetting__mdt-driven bypass mechanism
+ * works here too, which is useful for data-loader-style operations that
+ * want to suppress the outbound callout while replaying historic state.
  */
 trigger MatrixOrderSyncTrigger on Matrix_Order_Sync__e (after insert) {
-    for (Matrix_Order_Sync__e event : Trigger.new) {
-        MatrixOrderSyncService.syncOpportunity(
-            (Id) event.Opportunity_Id__c,
-            event.Operation__c
-        );
-    }
+    TriggerDispatcher.run(new MatrixOrderSyncTriggerHandler(), 'MatrixOrderSyncTrigger');
 }

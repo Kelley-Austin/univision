@@ -56,6 +56,12 @@ public with sharing class IngestService {
         String fileContent,
         SourceSystemTransformer transformer
     ) {
+        // Per-ingest correlationId so every Log__c entry from this batch
+        // (transform failure, per-row upsert failure, top-level exception)
+        // shares a single ID. Operators can filter Log__c.CorrelationId__c
+        // to see the full failure timeline for one upload.
+        String correlationId = LogX.getGuid();
+
         Load_Batch__c batch = new Load_Batch__c(
             Source_System__c = ss.Id,
             File_Name__c = cv.Title,
@@ -64,59 +70,101 @@ public with sharing class IngestService {
         );
         insert batch;
 
-        List<Inbound_Staging__c> stagingRows;
         try {
-            stagingRows = transformer.transform(fileContent, batch.Id, ss.Id, ss.Code__c);
-        } catch (Exception e) {
-            batch.Status__c = 'Failed';
-            batch.Error_Count__c = 1;
-            batch.Processed_At__c = Datetime.now();
-            update batch;
-            throw new IngestException('Transform failed: ' + e.getMessage());
-        }
+            List<Inbound_Staging__c> stagingRows;
+            try {
+                stagingRows = transformer.transform(fileContent, batch.Id, ss.Id, ss.Code__c);
+            } catch (Exception e) {
+                // Transform failure: log the full exception (stack trace, type)
+                // BEFORE we wrap-and-rethrow as IngestException. The wrapper
+                // exception's message would otherwise be all the caller sees.
+                LogX.logException(
+                    e,
+                    'IngestService.doIngest transform failed (sourceSystem=' + ss.Code__c +
+                        ', batch=' + batch.Id + ', file=' + cv.Title + ')',
+                    correlationId,
+                    /* doEmit */ true
+                );
+                batch.Status__c = 'Failed';
+                batch.Error_Count__c = 1;
+                batch.Processed_At__c = Datetime.now();
+                update batch;
+                throw new IngestException('Transform failed: ' + e.getMessage());
+            }
 
-        if (stagingRows == null || stagingRows.isEmpty()) {
-            batch.Status__c = 'Complete';
-            batch.Row_Count__c = 0;
-            batch.Error_Count__c = 0;
-            batch.Processed_At__c = Datetime.now();
-            update batch;
-            updateSourceSystemTimestamp(ss.Id);
-            return new IngestResult();
-        }
+            if (stagingRows == null || stagingRows.isEmpty()) {
+                batch.Status__c = 'Complete';
+                batch.Row_Count__c = 0;
+                batch.Error_Count__c = 0;
+                batch.Processed_At__c = Datetime.now();
+                update batch;
+                updateSourceSystemTimestamp(ss.Id);
+                return new IngestResult();
+            }
 
-        new MappingRuleExecutor(ss.Id).apply(stagingRows);
+            new MappingRuleExecutor(ss.Id).apply(stagingRows);
 
-        for (Inbound_Staging__c row : stagingRows) {
-            row.Staging_Key__c = computeStagingKey(ss.Code__c, row);
-        }
+            for (Inbound_Staging__c row : stagingRows) {
+                row.Staging_Key__c = computeStagingKey(ss.Code__c, row);
+            }
 
-        Database.UpsertResult[] upsertResults = Database.upsert(stagingRows, Inbound_Staging__c.Staging_Key__c, false);
+            Database.UpsertResult[] upsertResults = Database.upsert(stagingRows, Inbound_Staging__c.Staging_Key__c, false);
 
-        Integer upsertErrors = 0;
-        List<String> errorMsgs = new List<String>();
-        for (Integer i = 0; i < upsertResults.size(); i++) {
-            if (!upsertResults[i].isSuccess()) {
+            Integer upsertErrors = 0;
+            List<String> errorMsgs = new List<String>();
+            for (Integer i = 0; i < upsertResults.size(); i++) {
+                if (upsertResults[i].isSuccess()) continue;
                 upsertErrors++;
                 for (Database.Error err : upsertResults[i].getErrors()) {
                     errorMsgs.add(err.getMessage());
                 }
+                // Emit the full Database.error[] to Log__c. errorMsgs above
+                // gives the LWC a quick string list for inline display; the
+                // Log__c entries preserve status code, fields, etc. for triage.
+                LogX.logErrors(
+                    upsertResults[i].getErrors(),
+                    'IngestService.doIngest: Inbound_Staging__c upsert failed' +
+                        ' (sourceSystem=' + ss.Code__c + ', batch=' + batch.Id + ')',
+                    correlationId
+                );
             }
+
+            batch.Row_Count__c  = stagingRows.size();
+            batch.Error_Count__c = upsertErrors;
+            batch.Processed_At__c = Datetime.now();
+            batch.Status__c = upsertErrors == 0 ? 'Complete'
+                            : upsertErrors < stagingRows.size() ? 'Partial'
+                            : 'Failed';
+            update batch;
+            updateSourceSystemTimestamp(ss.Id);
+
+            IngestResult result = countResult(stagingRows, false);
+            result.errorCount += upsertErrors;
+            result.errors = errorMsgs;
+            return result;
+
+        } catch (Exception ex) {
+            // Top-level: catch anything the inner blocks didn't (DML failures,
+            // mapping-rule executor errors, etc.) so the failure leaves a
+            // Log__c entry even though we rethrow. doEmit=true uses the
+            // platform-event path so the entry survives any rollback caused
+            // by the rethrow. IngestException re-emerges from the inner
+            // catch and is logged here as well — slight duplication, worth it
+            // for top-level safety net coverage.
+            if (!(ex instanceof IngestException)) {
+                // The transform-failure path already logged its own exception
+                // before wrapping. Anything ELSE is a path we haven't logged
+                // yet; capture it now.
+                LogX.logException(
+                    ex,
+                    'IngestService.doIngest unexpected failure (sourceSystem=' + ss.Code__c +
+                        ', batch=' + batch.Id + ')',
+                    correlationId,
+                    /* doEmit */ true
+                );
+            }
+            throw ex;
         }
-
-        batch.Row_Count__c  = stagingRows.size();
-        batch.Error_Count__c = upsertErrors;
-        batch.Processed_At__c = Datetime.now();
-        batch.Status__c = upsertErrors == 0 ? 'Complete'
-                        : upsertErrors < stagingRows.size() ? 'Partial'
-                        : 'Failed';
-        update batch;
-        updateSourceSystemTimestamp(ss.Id);
-
-        IngestResult result = countResult(stagingRows, false);
-        result.errorCount += upsertErrors;
-        result.errors = errorMsgs;
-        return result;
     }
 
     private static IngestResult countResult(List<Inbound_Staging__c> rows, Boolean dryRun) {

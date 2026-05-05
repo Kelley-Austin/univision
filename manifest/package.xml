@@ -1,42 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>PreemptTransitionService</members>
-        <members>PreemptTransitionService.cls</members>
-        <members>PreemptTransitionServiceTest</members>
-        <members>PreemptTransitionServiceTest.cls</members>
-        <members>ProjectionRollupQueueable</members>
-        <members>ProjectionRollupQueueableTest</members>
-        <members>ReconciliationEngine</members>
-        <members>ReconciliationEngineTest</members>
+        <members>ActualRevenueTriggerHandler</members>
+        <members>ContentDocumentLinkTriggerHandler</members>
+        <members>MatrixOrderSyncTriggerHandler</members>
+        <members>PeriodCloseTriggerHandler</members>
+        <members>ProjectionTriggerHandler</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Actual_Revenue__c.Account__c.field</members>
-        <members>Actual_Revenue__c.Calendar_Type__c.field</members>
-        <members>Actual_Revenue__c.Is_Preempt__c.field</members>
-        <members>Actual_Revenue__c.Preempt_Status__c.field</members>
-        <members>Actual_Revenue__c.Source_Order_Number__c.field</members>
-        <members>Inbound_Staging__c.Is_Preempt__c.field</members>
-        <members>Inbound_Staging__c.Preempt_Status__c.field</members>
-        <members>Inbound_Staging__c.Source_Order_Number__c.field</members>
-        <members>Inbound_Staging__c.Source_System__c.field</members>
-        <members>Preempt_Transition_Log__c.Applied_Amount__c.field</members>
-        <members>Preempt_Transition_Log__c.Booked_Actual__c.field</members>
-        <members>Preempt_Transition_Log__c.Calendar_Type__c.field</members>
-        <members>Preempt_Transition_Log__c.Net_Adjustment__c.field</members>
-        <members>Preempt_Transition_Log__c.Notes__c.field</members>
-        <members>Preempt_Transition_Log__c.Original_Preempt__c.field</members>
-        <members>Preempt_Transition_Log__c.Period_Month__c.field</members>
-        <members>Preempt_Transition_Log__c.Period_Year__c.field</members>
-        <members>Preempt_Transition_Log__c.Reversed_Amount__c.field</members>
-        <members>Preempt_Transition_Log__c.Source_Order_Number__c.field</members>
-        <members>Preempt_Transition_Log__c.Transition_Type__c.field</members>
-        <name>CustomField</name>
-    </types>
-    <types>
-        <members>Preempt_Transition_Log__c</members>
-        <name>CustomObject</name>
+        <members>ActualRevenueTrigger</members>
+        <members>ContentDocumentLinkTrigger</members>
+        <members>MatrixOrderSyncTrigger</members>
+        <members>PeriodCloseTrigger</members>
+        <members>ProjectionTrigger</members>
+        <name>ApexTrigger</name>
     </types>
     <version>61.0</version>
 </Package>

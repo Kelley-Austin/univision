@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>LogDispatcher TriggerBypass</label>
+    <protected>false</protected>
+    <values>
+        <field>DisableAfter__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>DisableBefore__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>DisableDelete__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>DisableInsert__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>DisableUnDelete__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>DisableUpdate__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>DisableUserName__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>ExemptUserName__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>FieldAPIName__c</field>
+        <value xsi:type="xsd:string">TriggerBypass__c</value>
+    </values>
+    <values>
+        <field>FieldValue__c</field>
+        <value xsi:type="xsd:string">true</value>
+    </values>
+</CustomMetadata>

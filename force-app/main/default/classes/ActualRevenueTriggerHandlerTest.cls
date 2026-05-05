@@ -3,23 +3,13 @@ private class ActualRevenueTriggerHandlerTest {
 
     @TestSetup
     static void setupData() {
-        Id advRtId = Schema.SObjectType.Account
-            .getRecordTypeInfosByDeveloperName().get('Advertiser').getRecordTypeId();
-        Account adv = new Account(Name = 'Trigger Test Advertiser', RecordTypeId = advRtId);
-        insert adv;
-
-        Category__c cat = new Category__c(Name = 'Digital Spot');
-        insert cat;
-
-        // A closed period: Jan 2026 closed on Jan 31
-        Period_Close__c pc = new Period_Close__c(
-            Period_Month__c = 1,
-            Period_Year__c  = 2026,
-            Close_Date__c   = Date.newInstance(2026, 1, 31),
-            Status__c       = 'Closed',
-            Composite_Key__c = '2026|1'
-        );
-        insert pc;
+        // Centralized via TestDataFactory — adding required fields to any of
+        // these objects only needs the factory updated, not every test class.
+        TestDataFactory.createAdvertiser('Trigger Test Advertiser');
+        TestDataFactory.createCategory('Digital Spot');
+        // A closed period: Jan 2026 closed on Jan 31. Tests below assume
+        // today() > 2026-01-31 when asserting Is_Late__c = true.
+        TestDataFactory.createClosedPeriod(2026, 1, Date.newInstance(2026, 1, 31));
     }
 
     // ── Category_Snapshot populated on insert ─────────────────────────────────
