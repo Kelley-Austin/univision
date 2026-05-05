@@ -5,7 +5,7 @@ private class LoadBatchDashboardControllerTest {
     static void setup() {
         Source_System__c ss = new Source_System__c(
             Name = 'WideOrbit TV', Code__c = 'WIDEORBIT_TV',
-            Source_Code__c = 'WIDEORBIT_TV', Is_Active__c = true
+            Source_Code__c = 'WIDEORBIT_TV', Transformer_Class__c = 'WideOrbitTransformer', Is_Active__c = true
         );
         insert ss;
 
@@ -103,7 +103,7 @@ private class LoadBatchDashboardControllerTest {
     static void getSummary_differentSourceSystem_returnsZeroes() {
         Source_System__c other = new Source_System__c(
             Name = 'Strata', Code__c = 'STRATA',
-            Source_Code__c = 'STRATA', Is_Active__c = true
+            Source_Code__c = 'STRATA', Transformer_Class__c = 'StrataTransformer', Is_Active__c = true
         );
         insert other;
 

@@ -29,8 +29,10 @@ private class ReconciliationControllerTest {
         insert aeUser;
 
         Source_System__c ss = new Source_System__c(
-            Name    = 'WO Controller',
-            Code__c = 'WOCTRL'
+            Name                 = 'WO Controller',
+            Code__c              = 'WOCTRL',
+            Source_Code__c       = 'WOCTRL',
+            Transformer_Class__c = 'WideOrbitTransformer'
         );
         insert ss;
 

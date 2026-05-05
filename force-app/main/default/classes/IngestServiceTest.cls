@@ -6,6 +6,8 @@ private class IngestServiceTest {
         Source_System__c ss = new Source_System__c(
             Name = 'WideOrbit TV',
             Code__c = 'WIDEORBIT_TV',
+            Source_Code__c = 'WIDEORBIT_TV',
+            Transformer_Class__c = 'WideOrbitTransformer',
             Is_Active__c = true
         );
         insert ss;

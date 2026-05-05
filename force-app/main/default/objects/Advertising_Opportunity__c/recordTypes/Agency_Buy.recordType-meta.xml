@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Agency_Buy</fullName>
     <active>true</active>
     <description>Agency-placed buy — opportunity sourced through an advertising agency. Maps to Media Cloud Media Plan (Agency).</description>
     <label>Agency Buy</label>

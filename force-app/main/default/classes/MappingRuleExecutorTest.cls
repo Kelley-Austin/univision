@@ -3,7 +3,7 @@ private class MappingRuleExecutorTest {
 
     @TestSetup
     static void makeData() {
-        Source_System__c ss = new Source_System__c(Name = 'Test System', Code__c = 'TEST_EXEC');
+        Source_System__c ss = new Source_System__c(Name = 'Test System', Code__c = 'TEST_EXEC', Source_Code__c = 'TEST_EXEC', Transformer_Class__c = 'WideOrbitTransformer');
         insert ss;
 
         List<Mapping_Rule__c> rules = new List<Mapping_Rule__c>{
@@ -187,7 +187,7 @@ private class MappingRuleExecutorTest {
 
     @IsTest
     static void noRules_rowsPassThrough() {
-        Source_System__c empty = new Source_System__c(Name = 'No Rules SS', Code__c = 'NORULES_EXEC');
+        Source_System__c empty = new Source_System__c(Name = 'No Rules SS', Code__c = 'NORULES_EXEC', Source_Code__c = 'NORULES_EXEC', Transformer_Class__c = 'WideOrbitTransformer');
         insert empty;
 
         Inbound_Staging__c row = new Inbound_Staging__c(

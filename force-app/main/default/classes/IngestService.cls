@@ -149,4 +149,6 @@ public with sharing class IngestService {
         Blob digest = Crypto.generateDigest('MD5', Blob.valueOf(raw));
         return EncodingUtil.convertToHex(digest);
     }
+
+    public class IngestException extends Exception {}
 }

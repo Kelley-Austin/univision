@@ -13,7 +13,7 @@ private class OperativeTransformerTest {
         'OnlyTwo\n';
 
     private static Id makeSourceSystem() {
-        Source_System__c ss = new Source_System__c(Name = 'Operative', Code__c = 'OPERATIVE', Is_Active__c = true);
+        Source_System__c ss = new Source_System__c(Name = 'Operative', Code__c = 'OPERATIVE', Source_Code__c = 'OPERATIVE', Transformer_Class__c = 'OperativeTransformer', Is_Active__c = true);
         insert ss;
         Load_Batch__c lb = new Load_Batch__c(Source_System__c = ss.Id, Status__c = 'Processing');
         insert lb;
