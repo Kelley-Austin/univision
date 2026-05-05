@@ -14,6 +14,11 @@ global without sharing class TrafficOrderCallbackController {
         RestResponse res = RestContext.response;
         res.addHeader('Content-Type', 'application/json');
 
+        // Per-callback correlationId so a Log__c entry can be tied back to
+        // a specific inbound HTTP request. The traffic system never sees this
+        // ID; it's purely internal.
+        String correlationId = LogX.getGuid();
+
         try {
             CallbackPayload payload = (CallbackPayload) JSON.deserialize(
                 req.requestBody.toString(), CallbackPayload.class
@@ -53,6 +58,17 @@ global without sharing class TrafficOrderCallbackController {
             res.responseBody = Blob.valueOf('{"result":"ok","contractId":"' + contract.Id + '"}');
 
         } catch (Exception e) {
+            // Log the full exception to Log__c BEFORE writing the HTTP 500
+            // response. The caller (traffic system) only sees the truncated
+            // JSON error message; LogX captures stack trace + correlation
+            // for internal triage. doEmit=true so the Log__c entry survives
+            // any transaction rollback caused by the failure.
+            LogX.logException(
+                e,
+                'TrafficOrderCallbackController.handleCallback received invalid callback',
+                correlationId,
+                /* doEmit */ true
+            );
             res.statusCode = 500;
             res.responseBody = Blob.valueOf(
                 '{"error":"' + e.getMessage().replace('"', '\'') + '"}'
