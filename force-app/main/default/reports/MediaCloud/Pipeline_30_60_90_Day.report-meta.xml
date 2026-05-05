@@ -12,7 +12,7 @@
         <chartType>HorizontalBar</chartType>
         <enableHoverLabels>true</enableHoverLabels>
         <expandOtherItems>false</expandOtherItems>
-        <groupingColumn>Status__c</groupingColumn>
+        <groupingColumn>STAGE_NAME</groupingColumn>
         <legendPosition>Bottom</legendPosition>
         <location>CHART_BOTTOM</location>
         <showAxisLabels>true</showAxisLabels>
@@ -31,7 +31,7 @@
         <field>NAME</field>
     </columns>
     <columns>
-        <field>Account__r.Name</field>
+        <field>ACCOUNT_NAME</field>
     </columns>
     <columns>
         <field>OWNER.NAME</field>
@@ -40,7 +40,7 @@
         <field>Market__c</field>
     </columns>
     <columns>
-        <field>Status__c</field>
+        <field>STAGE_NAME</field>
     </columns>
     <columns>
         <field>End_Date__c</field>
@@ -53,7 +53,7 @@
     <filter>
         <booleanFilter>1 AND 2</booleanFilter>
         <criterias>
-            <column>Status__c</column>
+            <column>STAGE_NAME</column>
             <filterType>filterItem</filterType>
             <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
@@ -69,7 +69,7 @@
     </filter>
     <format>Summary</format>
     <groupingsDown>
-        <field>Status__c</field>
+        <field>STAGE_NAME</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <groupingsDown>
@@ -77,7 +77,7 @@
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>30/60/90-Day Pipeline</name>
-    <reportType>Advertising_Opportunity__c</reportType>
+    <reportType>Opportunity</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>
 </Report>

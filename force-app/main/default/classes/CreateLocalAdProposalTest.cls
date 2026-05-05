@@ -68,10 +68,10 @@ private class CreateLocalAdProposalTest {
         System.assertEquals(true, results[0].success, results[0].errorMessage);
         System.assertNotEquals(null, results[0].opportunityId);
 
-        Advertising_Opportunity__c opp = [
+        Opportunity opp = [
             SELECT Market__c, Primary_Demo__c, Secondary_Demo__c,
-                   Total_Planned_Amount__c, Total_Budget__c, Status__c
-            FROM Advertising_Opportunity__c
+                   Total_Planned_Amount__c, Total_Budget__c, StageName
+            FROM Opportunity
             WHERE Id = :results[0].opportunityId
         ];
         System.assertEquals('Los Angeles', opp.Market__c);
@@ -79,12 +79,12 @@ private class CreateLocalAdProposalTest {
         System.assertEquals('W25-54', opp.Secondary_Demo__c);
         System.assertEquals(10000, opp.Total_Planned_Amount__c);
         System.assertEquals(50000, opp.Total_Budget__c);
-        System.assertEquals('Draft', opp.Status__c);
+        System.assertEquals('Draft', opp.StageName);
 
         List<Budget_Line__c> lines = [
             SELECT Month__c, Planned_Amount__c, Vehicle__c, Channel__c
             FROM Budget_Line__c
-            WHERE Advertising_Opportunity__c = :results[0].opportunityId
+            WHERE Opportunity__c = :results[0].opportunityId
         ];
         System.assertEquals(1, lines.size());
         System.assertEquals(10000, lines[0].Planned_Amount__c);
@@ -116,7 +116,7 @@ private class CreateLocalAdProposalTest {
 
         List<Budget_Line__c> lines = [
             SELECT Id FROM Budget_Line__c
-            WHERE Advertising_Opportunity__c = :results[0].opportunityId
+            WHERE Opportunity__c = :results[0].opportunityId
         ];
         System.assertEquals(0, lines.size(), 'Expected no budget lines');
     }
@@ -142,7 +142,7 @@ private class CreateLocalAdProposalTest {
 
         System.assertEquals(true, results[0].success);
         System.assertEquals(0, [SELECT COUNT() FROM Budget_Line__c
-                                  WHERE Advertising_Opportunity__c = :results[0].opportunityId]);
+                                  WHERE Opportunity__c = :results[0].opportunityId]);
     }
 
     @IsTest
@@ -178,14 +178,14 @@ private class CreateLocalAdProposalTest {
 
         System.assertEquals(true, results[0].success);
 
-        Advertising_Opportunity__c opp = [
+        Opportunity opp = [
             SELECT Total_Planned_Amount__c
-            FROM Advertising_Opportunity__c
+            FROM Opportunity
             WHERE Id = :results[0].opportunityId
         ];
         System.assertEquals(10000, opp.Total_Planned_Amount__c, 'Rollup should total 4 × $2,500');
         System.assertEquals(4, [SELECT COUNT() FROM Budget_Line__c
-                                  WHERE Advertising_Opportunity__c = :results[0].opportunityId]);
+                                  WHERE Opportunity__c = :results[0].opportunityId]);
     }
 
     @IsTest
@@ -204,7 +204,7 @@ private class CreateLocalAdProposalTest {
 
         System.assertEquals(false, results[0].success, 'Null required Account__c should fail');
         System.assertNotEquals(null, results[0].errorMessage);
-        System.assertEquals(0, [SELECT COUNT() FROM Advertising_Opportunity__c]);
+        System.assertEquals(0, [SELECT COUNT() FROM Opportunity]);
     }
 
     @IsTest
@@ -233,7 +233,7 @@ private class CreateLocalAdProposalTest {
         for (CreateLocalAdProposal.ProposalResult r : results) {
             System.assertEquals(true, r.success, r.errorMessage);
         }
-        System.assertEquals(5, [SELECT COUNT() FROM Advertising_Opportunity__c]);
+        System.assertEquals(5, [SELECT COUNT() FROM Opportunity]);
     }
 
     @IsTest
@@ -273,9 +273,9 @@ private class CreateLocalAdProposalTest {
             );
         Test.stopTest();
 
-        Advertising_Opportunity__c opp = [
+        Opportunity opp = [
             SELECT RecordType.DeveloperName
-            FROM Advertising_Opportunity__c
+            FROM Opportunity
             WHERE Id = :results[0].opportunityId
         ];
         System.assertEquals('Local_Ad_Sales', opp.RecordType.DeveloperName);

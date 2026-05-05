@@ -1,11 +1,11 @@
 /**
  * Invocable action behind the "Run Reconciliation" quick action on
- * Advertising_Opportunity__c. Refreshes the Actual Revenue rollups for the
+ * Opportunity. Refreshes the Actual Revenue rollups for the
  * opportunity's Account so that pacing/variance calculations reflect the
  * latest matched actuals.
  *
  * Implementation: queries Actual_Revenue__c records for the opportunity's
- * Account (scoped to the opportunity's Fiscal_Year__c when set) and enqueues
+ * Account (scoped to the opportunity's FiscalYear when set) and enqueues
  * ProjectionRollupQueueable to recompute Projection__c.Actual_Amount__c.
  *
  * Note: this action operates on already-matched Actual_Revenue__c records.
@@ -40,35 +40,35 @@ public with sharing class RunReconciliationAction {
         for (ReconciliationRequest r : requests) {
             if (r.opportunityId != null) oppIds.add(r.opportunityId);
         }
-        Map<Id, Advertising_Opportunity__c> oppsById = new Map<Id, Advertising_Opportunity__c>(
-            [SELECT Id, Account__c, Fiscal_Year__c FROM Advertising_Opportunity__c WHERE Id IN :oppIds]
+        Map<Id, Opportunity> oppsById = new Map<Id, Opportunity>(
+            [SELECT Id, AccountId, FiscalYear FROM Opportunity WHERE Id IN :oppIds]
         );
 
         for (ReconciliationRequest req : requests) {
             ReconciliationResult res = new ReconciliationResult();
             try {
-                Advertising_Opportunity__c opp = oppsById.get(req.opportunityId);
+                Opportunity opp = oppsById.get(req.opportunityId);
                 if (opp == null) {
                     throw new IllegalArgumentException('Opportunity not found: ' + req.opportunityId);
                 }
-                if (opp.Account__c == null) {
+                if (opp.AccountId == null) {
                     res.success = false;
                     res.message = 'Cannot reconcile: this opportunity has no Account.';
                     results.add(res);
                     continue;
                 }
 
-                List<Actual_Revenue__c> actuals = (opp.Fiscal_Year__c != null)
+                List<Actual_Revenue__c> actuals = (opp.FiscalYear != null)
                     ? [SELECT Id FROM Actual_Revenue__c
-                       WHERE Account__c = :opp.Account__c AND Period_Year__c = :opp.Fiscal_Year__c]
+                       WHERE Account__c = :opp.AccountId AND Period_Year__c = :opp.FiscalYear]
                     : [SELECT Id FROM Actual_Revenue__c
-                       WHERE Account__c = :opp.Account__c];
+                       WHERE Account__c = :opp.AccountId];
 
                 if (actuals.isEmpty()) {
                     res.success = true;
                     res.message = 'No matched Actual Revenue records found for this Account'
-                                + (opp.Fiscal_Year__c != null
-                                    ? ' in fiscal year ' + opp.Fiscal_Year__c + '.'
+                                + (opp.FiscalYear != null
+                                    ? ' in fiscal year ' + opp.FiscalYear + '.'
                                     : '.')
                                 + ' Nothing to roll up.';
                     results.add(res);

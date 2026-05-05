@@ -43,18 +43,18 @@ public class CreateOpportunityWithBudgetLinesTest {
         System.assert(results[0].isSuccess, 'Should succeed');
         System.assertNotEquals(null, results[0].opportunityId);
 
-        Advertising_Opportunity__c opp = [
-            SELECT Id, Status__c, Total_Planned_Amount__c
-            FROM Advertising_Opportunity__c
+        Opportunity opp = [
+            SELECT Id, StageName, Total_Planned_Amount__c
+            FROM Opportunity
             WHERE Id = :results[0].opportunityId
         ];
-        System.assertEquals('Draft', opp.Status__c);
+        System.assertEquals('Draft', opp.StageName);
         System.assertEquals(5000, opp.Total_Planned_Amount__c);
 
         List<Budget_Line__c> lines = [
             SELECT Channel__c, Month__c, Planned_Amount__c, Status__c
             FROM Budget_Line__c
-            WHERE Advertising_Opportunity__c = :opp.Id
+            WHERE Opportunity__c = :opp.Id
         ];
         System.assertEquals(1, lines.size());
         System.assertEquals(chan.Id, lines[0].Channel__c);
@@ -82,7 +82,7 @@ public class CreateOpportunityWithBudgetLinesTest {
         System.assert(results[0].isSuccess, 'Should succeed with no lines');
         System.assertNotEquals(null, results[0].opportunityId);
 
-        Integer lineCount = [SELECT COUNT() FROM Budget_Line__c WHERE Advertising_Opportunity__c = :results[0].opportunityId];
+        Integer lineCount = [SELECT COUNT() FROM Budget_Line__c WHERE Opportunity__c = :results[0].opportunityId];
         System.assertEquals(0, lineCount);
     }
 
@@ -121,10 +121,10 @@ public class CreateOpportunityWithBudgetLinesTest {
             );
         Test.stopTest();
 
-        Advertising_Opportunity__c opp = [
-            SELECT Status__c FROM Advertising_Opportunity__c WHERE Id = :results[0].opportunityId
+        Opportunity opp = [
+            SELECT StageName FROM Opportunity WHERE Id = :results[0].opportunityId
         ];
-        System.assertEquals('Draft', opp.Status__c);
+        System.assertEquals('Draft', opp.StageName);
     }
 
     @isTest
@@ -147,7 +147,7 @@ public class CreateOpportunityWithBudgetLinesTest {
         System.assert(!results[0].isSuccess, 'Should fail');
         System.assertNotEquals(null, results[0].errorMessage);
 
-        Integer oppCount = [SELECT COUNT() FROM Advertising_Opportunity__c];
+        Integer oppCount = [SELECT COUNT() FROM Opportunity];
         System.assertEquals(0, oppCount, 'Rollback should have removed the opportunity');
     }
 
@@ -185,7 +185,7 @@ public class CreateOpportunityWithBudgetLinesTest {
         for (CreateOpportunityWithBudgetLines.OpportunityResult r : results) {
             System.assert(r.isSuccess, 'All bulk creates should succeed');
         }
-        System.assertEquals(5, [SELECT COUNT() FROM Advertising_Opportunity__c]);
+        System.assertEquals(5, [SELECT COUNT() FROM Opportunity]);
         System.assertEquals(5, [SELECT COUNT() FROM Budget_Line__c]);
     }
 }

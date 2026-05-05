@@ -54,7 +54,7 @@ public with sharing class TrafficOrderSubmitAction {
         Budget_Line__c line;
         try {
             line = [
-                SELECT Id, Name, Advertising_Opportunity__c
+                SELECT Id, Name, Opportunity__c
                 FROM Budget_Line__c
                 WHERE Id = :req.budgetLineId
                 LIMIT 1
@@ -79,11 +79,11 @@ public with sharing class TrafficOrderSubmitAction {
             return r;
         }
 
-        if (line.Advertising_Opportunity__c != null) {
+        if (line.Opportunity__c != null) {
             List<Advertising_Contract__c> contracts = [
                 SELECT Id, Traffic_Status__c
                 FROM Advertising_Contract__c
-                WHERE Advertising_Opportunity__c = :line.Advertising_Opportunity__c
+                WHERE Opportunity__c = :line.Opportunity__c
                 AND Contract_Status__c NOT IN ('Cancelled', 'Completed')
                 ORDER BY CreatedDate DESC
                 LIMIT 1

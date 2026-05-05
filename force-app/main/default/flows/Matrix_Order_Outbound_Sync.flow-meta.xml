@@ -38,44 +38,44 @@
         </value>
     </variables>
 
-    <!-- ─── Trigger: fires after Advertising_Opportunity__c is saved ──────
+    <!-- ─── Trigger: fires after Opportunity is saved ──────
          Entry conditions:
-           1. Status__c changed (IsChanged = true)
-           2. AND (Status__c = Active OR Status__c = Cancelled)
+           1. StageName changed (IsChanged = true)
+           2. AND (StageName = Approved OR Closed Won OR Closed Lost)
          The background/async path runs after the transaction commits.      -->
     <start>
         <locationX>176</locationX>
         <locationY>0</locationY>
         <filterLogic>1 AND (2 OR 3 OR 4)</filterLogic>
         <filters>
-            <field>Status__c</field>
+            <field>StageName</field>
             <operator>IsChanged</operator>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
         </filters>
         <filters>
-            <field>Status__c</field>
+            <field>StageName</field>
             <operator>EqualTo</operator>
             <value>
                 <stringValue>Approved</stringValue>
             </value>
         </filters>
         <filters>
-            <field>Status__c</field>
+            <field>StageName</field>
             <operator>EqualTo</operator>
             <value>
                 <stringValue>Closed Won</stringValue>
             </value>
         </filters>
         <filters>
-            <field>Status__c</field>
+            <field>StageName</field>
             <operator>EqualTo</operator>
             <value>
                 <stringValue>Closed Lost</stringValue>
             </value>
         </filters>
-        <object>Advertising_Opportunity__c</object>
+        <object>Opportunity</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <scheduledPaths>
             <connector>
@@ -100,7 +100,7 @@
             <name>Is_CANCEL</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.Status__c</leftValueReference>
+                <leftValueReference>$Record.StageName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Closed Lost</stringValue>
@@ -115,14 +115,14 @@
             <name>Is_UPDATE</name>
             <conditionLogic>(1 OR 2) AND 3</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.Status__c</leftValueReference>
+                <leftValueReference>$Record.StageName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Approved</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.Status__c</leftValueReference>
+                <leftValueReference>$Record.StageName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Closed Won</stringValue>

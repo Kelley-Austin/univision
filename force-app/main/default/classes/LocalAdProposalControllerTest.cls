@@ -21,14 +21,16 @@ private class LocalAdProposalControllerTest {
         );
         insert v;
 
-        Id rtId = Schema.SObjectType.Advertising_Opportunity__c
+        Id rtId = Schema.SObjectType.Opportunity
             .getRecordTypeInfosByDeveloperName()
             .get('Local_Ad_Sales')
             .getRecordTypeId();
 
-        Advertising_Opportunity__c opp = new Advertising_Opportunity__c(
+        Opportunity opp = new Opportunity(
+            Name              = 'Local Ad Test Opp',
             RecordTypeId      = rtId,
-            Account__c        = acct.Id,
+            AccountId         = acct.Id,
+            CloseDate         = Date.today().addMonths(3),
             Market__c         = 'Los Angeles',
             Start_Date__c     = Date.today(),
             End_Date__c       = Date.today().addMonths(3),
@@ -36,12 +38,12 @@ private class LocalAdProposalControllerTest {
             Secondary_Demo__c = 'W25-54',
             Proposal_Notes__c = 'Test proposal notes',
             Total_Budget__c   = 50000,
-            Status__c         = 'Draft'
+            StageName         = 'Draft'
         );
         insert opp;
 
         Budget_Line__c bl = new Budget_Line__c(
-            Advertising_Opportunity__c = opp.Id,
+            Opportunity__c = opp.Id,
             Account__c   = acct.Id,
             Vehicle__c   = v.Id,
             Channel__c   = ch.Id,
@@ -55,8 +57,8 @@ private class LocalAdProposalControllerTest {
 
     @IsTest
     static void testControllerHappyPath() {
-        Advertising_Opportunity__c opp =
-            [SELECT Id FROM Advertising_Opportunity__c LIMIT 1];
+        Opportunity opp =
+            [SELECT Id FROM Opportunity LIMIT 1];
 
         Test.setCurrentPageReference(new PageReference('/apex/LocalAdProposal'));
         ApexPages.currentPage().getParameters().put('id', opp.Id);
@@ -101,14 +103,14 @@ private class LocalAdProposalControllerTest {
 
     @IsTest
     static void testTotalPlannedSumsAllLines() {
-        Advertising_Opportunity__c opp =
-            [SELECT Id FROM Advertising_Opportunity__c LIMIT 1];
+        Opportunity opp =
+            [SELECT Id FROM Opportunity LIMIT 1];
         Account acct = [SELECT Id FROM Account LIMIT 1];
         Channel__c ch = [SELECT Id FROM Channel__c LIMIT 1];
         Vehicle__c v  = [SELECT Id FROM Vehicle__c LIMIT 1];
 
         Budget_Line__c bl2 = new Budget_Line__c(
-            Advertising_Opportunity__c = opp.Id,
+            Opportunity__c = opp.Id,
             Account__c   = acct.Id,
             Vehicle__c   = v.Id,
             Channel__c   = ch.Id,

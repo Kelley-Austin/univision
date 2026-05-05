@@ -14,7 +14,7 @@
     <!-- Fields displayed on the approval page for the reviewer -->
     <approvalPageFields>
         <field>Name</field>
-        <field>Advertising_Opportunity__c</field>
+        <field>Opportunity__c</field>
         <field>Account__c</field>
         <field>Contract_Status__c</field>
         <field>Total_Contract_Value__c</field>

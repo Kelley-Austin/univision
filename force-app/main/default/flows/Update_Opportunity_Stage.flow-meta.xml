@@ -15,7 +15,7 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
-        <description>ID of the Advertising Opportunity being updated. Passed automatically from the quick action.</description>
+        <description>ID of the Opportunity being updated. Passed automatically from the quick action.</description>
     </variables>
     <variables>
         <name>varOpportunity</name>
@@ -23,7 +23,7 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-        <objectType>Advertising_Opportunity__c</objectType>
+        <objectType>Opportunity</objectType>
     </variables>
 
     <!-- ═══════════════════════════════════════════
@@ -33,17 +33,17 @@
         <name>dcs_Status</name>
         <dataType>Picklist</dataType>
         <displayField>label</displayField>
-        <object>Advertising_Opportunity__c</object>
-        <picklistField>Status__c</picklistField>
-        <picklistObjectAndField>Advertising_Opportunity__c.Status__c</picklistObjectAndField>
+        <object>Opportunity</object>
+        <picklistField>StageName</picklistField>
+        <picklistObjectAndField>Opportunity.StageName</picklistObjectAndField>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
         <name>dcs_LostReason</name>
         <dataType>Picklist</dataType>
         <displayField>label</displayField>
-        <object>Advertising_Opportunity__c</object>
+        <object>Opportunity</object>
         <picklistField>Lost_Reason__c</picklistField>
-        <picklistObjectAndField>Advertising_Opportunity__c.Lost_Reason__c</picklistObjectAndField>
+        <picklistObjectAndField>Opportunity.Lost_Reason__c</picklistObjectAndField>
     </dynamicChoiceSets>
 
     <!-- ═══════════════════════════════════════════
@@ -75,13 +75,13 @@
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Advertising_Opportunity__c</object>
+        <object>Opportunity</object>
         <outputReference>varOpportunity</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>Name</queriedFields>
-        <queriedFields>Status__c</queriedFields>
-        <queriedFields>Close_Date__c</queriedFields>
-        <queriedFields>Estimated_Revenue__c</queriedFields>
+        <queriedFields>StageName</queriedFields>
+        <queriedFields>CloseDate</queriedFields>
+        <queriedFields>Amount</queriedFields>
         <queriedFields>Primary_Contact__c</queriedFields>
     </recordLookups>
 
@@ -101,7 +101,7 @@
         </connector>
         <fields>
             <name>display_CurrentStage</name>
-            <fieldText>&lt;p&gt;Current stage: &lt;strong&gt;{!varOpportunity.Status__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Select the new stage and confirm any required details below.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Current stage: &lt;strong&gt;{!varOpportunity.StageName}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Select the new stage and confirm any required details below.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -117,7 +117,7 @@
             <name>input_CloseDate</name>
             <dataType>Date</dataType>
             <defaultValue>
-                <elementReference>varOpportunity.Close_Date__c</elementReference>
+                <elementReference>varOpportunity.CloseDate</elementReference>
             </defaultValue>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
@@ -127,7 +127,7 @@
             <name>input_EstimatedRevenue</name>
             <dataType>Currency</dataType>
             <defaultValue>
-                <elementReference>varOpportunity.Estimated_Revenue__c</elementReference>
+                <elementReference>varOpportunity.Amount</elementReference>
             </defaultValue>
             <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
@@ -216,36 +216,36 @@
             </value>
         </filters>
         <inputAssignments>
-            <field>Status__c</field>
+            <field>StageName</field>
             <value>
                 <elementReference>screen_UpdateStage.input_NewStage</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Close_Date__c</field>
+            <field>CloseDate</field>
             <value>
                 <elementReference>screen_UpdateStage.input_CloseDate</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Estimated_Revenue__c</field>
+            <field>Amount</field>
             <value>
                 <elementReference>screen_UpdateStage.input_EstimatedRevenue</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Probability__c</field>
+            <field>Probability</field>
             <value>
                 <elementReference>screen_UpdateStage.input_Probability</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Next_Step__c</field>
+            <field>NextStep</field>
             <value>
                 <elementReference>screen_UpdateStage.input_NextStep</elementReference>
             </value>
         </inputAssignments>
-        <object>Advertising_Opportunity__c</object>
+        <object>Opportunity</object>
     </recordUpdates>
 
     <!-- ═══════════════════════════════════════════
@@ -268,25 +268,25 @@
             </value>
         </filters>
         <inputAssignments>
-            <field>Status__c</field>
+            <field>StageName</field>
             <value>
                 <elementReference>screen_UpdateStage.input_NewStage</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Close_Date__c</field>
+            <field>CloseDate</field>
             <value>
                 <elementReference>screen_UpdateStage.input_CloseDate</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Estimated_Revenue__c</field>
+            <field>Amount</field>
             <value>
                 <elementReference>screen_UpdateStage.input_EstimatedRevenue</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Probability__c</field>
+            <field>Probability</field>
             <value>
                 <elementReference>screen_UpdateStage.input_Probability</elementReference>
             </value>
@@ -298,12 +298,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Next_Step__c</field>
+            <field>NextStep</field>
             <value>
                 <elementReference>screen_UpdateStage.input_NextStep</elementReference>
             </value>
         </inputAssignments>
-        <object>Advertising_Opportunity__c</object>
+        <object>Opportunity</object>
     </recordUpdates>
 
     <!-- ═══════════════════════════════════════════

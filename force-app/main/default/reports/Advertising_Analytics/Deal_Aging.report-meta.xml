@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <columns>
-        <field>Account__c</field>
+        <field>ACCOUNT_NAME</field>
     </columns>
     <columns>
         <field>Market__c</field>
@@ -18,13 +18,13 @@
         <developerName>ROWCOUNT</developerName>
         <isActive>true</isActive>
         <isCrossBlock>false</isCrossBlock>
-        <reportType>Advertising_Opportunity__c</reportType>
+        <reportType>Opportunity</reportType>
         <scale>0</scale>
     </aggregates>
     <description>Active deals grouped by stage and owner — surfaces stalled pipeline for manager review.</description>
     <filter>
         <criterias>
-            <column>Status__c</column>
+            <column>STAGE_NAME</column>
             <isFilteringDisabled>false</isFilteringDisabled>
             <operator>excludes</operator>
             <value>Cancelled;Closed</value>
@@ -32,7 +32,7 @@
     </filter>
     <format>Summary</format>
     <groupingsDown>
-        <field>Status__c</field>
+        <field>STAGE_NAME</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <groupingsDown>
@@ -40,7 +40,7 @@
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Deal Aging</name>
-    <reportType>Advertising_Opportunity__c</reportType>
+    <reportType>Opportunity</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>
 </Report>

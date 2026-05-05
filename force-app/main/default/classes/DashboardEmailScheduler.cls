@@ -107,9 +107,9 @@ public without sharing class DashboardEmailScheduler implements Schedulable {
         List<AggregateResult> pipelineByMarket = [
             SELECT Market__c mkt, OwnerId oid,
                    SUM(Total_Budget__c) pipeline
-            FROM Advertising_Opportunity__c
-            WHERE Status__c NOT IN ('Cancelled', 'Closed')
-            AND Fiscal_Year__c = :yr
+            FROM Opportunity
+            WHERE StageName NOT IN ('Cancelled', 'Closed')
+            AND FiscalYear = :yr
             GROUP BY Market__c, OwnerId
             ORDER BY Market__c
         ];
@@ -119,19 +119,19 @@ public without sharing class DashboardEmailScheduler implements Schedulable {
                    SUM(Total_Budget__c) pipeline,
                    SUM(Total_Actual_Amount__c) actual,
                    COUNT(Id) cnt
-            FROM Advertising_Opportunity__c
-            WHERE Fiscal_Year__c = :yr
+            FROM Opportunity
+            WHERE FiscalYear = :yr
             GROUP BY OwnerId
             ORDER BY OwnerId
         ];
 
         List<AggregateResult> dealAging = [
-            SELECT Status__c status, COUNT(Id) cnt
-            FROM Advertising_Opportunity__c
-            WHERE Status__c NOT IN ('Cancelled', 'Closed')
-            AND Fiscal_Year__c = :yr
-            GROUP BY Status__c
-            ORDER BY Status__c
+            SELECT StageName status, COUNT(Id) cnt
+            FROM Opportunity
+            WHERE StageName NOT IN ('Cancelled', 'Closed')
+            AND FiscalYear = :yr
+            GROUP BY StageName
+            ORDER BY StageName
         ];
 
         Map<Id, String> ownerNames = resolveUserNames(collectIds(pipelineByMarket, repYtd, 'oid'));
@@ -201,8 +201,8 @@ public without sharing class DashboardEmailScheduler implements Schedulable {
 
         List<AggregateResult> revByMarket = [
             SELECT Market__c mkt, SUM(Total_Budget__c) budget, SUM(Total_Actual_Amount__c) actual
-            FROM Advertising_Opportunity__c
-            WHERE Fiscal_Year__c = :yr
+            FROM Opportunity
+            WHERE FiscalYear = :yr
             GROUP BY Market__c
             ORDER BY Market__c
         ];

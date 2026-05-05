@@ -7,6 +7,12 @@ public with sharing class CreateOpportunityWithBudgetLines {
         @InvocableVariable(label='Agency Account ID')
         public Id agencyAccountId;
 
+        @InvocableVariable(label='Opportunity Name')
+        public String opportunityName;
+
+        @InvocableVariable(label='Close Date')
+        public Date closeDate;
+
         @InvocableVariable(label='Start Date')
         public Date startDate;
 
@@ -22,7 +28,7 @@ public with sharing class CreateOpportunityWithBudgetLines {
         @InvocableVariable(label='Total Budget')
         public Decimal totalBudget;
 
-        @InvocableVariable(label='Status')
+        @InvocableVariable(label='Stage')
         public String status;
 
         @InvocableVariable(label='Budget Lines JSON')
@@ -42,7 +48,7 @@ public with sharing class CreateOpportunityWithBudgetLines {
 
     @InvocableMethod(
         label='Create Opportunity With Budget Lines'
-        description='Creates Advertising_Opportunity__c and Budget_Line__c records in one transaction; rolls back on any failure'
+        description='Creates Opportunity and Budget_Line__c records in one transaction; rolls back on any failure'
     )
     public static List<OpportunityResult> createOpportunityWithBudgetLines(List<OpportunityRequest> requests) {
         List<OpportunityResult> results = new List<OpportunityResult>();
@@ -52,15 +58,22 @@ public with sharing class CreateOpportunityWithBudgetLines {
             OpportunityResult result = new OpportunityResult();
 
             try {
-                Advertising_Opportunity__c opp = new Advertising_Opportunity__c(
-                    Account__c        = req.accountId,
+                // Standard Opportunity requires Name, StageName, and CloseDate.
+                // Fiscal_Year__c is DROP per FIELD_MAPPING — use standard auto FiscalYear (read-only, derived from CloseDate).
+                Opportunity opp = new Opportunity(
+                    Name              = String.isNotBlank(req.opportunityName)
+                                            ? req.opportunityName
+                                            : 'New Opportunity',
+                    AccountId         = req.accountId,
                     Agency_Account__c = req.agencyAccountId,
+                    CloseDate         = req.closeDate != null
+                                            ? req.closeDate
+                                            : (req.endDate != null ? req.endDate : Date.today().addDays(30)),
                     Start_Date__c     = req.startDate,
                     End_Date__c       = req.endDate,
                     Market__c         = req.market,
-                    Fiscal_Year__c    = req.fiscalYear,
                     Total_Budget__c   = req.totalBudget,
-                    Status__c         = String.isBlank(req.status) ? 'Draft' : req.status
+                    StageName         = String.isBlank(req.status) ? 'Draft' : req.status
                 );
                 insert opp;
 
@@ -79,14 +92,14 @@ public with sharing class CreateOpportunityWithBudgetLines {
                             totalPlanned += amt;
 
                             lines.add(new Budget_Line__c(
-                                Advertising_Opportunity__c = opp.Id,
-                                Account__c                 = req.accountId,
-                                Channel__c                 = (Id) lineMap.get('channelId'),
-                                Month__c                   = (String) lineMap.get('month'),
-                                Fiscal_Year__c             = (String) lineMap.get('fiscalYear'),
-                                Planned_Amount__c          = amt,
-                                Notes__c                   = (String) lineMap.get('notes'),
-                                Status__c                  = 'Draft'
+                                Opportunity__c    = opp.Id,
+                                Account__c        = req.accountId,
+                                Channel__c        = (Id) lineMap.get('channelId'),
+                                Month__c          = (String) lineMap.get('month'),
+                                Fiscal_Year__c    = (String) lineMap.get('fiscalYear'),
+                                Planned_Amount__c = amt,
+                                Notes__c          = (String) lineMap.get('notes'),
+                                Status__c         = 'Draft'
                             ));
                         }
 

@@ -6,14 +6,16 @@ private class TrafficOrderCallbackControllerTest {
         Account acct = new Account(Name = 'Test Advertiser');
         insert acct;
 
-        Advertising_Opportunity__c opp = new Advertising_Opportunity__c(
-            Account__c = acct.Id,
-            Status__c = 'Active'
+        Opportunity opp = new Opportunity(
+            Name       = 'Test Opp',
+            AccountId  = acct.Id,
+            StageName  = 'Active',
+            CloseDate  = Date.today().addDays(30)
         );
         insert opp;
 
         Advertising_Contract__c contract = new Advertising_Contract__c(
-            Advertising_Opportunity__c = opp.Id,
+            Opportunity__c = opp.Id,
             Contract_Status__c = 'Active',
             Traffic_Status__c = 'Pending',
             Traffic_Order_ID__c = 'TRF-CALLBACK-001'

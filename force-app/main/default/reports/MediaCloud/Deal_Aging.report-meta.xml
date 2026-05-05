@@ -31,13 +31,13 @@
         <field>NAME</field>
     </columns>
     <columns>
-        <field>Account__r.Name</field>
+        <field>ACCOUNT_NAME</field>
     </columns>
     <columns>
         <field>OWNER.NAME</field>
     </columns>
     <columns>
-        <field>Status__c</field>
+        <field>STAGE_NAME</field>
     </columns>
     <columns>
         <field>Market__c</field>
@@ -58,7 +58,7 @@
     <description>Open opportunities sorted by creation date (oldest first) to surface stalled deals. Grouped by rep and status so managers can see where deals are getting stuck.</description>
     <filter>
         <criterias>
-            <column>Status__c</column>
+            <column>STAGE_NAME</column>
             <filterType>filterItem</filterType>
             <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
@@ -71,11 +71,11 @@
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <groupingsDown>
-        <field>Status__c</field>
+        <field>STAGE_NAME</field>
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Deal Aging</name>
-    <reportType>Advertising_Opportunity__c</reportType>
+    <reportType>Opportunity</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <sortColumn>CreatedDate</sortColumn>

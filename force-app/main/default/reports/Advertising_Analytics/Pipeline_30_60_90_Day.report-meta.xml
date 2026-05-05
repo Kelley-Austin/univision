@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <columns>
-        <field>Account__c</field>
+        <field>ACCOUNT_NAME</field>
     </columns>
     <columns>
         <field>Market__c</field>
     </columns>
     <columns>
-        <field>Status__c</field>
+        <field>STAGE_NAME</field>
     </columns>
     <columns>
         <field>Total_Budget__c</field>
@@ -18,7 +18,7 @@
         <developerName>TOTAL_BUDGET_SUM</developerName>
         <isActive>true</isActive>
         <isCrossBlock>false</isCrossBlock>
-        <reportType>Advertising_Opportunity__c</reportType>
+        <reportType>Opportunity</reportType>
         <scale>2</scale>
     </aggregates>
     <aggregates>
@@ -27,13 +27,13 @@
         <developerName>ROWCOUNT</developerName>
         <isActive>true</isActive>
         <isCrossBlock>false</isCrossBlock>
-        <reportType>Advertising_Opportunity__c</reportType>
+        <reportType>Opportunity</reportType>
         <scale>0</scale>
     </aggregates>
     <description>Open pipeline grouped by close month — use groupings to read 30/60/90-day buckets at a glance.</description>
     <filter>
         <criterias>
-            <column>Status__c</column>
+            <column>STAGE_NAME</column>
             <isFilteringDisabled>false</isFilteringDisabled>
             <operator>excludes</operator>
             <value>Cancelled;Closed</value>
@@ -50,7 +50,7 @@
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Pipeline 30-60-90 Day</name>
-    <reportType>Advertising_Opportunity__c</reportType>
+    <reportType>Opportunity</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <timeFrameFilter>

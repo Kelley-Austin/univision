@@ -12,10 +12,12 @@ private class RunReconciliationActionTest {
         );
         insert adv;
 
-        Advertising_Opportunity__c opp = new Advertising_Opportunity__c(
-            Name           = 'Q1 Buy',
-            Account__c     = adv.Id,
-            Fiscal_Year__c = '2026'
+        // Standard Opportunity FiscalYear is read-only and derived from CloseDate.
+        Opportunity opp = new Opportunity(
+            Name      = 'Q1 Buy',
+            AccountId = adv.Id,
+            StageName = 'Working',
+            CloseDate = Date.newInstance(2026, 3, 31)
         );
         insert opp;
 
@@ -42,7 +44,7 @@ private class RunReconciliationActionTest {
 
     @IsTest
     static void run_queuesRollupForMatchingActuals() {
-        Advertising_Opportunity__c opp = [SELECT Id FROM Advertising_Opportunity__c LIMIT 1];
+        Opportunity opp = [SELECT Id FROM Opportunity LIMIT 1];
 
         RunReconciliationAction.ReconciliationRequest req = new RunReconciliationAction.ReconciliationRequest();
         req.opportunityId = opp.Id;
@@ -67,10 +69,11 @@ private class RunReconciliationActionTest {
                 .getRecordTypeInfosByDeveloperName().get('Advertiser').getRecordTypeId()
         );
         insert adv2;
-        Advertising_Opportunity__c opp = new Advertising_Opportunity__c(
-            Name           = 'Empty Opp',
-            Account__c     = adv2.Id,
-            Fiscal_Year__c = '2026'
+        Opportunity opp = new Opportunity(
+            Name      = 'Empty Opp',
+            AccountId = adv2.Id,
+            StageName = 'Working',
+            CloseDate = Date.newInstance(2026, 3, 31)
         );
         insert opp;
 
@@ -89,7 +92,12 @@ private class RunReconciliationActionTest {
 
     @IsTest
     static void run_failsGracefully_whenAccountIsNull() {
-        Advertising_Opportunity__c opp = new Advertising_Opportunity__c(Name = 'Orphan Opp');
+        // AccountId intentionally null to exercise the "no Account" branch.
+        Opportunity opp = new Opportunity(
+            Name      = 'Orphan Opp',
+            StageName = 'Working',
+            CloseDate = Date.today().addDays(30)
+        );
         insert opp;
 
         RunReconciliationAction.ReconciliationRequest req = new RunReconciliationAction.ReconciliationRequest();

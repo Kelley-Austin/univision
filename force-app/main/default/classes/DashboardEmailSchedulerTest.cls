@@ -14,11 +14,13 @@ private class DashboardEmailSchedulerTest {
         Vehicle__c veh = new Vehicle__c(Name = 'Test Vehicle', Status__c = 'Active');
         insert veh;
 
-        Advertising_Opportunity__c opp = new Advertising_Opportunity__c(
-            Account__c     = acc.Id,
-            Status__c      = 'Active',
-            Market__c      = 'Los Angeles',
-            Fiscal_Year__c = Date.today().year()
+        // Standard Opportunity FiscalYear is read-only and derived from CloseDate.
+        Opportunity opp = new Opportunity(
+            Name      = 'Dashboard Test Opp',
+            AccountId = acc.Id,
+            StageName = 'Active',
+            Market__c = 'Los Angeles',
+            CloseDate = Date.today()
         );
         insert opp;
 
@@ -34,7 +36,7 @@ private class DashboardEmailSchedulerTest {
         insert bl;
 
         Advertising_Contract__c contract = new Advertising_Contract__c(
-            Advertising_Opportunity__c = opp.Id,
+            Opportunity__c   = opp.Id,
             Account__c       = acc.Id,
             Contract_Status__c = 'Active',
             Traffic_Status__c = 'Pending',
@@ -110,7 +112,7 @@ private class DashboardEmailSchedulerTest {
     @IsTest
     static void testBuildSalesManagerBody_empty() {
         // Delete setup data so body renders empty-state messages
-        delete [SELECT Id FROM Advertising_Opportunity__c];
+        delete [SELECT Id FROM Opportunity];
 
         String body = DashboardEmailScheduler.buildSalesManagerBody();
         System.assert(body.contains('No active pipeline'), 'Should render empty pipeline state');
@@ -135,7 +137,7 @@ private class DashboardEmailSchedulerTest {
     static void testBuildWeeklyAnalyticsBody_empty() {
         delete [SELECT Id FROM Budget_Line__c];
         delete [SELECT Id FROM Advertising_Contract__c];
-        delete [SELECT Id FROM Advertising_Opportunity__c];
+        delete [SELECT Id FROM Opportunity];
 
         String body = DashboardEmailScheduler.buildWeeklyAnalyticsBody();
         System.assert(body.contains('No vehicle data'),   'Should render empty vehicle state');

@@ -11,14 +11,16 @@ private class PitchProjectControllerTest {
         return a;
     }
 
-    private static Advertising_Opportunity__c makeOpp(Id accountId, Id projectId,
-                                                       String status, Decimal amount) {
-        Advertising_Opportunity__c opp = new Advertising_Opportunity__c(
-            Account__c               = accountId,
-            Status__c                = status,
+    private static Opportunity makeOpp(Id accountId, Id projectId,
+                                       String status, Decimal amount) {
+        // Standard Opportunity FiscalYear is read-only and derived from CloseDate.
+        Opportunity opp = new Opportunity(
+            Name                     = 'Pitch Test Opp',
+            AccountId                = accountId,
+            StageName                = status,
+            CloseDate                = Date.newInstance(2026, 6, 30),
             Total_Planned_Amount__c  = amount,
-            Pitch_Project__c         = projectId,
-            Fiscal_Year__c           = 2026
+            Pitch_Project__c         = projectId
         );
         insert opp;
         return opp;

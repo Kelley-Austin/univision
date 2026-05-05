@@ -14,7 +14,7 @@ public without sharing class TrafficOrderTransmitQueueable implements Queueable,
         List<Budget_Line__c> lines = [
             SELECT Id, Name, Copy_Code__c, Copy_Rotation__c, Spot_Length__c,
                    Weekly_Spots__c, Spot_Rate__c, Spot_Instructions__c,
-                   Advertising_Opportunity__c
+                   Opportunity__c
             FROM Budget_Line__c
             WHERE Id IN :budgetLineIds
         ];
@@ -26,8 +26,8 @@ public without sharing class TrafficOrderTransmitQueueable implements Queueable,
         // Collect opportunity IDs for a single contract lookup after all callouts
         Set<Id> oppIds = new Set<Id>();
         for (Budget_Line__c line : lines) {
-            if (line.Advertising_Opportunity__c != null) {
-                oppIds.add(line.Advertising_Opportunity__c);
+            if (line.Opportunity__c != null) {
+                oppIds.add(line.Opportunity__c);
             }
         }
 
@@ -50,9 +50,9 @@ public without sharing class TrafficOrderTransmitQueueable implements Queueable,
             }
             lineUpdates.add(lu);
 
-            if (line.Advertising_Opportunity__c != null
-                    && contractByOpp.containsKey(line.Advertising_Opportunity__c)) {
-                Advertising_Contract__c c = contractByOpp.get(line.Advertising_Opportunity__c);
+            if (line.Opportunity__c != null
+                    && contractByOpp.containsKey(line.Opportunity__c)) {
+                Advertising_Contract__c c = contractByOpp.get(line.Opportunity__c);
                 if (result.trafficOrderId != null) {
                     c.Traffic_Order_ID__c = result.trafficOrderId;
                 }
@@ -117,15 +117,15 @@ public without sharing class TrafficOrderTransmitQueueable implements Queueable,
             return result;
         }
         for (Advertising_Contract__c c : [
-            SELECT Id, Advertising_Opportunity__c,
+            SELECT Id, Opportunity__c,
                    Traffic_Status__c, Traffic_Order_ID__c, Traffic_Error_Message__c
             FROM Advertising_Contract__c
-            WHERE Advertising_Opportunity__c IN :oppIds
+            WHERE Opportunity__c IN :oppIds
             AND Contract_Status__c NOT IN ('Cancelled', 'Completed')
             ORDER BY CreatedDate DESC
         ]) {
-            if (!result.containsKey(c.Advertising_Opportunity__c)) {
-                result.put(c.Advertising_Opportunity__c, c);
+            if (!result.containsKey(c.Opportunity__c)) {
+                result.put(c.Opportunity__c, c);
             }
         }
         return result;

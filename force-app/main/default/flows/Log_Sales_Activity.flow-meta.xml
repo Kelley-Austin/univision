@@ -15,7 +15,7 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
-        <description>ID of the Advertising Opportunity this activity is logged against.</description>
+        <description>ID of the Opportunity this activity is logged against.</description>
     </variables>
     <variables>
         <name>varOpportunity</name>
@@ -23,7 +23,7 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-        <objectType>Advertising_Opportunity__c</objectType>
+        <objectType>Opportunity</objectType>
     </variables>
 
     <!-- ═══════════════════════════════════════════
@@ -149,13 +149,13 @@
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Advertising_Opportunity__c</object>
+        <object>Opportunity</object>
         <outputReference>varOpportunity</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>Name</queriedFields>
-        <queriedFields>Account__c</queriedFields>
+        <queriedFields>AccountId</queriedFields>
         <queriedFields>Primary_Contact__c</queriedFields>
-        <queriedFields>Status__c</queriedFields>
+        <queriedFields>StageName</queriedFields>
     </recordLookups>
 
     <!-- ═══════════════════════════════════════════
@@ -364,12 +364,12 @@
             </value>
         </filters>
         <inputAssignments>
-            <field>Next_Step__c</field>
+            <field>NextStep</field>
             <value>
                 <elementReference>screen_LogActivity.input_NextStep</elementReference>
             </value>
         </inputAssignments>
-        <object>Advertising_Opportunity__c</object>
+        <object>Opportunity</object>
     </recordUpdates>
 
     <!-- ═══════════════════════════════════════════

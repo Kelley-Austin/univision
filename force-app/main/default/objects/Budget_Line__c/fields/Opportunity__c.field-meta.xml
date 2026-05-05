@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Advertising_Opportunity__c</fullName>
+    <fullName>Opportunity__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
-    <label>Advertising Opportunity</label>
-    <referenceTo>Advertising_Opportunity__c</referenceTo>
+    <label>Opportunity</label>
+    <referenceTo>Opportunity</referenceTo>
     <relationshipLabel>Budget Lines</relationshipLabel>
     <relationshipName>Budget_Lines</relationshipName>
     <required>false</required>

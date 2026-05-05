@@ -24,7 +24,7 @@
         <fullName>All_Reconciliation_Lines</fullName>
         <columns>NAME</columns>
         <columns>Reconciliation_Status__c</columns>
-        <columns>Advertising_Opportunity__c</columns>
+        <columns>Opportunity__c</columns>
         <columns>Channel__c</columns>
         <columns>Vehicle__c</columns>
         <columns>Month__c</columns>
