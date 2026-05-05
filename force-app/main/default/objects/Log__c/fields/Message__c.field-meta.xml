@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Message__c</fullName>
+    <label>Message</label>
+    <description>Free-text description of the logged event. Truncated to 32768 characters by the Logger Apex class.</description>
+    <length>32768</length>
+    <required>false</required>
+    <type>LongTextArea</type>
+    <visibleLines>6</visibleLines>
+</CustomField>
