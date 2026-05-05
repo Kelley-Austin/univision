@@ -9,9 +9,8 @@
             <axisBinding>y</axisBinding>
             <column>Total_Budget__c</column>
         </chartSummaries>
-        <chartType>VerticalBar</chartType>
+        <chartType>HorizontalBar</chartType>
         <enableHoverLabels>true</enableHoverLabels>
-        <expandOtherItems>false</expandOtherItems>
         <groupingColumn>Market__c</groupingColumn>
         <legendPosition>Bottom</legendPosition>
         <location>CHART_BOTTOM</location>

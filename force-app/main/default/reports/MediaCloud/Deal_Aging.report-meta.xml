@@ -5,13 +5,12 @@
         <backgroundColor2>#FFFFFF</backgroundColor2>
         <backgroundFadeDir>Diagonal</backgroundFadeDir>
         <chartSummaries>
-            <aggregate>Count</aggregate>
+            <aggregate>Sum</aggregate>
             <axisBinding>y</axisBinding>
-            <column>RowCount</column>
+            <column>Total_Budget__c</column>
         </chartSummaries>
         <chartType>HorizontalBar</chartType>
         <enableHoverLabels>true</enableHoverLabels>
-        <expandOtherItems>false</expandOtherItems>
         <groupingColumn>OWNER.NAME</groupingColumn>
         <legendPosition>Bottom</legendPosition>
         <location>CHART_BOTTOM</location>
@@ -62,7 +61,7 @@
             <filterType>filterItem</filterType>
             <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
-            <value>Prospecting,Proposal,Approved</value>
+            <value>Stage 1 - Lead,Stage 2 - Discovery/CNA,Stage 3 - Pipeline/Deal,Stage 4 - Negotiation,Stage 5 - Contract Pending</value>
         </criterias>
     </filter>
     <format>Summary</format>

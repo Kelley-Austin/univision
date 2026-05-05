@@ -12,8 +12,10 @@
 # Unexpected child metadata — quick action inside CustomObject directory
 **/objects/Account/quickActions/Link_Agency.quickAction-meta.xml
 
-# Reports — invalid elements for this org's API version
-**/reports/Advertising_Analytics/*.report-meta.xml
+# Reports — un-ignored 2026-05-05 (Slice F): rejected elements (expandOtherItems,
+# VerticalBar, Count aggregate) stripped from MediaCloud reports;
+# Advertising_Analytics already clean.
+# **/reports/Advertising_Analytics/*.report-meta.xml
 **/reportTypes/Period_Snapshot_Forecast_Accuracy.reportType-meta.xml
 **/reportTypes/Forecast_Stage_Snapshots.reportType-meta.xml
 **/reportTypes/Pacing_Snapshots.reportType-meta.xml
@@ -65,9 +67,10 @@
 **/tabs/Pitch_Project__c.tab-meta.xml
 **/tabs/Sales_Ops_Console.tab-meta.xml
 
-# Dashboards — expandOtherItems invalid in DashboardComponent
-**/dashboards/Advertising_Analytics/Weekly_Analytics_Dashboard.dashboard-meta.xml
-**/dashboards/MediaCloud/Sales_Manager_Dashboard.dashboard-meta.xml
+# Dashboards — un-ignored 2026-05-05 (Slice F): both dashboards verified clean of
+# expandOtherItems on this branch.
+# **/dashboards/Advertising_Analytics/Weekly_Analytics_Dashboard.dashboard-meta.xml
+# **/dashboards/MediaCloud/Sales_Manager_Dashboard.dashboard-meta.xml
 
 # Flows — screens element contiguity / unsupported lookupField extension / LWC $recordId ref
 **/flows/Create_Agency_Account.flow-meta.xml
@@ -175,12 +178,14 @@ Advertising_Opportunity__c.Update_Stage.quickAction-meta.xml
 **/pages/LocalAdProposal.page
 **/pages/LocalAdProposal.page-meta.xml
 
-# Reports — invalid elements (expandOtherItems / VerticalBar ChartType / Count ReportSummaryType)
-**/reports/MediaCloud/Current_Month_Pacing.report-meta.xml
-**/reports/MediaCloud/Deal_Aging.report-meta.xml
-**/reports/MediaCloud/Pipeline_30_60_90_Day.report-meta.xml
-**/reports/MediaCloud/Pipeline_by_Market.report-meta.xml
-**/reports/MediaCloud/Rep_Productivity.report-meta.xml
+# Reports — un-ignored 2026-05-05 (Slice F): rejected elements stripped (expandOtherItems removed,
+# VerticalBar -> HorizontalBar, Count aggregate -> Sum, legacy stage filter literals updated to
+# Stage 1-5 names). Stage filters in Pipeline_30_60_90_Day and Deal_Aging now use new stages.
+# **/reports/MediaCloud/Current_Month_Pacing.report-meta.xml
+# **/reports/MediaCloud/Deal_Aging.report-meta.xml
+# **/reports/MediaCloud/Pipeline_30_60_90_Day.report-meta.xml
+# **/reports/MediaCloud/Pipeline_by_Market.report-meta.xml
+# **/reports/MediaCloud/Rep_Productivity.report-meta.xml
 
 # ReportTypes — invalid <outerJoin> + missing relationship path
 **/reportTypes/Budget_Lines_with_Opportunity_and_Vehicle.reportType-meta.xml

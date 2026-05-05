@@ -16,7 +16,6 @@
         </chartSummaries>
         <chartType>HorizontalBar</chartType>
         <enableHoverLabels>true</enableHoverLabels>
-        <expandOtherItems>false</expandOtherItems>
         <groupingColumn>Channel__r.Name</groupingColumn>
         <legendPosition>Bottom</legendPosition>
         <location>CHART_BOTTOM</location>
