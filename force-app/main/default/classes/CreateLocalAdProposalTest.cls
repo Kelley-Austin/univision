@@ -79,7 +79,7 @@ private class CreateLocalAdProposalTest {
         System.assertEquals('W25-54', opp.Secondary_Demo__c);
         System.assertEquals(10000, opp.Total_Planned_Amount__c);
         System.assertEquals(50000, opp.Total_Budget__c);
-        System.assertEquals('Draft', opp.StageName);
+        System.assertEquals('Stage 1 - Lead', opp.StageName);
 
         List<Budget_Line__c> lines = [
             SELECT Month__c, Planned_Amount__c, Vehicle__c, Channel__c
@@ -278,6 +278,6 @@ private class CreateLocalAdProposalTest {
             FROM Opportunity
             WHERE Id = :results[0].opportunityId
         ];
-        System.assertEquals('Local_Ad_Sales', opp.RecordType.DeveloperName);
+        System.assertEquals('TV_Linear', opp.RecordType.DeveloperName);
     }
 }

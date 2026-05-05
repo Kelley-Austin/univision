@@ -23,7 +23,7 @@ private class LocalAdProposalControllerTest {
 
         Id rtId = Schema.SObjectType.Opportunity
             .getRecordTypeInfosByDeveloperName()
-            .get('Local_Ad_Sales')
+            .get('TV_Linear')
             .getRecordTypeId();
 
         Opportunity opp = new Opportunity(
@@ -38,7 +38,7 @@ private class LocalAdProposalControllerTest {
             Secondary_Demo__c = 'W25-54',
             Proposal_Notes__c = 'Test proposal notes',
             Total_Budget__c   = 50000,
-            StageName         = 'Draft'
+            StageName         = 'Stage 1 - Lead'
         );
         insert opp;
 

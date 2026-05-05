@@ -52,22 +52,26 @@
     </dynamicChoiceSets>
 
     <!-- ═══════════════════════════════════════════
-         CHOICES
+         CHOICES — repurposed from Direct/Agency to channel buckets (2026-05-05).
+         NOTE: Full 7-RT picker rewrite deferred; Direct/Agency choices repurposed
+         to TV-Linear and Digital as a temporary 2-option mapping. Flow remains
+         in .forceignore due to other deploy-blocking issues; standard "New"
+         button on the Opportunity tab is the live entry point for now.
     ═══════════════════════════════════════════ -->
     <choices>
         <name>choice_DirectBuy</name>
-        <choiceText>Direct Buy — placed directly with Univision</choiceText>
+        <choiceText>TV - Linear (owned-and-operated)</choiceText>
         <dataType>String</dataType>
         <value>
-            <stringValue>Direct Buy</stringValue>
+            <stringValue>TV Linear</stringValue>
         </value>
     </choices>
     <choices>
         <name>choice_AgencyBuy</name>
-        <choiceText>Agency Buy — placed through an advertising agency</choiceText>
+        <choiceText>Digital (Operative-sourced)</choiceText>
         <dataType>String</dataType>
         <value>
-            <stringValue>Agency Buy</stringValue>
+            <stringValue>Digital</stringValue>
         </value>
     </choices>
 
@@ -77,17 +81,17 @@
     <formulas>
         <name>formula_DirectBuyRecordTypeId</name>
         <dataType>String</dataType>
-        <expression>$ObjectType.Opportunity.RecordTypeInfos.Direct_Buy.RecordTypeId</expression>
+        <expression>$ObjectType.Opportunity.RecordTypeInfos.TV_Linear.RecordTypeId</expression>
     </formulas>
     <formulas>
         <name>formula_AgencyBuyRecordTypeId</name>
         <dataType>String</dataType>
-        <expression>$ObjectType.Opportunity.RecordTypeInfos.Agency_Buy.RecordTypeId</expression>
+        <expression>$ObjectType.Opportunity.RecordTypeInfos.Digital.RecordTypeId</expression>
     </formulas>
     <formulas>
         <name>formula_RecordTypeId</name>
         <dataType>String</dataType>
-        <expression>IF({!screen_AccountType.input_BuyType} = "Direct Buy", {!formula_DirectBuyRecordTypeId}, {!formula_AgencyBuyRecordTypeId})</expression>
+        <expression>IF({!screen_AccountType.input_BuyType} = "TV Linear", {!formula_DirectBuyRecordTypeId}, {!formula_AgencyBuyRecordTypeId})</expression>
     </formulas>
 
     <!-- ═══════════════════════════════════════════
@@ -193,7 +197,7 @@
                     <leftValueReference>screen_AccountType.input_BuyType</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Agency Buy</stringValue>
+                        <stringValue>Digital</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
