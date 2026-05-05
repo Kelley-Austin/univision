@@ -46,7 +46,9 @@
 **/namedCredentials/Matrix_API.namedCredential-meta.xml
 
 # Custom Metadata Type object — deploymentStatus not allowed
-**/objects/Revenue_Code_Mapping__mdt.object-meta.xml
+# (no longer applies — object-meta.xml has been cleaned up; entry kept commented
+# as a record of the prior issue.)
+# **/objects/Revenue_Code_Mapping__mdt.object-meta.xml
 
 # Custom Tabs — sobjectName/lightningWebComponent element invalid in this org's CustomTab schema
 **/tabs/Inbound_Staging__c.tab-meta.xml
@@ -78,7 +80,10 @@
 **/objects/Actual_Revenue__c/fields/Revenue_Type__c.field-meta.xml
 
 # Custom Metadata Type — object-level file (subdir pattern)
-**/objects/Revenue_Code_Mapping__mdt/Revenue_Code_Mapping__mdt.object-meta.xml
+# (no longer applies — object-meta.xml is now cleanly defined with
+# <visibility>Public</visibility>; removing exclusion so the CMT and its
+# downstream Apex consumers (WideOrbitTransformer etc.) can compile.)
+# **/objects/Revenue_Code_Mapping__mdt/Revenue_Code_Mapping__mdt.object-meta.xml
 
 # LWC — API v62 literal expression incompatibility or missing @api property
 **/lwc/fileUploadSource
