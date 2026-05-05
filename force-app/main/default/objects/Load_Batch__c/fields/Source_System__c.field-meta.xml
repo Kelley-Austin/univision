@@ -6,7 +6,6 @@
     <referenceTo>Source_System__c</referenceTo>
     <relationshipLabel>Load Batches</relationshipLabel>
     <relationshipName>Load_Batches</relationshipName>
-    <deleteConstraint>Restrict</deleteConstraint>
     <required>true</required>
     <type>Lookup</type>
 </CustomField>

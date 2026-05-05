@@ -5,7 +5,6 @@
     <referenceTo>Channel__c</referenceTo>
     <relationshipLabel>Vehicle Channels</relationshipLabel>
     <relationshipName>Vehicle_Channels_Channel</relationshipName>
-    <required>true</required>
     <trackTrending>false</trackTrending>
     <type>MasterDetail</type>
     <writeRequiresMasterRead>false</writeRequiresMasterRead>
