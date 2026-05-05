@@ -22,8 +22,8 @@
  *
  *  afterInsert   ── Enqueue ProjectionRollupQueueable so the matching
  *                   Projection__c rows pick up this batch's Actual_Amount__c.
- *                   Gated by TestSettings.enableQueueableInTests so existing
- *                   tests don't get unexpected async side-effects.
+ *                   Skipped under Test.isRunningTest() so existing tests
+ *                   don't get unexpected async side-effects.
  *
  *  afterUpdate   ── Same enqueue as afterInsert. NOTE: when dimension fields
  *                   (Account, Category, Revenue_Type, Period_*) change on an
@@ -34,7 +34,7 @@
  *                   in the project's bug tracker; safe enough for the current
  *                   ingest-driven workflow because reparenting Actuals is rare.
  *
- *  afterDelete   ── Same enqueue, using Trigger.old IDs.
+ *  afterDelete   ── Same enqueue, using oldRecordsMap.values().
  *
  *  Bulk safety
  *  -----------
@@ -49,10 +49,10 @@
  *  ---------
  *    * Private helpers are @TestVisible so unit-style tests can hit them
  *      without a full DML round-trip.
- *    * The async enqueue is gated by TestSettings.enableQueueableInTests
- *      (default false) so existing tests don't trip new side effects. Tests
- *      that want to assert rollup behavior set the flag, run inside
- *      Test.startTest()/Test.stopTest(), and assert on Projection__c after.
+ *    * The async enqueue is suppressed under Test.isRunningTest() so default
+ *      tests don't trip new side effects. Tests that want to assert rollup
+ *      behavior can configure a TriggerSetting__mdt entry to bypass other
+ *      handlers, then explicitly invoke the rollup queueable themselves.
  *
  *  Schema dependencies (do not change without updating both ends)
  *  --------------------------------------------------------------
@@ -61,14 +61,12 @@
  *      The existing test fixture sets '2026|1', confirming this convention.
  *    * Period_Close__c.Status__c values include 'Closed' (case-sensitive).
  *
- *  Migration note
- *  --------------
- *  This handler was rewritten on 2026-05-04 to extend the new TriggerHandler
- *  base class and adopt the canonical phase-method pattern. The previous
- *  implementation used a single static handle(newList, oldMap, isInsert)
- *  dispatched directly from the trigger. Behavior is preserved; the diff
- *  fixes a double-call to PitchProjectUnitCodeLinker on insert and replaces
- *  the unfiltered Period_Close query with an indexed one.
+ *  Framework
+ *  ---------
+ *  Extends the canonical TriggerHandler base class (Patrick Stephens'). Phase
+ *  methods receive Trigger.new / Trigger.newMap / Trigger.oldMap as arguments
+ *  from TriggerDispatcher; we cast at the entry point and delegate to the
+ *  typed @TestVisible helpers.
  * =============================================================================
  */
 public with sharing class ActualRevenueTriggerHandler extends TriggerHandler {
@@ -77,34 +75,40 @@ public with sharing class ActualRevenueTriggerHandler extends TriggerHandler {
     //  Phase methods
     // =========================================================================
 
-    protected override void beforeInsert() {
-        List<Actual_Revenue__c> recs = (List<Actual_Revenue__c>) Trigger.new;
+    public override void beforeInsert(List<SObject> newRecords) {
+        List<Actual_Revenue__c> recs = (List<Actual_Revenue__c>) newRecords;
         stampCategorySnapshots(recs);
         flagLateActuals(recs);
         linkPitchProjects(recs);
     }
 
-    protected override void beforeUpdate() {
-        List<Actual_Revenue__c> recs = (List<Actual_Revenue__c>) Trigger.new;
-        Map<Id, Actual_Revenue__c> oldMap = (Map<Id, Actual_Revenue__c>) Trigger.oldMap;
+    public override void beforeUpdate(
+        Map<Id, SObject> newRecordsMap,
+        Map<Id, SObject> oldRecordsMap
+    ) {
+        List<Actual_Revenue__c>      recs   = (List<Actual_Revenue__c>) newRecordsMap.values();
+        Map<Id, Actual_Revenue__c>   oldMap = (Map<Id, Actual_Revenue__c>) oldRecordsMap;
         restoreCategorySnapshots(recs, oldMap);
         flagLateActuals(recs);
         relinkPitchProjectsOnUpdate(recs, oldMap);
     }
 
-    protected override void afterInsert() {
-        enqueueProjectionRollup(Trigger.new, null);
+    public override void afterInsert(Map<Id, SObject> newRecordsMap) {
+        enqueueProjectionRollup(newRecordsMap.values(), null);
     }
 
-    protected override void afterUpdate() {
+    public override void afterUpdate(
+        Map<Id, SObject> newRecordsMap,
+        Map<Id, SObject> oldRecordsMap
+    ) {
         // Pass both new and old so a future enhancement of
         // ProjectionRollupQueueable can detect dimension-change reparenting
         // without us having to revisit this trigger.
-        enqueueProjectionRollup(Trigger.new, Trigger.old);
+        enqueueProjectionRollup(newRecordsMap.values(), oldRecordsMap.values());
     }
 
-    protected override void afterDelete() {
-        enqueueProjectionRollup(null, Trigger.old);
+    public override void afterDelete(Map<Id, SObject> oldRecordsMap) {
+        enqueueProjectionRollup(null, oldRecordsMap.values());
     }
 
     // =========================================================================
@@ -274,11 +278,10 @@ public with sharing class ActualRevenueTriggerHandler extends TriggerHandler {
      * ProjectionRollupQueueable to recompute Projection__c.Actual_Amount__c
      * for each affected composite key.
      *
-     * Enqueue is suppressed under test context unless the test has explicitly
-     * opted in via TestSettings.enableQueueableInTests. This keeps the new
-     * afterX coverage from breaking existing tests that don't expect async
-     * side-effects, while leaving the door open for tests that want to
-     * exercise the full chain.
+     * Enqueue is suppressed under Test.isRunningTest() so existing tests don't
+     * trip async side-effects. Tests that want to exercise the rollup chain
+     * should bypass this handler via TriggerSetting__mdt and invoke the
+     * queueable directly with a known set of Ids.
      *
      * NOTE on ReconciliationEngine path: the engine currently also calls
      * System.enqueueJob(new ProjectionRollupQueueable(...)) directly after
@@ -289,7 +292,7 @@ public with sharing class ActualRevenueTriggerHandler extends TriggerHandler {
      */
     @TestVisible
     private static void enqueueProjectionRollup(List<SObject> newList, List<SObject> oldList) {
-        if (Test.isRunningTest() && !TestSettings.enableQueueableInTests) return;
+        if (Test.isRunningTest()) return;
 
         Set<Id> actualIds = new Set<Id>();
         if (newList != null) {
