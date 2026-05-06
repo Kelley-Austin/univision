@@ -45,4 +45,5 @@ Always wait for deploys to finish. Do not ask the user to check back.
 ## Project Decisions
 
 - **2026-05-05** — _from [Platform Foundation & Master Data Model](docs/slices/conv-1777471362028-platform-foundation-master-data-model.md)_ — **Account/Projection/Budget set to Private OWD with role-hierarchy rollup** — *Why:* HoldCo/Agency/Advertiser data must be isolated by team while still rolling up to managers; Public Read/Write would leak competitive account data.
+- **2026-05-05** — _from [Switch to the main branch.](docs/slices/conv-1777994527469-switch-to-the-main-branch.md)_ — **Branch context reset to `main` before next unit of work** — *Why:* Establish a clean baseline so subsequent slices branch from canonical history rather than WIP debris.
 <!-- END cheese:decisions -->

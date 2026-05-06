@@ -70,6 +70,26 @@ public with sharing class IngestService {
         );
         insert batch;
 
+        Long startMs = Datetime.now().getTime();
+
+        // Emit ingest-started event so the Sales Ops "Last Imported Date" panel
+        // and any forensic dashboard can see this run before it completes.
+        new Log(
+            'Ingest.Started',
+            'Info',
+            'Ingest started for ' + ss.Code__c + ' file=' + cv.Title,
+            ss.Code__c,
+            JSON.serialize(new Map<String, Object>{
+                'sourceCode'      => ss.Code__c,
+                'sourceSystemId'  => ss.Id,
+                'sourceName'      => ss.Name,
+                'fileName'        => cv.Title,
+                'contentVersionId'=> cv.Id,
+                'loadBatchId'     => batch.Id
+            }),
+            correlationId
+        ).emit();
+
         try {
             List<Inbound_Staging__c> stagingRows;
             try {
@@ -99,6 +119,24 @@ public with sharing class IngestService {
                 batch.Processed_At__c = Datetime.now();
                 update batch;
                 updateSourceSystemTimestamp(ss.Id);
+
+                Log emptyLog = new Log(
+                    'Ingest.Empty',
+                    'Warning',
+                    'Ingest produced 0 rows for ' + ss.Code__c + ' file=' + cv.Title,
+                    ss.Code__c,
+                    JSON.serialize(new Map<String, Object>{
+                        'sourceCode'     => ss.Code__c,
+                        'sourceSystemId' => ss.Id,
+                        'fileName'       => cv.Title,
+                        'loadBatchId'    => batch.Id,
+                        'rowCount'       => 0,
+                        'durationMs'     => Datetime.now().getTime() - startMs
+                    }),
+                    correlationId
+                );
+                emptyLog.ObjectReferenceId = batch.Id;
+                emptyLog.emit();
                 return new IngestResult();
             }
 
@@ -137,6 +175,36 @@ public with sharing class IngestService {
                             : 'Failed';
             update batch;
             updateSourceSystemTimestamp(ss.Id);
+
+            // Emit completion event. EventKey is the source system code so the
+            // Sales Ops "Last Imported Date" panel can group by EventKey and
+            // surface MAX(ComposedDateTime__c) per source.
+            String eventName = upsertErrors == 0
+                ? 'Ingest.Completed'
+                : upsertErrors < stagingRows.size() ? 'Ingest.PartialFailure' : 'Ingest.Failed';
+            String logType = upsertErrors == 0 ? 'Info'
+                            : upsertErrors < stagingRows.size() ? 'Warning' : 'Error';
+
+            Log completionLog = new Log(
+                eventName,
+                logType,
+                'Ingest ' + batch.Status__c + ' ' + ss.Code__c +
+                    ' rows=' + stagingRows.size() + ' errors=' + upsertErrors,
+                ss.Code__c,
+                JSON.serialize(new Map<String, Object>{
+                    'sourceCode'     => ss.Code__c,
+                    'sourceSystemId' => ss.Id,
+                    'fileName'       => cv.Title,
+                    'loadBatchId'    => batch.Id,
+                    'rowCount'       => stagingRows.size(),
+                    'errorCount'     => upsertErrors,
+                    'status'         => batch.Status__c,
+                    'durationMs'     => Datetime.now().getTime() - startMs
+                }),
+                correlationId
+            );
+            completionLog.ObjectReferenceId = batch.Id;
+            completionLog.emit();
 
             IngestResult result = countResult(stagingRows, false);
             result.errorCount += upsertErrors;
