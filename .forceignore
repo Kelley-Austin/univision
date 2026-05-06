@@ -83,10 +83,12 @@
 **/flows/Pitch_Project_Creator.flow-meta.xml
 **/flows/Period_Close_Actions.flow-meta.xml
 
-# Field type change blocked by existing org data — issue resurfaced 2026-05-05.
-# Restored exclusion per the contingency note. Apex callers and the field exist
-# in the org with a non-Picklist type that conflicts with the source definition.
-**/objects/Actual_Revenue__c/fields/Revenue_Type__c.field-meta.xml
+# Actual_Revenue__c.Revenue_Type__c — un-ignored 2026-05-05. Excluding caused
+# ~15 dependent Apex classes to fail compile (field referenced in
+# ProjectionRollupQueueable, ReconciliationEngine, IngestBatch, LateActualsController,
+# PacingSnapshotBatch, etc.). Let it deploy and surface any type-conflict error
+# directly rather than masking it.
+# **/objects/Actual_Revenue__c/fields/Revenue_Type__c.field-meta.xml
 
 # Pre-existing: Opportunity.Pitch_Project__c lookup conflicts with existing
 # child relationship "Opportunities" on Pitch_Project__c. PitchProjectController
@@ -99,16 +101,21 @@
 **/classes/PitchProjectControllerTest.cls-meta.xml
 **/layouts/Opportunity-Opportunity Layout.layout-meta.xml
 
-# Reports + Dashboards depending on custom Opportunity fields and Log__c report type.
-# Un-ignored 2026-05-05 — schema seeded in the prior deploy, ready for second pass.
-# **/reports/MediaCloud/Last_Imported_Date.report-meta.xml
-# **/reports/MediaCloud/Sales_Outlook_Matrix.report-meta.xml
-# **/dashboards/MediaCloud/Source_System_Health.dashboard-meta.xml
-# **/dashboards/MediaCloud/Sales_Outlook.dashboard-meta.xml
+# Reports + Dashboards still failing across orgs (Last_Imported_Date 'invalid
+# report type'; Sales_Outlook_Matrix Total_Budget__c missing; both dashboards
+# 'LeftSection or RightSection' required). Re-ignored 2026-05-05; these need a
+# focused dashboard-XML rebuild as a separate slice once the schema is stable.
+**/reports/MediaCloud/Last_Imported_Date.report-meta.xml
+**/reports/MediaCloud/Sales_Outlook_Matrix.report-meta.xml
+**/dashboards/MediaCloud/Source_System_Health.dashboard-meta.xml
+**/dashboards/MediaCloud/Sales_Outlook.dashboard-meta.xml
 
-# Master-detail relationshipOrder is immutable once set in the org. Source has a
-# different value than the deployed field; cannot reconcile via metadata.
-**/objects/Advertising_Contract__c/fields/Opportunity__c.field-meta.xml
+# Advertising_Contract__c.Opportunity__c — un-ignored 2026-05-05. Excluding
+# cascaded to TrafficOrderSubmitAction, TrafficOrderTransmitQueueable,
+# CancellationPolicyServiceTest, etc., and breaks the master-detail sharingModel.
+# If relationshipOrder conflict resurfaces, edit the field XML to match the org's
+# value rather than excluding the whole field.
+# **/objects/Advertising_Contract__c/fields/Opportunity__c.field-meta.xml
 
 # Custom Metadata Type — object-level file (subdir pattern)
 # (no longer applies — object-meta.xml is now cleanly defined with
