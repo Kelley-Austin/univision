@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Latest_Snapshots</fullName>
+    <columns>NAME</columns>
+    <columns>Snapshot_Date__c</columns>
+    <columns>Projection__c</columns>
+    <columns>Forecast_Stage__c</columns>
+    <columns>Weight_Pct__c</columns>
+    <columns>Amount__c</columns>
+    <columns>Weighted_Amount__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>Latest Snapshots</label>
+</ListView>

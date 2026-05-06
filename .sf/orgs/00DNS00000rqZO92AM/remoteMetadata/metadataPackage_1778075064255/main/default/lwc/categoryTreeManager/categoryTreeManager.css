@@ -1,0 +1,78 @@
+.tree-container {
+    min-height: 80px;
+}
+
+.tree-node {
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    cursor: grab;
+    transition: background-color 0.12s ease;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.tree-node:hover {
+    background-color: #f3f2f2;
+}
+
+.tree-node.drag-over {
+    background-color: #d9e8fb;
+    outline: 2px dashed #0176d3;
+    outline-offset: -2px;
+}
+
+.tree-node.dragging {
+    opacity: 0.45;
+    cursor: grabbing;
+}
+
+.tree-node.inactive-node .cat-name {
+    color: #706e6b;
+    font-style: italic;
+}
+
+.expand-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    min-width: 20px;
+    height: 20px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.expand-spacer {
+    display: inline-block;
+    width: 16px;
+}
+
+.cat-name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.875rem;
+    padding: 0 0.5rem;
+}
+
+.cat-actions {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    opacity: 0;
+    transition: opacity 0.12s ease;
+    flex-shrink: 0;
+}
+
+.tree-node:hover .cat-actions {
+    opacity: 1;
+}
+
+.inactive-badge {
+    --sds-c-badge-color-background: #706e6b;
+    --sds-c-badge-text-color: #ffffff;
+    font-size: 0.65rem;
+    flex-shrink: 0;
+}

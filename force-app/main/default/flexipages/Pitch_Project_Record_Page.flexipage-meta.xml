@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Lightning Record Page for Pitch Project. Shows pacing against the project goal, participating outlets, and linked Actual Revenues. The New Pitch Project quick action is accessible from the action bar in the highlights panel.</description>
-    <masterLabel>Pitch Project Record Page</masterLabel>
-    <sobjectType>Pitch_Project__c</sobjectType>
-    <type>RecordPage</type>
-
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
@@ -19,7 +15,6 @@
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
-
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
@@ -40,5 +35,7 @@
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
-
+    <masterLabel>Pitch Project Record Page</masterLabel>
+    <sobjectType>Pitch_Project__c</sobjectType>
+    <type>RecordPage</type>
 </FlexiPage>

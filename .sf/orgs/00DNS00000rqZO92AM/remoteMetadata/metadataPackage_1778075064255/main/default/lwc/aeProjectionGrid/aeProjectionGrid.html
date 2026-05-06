@@ -1,0 +1,131 @@
+<template>
+    <lightning-card title="AE Projection Grid" icon-name="standard:forecast">
+        <!-- Filters -->
+        <div class="slds-m-around_small">
+            <div class="slds-grid slds-wrap slds-gutters_small slds-m-bottom_small">
+                <div class="slds-col slds-size_1-of-4">
+                    <lightning-combobox
+                        label="Revenue Type"
+                        value={revenueType}
+                        options={revenueTypeOptions}
+                        onchange={handleRevenueTypeChange}
+                        required>
+                    </lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                    <lightning-combobox
+                        label="Category"
+                        value={categoryId}
+                        options={categoryOptions}
+                        onchange={handleCategoryChange}
+                        placeholder="Select category"
+                        required>
+                    </lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                    <lightning-input
+                        label="Fiscal Year"
+                        type="number"
+                        value={periodYear}
+                        min="2000"
+                        max="2099"
+                        onchange={handleYearChange}>
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                    <lightning-combobox
+                        label="Stage"
+                        value={defaultStage}
+                        options={stageOptions}
+                        onchange={handleStageChange}>
+                    </lightning-combobox>
+                </div>
+            </div>
+
+            <!-- Lock warning -->
+            <template if:true={lockResult.isLocked}>
+                <div class="slds-notify slds-notify_alert slds-alert_warning slds-m-bottom_small" role="alert">
+                    <lightning-icon icon-name="utility:lock" size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                    <strong>Budget Locked:</strong>&nbsp;{lockResult.lockMessage}
+                </div>
+            </template>
+
+            <!-- Error display -->
+            <template if:true={errorMessage}>
+                <div class="slds-notify slds-notify_alert slds-alert_error slds-m-bottom_small" role="alert">
+                    {errorMessage}
+                </div>
+            </template>
+
+            <!-- Success toast banner -->
+            <template if:true={successMessage}>
+                <div class="slds-notify slds-notify_toast slds-theme_success slds-m-bottom_small" role="status">
+                    {successMessage}
+                </div>
+            </template>
+
+            <!-- Paste hint -->
+            <div class="slds-text-body_small slds-text-color_weak slds-m-bottom_x-small">
+                Tip: Copy 12 monthly values from Excel (one row), click the January cell, and press Ctrl+V / ⌘+V to paste.
+            </div>
+
+            <!-- Grid table -->
+            <div class="grid-container" onpaste={handlePaste}>
+                <table class="slds-table slds-table_fixed-layout slds-table_bordered proj-table">
+                    <thead>
+                        <tr>
+                            <th class="month-col">Month</th>
+                            <template for:each={rows} for:item="row">
+                                <th key={row.month} class="amount-col">{row.monthLabel}</th>
+                            </template>
+                            <th class="total-col">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Amount ($)</td>
+                            <template for:each={rows} for:item="row">
+                                <td key={row.month} class="amount-cell">
+                                    <input
+                                        type="number"
+                                        class="amount-input"
+                                        data-month={row.month}
+                                        value={row.amount}
+                                        min="0"
+                                        step="0.01"
+                                        onchange={handleAmountChange}
+                                        disabled={isLocked}
+                                    />
+                                </td>
+                            </template>
+                            <td class="total-cell">{formattedTotal}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Actions -->
+            <div class="slds-grid slds-gutters_small slds-m-top_small">
+                <div class="slds-col">
+                    <lightning-button
+                        label="Save Projections"
+                        variant="brand"
+                        onclick={handleSave}
+                        disabled={isSaveDisabled}>
+                    </lightning-button>
+                    <lightning-button
+                        label="Reset"
+                        variant="neutral"
+                        onclick={handleReset}
+                        class="slds-m-left_x-small">
+                    </lightning-button>
+                </div>
+                <div class="slds-col slds-text-align_right">
+                    <template if:true={isSaving}>
+                        <lightning-spinner size="small" alternative-text="Saving..."></lightning-spinner>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </lightning-card>
+</template>

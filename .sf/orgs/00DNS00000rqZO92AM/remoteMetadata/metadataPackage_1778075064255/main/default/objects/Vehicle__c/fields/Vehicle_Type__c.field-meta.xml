@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Vehicle_Type__c</fullName>
+    <label>Vehicle Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Network Package</fullName>
+                <default>false</default>
+                <label>Network Package</label>
+            </value>
+            <value>
+                <fullName>Program Package</fullName>
+                <default>false</default>
+                <label>Program Package</label>
+            </value>
+            <value>
+                <fullName>Sports Package</fullName>
+                <default>false</default>
+                <label>Sports Package</label>
+            </value>
+            <value>
+                <fullName>Sponsorship</fullName>
+                <default>false</default>
+                <label>Sponsorship</label>
+            </value>
+            <value>
+                <fullName>Digital Package</fullName>
+                <default>false</default>
+                <label>Digital Package</label>
+            </value>
+            <value>
+                <fullName>Multimedia Package</fullName>
+                <default>false</default>
+                <label>Multimedia Package</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

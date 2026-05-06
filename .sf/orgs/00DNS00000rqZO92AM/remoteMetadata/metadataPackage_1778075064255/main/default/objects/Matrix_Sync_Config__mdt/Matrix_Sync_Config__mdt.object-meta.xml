@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Configuration settings for the Matrix inventory sync. Deploy a single record with DeveloperName=Default.</description>
+    <label>Matrix Sync Config</label>
+    <pluralLabel>Matrix Sync Configs</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

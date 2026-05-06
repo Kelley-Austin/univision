@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Inbound_Staging__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Traceability link back to the staging row that produced this actual.</description>
+    <label>Inbound Staging</label>
+    <referenceTo>Inbound_Staging__c</referenceTo>
+    <relationshipLabel>Actual Revenue Records</relationshipLabel>
+    <relationshipName>Actual_Revenue_Records</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

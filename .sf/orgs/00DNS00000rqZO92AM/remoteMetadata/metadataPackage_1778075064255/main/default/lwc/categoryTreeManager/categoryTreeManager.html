@@ -1,0 +1,91 @@
+<template>
+    <lightning-card title="Category Taxonomy" icon-name="standard:hierarchy">
+        <div slot="actions">
+            <lightning-button
+                label="Add Root Category"
+                icon-name="utility:add"
+                onclick={handleAddRoot}>
+            </lightning-button>
+        </div>
+
+        <div class="slds-p-horizontal_small slds-p-bottom_small">
+            <template lwc:if={isLoading}>
+                <div class="slds-align_absolute-center slds-p-around_large">
+                    <lightning-spinner alternative-text="Loading categories" size="medium"></lightning-spinner>
+                </div>
+            </template>
+
+            <template lwc:if={hasError}>
+                <div class="slds-notify slds-notify_alert slds-alert_error slds-m-bottom_small" role="alert">
+                    <lightning-icon icon-name="utility:error" alternative-text="Error" size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                    {errorMessage}
+                </div>
+            </template>
+
+            <template lwc:if={hasNodes}>
+                <div class="tree-container"
+                     ondragover={handleDragOver}
+                     ondrop={handleDrop}>
+                    <template for:each={flatNodes} for:item="node">
+                        <div
+                            key={node.Id}
+                            class={node.rowClass}
+                            style={node.indentStyle}
+                            draggable="true"
+                            data-id={node.Id}
+                            ondragstart={handleDragStart}
+                            ondragenter={handleDragEnter}
+                            ondragleave={handleDragLeave}>
+
+                            <span class="expand-btn" data-id={node.Id} onclick={handleToggle}>
+                                <template lwc:if={node.hasChildren}>
+                                    <lightning-icon
+                                        icon-name={node.expandIcon}
+                                        size="xx-small"
+                                        alternative-text="Toggle">
+                                    </lightning-icon>
+                                </template>
+                                <template lwc:else>
+                                    <span class="expand-spacer"></span>
+                                </template>
+                            </span>
+
+                            <span class="cat-name" title={node.Name}>{node.Name}</span>
+
+                            <template lwc:if={node.isInactive}>
+                                <lightning-badge label="Inactive" class="slds-m-left_x-small inactive-badge"></lightning-badge>
+                            </template>
+
+                            <span class="cat-actions">
+                                <lightning-button-icon
+                                    icon-name="utility:add"
+                                    alternative-text="Add child category"
+                                    title="Add child"
+                                    variant="bare"
+                                    size="small"
+                                    data-id={node.Id}
+                                    onclick={handleAddChild}>
+                                </lightning-button-icon>
+                                <lightning-button-icon
+                                    icon-name="utility:close"
+                                    alternative-text="Retire category"
+                                    title="Retire"
+                                    variant="bare"
+                                    size="small"
+                                    data-id={node.Id}
+                                    onclick={handleRetire}>
+                                </lightning-button-icon>
+                            </span>
+                        </div>
+                    </template>
+                </div>
+            </template>
+
+            <template lwc:if={isEmpty}>
+                <div class="slds-align_absolute-center slds-p-around_large slds-text-color_weak">
+                    No categories yet. Click "Add Root Category" to get started.
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

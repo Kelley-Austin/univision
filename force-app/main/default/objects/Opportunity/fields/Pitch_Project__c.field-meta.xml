@@ -4,8 +4,8 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <label>Pitch Project</label>
     <referenceTo>Pitch_Project__c</referenceTo>
-    <relationshipLabel>Opportunities</relationshipLabel>
-    <relationshipName>Opportunities</relationshipName>
+    <relationshipLabel>Pitched Opportunities</relationshipLabel>
+    <relationshipName>Pitched_Opportunities</relationshipName>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <type>Lookup</type>

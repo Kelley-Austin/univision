@@ -1,0 +1,44 @@
+<template>
+    <lightning-card title="Load History" icon-name="utility:data_streams">
+        <div slot="actions">
+            <lightning-button-icon
+                icon-name="utility:refresh"
+                alternative-text="Refresh"
+                onclick={handleRefresh}>
+            </lightning-button-icon>
+        </div>
+        <div class="slds-card__body slds-card__body_inner">
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading..." size="small"></lightning-spinner>
+            </template>
+            <template if:true={summary}>
+                <div class="slds-grid slds-gutters slds-m-bottom_medium">
+                    <div class="slds-col">
+                        <div class="slds-box slds-text-align_center">
+                            <p class="slds-text-heading_large">{summary.totalRowsToday}</p>
+                            <p class="slds-text-body_small">Today's Rows</p>
+                        </div>
+                    </div>
+                    <div class="slds-col">
+                        <div class="slds-box slds-text-align_center">
+                            <p class="slds-text-heading_large">{summary.totalErrorsToday}</p>
+                            <p class="slds-text-body_small">Today's Errors</p>
+                        </div>
+                    </div>
+                    <div class="slds-col">
+                        <div class="slds-box slds-text-align_center">
+                            <p class="slds-text-heading_large">{summary.batchCount}</p>
+                            <p class="slds-text-body_small">Batches Today</p>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <lightning-datatable
+                key-field="Id"
+                data={batches}
+                columns={columns}
+                hide-checkbox-column>
+            </lightning-datatable>
+        </div>
+    </lightning-card>
+</template>

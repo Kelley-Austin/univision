@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Stage_Name__c</fullName>
+    <caseSensitive>false</caseSensitive>
+    <description>Picklist value of Projection__c.Forecast_Stage__c that this weight applies to (e.g., &apos;Stage 0&apos;, &apos;Booked&apos;, &apos;NA&apos;). Lookup key for ForecastStageWeightProvider.</description>
+    <externalId>true</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Stage Name</label>
+    <length>20</length>
+    <required>true</required>
+    <type>Text</type>
+    <unique>true</unique>
+</CustomField>

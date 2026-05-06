@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+<CustomReportType xmlns="http://soap.sforce.com/2006/04/metadata">
     <baseObject>Reconciliation_Line__c</baseObject>
     <category>other</category>
     <deployed>true</deployed>
@@ -47,7 +47,7 @@
     <sections>
         <columns>
             <field>NAME</field>
-            <table>Advertising_Opportunity__r</table>
+            <table>Opportunity__r</table>
         </columns>
         <masterLabel>Advertising Opportunity</masterLabel>
     </sections>
@@ -65,4 +65,4 @@
         </columns>
         <masterLabel>Vehicle</masterLabel>
     </sections>
-</ReportType>
+</CustomReportType>

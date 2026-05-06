@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PlanviewInt</fullName>
+    <columns>NAME</columns>
+    <columns>LogEventName__c</columns>
+    <columns>Type__c</columns>
+    <columns>ComposedDateTime__c</columns>
+    <columns>EventKey__c</columns>
+    <columns>ObjectReferenceId__c</columns>
+    <columns>Message__c</columns>
+    <columns>CorrelationId__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>LogEventName__c</field>
+        <operation>equals</operation>
+        <value>PlanviewIntegration</value>
+    </filters>
+    <label>PlanviewInt</label>
+</ListView>

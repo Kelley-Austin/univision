@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Lightning Record Page for Account — Advertising Budget view. Shows the 12-month Budget vs. Projection vs. Actual grid, the AE reconciliation worklist for unmatched staging records, the Budget Lines related list, and Actual Revenues. Assigned to the Advertiser record type in Lightning App Builder.</description>
-    <masterLabel>Account Advertising Budget</masterLabel>
-    <sobjectType>Account</sobjectType>
-    <type>RecordPage</type>
-
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
@@ -19,7 +15,6 @@
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
-
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
@@ -71,5 +66,7 @@
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
-
+    <masterLabel>Account Advertising Budget</masterLabel>
+    <sobjectType>Account</sobjectType>
+    <type>RecordPage</type>
 </FlexiPage>

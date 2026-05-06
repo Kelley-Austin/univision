@@ -1,0 +1,54 @@
+<template>
+    <lightning-card title="Mapping Rules" icon-name="utility:rules">
+        <div slot="actions">
+            <lightning-button label="Dry Run" onclick={handleDryRun} class="slds-m-right_x-small"></lightning-button>
+            <lightning-button variant="brand" label="New Rule" onclick={handleNew}></lightning-button>
+        </div>
+        <div class="slds-card__body slds-card__body_inner">
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading..." size="small"></lightning-spinner>
+            </template>
+            <template if:true={dryRunResult}>
+                <div class="slds-box slds-m-bottom_small slds-theme_info">
+                    <p>Dry Run: {dryRunResult.pendingRows} pending rows &mdash;
+                       {dryRunResult.wouldExclude} would be excluded,
+                       {dryRunResult.wouldRemap} would be remapped.</p>
+                </div>
+            </template>
+            <lightning-datatable
+                key-field="Id"
+                data={rules}
+                columns={columns}
+                onrowaction={handleRowAction}
+                hide-checkbox-column>
+            </lightning-datatable>
+        </div>
+    </lightning-card>
+
+    <template if:true={showModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-modal__title">{modalTitle}</h2>
+                    <button class="slds-button slds-button_icon slds-modal__close" onclick={handleModalClose}>
+                        <lightning-icon icon-name="utility:close" size="small"></lightning-icon>
+                    </button>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <lightning-input label="Rule Name" value={editRecord.Name} data-field="Name" onchange={handleFieldChange}></lightning-input>
+                    <lightning-combobox label="Rule Type" value={editRecord.Rule_Type__c} options={ruleTypeOptions} data-field="Rule_Type__c" onchange={handleFieldChange}></lightning-combobox>
+                    <lightning-input label="Field Name" value={editRecord.Field_Name__c} data-field="Field_Name__c" onchange={handleFieldChange}></lightning-input>
+                    <lightning-input label="Raw Value" value={editRecord.Raw_Value__c} data-field="Raw_Value__c" onchange={handleFieldChange}></lightning-input>
+                    <lightning-input label="Mapped Value" value={editRecord.Mapped_Value__c} data-field="Mapped_Value__c" onchange={handleFieldChange}></lightning-input>
+                    <lightning-input type="checkbox" label="Is Active" checked={editRecord.Is_Active__c} data-field="Is_Active__c" onchange={handleCheckboxChange}></lightning-input>
+                    <lightning-textarea label="Notes" value={editRecord.Notes__c} data-field="Notes__c" onchange={handleFieldChange}></lightning-textarea>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button label="Cancel" onclick={handleModalClose}></lightning-button>
+                    <lightning-button variant="brand" label="Save" onclick={handleSave}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

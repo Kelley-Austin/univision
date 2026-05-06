@@ -51,20 +51,16 @@
     <description>Opportunities closing within the next 90 days, grouped by status. Sales managers use this to prioritize deals and forecast near-term revenue.</description>
     <filter>
         <booleanFilter>1 AND 2</booleanFilter>
-        <criterias>
+        <criteriaItems>
             <column>STAGE_NAME</column>
-            <filterType>filterItem</filterType>
-            <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
             <value>Stage 3 - Pipeline/Deal,Stage 4 - Negotiation,Stage 5 - Contract Pending</value>
-        </criterias>
-        <criterias>
+        </criteriaItems>
+        <criteriaItems>
             <column>End_Date__c</column>
-            <filterType>filterItem</filterType>
-            <isUnlocked>true</isUnlocked>
             <operator>lessThan</operator>
             <value>NEXT 90 DAYS</value>
-        </criterias>
+        </criteriaItems>
     </filter>
     <format>Summary</format>
     <groupingsDown>

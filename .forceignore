@@ -1,186 +1,35 @@
-# .forceignore v2
+# .forceignore v2 — last cleaned 2026-05-06
+# See CLAUDE.md "Scope notes" for which items are deliberately excluded vs deferred.
+# When you fix an entry below, delete its line; don't comment it out.
+
+# === Standard dev artifacts (always ignore) ===
 .forceignore
 **/jsconfig.json
 **/.eslintrc.json
 **/lwc/**/__tests__/**
 
-# CLI parsing issue with folder metadata in source format
-**/reportFolders/Advertising_Analytics.reportFolder-meta.xml
-**/dashboardFolders/Advertising_Analytics.dashboardFolder-meta.xml
-**/dashboardFolders/MediaCloud.dashboardFolder-meta.xml
+# === KEEP IGNORED — out of SOW Phase 1 (Change Order required to include) ===
 
-# Unexpected child metadata — quick action inside CustomObject directory
-**/objects/Account/quickActions/Link_Agency.quickAction-meta.xml
-
-# Reports — Advertising_Analytics folder still has pre-existing parse errors
-# (criterias element placement, INTERVAL_CURRENT_FY enum, masterLabel missing,
-# sortIndex placement). Slice F only addressed expandOtherItems/VerticalBar/Count.
-# Re-ignored 2026-05-05 pending a deeper sweep.
+# Story 3-009 (Forecast Stage Snapshots) — not started; gates Advertising_Analytics reports
+# Reports in this folder have multiple parse issues (criterias, INTERVAL_CURRENT_FY enum,
+# masterLabel missing, sortIndex placement) — defer until story 3-009 picks them up.
 **/reports/Advertising_Analytics/*.report-meta.xml
 **/reportTypes/Period_Snapshot_Forecast_Accuracy.reportType-meta.xml
 **/reportTypes/Forecast_Stage_Snapshots.reportType-meta.xml
 **/reportTypes/Pacing_Snapshots.reportType-meta.xml
 **/reportTypes/Period_Snapshots_Detail.reportType-meta.xml
 
-# Flow-type quick actions not supported in this org
-**/quickActions/New_Advertiser.quickAction-meta.xml
-**/quickActions/New_Agency.quickAction-meta.xml
-
-# Flows using flowruntime:lookupField or recordChoiceSets not available in this org
-**/flows/Link_Agency_To_Advertiser.flow-meta.xml
-**/flows/Retire_Category_With_Successor.flow-meta.xml
-
-# FlexiPage / App using schema elements not valid in this org type
-**/flexipages/MDM_Workspace_Home.flexipage-meta.xml
-**/flexipages/Agency_Account_Record_Page.flexipage-meta.xml
-**/flexipages/Source_System_Record_Page.flexipage-meta.xml
-**/flexipages/Account_Advertising_Budget.flexipage-meta.xml
-**/flexipages/Advertising_Contract_Record_Page.flexipage-meta.xml
-**/flexipages/Advertising_Opportunity_Record_Page.flexipage-meta.xml
-**/flexipages/Budget_Line_Record_Page.flexipage-meta.xml
-**/flexipages/Period_Close_Record_Page.flexipage-meta.xml
-**/flexipages/Pitch_Project_Record_Page.flexipage-meta.xml
-**/flexipages/Sales_Operations_Console_App.flexipage-meta.xml
-**/applications/MDM_Workspace.app-meta.xml
-**/applications/MediaCloud.app-meta.xml
-# Pre-existing issue: workspaceType element invalid in this org's API. Re-ignored
-# 2026-05-05 (Slice F+) — surfaces during validate; deeper fix needed in CustomApplication schema.
-**/applications/Sales_Operations_Console.app-meta.xml
-
-# Named Credential — type element invalid in this org
-**/namedCredentials/Matrix_API.namedCredential-meta.xml
-
-# Custom Metadata Type object — deploymentStatus not allowed
-# (no longer applies — object-meta.xml has been cleaned up; entry kept commented
-# as a record of the prior issue.)
-# **/objects/Revenue_Code_Mapping__mdt.object-meta.xml
-
-# Custom Tabs — sobjectName/lightningWebComponent element invalid in this org's CustomTab schema
-**/tabs/Inbound_Staging__c.tab-meta.xml
-**/tabs/Load_Batch__c.tab-meta.xml
-**/tabs/Mapping_Rule__c.tab-meta.xml
-**/tabs/Source_System__c.tab-meta.xml
-**/tabs/Actual_Revenue__c.tab-meta.xml
-**/tabs/Advertising_Contract__c.tab-meta.xml
-**/tabs/Advertising_Opportunity__c.tab-meta.xml
-**/tabs/Budget_Line__c.tab-meta.xml
-**/tabs/Pacing_Snapshot__c.tab-meta.xml
-**/tabs/Period_Close__c.tab-meta.xml
-**/tabs/Pitch_Project__c.tab-meta.xml
-**/tabs/Sales_Ops_Console.tab-meta.xml
-
-# Dashboards — pre-existing issue: chartSummary/groupingColumn not compatible
-# with autoselectColumnsFromReport mode for Bar. Slice F addressed expandOtherItems
-# but the deeper component/report config mismatch remains. Re-ignored 2026-05-05.
+# Dashboards that depend on Advertising_Analytics reports (deploy fails when child reports excluded)
 **/dashboards/Advertising_Analytics/Weekly_Analytics_Dashboard.dashboard-meta.xml
 **/dashboards/MediaCloud/Sales_Manager_Dashboard.dashboard-meta.xml
 
-# Flows — screens element contiguity / unsupported lookupField extension / LWC $recordId ref
-**/flows/Create_Agency_Account.flow-meta.xml
-**/flows/Create_Direct_Buy_Advertiser.flow-meta.xml
-**/flows/Makegood_Or_Cancellation.flow-meta.xml
-**/flows/Traffic_Copy_Entry.flow-meta.xml
-**/flows/Pitch_Project_Creator.flow-meta.xml
-**/flows/Period_Close_Actions.flow-meta.xml
-
-# Actual_Revenue__c.Revenue_Type__c — un-ignored 2026-05-05. Excluding caused
-# ~15 dependent Apex classes to fail compile (field referenced in
-# ProjectionRollupQueueable, ReconciliationEngine, IngestBatch, LateActualsController,
-# PacingSnapshotBatch, etc.). Let it deploy and surface any type-conflict error
-# directly rather than masking it.
-# **/objects/Actual_Revenue__c/fields/Revenue_Type__c.field-meta.xml
-
-# Pre-existing: Opportunity.Pitch_Project__c lookup conflicts with existing
-# child relationship "Opportunities" on Pitch_Project__c. PitchProjectController
-# and its test reference the field; layout references it; all four chain-fail.
-# Re-ignored 2026-05-05 pending relationshipName fix on the field.
-**/objects/Opportunity/fields/Pitch_Project__c.field-meta.xml
-**/classes/PitchProjectController.cls
-**/classes/PitchProjectController.cls-meta.xml
-**/classes/PitchProjectControllerTest.cls
-**/classes/PitchProjectControllerTest.cls-meta.xml
-**/layouts/Opportunity-Opportunity Layout.layout-meta.xml
-
-# Reports + Dashboards still failing across orgs (Last_Imported_Date 'invalid
-# report type'; Sales_Outlook_Matrix Total_Budget__c missing; both dashboards
-# 'LeftSection or RightSection' required). Re-ignored 2026-05-05; these need a
-# focused dashboard-XML rebuild as a separate slice once the schema is stable.
-**/reports/MediaCloud/Last_Imported_Date.report-meta.xml
-**/reports/MediaCloud/Sales_Outlook_Matrix.report-meta.xml
-**/dashboards/MediaCloud/Source_System_Health.dashboard-meta.xml
-**/dashboards/MediaCloud/Sales_Outlook.dashboard-meta.xml
-
-# Advertising_Contract__c.Opportunity__c — un-ignored 2026-05-05. Excluding
-# cascaded to TrafficOrderSubmitAction, TrafficOrderTransmitQueueable,
-# CancellationPolicyServiceTest, etc., and breaks the master-detail sharingModel.
-# If relationshipOrder conflict resurfaces, edit the field XML to match the org's
-# value rather than excluding the whole field.
-# **/objects/Advertising_Contract__c/fields/Opportunity__c.field-meta.xml
-
-# Custom Metadata Type — object-level file (subdir pattern)
-# (no longer applies — object-meta.xml is now cleanly defined with
-# <visibility>Public</visibility>; removing exclusion so the CMT and its
-# downstream Apex consumers (WideOrbitTransformer etc.) can compile.)
-# **/objects/Revenue_Code_Mapping__mdt/Revenue_Code_Mapping__mdt.object-meta.xml
-
-# LWC — API v62 literal expression incompatibility or missing @api property
-**/lwc/fileUploadSource
-**/lwc/sourceFileUpload
-**/lwc/pitchProjectCreator
-
-# LWC already deployed with correct lightning__FlowScreen target; redeploy triggers false conflict
-**/lwc/periodCloseActions
-
-# === hotfix/main-deploy-recovery additions (2026-05-04) ===
-# Most of these are out-of-SOW or schema-drifted slices that block the recovery
-# deploy. Source remains in the tree for future fix-and-redeploy cycles.
-
-# Flows — bad merge artifacts (duplicated <screens>/<recordLookups>) and
-# elements not supported by this org's API version
-**/flows/Create_Advertising_Opportunity.flow-meta.xml
-**/flows/Create_Local_Ad_Proposal.flow-meta.xml
-**/flows/Log_Sales_Activity.flow-meta.xml
-**/flows/Matrix_Inventory_Admin_Sync.flow-meta.xml
-**/flows/New_Advertising_Opportunity.flow-meta.xml
-**/flows/Promote_Opportunity_to_Contract.flow-meta.xml
-**/flows/Run_Reconciliation.flow-meta.xml
-**/flows/Transmit_Traffic_Order_on_Contract_Activation.flow-meta.xml
-**/flows/Update_Opportunity_Stage.flow-meta.xml
-Create_Advertising_Opportunity.flow-meta.xml
-Create_Local_Ad_Proposal.flow-meta.xml
-Log_Sales_Activity.flow-meta.xml
-Matrix_Inventory_Admin_Sync.flow-meta.xml
-New_Advertising_Opportunity.flow-meta.xml
-Promote_Opportunity_to_Contract.flow-meta.xml
-Run_Reconciliation.flow-meta.xml
-Transmit_Traffic_Order_on_Contract_Activation.flow-meta.xml
-Update_Opportunity_Stage.flow-meta.xml
-
-# QuickActions — Flow-type schema not parseable; defer behind the flows above
-**/quickActions/Account.Create_Advertising_Opportunity.quickAction-meta.xml
-**/quickActions/Account.Create_Local_Ad_Proposal.quickAction-meta.xml
-**/quickActions/Account.Link_Agency_To_Advertiser.quickAction-meta.xml
-**/quickActions/Advertising_Opportunity__c.Log_Activity.quickAction-meta.xml
-**/quickActions/Advertising_Opportunity__c.New_Opportunity.quickAction-meta.xml
-**/quickActions/Advertising_Opportunity__c.Promote_to_Contract.quickAction-meta.xml
-**/quickActions/Advertising_Opportunity__c.Run_Reconciliation.quickAction-meta.xml
-**/quickActions/Advertising_Opportunity__c.Update_Stage.quickAction-meta.xml
-Account.Create_Advertising_Opportunity.quickAction-meta.xml
-Account.Create_Local_Ad_Proposal.quickAction-meta.xml
-Account.Link_Agency_To_Advertiser.quickAction-meta.xml
-Advertising_Opportunity__c.Log_Activity.quickAction-meta.xml
-Advertising_Opportunity__c.New_Opportunity.quickAction-meta.xml
-Advertising_Opportunity__c.Promote_to_Contract.quickAction-meta.xml
-Advertising_Opportunity__c.Run_Reconciliation.quickAction-meta.xml
-Advertising_Opportunity__c.Update_Stage.quickAction-meta.xml
-
-# Apex — out-of-SOW Traffic outbound stack; constructor/exception class drift
+# Traffic outbound callout (Salesforce → WideOrbit) — out of SOW Phase 1
 **/classes/TrafficOrderService.cls
 **/classes/TrafficOrderService.cls-meta.xml
 **/classes/TrafficOrderServiceTest.cls
 **/classes/TrafficOrderServiceTest.cls-meta.xml
 
-# Apex — schema drift on Channel__c / Advertising_Opportunity__c (out of SOW Local Ad Sales flow)
+# Local Ad Sales Proposal Flow — out of SOW
 **/classes/CreateLocalAdProposal.cls
 **/classes/CreateLocalAdProposal.cls-meta.xml
 **/classes/CreateLocalAdProposalTest.cls
@@ -193,66 +42,46 @@ Advertising_Opportunity__c.Update_Stage.quickAction-meta.xml
 **/classes/LocalAdProposalController.cls-meta.xml
 **/classes/LocalAdProposalControllerTest.cls
 **/classes/LocalAdProposalControllerTest.cls-meta.xml
-
-# Apex tests — Advertising_Opportunity__c.Name not writeable (autonumber name field)
-**/classes/MatrixOrderSyncServiceTest.cls
-**/classes/MatrixOrderSyncServiceTest.cls-meta.xml
-**/classes/RunReconciliationActionTest.cls
-**/classes/RunReconciliationActionTest.cls-meta.xml
-
-# LWC + VF page — depend on the excluded Apex above
 **/lwc/proposalBudgetLines
 **/lwc/budgetLineEditor
 **/pages/LocalAdProposal.page
 **/pages/LocalAdProposal.page-meta.xml
 
-# Reports — Slice F fixed expandOtherItems/VerticalBar/Count but the criterias
-# element placement is still wrong for this org's API version. Re-ignored
-# 2026-05-05 pending a filter-block restructure. New Last_Imported_Date and
-# Sales_Outlook_Matrix in this folder use the correct schema and deploy fine.
-**/reports/MediaCloud/Current_Month_Pacing.report-meta.xml
-**/reports/MediaCloud/Deal_Aging.report-meta.xml
-**/reports/MediaCloud/Pipeline_30_60_90_Day.report-meta.xml
-**/reports/MediaCloud/Pipeline_by_Market.report-meta.xml
-**/reports/MediaCloud/Rep_Productivity.report-meta.xml
+# Apex tests that try to set autonumber Name field — defer behind test rewrites
+**/classes/MatrixOrderSyncServiceTest.cls
+**/classes/MatrixOrderSyncServiceTest.cls-meta.xml
+**/classes/RunReconciliationActionTest.cls
+**/classes/RunReconciliationActionTest.cls-meta.xml
 
-# ReportTypes — invalid <outerJoin> + missing relationship path
-**/reportTypes/Budget_Lines_with_Opportunity_and_Vehicle.reportType-meta.xml
-**/reportTypes/Reconciliation_Report.reportType-meta.xml
+# === MANUAL STEP — re-include after one-time org config (track in Cutover.csv) ===
 
-# Picklist field with Text(50) → Picklist conflict in org; needs org-side delete first
-**/objects/Advertising_Opportunity__c/fields/Status__c.field-meta.xml
-
-# Approval process references Contract_Approvers queue which doesn't exist in
-# the org yet. Queues are runtime/admin config; create the queue in Setup, then
-# remove this exclusion to re-include the approval process.
+# Approval process needs the Contract_Approvers queue created in Setup → Queues first
 **/approvalProcesses/Advertising_Contract__c.Contract_Approval_Process.approvalProcess-meta.xml
 
-# Filename-only fallbacks for files that exist on this branch — ** patterns can be unreliable
-# when the file physically exists in the source tree (SF CLI v2 forceignore limitation)
-New_Advertiser.quickAction-meta.xml
-New_Agency.quickAction-meta.xml
-Create_Agency_Account.flow-meta.xml
-Create_Direct_Buy_Advertiser.flow-meta.xml
-Link_Agency_To_Advertiser.flow-meta.xml
-Retire_Category_With_Successor.flow-meta.xml
-Makegood_Or_Cancellation.flow-meta.xml
-Traffic_Copy_Entry.flow-meta.xml
-Pitch_Project_Creator.flow-meta.xml
-Agency_Account_Record_Page.flexipage-meta.xml
-MDM_Workspace_Home.flexipage-meta.xml
-MDM_Workspace.app-meta.xml
-Matrix_API.namedCredential-meta.xml
+# === FIX BACKLOG — flows with parsing/contiguity issues; need deploy-error-driven repair ===
+# Each of these flows needs targeted XML edits based on actual deploy errors. Source kept
+# in tree so the work is visible; un-ignore one at a time, attempt deploy, fix the surfaced
+# error, repeat.
 
-# === 2026-05-05 deployment hotfix additions ===
-# Tab references a CustomObject (Actuals_Record__c) that doesn't exist in source
-# nor in the org. Either rename the tab or remove. Excluded for now so the
-# rest of the deploy can proceed.
-**/tabs/Actuals_Record__c.tab-meta.xml
+**/flows/Link_Agency_To_Advertiser.flow-meta.xml
+**/flows/Retire_Category_With_Successor.flow-meta.xml
+**/flows/Create_Agency_Account.flow-meta.xml
+**/flows/Create_Direct_Buy_Advertiser.flow-meta.xml
+**/flows/Makegood_Or_Cancellation.flow-meta.xml
+**/flows/Traffic_Copy_Entry.flow-meta.xml
+**/flows/Pitch_Project_Creator.flow-meta.xml
+**/flows/Period_Close_Actions.flow-meta.xml
+**/flows/Log_Sales_Activity.flow-meta.xml
+**/flows/Matrix_Inventory_Admin_Sync.flow-meta.xml
+**/flows/Run_Reconciliation.flow-meta.xml
+**/flows/Transmit_Traffic_Order_on_Contract_Activation.flow-meta.xml
+**/flows/Create_Opportunity.flow-meta.xml
+**/flows/New_Opportunity.flow-meta.xml
 
-# Flow-type QuickActions whose target Flow files are excluded above; the
-# QuickAction metadata is unparseable without the flow it references.
-# Pair-locked with the corresponding Flow exclusions earlier in this file.
+# Flow-type quick actions — pair-locked with their parent flows above
+**/quickActions/Account.Link_Agency_To_Advertiser.quickAction-meta.xml
+**/quickActions/Account.Create_Local_Ad_Proposal.quickAction-meta.xml
+**/quickActions/Account.Create_Opportunity.quickAction-meta.xml
 **/quickActions/Advertising_Contract__c.Makegood_Or_Cancellation.quickAction-meta.xml
 **/quickActions/Budget_Line__c.Traffic_Copy_Entry.quickAction-meta.xml
 **/quickActions/Opportunity.Log_Activity.quickAction-meta.xml
@@ -262,32 +91,3 @@ Matrix_API.namedCredential-meta.xml
 **/quickActions/Opportunity.Update_Stage.quickAction-meta.xml
 **/quickActions/Period_Close__c.Close_Period.quickAction-meta.xml
 **/quickActions/Pitch_Project__c.Create_Pitch_Project.quickAction-meta.xml
-# Filename-only fallbacks (per the SF CLI v2 forceignore limitation note above)
-Advertising_Contract__c.Makegood_Or_Cancellation.quickAction-meta.xml
-Budget_Line__c.Traffic_Copy_Entry.quickAction-meta.xml
-Opportunity.Log_Activity.quickAction-meta.xml
-Opportunity.New_Opportunity.quickAction-meta.xml
-Opportunity.Promote_to_Contract.quickAction-meta.xml
-Opportunity.Run_Reconciliation.quickAction-meta.xml
-Opportunity.Update_Stage.quickAction-meta.xml
-Period_Close__c.Close_Period.quickAction-meta.xml
-Pitch_Project__c.Create_Pitch_Project.quickAction-meta.xml
-
-# Flow files with deploy-blocking issues (parsing errors / references to
-# excluded LWCs). Defer behind underlying fixes. Source kept for context.
-**/flows/Create_Opportunity.flow-meta.xml
-**/flows/New_Opportunity.flow-meta.xml
-Create_Opportunity.flow-meta.xml
-New_Opportunity.flow-meta.xml
-
-# FlexiPage references force:recordDetail design-time component which can't
-# be resolved in this org. Out of scope for the trigger-handler refactor;
-# defer until the page is rebuilt or the component dependency is restored.
-**/flexipages/Opportunity_Record_Page.flexipage-meta.xml
-Opportunity_Record_Page.flexipage-meta.xml
-
-# Flow-type quickAction whose target Flow is excluded above. Pair-locked
-# with the Create_Opportunity.flow exclusion.
-**/quickActions/Account.Create_Opportunity.quickAction-meta.xml
-Account.Create_Opportunity.quickAction-meta.xml
-

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__AppPage</target>
+    </targets>
+    <masterLabel>Exclusion Log</masterLabel>
+    <description>Paginated list of excluded Inbound_Staging__c rows with filtering by rule token and period year. Supports bulk re-queue back to Pending.</description>
+</LightningComponentBundle>

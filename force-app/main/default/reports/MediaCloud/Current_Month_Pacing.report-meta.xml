@@ -63,13 +63,11 @@
     </columns>
     <description>Planned vs. actual spend for the current calendar month, grouped by channel. Requires Actual_Amount__c and Variance_Amount__c from the WideOrbit reconciliation slice.</description>
     <filter>
-        <criterias>
+        <criteriaItems>
             <column>Status__c</column>
-            <filterType>filterItem</filterType>
-            <isUnlocked>true</isUnlocked>
             <operator>notEqual</operator>
             <value>Cancelled</value>
-        </criterias>
+        </criteriaItems>
     </filter>
     <format>Summary</format>
     <groupingsDown>

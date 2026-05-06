@@ -54,13 +54,11 @@
     </columns>
     <description>Open advertising pipeline grouped by market and status. Excludes Closed Lost opportunities. Requires Market__c and Total_Budget__c from the data model slice.</description>
     <filter>
-        <criterias>
+        <criteriaItems>
             <column>STAGE_NAME</column>
-            <filterType>filterItem</filterType>
-            <isUnlocked>true</isUnlocked>
             <operator>notEqual</operator>
             <value>Closed Lost</value>
-        </criterias>
+        </criteriaItems>
     </filter>
     <format>Summary</format>
     <groupingsDown>

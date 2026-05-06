@@ -1,0 +1,14 @@
+.dry-run-panel {
+    background-color: #f4f6f9;
+    border: 1px solid #dddbda;
+    border-radius: 4px;
+    padding: 1rem;
+}
+
+.slds-modal {
+    z-index: 9000;
+}
+
+.slds-backdrop {
+    z-index: 8999;
+}

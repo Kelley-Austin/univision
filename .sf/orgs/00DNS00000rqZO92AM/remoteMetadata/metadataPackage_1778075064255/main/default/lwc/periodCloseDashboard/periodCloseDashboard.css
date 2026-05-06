@@ -1,0 +1,22 @@
+.positive-variance {
+    color: #2e844a;
+    font-weight: bold;
+}
+
+.negative-variance {
+    color: #c23934;
+    font-weight: bold;
+}
+
+.legend-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 4px;
+}
+
+.legend-open     { background-color: #2e844a; }
+.legend-closed   { background-color: #3e3e3c; }
+.legend-reopened { background-color: #dd7a01; }
+.legend-none     { background-color: #dddbda; }

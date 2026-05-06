@@ -56,13 +56,11 @@
     </columns>
     <description>Open opportunities sorted by creation date (oldest first) to surface stalled deals. Grouped by rep and status so managers can see where deals are getting stuck.</description>
     <filter>
-        <criterias>
+        <criteriaItems>
             <column>STAGE_NAME</column>
-            <filterType>filterItem</filterType>
-            <isUnlocked>true</isUnlocked>
             <operator>equals</operator>
             <value>Stage 1 - Lead,Stage 2 - Discovery/CNA,Stage 3 - Pipeline/Deal,Stage 4 - Negotiation,Stage 5 - Contract Pending</value>
-        </criterias>
+        </criteriaItems>
     </filter>
     <format>Summary</format>
     <groupingsDown>

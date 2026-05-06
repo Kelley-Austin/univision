@@ -22,5 +22,4 @@
     <tabs>Source_System__c</tabs>
 
     <uiType>Lightning</uiType>
-    <workspaceType>Standard</workspaceType>
 </CustomApplication>

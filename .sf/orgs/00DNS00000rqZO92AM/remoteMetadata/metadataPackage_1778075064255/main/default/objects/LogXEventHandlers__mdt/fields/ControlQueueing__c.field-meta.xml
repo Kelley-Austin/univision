@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ControlQueueing__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>If unchecked, the framework enqueues each handler invocation in a single job and the processor runs in a queueable context. If checked, the framework invokes the process during the Log Trigger and it is up to the processor to control queueing. Note: Checking this means that the processor is running within a DML context and has uncommitted work pending and so cannot make a callout without first handling the queueing.</description>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>If unchecked, the framework enqueues each handler invocation in a single job and the processor runs in a queueable context. If checked, the framework invokes the process during the Log Trigger and it is up to the processor to control queueing. Note: Checking this means that the processor is running within a DML context and has uncommitted work pending and so cannot make a callout without first handling the queueing.</inlineHelpText>
+    <label>ControlQueueing</label>
+    <type>Checkbox</type>
+</CustomField>

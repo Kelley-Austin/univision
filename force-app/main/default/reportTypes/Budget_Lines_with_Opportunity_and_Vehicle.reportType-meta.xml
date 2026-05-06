@@ -114,7 +114,6 @@
             <field>Opportunity__r.AccountId</field>
         </columns>
         <masterLabel>Opportunity Fields</masterLabel>
-        <outerJoin>true</outerJoin>
     </sections>
 
     <!-- Vehicle fields (accessed via Budget_Line__c.Vehicle__c lookup) -->
@@ -144,6 +143,5 @@
             <field>Vehicle__r.Status__c</field>
         </columns>
         <masterLabel>Vehicle Fields</masterLabel>
-        <outerJoin>true</outerJoin>
     </sections>
 </CustomReportType>

@@ -1,0 +1,35 @@
+.budget-table {
+    width: 100%;
+    font-size: 0.8rem;
+    border-collapse: collapse;
+}
+
+.dim-col   { width: 140px; min-width: 110px; }
+.month-col { min-width: 72px; text-align: right; }
+.total-col { width: 100px; text-align: right; font-weight: bold; }
+
+.dim-cell {
+    vertical-align: middle;
+    border-right: 2px solid #dddbda;
+    padding: 4px 8px;
+}
+
+.row-label  { font-weight: 600; padding: 4px 8px; min-width: 80px; }
+.amount-cell{ text-align: right; padding: 4px 6px; white-space: nowrap; }
+.total-cell { text-align: right; padding: 4px 8px; font-weight: 700; white-space: nowrap; }
+
+/* Row stripe colours */
+.budget-row     td { background-color: #f3f3f3; }
+.projection-row td { background-color: #eaf4fb; }
+.actual-row     td { background-color: #f0faf0; }
+.variance-row   td { background-color: #fffbf0; border-bottom: 2px solid #dddbda; }
+
+/* Row label colours */
+.budget-label     { color: #514f4d; }
+.projection-label { color: #0176d3; }
+.actual-label     { color: #2e844a; }
+.variance-label   { color: #9a5500; }
+
+/* Variance sign colours */
+.positive { color: #2e844a; }
+.negative { color: #c23934; }

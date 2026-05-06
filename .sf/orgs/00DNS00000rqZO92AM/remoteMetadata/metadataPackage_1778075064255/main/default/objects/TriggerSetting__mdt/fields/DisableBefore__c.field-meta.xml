@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DisableBefore__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Check this to disable Before events on this trigger. If only DisableBefore is checked, no Before events will fire. If DisableBefore is checked AND DisableInsert is checked, then no Before Insert events will fire, but Before Update events will still fire.</description>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Check this to disable Before events on this trigger. If only DisableBefore is checked, no Before events will fire. If DisableBefore is checked AND DisableInsert is checked, then no Before Insert events will fire, but Before Update events will still fire.</inlineHelpText>
+    <label>DisableBefore</label>
+    <type>Checkbox</type>
+</CustomField>

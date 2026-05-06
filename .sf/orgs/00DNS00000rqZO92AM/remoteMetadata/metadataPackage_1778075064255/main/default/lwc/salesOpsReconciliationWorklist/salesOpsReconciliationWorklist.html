@@ -1,0 +1,215 @@
+<template>
+    <lightning-card title="Reconciliation Worklist — Sales Ops" icon-name="standard:forecasts">
+        <div class="slds-card__body slds-card__body_inner">
+
+            <!-- Filters -->
+            <div class="slds-grid slds-gutters slds-m-bottom_medium">
+                <div class="slds-col slds-size_1-of-4">
+                    <lightning-combobox
+                        label="AE User"
+                        placeholder="All AEs"
+                        options={aeOptions}
+                        value={filterAeUserId}
+                        onchange={handleFilterChange}
+                        data-field="filterAeUserId">
+                    </lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                    <lightning-combobox
+                        label="Source System"
+                        placeholder="All Sources"
+                        options={sourceSystemOptions}
+                        value={filterSourceSystem}
+                        onchange={handleFilterChange}
+                        data-field="filterSourceSystem">
+                    </lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_1-of-8">
+                    <lightning-input
+                        type="number"
+                        label="Month"
+                        min="1"
+                        max="12"
+                        value={filterMonth}
+                        onchange={handleFilterChange}
+                        data-field="filterMonth">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-8">
+                    <lightning-input
+                        type="number"
+                        label="Year"
+                        min="2020"
+                        max="2030"
+                        value={filterYear}
+                        onchange={handleFilterChange}
+                        data-field="filterYear">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-col_bump-left slds-align-bottom">
+                    <lightning-button label="Apply Filters" variant="brand" onclick={handleApplyFilters}
+                        class="slds-m-right_x-small"></lightning-button>
+                    <lightning-button label="Clear" variant="neutral" onclick={handleClearFilters}></lightning-button>
+                </div>
+            </div>
+
+            <!-- Summary + bulk actions -->
+            <div class="slds-grid slds-gutters slds-m-bottom_small">
+                <div class="slds-col">
+                    <span class="slds-badge slds-badge_lightest">{totalCount} unmatched row(s)</span>
+                    <template if:true={hasSelection}>
+                        <span class="slds-badge slds-theme_success slds-m-left_x-small">
+                            {selectedCount} selected
+                        </span>
+                    </template>
+                </div>
+                <div class="slds-col slds-col_bump-left">
+                    <template if:true={hasSelection}>
+                        <lightning-button
+                            label="Bulk Exclude Selected"
+                            variant="destructive-text"
+                            onclick={handleBulkExclude}
+                            class="slds-m-right_x-small">
+                        </lightning-button>
+                    </template>
+                    <lightning-button
+                        label="Run Reconciliation Batch"
+                        variant="brand"
+                        onclick={handleRunBatch}
+                        class="slds-m-right_x-small">
+                    </lightning-button>
+                    <lightning-button
+                        label="Refresh"
+                        icon-name="utility:refresh"
+                        onclick={handleRefresh}>
+                    </lightning-button>
+                </div>
+            </div>
+
+            <!-- Loading / Error / Empty -->
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </template>
+            <template if:true={hasError}>
+                <div class="slds-notify slds-notify_alert slds-theme_error">
+                    <span>{errorMessage}</span>
+                </div>
+            </template>
+            <template if:false={hasRows}>
+                <template if:false={isLoading}>
+                    <div class="slds-m-top_medium">
+                        <p class="slds-text-body_regular slds-text-color_weak">
+                            No unmatched rows match the current filters.
+                        </p>
+                    </div>
+                </template>
+            </template>
+
+            <!-- Data table -->
+            <template if:true={hasRows}>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th scope="col">
+                                <input type="checkbox" onchange={handleSelectAll} checked={allSelected}/>
+                            </th>
+                            <th scope="col">Advertiser (Raw)</th>
+                            <th scope="col">AE Code</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Period</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Source</th>
+                            <th scope="col">Account Tier</th>
+                            <th scope="col">Top Suggestion</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={rows} for:item="row">
+                            <tr key={row.stagingId} class="slds-hint-parent">
+                                <td>
+                                    <input
+                                        type="checkbox"
+                                        data-staging-id={row.stagingId}
+                                        checked={row.isSelected}
+                                        onchange={handleRowSelect}>
+                                </td>
+                                <td>
+                                    <span class="slds-truncate" title={row.rawAdvertiserName}>
+                                        {row.rawAdvertiserName}
+                                    </span>
+                                </td>
+                                <td>{row.rawAeCode}</td>
+                                <td>
+                                    <lightning-formatted-number
+                                        value={row.revenueAmount}
+                                        format-style="currency"
+                                        currency-code="USD">
+                                    </lightning-formatted-number>
+                                </td>
+                                <td>{row.periodMonth}/{row.periodYear}</td>
+                                <td>{row.revenueType}</td>
+                                <td>{row.sourceSystem}</td>
+                                <td>
+                                    <span class={row.tierBadgeClass}>
+                                        T{row.matchAccountTier}
+                                    </span>
+                                </td>
+                                <td>
+                                    <template if:true={row.topSuggestion}>
+                                        {row.topSuggestion.accountName}
+                                        <span class="slds-text-color_weak slds-text-body_small">
+                                            ({row.topSuggestion.score}%)
+                                        </span>
+                                    </template>
+                                    <template if:false={row.topSuggestion}>
+                                        <span class="slds-text-color_weak">—</span>
+                                    </template>
+                                </td>
+                                <td>
+                                    <lightning-button-group>
+                                        <template if:true={row.topSuggestion}>
+                                            <lightning-button
+                                                label="Accept Top"
+                                                variant="brand"
+                                                data-staging-id={row.stagingId}
+                                                data-account-id={row.topSuggestion.accountId}
+                                                data-tier="2"
+                                                onclick={handleAccept}>
+                                            </lightning-button>
+                                        </template>
+                                        <lightning-button
+                                            label="Exclude"
+                                            variant="destructive-text"
+                                            data-staging-id={row.stagingId}
+                                            onclick={handleExclude}>
+                                        </lightning-button>
+                                    </lightning-button-group>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+
+                <!-- Pagination -->
+                <div class="slds-grid slds-grid_align-center slds-m-top_small">
+                    <lightning-button
+                        label="Previous"
+                        icon-name="utility:chevronleft"
+                        disabled={isPrevDisabled}
+                        onclick={handlePrev}>
+                    </lightning-button>
+                    <span class="slds-m-horizontal_small slds-align-middle">Page {currentPage}</span>
+                    <lightning-button
+                        label="Next"
+                        icon-name="utility:chevronright"
+                        icon-position="right"
+                        disabled={isNextDisabled}
+                        onclick={handleNext}>
+                    </lightning-button>
+                </div>
+            </template>
+
+        </div>
+    </lightning-card>
+</template>

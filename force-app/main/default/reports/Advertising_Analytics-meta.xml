@@ -3,4 +3,7 @@
     <accessType>Public</accessType>
     <name>Advertising Analytics</name>
     <publicFolderAccess>ReadWrite</publicFolderAccess>
+    <sharedTo>
+        <allInternalUsers>allInternalUsers</allInternalUsers>
+    </sharedTo>
 </ReportFolder>

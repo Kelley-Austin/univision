@@ -1,0 +1,93 @@
+<template>
+    <lightning-card title="Pitch Pacing" icon-name="utility:chart">
+
+        <div class="slds-m-around_medium">
+
+            <template lwc:if={isLoading}>
+                <div class="slds-align_absolute-center slds-p-around_large">
+                    <lightning-spinner alternative-text="Loading pacing data..." size="medium"></lightning-spinner>
+                </div>
+            </template>
+
+            <template lwc:if={hasError}>
+                <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                    <span class="slds-assistive-text">Error</span>
+                    {errorMessage}
+                </div>
+            </template>
+
+            <template lwc:if={hasData}>
+
+                <!-- ── Metric tiles ─────────────────────────────────── -->
+                <div class="slds-grid slds-wrap slds-gutters slds-m-bottom_medium">
+
+                    <!-- Goal -->
+                    <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4 slds-m-bottom_small">
+                        <div class="metric-tile metric-tile_goal">
+                            <p class="tile-label">Goal</p>
+                            <p class="tile-value">{formattedGoal}</p>
+                            <p class="tile-sub">&nbsp;</p>
+                        </div>
+                    </div>
+
+                    <!-- Booked -->
+                    <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4 slds-m-bottom_small">
+                        <div class="metric-tile metric-tile_booked">
+                            <p class="tile-label">Booked</p>
+                            <p class="tile-value">{formattedBooked}</p>
+                            <p class="tile-sub">{bookedPct}% of goal</p>
+                        </div>
+                    </div>
+
+                    <!-- Pending -->
+                    <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4 slds-m-bottom_small">
+                        <div class="metric-tile metric-tile_pending">
+                            <p class="tile-label">Pending</p>
+                            <p class="tile-value">{formattedPending}</p>
+                            <p class="tile-sub">{pendingPct}% of goal</p>
+                        </div>
+                    </div>
+
+                    <!-- Forecast (Weighted) -->
+                    <div class="slds-col slds-size_1-of-2 slds-large-size_1-of-4 slds-m-bottom_small">
+                        <div class="metric-tile metric-tile_forecast">
+                            <p class="tile-label">Forecast (Weighted)</p>
+                            <p class="tile-value">{formattedForecast}</p>
+                            <p class="tile-sub">{forecastPct}% of goal</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ── Stacked progress bar ─────────────────────────── -->
+                <div class="slds-m-top_small">
+                    <div class="slds-grid slds-grid_align-spread slds-m-bottom_xx-small">
+                        <span class="slds-text-body_small slds-text-color_weak">Revenue vs Goal</span>
+                        <span class="slds-text-body_small slds-text-color_weak">{formattedGoal}</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-segment progress-booked"  style={bookedBarStyle}></div>
+                        <div class="progress-segment progress-pending"  style={pendingBarStyle}></div>
+                    </div>
+                    <div class="slds-grid slds-m-top_x-small slds-gutters">
+                        <div class="slds-col">
+                            <span class="legend-dot legend-dot_booked"></span>
+                            <span class="slds-text-body_small"> Booked</span>
+                        </div>
+                        <div class="slds-col">
+                            <span class="legend-dot legend-dot_pending"></span>
+                            <span class="slds-text-body_small"> Pending</span>
+                        </div>
+                        <div class="slds-col">
+                            <span class="legend-dot legend-dot_forecast"></span>
+                            <span class="slds-text-body_small"> Forecast</span>
+                        </div>
+                    </div>
+                </div>
+
+            </template>
+
+        </div>
+
+    </lightning-card>
+</template>

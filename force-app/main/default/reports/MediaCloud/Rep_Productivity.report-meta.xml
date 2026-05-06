@@ -43,13 +43,11 @@
     </columns>
     <description>Rep productivity showing total budget, planned, and actual amounts per sales rep for the current fiscal year. Excludes Cancelled opportunities.</description>
     <filter>
-        <criterias>
+        <criteriaItems>
             <column>STAGE_NAME</column>
-            <filterType>filterItem</filterType>
-            <isUnlocked>true</isUnlocked>
             <operator>notEqual</operator>
             <value>Closed Lost</value>
-        </criterias>
+        </criteriaItems>
     </filter>
     <format>Summary</format>
     <groupingsDown>

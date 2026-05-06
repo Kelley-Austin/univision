@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DisableAfter__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Check this to disable After events on this trigger. If only DisableAfter is checked, no After events will fire. If DisableAfter is checked AND DisableInsert is checked, then no After Insert events will fire, but After Update events will still fire.</description>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Check this to disable After events on this trigger. If only DisableAfter is checked, no After events will fire. If DisableAfter is checked AND DisableInsert is checked, then no After Insert events will fire, but After Update events will still fire.</inlineHelpText>
+    <label>DisableAfter</label>
+    <type>Checkbox</type>
+</CustomField>

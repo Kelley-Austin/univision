@@ -1,0 +1,121 @@
+<template>
+    <lightning-card title="Account Budget Grid" icon-name="standard:metrics">
+        <div class="slds-m-around_small">
+            <!-- Filters -->
+            <div class="slds-grid slds-wrap slds-gutters_small slds-m-bottom_small">
+                <div class="slds-col slds-size_1-of-4">
+                    <lightning-combobox
+                        label="Revenue Type"
+                        value={revenueType}
+                        options={revenueTypeOptions}
+                        placeholder="All Types"
+                        onchange={handleRevenueTypeChange}>
+                    </lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                    <lightning-combobox
+                        label="Category"
+                        value={categoryId}
+                        options={categoryOptions}
+                        placeholder="All Categories"
+                        onchange={handleCategoryChange}>
+                    </lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_1-of-4">
+                    <lightning-input
+                        label="Fiscal Year"
+                        type="number"
+                        value={periodYear}
+                        min="2000"
+                        max="2099"
+                        onchange={handleYearChange}>
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-4 slds-align-bottom">
+                    <lightning-button label="Refresh" variant="neutral" onclick={handleRefresh}></lightning-button>
+                </div>
+            </div>
+
+            <!-- Loading spinner -->
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading budget data..." size="medium"></lightning-spinner>
+            </template>
+
+            <!-- Error -->
+            <template if:true={errorMessage}>
+                <div class="slds-notify slds-notify_alert slds-alert_error slds-m-bottom_small" role="alert">
+                    {errorMessage}
+                </div>
+            </template>
+
+            <!-- Empty state -->
+            <template if:false={isLoading}>
+                <template if:true={isEmpty}>
+                    <div class="slds-illustration slds-illustration_small slds-m-vertical_large">
+                        <p class="slds-text-body_regular slds-text-color_weak">
+                            No budget rows found for the selected filters. Add a Budget record for this Account to begin.
+                        </p>
+                    </div>
+                </template>
+
+                <!-- Grid table -->
+                <template if:false={isEmpty}>
+                    <div class="grid-container" style="overflow-x: auto;">
+                        <table class="slds-table slds-table_fixed-layout slds-table_bordered budget-table">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th class="dim-col">Category / Type</th>
+                                    <th class="dim-col">Row</th>
+                                    <template for:each={monthHeaders} for:item="mh">
+                                        <th key={mh} class="month-col">{mh}</th>
+                                    </template>
+                                    <th class="total-col">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={displayRows} for:item="section">
+                                    <!-- Budget row -->
+                                    <tr key={section.budgetKey} class="budget-row">
+                                        <td rowspan="4" class="dim-cell">
+                                            <div class="slds-text-body_small slds-text-title_caps">{section.categoryName}</div>
+                                            <div class="slds-text-body_small slds-text-color_weak">{section.revenueType}</div>
+                                        </td>
+                                        <td class="row-label budget-label">Budget</td>
+                                        <template for:each={section.budgetAmounts} for:item="amt">
+                                            <td key={amt.idx} class="amount-cell">{amt.formatted}</td>
+                                        </template>
+                                        <td class="total-cell">{section.formattedBudgetTotal}</td>
+                                    </tr>
+                                    <!-- Projection row -->
+                                    <tr key={section.projectionKey} class="projection-row">
+                                        <td class="row-label projection-label">Projection</td>
+                                        <template for:each={section.projectionAmounts} for:item="amt">
+                                            <td key={amt.idx} class="amount-cell">{amt.formatted}</td>
+                                        </template>
+                                        <td class="total-cell">{section.formattedProjectionTotal}</td>
+                                    </tr>
+                                    <!-- Actual row -->
+                                    <tr key={section.actualKey} class="actual-row">
+                                        <td class="row-label actual-label">Actual</td>
+                                        <template for:each={section.actualAmounts} for:item="amt">
+                                            <td key={amt.idx} class="amount-cell">{amt.formatted}</td>
+                                        </template>
+                                        <td class="total-cell">{section.formattedActualTotal}</td>
+                                    </tr>
+                                    <!-- Variance row -->
+                                    <tr key={section.varianceKey} class="variance-row">
+                                        <td class="row-label variance-label">Variance</td>
+                                        <template for:each={section.varianceAmounts} for:item="amt">
+                                            <td key={amt.idx} class={amt.cssClass}>{amt.formatted}</td>
+                                        </template>
+                                        <td class={section.varianceTotalClass}>{section.formattedVarianceTotal}</td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template>

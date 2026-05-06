@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Active_Channels</fullName>
+    <columns>NAME</columns>
+    <columns>Channel_Type__c</columns>
+    <columns>Market__c</columns>
+    <columns>Channel_Code__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Status__c</field>
+        <operation>equals</operation>
+        <value>Active</value>
+    </filters>
+    <label>Active Channels</label>
+</ListView>
