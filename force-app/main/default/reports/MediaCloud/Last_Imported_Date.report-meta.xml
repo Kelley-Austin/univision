@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>EventKey__c</field>
+    </columns>
+    <columns>
+        <field>LogEventName__c</field>
+    </columns>
+    <columns>
+        <field>Type__c</field>
+    </columns>
+    <columns>
+        <field>Message__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Maximum</aggregateTypes>
+        <field>ComposedDateTime__c</field>
+    </columns>
+    <columns>
+        <field>CorrelationId__c</field>
+    </columns>
+    <description>Most recent ingest event per revenue source. Sourced from Log__c (LogEventName contains 'Ingest.'). Replaces the Load_Batch__c view.</description>
+    <filter>
+        <criteriaItems>
+            <column>Log__c.LogEventName__c</column>
+            <operator>contains</operator>
+            <value>Ingest.</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <field>EventKey__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Last Imported Date</name>
+    <reportType>Log__c</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <sortColumn>ComposedDateTime__c</sortColumn>
+    <sortOrder>Desc</sortOrder>
+</Report>

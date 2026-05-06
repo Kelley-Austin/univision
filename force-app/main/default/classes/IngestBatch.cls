@@ -107,6 +107,34 @@ public with sharing class IngestBatch implements Database.Batchable<SObject>, Da
             'IngestBatch complete — processed: ' + processed
             + ', promoted: ' + promoted
             + ', errors: ' + errors);
+
+        // Emit promotion-complete event. Sourced by Sales Ops dashboards
+        // (filter LogEventName starts-with 'Ingest.' or 'IngestBatch.').
+        // EventKey is the sourceSystemId (or 'ALL' if scoped to all sources)
+        // so the panel can group by source. CorrelationId from the BatchableContext
+        // jobId so all chunks of one batch share an ID.
+        String sourceKey = sourceSystemId != null ? String.valueOf(sourceSystemId) : 'ALL';
+        String type = errors == 0 ? 'Info' : (errors < processed ? 'Warning' : 'Error');
+        String eventName = errors == 0
+            ? 'IngestBatch.PromoteCompleted'
+            : (errors < processed ? 'IngestBatch.PromotePartial' : 'IngestBatch.PromoteFailed');
+
+        Log batchLog = new Log(
+            eventName,
+            type,
+            'IngestBatch promote: processed=' + processed
+                + ' promoted=' + promoted + ' errors=' + errors,
+            sourceKey,
+            JSON.serialize(new Map<String, Object>{
+                'jobId'          => bc.getJobId(),
+                'sourceSystemId' => sourceSystemId,
+                'processed'      => processed,
+                'promoted'       => promoted,
+                'errors'         => errors
+            }),
+            String.valueOf(bc.getJobId())
+        );
+        batchLog.emit();
     }
 
     // ── Private helpers ───────────────────────────────────────────────────

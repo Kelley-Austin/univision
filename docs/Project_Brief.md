@@ -125,3 +125,28 @@ See docs/Personas.md for full persona detail.
 - (2026-05-05) Production deploy path depends on the ka-vault hook + GitHub Actions pipeline; failure mode if Actions is down or the hook misconfigures is undocumented — need a runbook for the production deploy owner.
 - (2026-05-05) Sandbox topology in CLAUDE.md lists `clare-dev`, `clare-uat`, and Production but project memory records only `univision-production` (a Developer Edition org) as the actual connected target — the documented org strategy and the real connections diverge and need reconciliation before UAT testing begins.
 - (2026-05-05) `clare-uat` partial-copy refresh cadence is undefined; risk of stale UAT data masking reconciliation/matching defects that only surface against production-scale data volumes.
+
+<!-- BEGIN cheese:slice-index -->
+| Slice | Status | Doc | Persona served |
+| --- | --- | --- | --- |
+| Demo Prep, Dashboard Prep, Account to Opportunity Process | in-progress | [view](docs/slices/conv-1778004962585-demo-prep-dashboard-prep-account-to-opportunity-pr.md) | (see file) |
+| Matrix Inventory Sync — Vehicle & Media Plan IDs | ready-to-start | [view](docs/slices/conv-1777994913585-matrix-inventory-sync-vehicle-media-plan-ids.md) | (see file) |
+| Field Manifest Reconciliation Against Standard Opportunity | ready-to-start | [view](docs/slices/conv-1777994913586-field-manifest-reconciliation-against-standard-opp.md) | (see file) |
+| Internal Action Items Triage & Cutover Sync | ready-to-start | [view](docs/slices/conv-1777994913587-internal-action-items-triage-cutover-sync.md) | (see file) |
+| Solution Design Document v1.0 Gap Closure | ready-to-start | [view](docs/slices/conv-1777994913588-solution-design-document-v1-0-gap-closure.md) | (see file) |
+| Internal Meeting Notes → Decision Log Extraction | ready-to-start | [view](docs/slices/conv-1777994913589-internal-meeting-notes-decision-log-extraction.md) | (see file) |
+| Switch to the main branch. | in-progress | [view](docs/slices/conv-1777994527469-switch-to-the-main-branch.md) | (see file) |
+| Pipeline Ingestion Layer — 5 Source Transformers | deployed | [view](docs/slices/conv-1777471362029-pipeline-ingestion-layer-5-source-transformers.md) | (see file) |
+| Reconciliation & Actual Revenue Engine | deployed | [view](docs/slices/conv-1777471362030-reconciliation-actual-revenue-engine.md) | (see file) |
+| Forecast Management & Budget Tracking | deployed | [view](docs/slices/conv-1777471362031-forecast-management-budget-tracking.md) | (see file) |
+| Period Close Lifecycle & Variance Reporting | in-progress | [view](docs/slices/conv-1777471362032-period-close-lifecycle-variance-reporting.md) | (see file) |
+| Sales Operations Console & Reporting Analytics | in-progress | [view](docs/slices/conv-1777471362033-sales-operations-console-reporting-analytics.md) | (see file) |
+| Pitch Projects Module | ready-to-start | [view](docs/slices/conv-1777471362034-pitch-projects-module.md) | (see file) |
+| Build a Screen Flow with LWC file-upload | deployed | [view](docs/slices/conv-1777470284299-build-a-screen-flow-with-lwc-file-upload.md) | (see file) |
+| Traffic Copy Entry & Order Transmission Flow | in-progress | [view](docs/slices/conv-1777470284300-traffic-copy-entry-order-transmission-flow.md) | (see file) |
+| Matrix API Inventory Sync & Media Plan Linkage | deployed | [view](docs/slices/conv-1777470284301-matrix-api-inventory-sync-media-plan-linkage.md) | (see file) |
+| Build Screen Flows and quick actions for | deployed | [view](docs/slices/conv-1777470284302-build-screen-flows-and-quick-actions-for.md) | (see file) |
+| Make Good & Cancellation Request Workflow | deployed | [view](docs/slices/conv-1777470284303-make-good-cancellation-request-workflow.md) | (see file) |
+| Sales Performance Reporting & Dashboard Suite | in-progress | [view](docs/slices/conv-1777470284304-sales-performance-reporting-dashboard-suite.md) | (see file) |
+| Lightning App Record Pages & Navigation Assembly | in-progress | [view](docs/slices/conv-1777470284305-lightning-app-record-pages-navigation-assembly.md) | (see file) |
+<!-- END cheese:slice-index -->

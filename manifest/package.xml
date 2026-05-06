@@ -1,14 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
+        <members>CancellationPolicyServiceTest</members>
+        <members>CreateLocalAdProposal</members>
+        <members>CreateLocalAdProposalTest</members>
+        <members>CreateOpportunityWithBudgetLines</members>
+        <members>CreateOpportunityWithBudgetLinesTest</members>
+        <members>LocalAdProposalControllerTest</members>
+        <members>MatrixPromoteToContractActionTest</members>
+        <members>RunReconciliationActionTest</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
         <members>Opportunity.Default_Sales_Process.businessProcess</members>
         <name>BusinessProcess</name>
     </types>
     <types>
+        <members>Forecast_Stage_Weight.Stage_0.md</members>
+        <members>Forecast_Stage_Weight.Stage_1.md</members>
+        <members>Forecast_Stage_Weight.Stage_2.md</members>
+        <members>Forecast_Stage_Weight.Stage_3.md</members>
+        <members>Forecast_Stage_Weight.Stage_4.md</members>
+        <members>Forecast_Stage_Weight.Stage_5.md</members>
+        <name>CustomMetadata</name>
+    </types>
+    <types>
+        <members>MediaCloud</members>
+        <name>Dashboard</name>
+    </types>
+    <types>
+        <members>New_Opportunity.flow</members>
+        <name>Flow</name>
+    </types>
+    <types>
+        <members>Opportunity.Pipeline_Kanban.listView</members>
+        <name>ListView</name>
+    </types>
+    <types>
         <members>Opportunity.Agency_Buy.recordType</members>
+        <members>Opportunity.Digital.recordType</members>
         <members>Opportunity.Direct_Buy.recordType</members>
         <members>Opportunity.Local_Ad_Sales.recordType</members>
+        <members>Opportunity.Radio_Digital.recordType</members>
+        <members>Opportunity.Radio_Linear.recordType</members>
+        <members>Opportunity.Radio_Network.recordType</members>
+        <members>Opportunity.TV_Affiliates.recordType</members>
+        <members>Opportunity.TV_Border_Stations.recordType</members>
+        <members>Opportunity.TV_Linear.recordType</members>
         <name>RecordType</name>
+    </types>
+    <types>
+        <members>MediaCloud</members>
+        <name>Report</name>
+    </types>
+    <types>
+        <members>OpportunityStage.standardValueSet</members>
+        <name>StandardValueSet</name>
     </types>
     <version>61.0</version>
 </Package>
