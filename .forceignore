@@ -100,13 +100,11 @@
 **/layouts/Opportunity-Opportunity Layout.layout-meta.xml
 
 # Reports + Dashboards depending on custom Opportunity fields and Log__c report type.
-# Fresh org doesn't have Total_Budget__c et al until the field metadata lands first.
-# Land the LogX retrofit Apex + ingest changes first; add these in a follow-up
-# after the org is seeded with the underlying schema.
-**/reports/MediaCloud/Last_Imported_Date.report-meta.xml
-**/reports/MediaCloud/Sales_Outlook_Matrix.report-meta.xml
-**/dashboards/MediaCloud/Source_System_Health.dashboard-meta.xml
-**/dashboards/MediaCloud/Sales_Outlook.dashboard-meta.xml
+# Un-ignored 2026-05-05 — schema seeded in the prior deploy, ready for second pass.
+# **/reports/MediaCloud/Last_Imported_Date.report-meta.xml
+# **/reports/MediaCloud/Sales_Outlook_Matrix.report-meta.xml
+# **/dashboards/MediaCloud/Source_System_Health.dashboard-meta.xml
+# **/dashboards/MediaCloud/Sales_Outlook.dashboard-meta.xml
 
 # Master-detail relationshipOrder is immutable once set in the org. Source has a
 # different value than the deployed field; cannot reconcile via metadata.
