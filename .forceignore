@@ -108,6 +108,10 @@
 **/dashboards/MediaCloud/Source_System_Health.dashboard-meta.xml
 **/dashboards/MediaCloud/Sales_Outlook.dashboard-meta.xml
 
+# Master-detail relationshipOrder is immutable once set in the org. Source has a
+# different value than the deployed field; cannot reconcile via metadata.
+**/objects/Advertising_Contract__c/fields/Opportunity__c.field-meta.xml
+
 # Custom Metadata Type — object-level file (subdir pattern)
 # (no longer applies — object-meta.xml is now cleanly defined with
 # <visibility>Public</visibility>; removing exclusion so the CMT and its
