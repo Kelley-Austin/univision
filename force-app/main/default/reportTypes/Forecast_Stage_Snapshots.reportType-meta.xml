@@ -44,6 +44,5 @@
             <field>LAST_UPDATE</field>
         </columns>
         <masterLabel>Projection Fields</masterLabel>
-        <table>Projection__c</table>
     </sections>
 </ReportType>

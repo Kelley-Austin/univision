@@ -8,58 +8,53 @@
     <sections>
         <columns>
             <field>NAME</field>
-            <table>Reconciliation_Line__c</table>
         </columns>
         <columns>
             <field>RECONCILIATION_STATUS__C</field>
-            <table>Reconciliation_Line__c</table>
         </columns>
         <columns>
             <field>MONTH__C</field>
-            <table>Reconciliation_Line__c</table>
         </columns>
         <columns>
             <field>FISCAL_YEAR__C</field>
-            <table>Reconciliation_Line__c</table>
         </columns>
         <columns>
             <field>PLANNED_AMOUNT__C</field>
-            <table>Reconciliation_Line__c</table>
         </columns>
         <columns>
             <field>ACTUAL_AMOUNT__C</field>
-            <table>Reconciliation_Line__c</table>
         </columns>
         <columns>
             <field>VARIANCE_AMOUNT__C</field>
-            <table>Reconciliation_Line__c</table>
         </columns>
         <columns>
             <field>PLANNED_WEEKLY_SPOTS__C</field>
-            <table>Reconciliation_Line__c</table>
         </columns>
         <columns>
             <field>ACTUAL_SPOT_COUNT__C</field>
-            <table>Reconciliation_Line__c</table>
         </columns>
         <masterLabel>Reconciliation Lines</masterLabel>
+        <table>Reconciliation_Line__c</table>
     </sections>
     <sections>
         <columns>
             <field>Reconciliation_Line__c.Opportunity__r.Name</field>
         </columns>
         <masterLabel>Advertising Opportunity</masterLabel>
+        <table>Reconciliation_Line__c</table>
     </sections>
     <sections>
         <columns>
             <field>Reconciliation_Line__c.Channel__r.NAME</field>
         </columns>
         <masterLabel>Channel</masterLabel>
+        <table>Reconciliation_Line__c</table>
     </sections>
     <sections>
         <columns>
             <field>Reconciliation_Line__c.Vehicle__r.NAME</field>
         </columns>
         <masterLabel>Vehicle</masterLabel>
+        <table>Reconciliation_Line__c</table>
     </sections>
 </CustomReportType>

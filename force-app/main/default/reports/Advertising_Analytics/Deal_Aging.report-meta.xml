@@ -39,7 +39,6 @@
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Deal Aging</name>
-    <masterLabel>Deal Aging</masterLabel>
     <reportType>Opportunity</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>

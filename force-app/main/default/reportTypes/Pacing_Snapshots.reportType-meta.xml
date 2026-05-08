@@ -50,6 +50,5 @@
             <field>Actual_Amount__c</field>
         </columns>
         <masterLabel>Pacing Snapshot Fields</masterLabel>
-        <table>Pacing_Snapshot__c</table>
     </sections>
 </ReportType>

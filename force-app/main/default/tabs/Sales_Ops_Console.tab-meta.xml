@@ -2,5 +2,5 @@
 <CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
     <label>Sales Ops Console</label>
     <motif>Custom58: Sunburst</motif>
-    <lwc>salesOpsConsole</lwc>
+    <lightningWebComponent>salesOpsConsole</lightningWebComponent>
 </CustomTab>

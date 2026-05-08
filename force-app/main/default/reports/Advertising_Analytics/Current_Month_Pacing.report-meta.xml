@@ -60,7 +60,6 @@
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Current Month Pacing</name>
-    <masterLabel>Current Month Pacing</masterLabel>
     <reportType>Budget_Line__c</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>

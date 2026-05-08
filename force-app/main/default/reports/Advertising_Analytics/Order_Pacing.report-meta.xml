@@ -48,7 +48,6 @@
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Order Pacing</name>
-    <masterLabel>Order Pacing</masterLabel>
     <reportType>Advertising_Contract__c</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>

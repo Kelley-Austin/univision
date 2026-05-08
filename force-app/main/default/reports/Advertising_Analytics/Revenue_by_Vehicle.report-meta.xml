@@ -57,7 +57,6 @@
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Revenue by Vehicle</name>
-    <masterLabel>Revenue by Vehicle</masterLabel>
     <reportType>Budget_Line__c</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>

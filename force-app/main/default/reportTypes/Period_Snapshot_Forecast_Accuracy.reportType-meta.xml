@@ -62,6 +62,5 @@
             <checkedByDefault>false</checkedByDefault>
             <field>CREATED_DATE</field>
         </columns>
-        <table>Period_Snapshot__c</table>
     </sections>
 </ReportType>

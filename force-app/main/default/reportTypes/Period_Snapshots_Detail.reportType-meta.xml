@@ -23,7 +23,6 @@
             <field>Close_Date__c</field>
         </columns>
         <masterLabel>Period Close Fields</masterLabel>
-        <table>Period_Close__c</table>
     </sections>
     <sections>
         <columns>
@@ -48,6 +47,5 @@
             <field>Period_Close__c.Period_Snapshot__c.Variance_Pct__c</field>
         </columns>
         <masterLabel>Period Snapshot Fields</masterLabel>
-        <table>Period_Snapshot__c</table>
     </sections>
 </ReportType>

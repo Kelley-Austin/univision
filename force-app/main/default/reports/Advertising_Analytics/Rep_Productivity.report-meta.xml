@@ -31,7 +31,6 @@
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Rep Productivity</name>
-    <masterLabel>Rep Productivity</masterLabel>
     <reportType>Opportunity</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>

@@ -69,7 +69,6 @@
             <field>Notes__c</field>
         </columns>
         <masterLabel>Budget Line Fields</masterLabel>
-        <table>Budget_Line__c</table>
     </sections>
 
     <!-- Opportunity fields (accessed via Budget_Line__c.Opportunity__c lookup) -->

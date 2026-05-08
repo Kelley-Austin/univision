@@ -37,7 +37,6 @@
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Pipeline 30-60-90 Day</name>
-    <masterLabel>Pipeline 30-60-90 Day</masterLabel>
     <reportType>Opportunity</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>

@@ -45,7 +45,6 @@
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Pipeline by Market</name>
-    <masterLabel>Pipeline by Market</masterLabel>
     <reportType>Opportunity</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>
