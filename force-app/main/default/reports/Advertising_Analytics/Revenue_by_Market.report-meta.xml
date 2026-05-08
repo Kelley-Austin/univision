@@ -1,23 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <columns>
-        <field>Total_Budget__c</field>
-    </columns>
-    <columns>
         <field>Total_Actual_Amount__c</field>
     </columns>
     <columns>
         <field>Total_Variance_Amount__c</field>
     </columns>
-    <aggregates>
-        <calculatedFormula>Total_Budget__c:SUM</calculatedFormula>
-        <datatype>currency</datatype>
-        <developerName>BUDGET_SUM</developerName>
-        <isActive>true</isActive>
-        <isCrossBlock>false</isCrossBlock>
-        <reportType>Opportunity</reportType>
-        <scale>2</scale>
-    </aggregates>
     <aggregates>
         <calculatedFormula>Total_Actual_Amount__c:SUM</calculatedFormula>
         <datatype>currency</datatype>
@@ -38,11 +26,12 @@
         <sortOrder>Desc</sortOrder>
     </groupingsDown>
     <name>Revenue by Market</name>
+    <masterLabel>Revenue by Market</masterLabel>
     <reportType>Opportunity</reportType>
     <scope>organization</scope>
     <showDetails>false</showDetails>
     <timeFrameFilter>
         <dateColumn>End_Date__c</dateColumn>
-        <interval>INTERVAL_CURRENT_FY</interval>
+        <interval>INTERVAL_CURFY</interval>
     </timeFrameFilter>
 </Report>

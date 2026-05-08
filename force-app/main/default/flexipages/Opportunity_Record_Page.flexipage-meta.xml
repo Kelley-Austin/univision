@@ -18,17 +18,15 @@
                 <componentName>force:highlightsPanel</componentName>
             </componentInstance>
         </itemInstances>
-        <mode>Replace</mode>
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
-
     <flexiPageRegions>
-        <itemInstances>
+        <!-- <itemInstances>
             <componentInstance>
                 <componentName>force:recordDetail</componentName>
             </componentInstance>
-        </itemInstances>
+        </itemInstances> -->
         <itemInstances>
             <componentInstance>
                 <componentName>c:aeProjectionGrid</componentName>

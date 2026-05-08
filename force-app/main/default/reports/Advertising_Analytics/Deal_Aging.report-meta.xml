@@ -23,12 +23,11 @@
     </aggregates>
     <description>Active deals grouped by stage and owner — surfaces stalled pipeline for manager review.</description>
     <filter>
-        <criterias>
+        <criteriaItems>
             <column>STAGE_NAME</column>
-            <isFilteringDisabled>false</isFilteringDisabled>
-            <operator>excludes</operator>
-            <value>Cancelled;Closed</value>
-        </criterias>
+            <operator>notEqual</operator>
+            <value>Cancelled,Closed</value>
+        </criteriaItems>
     </filter>
     <format>Summary</format>
     <groupingsDown>
@@ -40,6 +39,7 @@
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Deal Aging</name>
+    <masterLabel>Deal Aging</masterLabel>
     <reportType>Opportunity</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>

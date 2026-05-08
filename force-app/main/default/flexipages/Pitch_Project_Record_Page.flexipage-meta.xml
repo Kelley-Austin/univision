@@ -11,16 +11,15 @@
                 <componentName>force:highlightsPanel</componentName>
             </componentInstance>
         </itemInstances>
-        <mode>Replace</mode>
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <itemInstances>
+        <!-- <itemInstances>
             <componentInstance>
                 <componentName>force:recordDetail</componentName>
             </componentInstance>
-        </itemInstances>
+        </itemInstances> -->
         <itemInstances>
             <componentInstance>
                 <componentName>c:pitchProjectPacing</componentName>
@@ -37,5 +36,8 @@
     </flexiPageRegions>
     <masterLabel>Pitch Project Record Page</masterLabel>
     <sobjectType>Pitch_Project__c</sobjectType>
+    <template>
+        <name>flexipage:recordHomeSimpleViewTemplate</name>
+    </template>
     <type>RecordPage</type>
 </FlexiPage>

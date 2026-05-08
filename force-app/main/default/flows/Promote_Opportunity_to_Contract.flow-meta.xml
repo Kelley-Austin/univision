@@ -12,106 +12,11 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <runInMode>DefaultMode</runInMode>
-    <start>
-        <locationX>176</locationX>
-        <locationY>50</locationY>
-        <connector>
-            <targetReference>getOpportunity</targetReference>
-        </connector>
-    </start>
-    <status>Active</status>
 
     <!-- ═══════════════════════════════════════════
          VARIABLES
     ═══════════════════════════════════════════ -->
 
-    <variables>
-        <name>recordId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varContractId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
-    </variables>
-    <variables>
-        <name>varSignatoryName</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varSignatoryTitle</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varSignatoryEmail</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varContractTerms</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varCancellationPolicy</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varCancellationNoticeDays</name>
-        <dataType>Number</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <scale>0</scale>
-    </variables>
-    <variables>
-        <name>varCancellationFeePercent</name>
-        <dataType>Number</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <scale>2</scale>
-    </variables>
-    <variables>
-        <name>varMakeGoodPolicy</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varMakeGoodCredits</name>
-        <dataType>Currency</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <scale>2</scale>
-    </variables>
-    <variables>
-        <name>varNotes</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
 
     <!-- ═══════════════════════════════════════════
          CHOICES (Cancellation Policy dropdown)
@@ -177,37 +82,7 @@
     </recordLookups>
 
     <!-- ═══════════════════════════════════════════
-         ELEMENT 2 — Decision: Is Opportunity Approved?
-    ═══════════════════════════════════════════ -->
-
-    <decisions>
-        <name>decisionIsApproved</name>
-        <label>Is Opportunity Approved?</label>
-        <locationX>176</locationX>
-        <locationY>290</locationY>
-        <defaultConnector>
-            <targetReference>screenErrorNotApproved</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Not Approved</defaultConnectorLabel>
-        <rules>
-            <name>outcomeIsApproved</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>getOpportunity.StageName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Approved</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>getExistingContract</targetReference>
-            </connector>
-            <label>Yes — Approved</label>
-        </rules>
-    </decisions>
-
-    <!-- ═══════════════════════════════════════════
-         ELEMENT 3 — Get Existing Active Contract
+         ELEMENT 2 — Get Existing Active Contract
     ═══════════════════════════════════════════ -->
 
     <recordLookups>
@@ -240,6 +115,36 @@
     </recordLookups>
 
     <!-- ═══════════════════════════════════════════
+         ELEMENT 3 — Decision: Is Opportunity Approved?
+    ═══════════════════════════════════════════ -->
+
+    <decisions>
+        <name>decisionIsApproved</name>
+        <label>Is Opportunity Approved?</label>
+        <locationX>176</locationX>
+        <locationY>290</locationY>
+        <defaultConnector>
+            <targetReference>screenErrorNotApproved</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Approved</defaultConnectorLabel>
+        <rules>
+            <name>outcomeIsApproved</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getOpportunity.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Approved</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>getExistingContract</targetReference>
+            </connector>
+            <label>Yes — Approved</label>
+        </rules>
+    </decisions>
+
+    <!-- ═══════════════════════════════════════════
          ELEMENT 4 — Decision: Active Contract Already Exists?
     ═══════════════════════════════════════════ -->
 
@@ -268,6 +173,172 @@
             <label>Yes — Block Duplicate</label>
         </rules>
     </decisions>
+
+
+
+    <!-- ═══════════════════════════════════════════
+         ELEMENT 7 — Create Contract Record
+    ═══════════════════════════════════════════ -->
+
+    <recordCreates>
+        <name>createContract</name>
+        <label>Create Contract</label>
+        <locationX>176</locationX>
+        <locationY>890</locationY>
+        <connector>
+            <targetReference>submitForApproval</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>screenErrorCreate</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>Opportunity__c</field>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Account__c</field>
+            <value>
+                <elementReference>getOpportunity.AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Agency_Account__c</field>
+            <value>
+                <elementReference>getOpportunity.Agency_Account__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Start_Date__c</field>
+            <value>
+                <elementReference>getOpportunity.Start_Date__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>End_Date__c</field>
+            <value>
+                <elementReference>getOpportunity.End_Date__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Total_Contract_Value__c</field>
+            <value>
+                <elementReference>getOpportunity.Total_Budget__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Market__c</field>
+            <value>
+                <elementReference>getOpportunity.Market__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Contract_Status__c</field>
+            <value>
+                <stringValue>Draft</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Signatory_Name__c</field>
+            <value>
+                <elementReference>varSignatoryName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Signatory_Title__c</field>
+            <value>
+                <elementReference>varSignatoryTitle</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Signatory_Email__c</field>
+            <value>
+                <elementReference>varSignatoryEmail</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Contract_Terms__c</field>
+            <value>
+                <elementReference>varContractTerms</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Cancellation_Policy__c</field>
+            <value>
+                <elementReference>varCancellationPolicy</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Cancellation_Notice_Days__c</field>
+            <value>
+                <elementReference>varCancellationNoticeDays</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Cancellation_Fee_Percent__c</field>
+            <value>
+                <elementReference>varCancellationFeePercent</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Make_Good_Policy__c</field>
+            <value>
+                <elementReference>varMakeGoodPolicy</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Make_Good_Credits__c</field>
+            <value>
+                <elementReference>varMakeGoodCredits</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Notes__c</field>
+            <value>
+                <elementReference>varNotes</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Advertising_Contract__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+
+    <!-- ═══════════════════════════════════════════
+         ELEMENT 8 — Submit for Approval
+    ═══════════════════════════════════════════ -->
+
+    <actionCalls>
+        <name>submitForApproval</name>
+        <label>Submit for Approval</label>
+        <locationX>176</locationX>
+        <locationY>1010</locationY>
+        <actionName>submit</actionName>
+        <actionType>submit</actionType>
+        <connector>
+            <targetReference>screenSuccess</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>screenErrorSubmit</targetReference>
+        </faultConnector>
+        <inputParameters>
+            <name>objectId</name>
+            <value>
+                <elementReference>createContract</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>comments</name>
+            <value>
+                <stringValue>Contract promoted from approved Opportunity via Promote to Contract flow.</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>processDefinitionNameOrId</name>
+            <value>
+                <stringValue>Contract_Approval_Process</stringValue>
+            </value>
+        </inputParameters>
+    </actionCalls>
 
     <!-- ═══════════════════════════════════════════
          ELEMENT 5 — Screen: Signatory Details
@@ -459,170 +530,6 @@
     </screens>
 
     <!-- ═══════════════════════════════════════════
-         ELEMENT 7 — Create Contract Record
-    ═══════════════════════════════════════════ -->
-
-    <recordCreates>
-        <name>createContract</name>
-        <label>Create Contract</label>
-        <locationX>176</locationX>
-        <locationY>890</locationY>
-        <connector>
-            <targetReference>submitForApproval</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>screenErrorCreate</targetReference>
-        </faultConnector>
-        <inputAssignments>
-            <field>Opportunity__c</field>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Account__c</field>
-            <value>
-                <elementReference>getOpportunity.AccountId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Agency_Account__c</field>
-            <value>
-                <elementReference>getOpportunity.Agency_Account__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Start_Date__c</field>
-            <value>
-                <elementReference>getOpportunity.Start_Date__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>End_Date__c</field>
-            <value>
-                <elementReference>getOpportunity.End_Date__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Total_Contract_Value__c</field>
-            <value>
-                <elementReference>getOpportunity.Total_Budget__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Market__c</field>
-            <value>
-                <elementReference>getOpportunity.Market__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Contract_Status__c</field>
-            <value>
-                <stringValue>Draft</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Signatory_Name__c</field>
-            <value>
-                <elementReference>varSignatoryName</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Signatory_Title__c</field>
-            <value>
-                <elementReference>varSignatoryTitle</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Signatory_Email__c</field>
-            <value>
-                <elementReference>varSignatoryEmail</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Contract_Terms__c</field>
-            <value>
-                <elementReference>varContractTerms</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Cancellation_Policy__c</field>
-            <value>
-                <elementReference>varCancellationPolicy</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Cancellation_Notice_Days__c</field>
-            <value>
-                <elementReference>varCancellationNoticeDays</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Cancellation_Fee_Percent__c</field>
-            <value>
-                <elementReference>varCancellationFeePercent</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Make_Good_Policy__c</field>
-            <value>
-                <elementReference>varMakeGoodPolicy</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Make_Good_Credits__c</field>
-            <value>
-                <elementReference>varMakeGoodCredits</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Notes__c</field>
-            <value>
-                <elementReference>varNotes</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Advertising_Contract__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
-
-    <!-- ═══════════════════════════════════════════
-         ELEMENT 8 — Submit for Approval
-    ═══════════════════════════════════════════ -->
-
-    <actionCalls>
-        <name>submitForApproval</name>
-        <label>Submit for Approval</label>
-        <locationX>176</locationX>
-        <locationY>1010</locationY>
-        <actionName>submit</actionName>
-        <actionType>submit</actionType>
-        <connector>
-            <targetReference>screenSuccess</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>screenErrorSubmit</targetReference>
-        </faultConnector>
-        <inputParameters>
-            <name>objectId</name>
-            <value>
-                <elementReference>createContract</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>comments</name>
-            <value>
-                <stringValue>Contract promoted from approved Opportunity via Promote to Contract flow.</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>processDefinitionNameOrId</name>
-            <value>
-                <stringValue>Contract_Approval_Process</stringValue>
-            </value>
-        </inputParameters>
-    </actionCalls>
-
-    <!-- ═══════════════════════════════════════════
          ELEMENT 9 — Success Screen
     ═══════════════════════════════════════════ -->
 
@@ -715,4 +622,99 @@
         <showHeader>true</showHeader>
     </screens>
 
+    <start>
+        <locationX>176</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>getOpportunity</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varContractId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>varSignatoryName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varSignatoryTitle</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varSignatoryEmail</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varContractTerms</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varCancellationPolicy</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varCancellationNoticeDays</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+    </variables>
+    <variables>
+        <name>varCancellationFeePercent</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+    </variables>
+    <variables>
+        <name>varMakeGoodPolicy</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varMakeGoodCredits</name>
+        <dataType>Currency</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+    </variables>
+    <variables>
+        <name>varNotes</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>

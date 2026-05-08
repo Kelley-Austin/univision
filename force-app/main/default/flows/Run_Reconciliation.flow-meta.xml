@@ -14,62 +14,10 @@
         <value><stringValue>AUTO_LAYOUT_CANVAS</stringValue></value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <start>
-        <locationX>176</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Confirm_Screen</targetReference>
-        </connector>
-    </start>
-    <status>Active</status>
 
     <!-- ── Input variable from the record page ── -->
-    <variables>
-        <name>recordId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-        <description>Advertising Opportunity record ID passed automatically by the Quick Action.</description>
-    </variables>
 
     <!-- ── Output variables populated by the Apex action ── -->
-    <variables>
-        <name>varSuccess</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varMessage</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-
-    <!-- ── Screen 1: Confirm ── -->
-    <screens>
-        <name>Confirm_Screen</name>
-        <label>Run Reconciliation</label>
-        <locationX>176</locationX>
-        <locationY>158</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Run_Reconciliation_Action</targetReference>
-        </connector>
-        <fields>
-            <name>Confirm_Text</name>
-            <fieldText>&lt;p&gt;This will compare all &lt;strong&gt;Budget Lines&lt;/strong&gt; on this Advertising Opportunity against &lt;strong&gt;Counterpoint actuals&lt;/strong&gt; and create or update &lt;strong&gt;Reconciliation Lines&lt;/strong&gt;.&lt;/p&gt;&lt;p&gt;Any existing reconciliation results for this opportunity will be replaced. The job runs in the background — click &lt;strong&gt;Run&lt;/strong&gt; to queue it.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <nextOrFinishButtonLabel>Run</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
 
     <!-- ── Apex Action ── -->
     <actionCalls>
@@ -129,6 +77,28 @@
         </rules>
     </decisions>
 
+    <!-- ── Screens ── -->
+    <screens>
+        <name>Confirm_Screen</name>
+        <label>Run Reconciliation</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Run_Reconciliation_Action</targetReference>
+        </connector>
+        <fields>
+            <name>Confirm_Text</name>
+            <fieldText>&lt;p&gt;This will compare all &lt;strong&gt;Budget Lines&lt;/strong&gt; on this Advertising Opportunity against &lt;strong&gt;Counterpoint actuals&lt;/strong&gt; and create or update &lt;strong&gt;Reconciliation Lines&lt;/strong&gt;.&lt;/p&gt;&lt;p&gt;Any existing reconciliation results for this opportunity will be replaced. The job runs in the background — click &lt;strong&gt;Run&lt;/strong&gt; to queue it.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Run</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
     <!-- ── Screen 2: Success ── -->
     <screens>
         <name>Success_Screen</name>
@@ -164,4 +134,34 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
+    <start>
+        <locationX>176</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Confirm_Screen</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <description>Advertising Opportunity record ID passed automatically by the Quick Action.</description>
+    </variables>
+    <variables>
+        <name>varSuccess</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>

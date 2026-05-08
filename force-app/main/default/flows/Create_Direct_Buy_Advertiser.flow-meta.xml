@@ -12,37 +12,6 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <runInMode>DefaultMode</runInMode>
-    <status>Active</status>
-
-    <!-- ═══════════════════════════ VARIABLES ═══════════════════════════════ -->
-
-    <variables>
-        <name>var_newAccountId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
-    </variables>
-
-    <variables>
-        <name>var_primaryAgencyId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-
-    <variables>
-        <name>var_directBuyRT</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>RecordType</objectType>
-    </variables>
-
-    <!-- ═══════════════════════════ DYNAMIC CHOICE SETS ═════════════════════ -->
-
     <dynamicChoiceSets>
         <name>dcs_Market</name>
         <dataType>Picklist</dataType>
@@ -50,7 +19,6 @@
         <picklistField>Market__c</picklistField>
         <picklistObject>Account</picklistObject>
     </dynamicChoiceSets>
-
     <dynamicChoiceSets>
         <name>dcs_MediaType</name>
         <dataType>Picklist</dataType>
@@ -58,18 +26,6 @@
         <picklistField>Media_Type__c</picklistField>
         <picklistObject>Account</picklistObject>
     </dynamicChoiceSets>
-
-    <!-- ═══════════════════════════ FLOW ELEMENTS ════════════════════════════ -->
-
-    <start>
-        <locationX>176</locationX>
-        <locationY>48</locationY>
-        <connector>
-            <targetReference>Get_DirectBuy_RT</targetReference>
-        </connector>
-    </start>
-
-    <!-- 1. Look up the Direct_Buy record type ID -->
     <recordLookups>
         <name>Get_DirectBuy_RT</name>
         <label>Get Direct Buy Record Type</label>
@@ -100,8 +56,6 @@
         <queriedFields>DeveloperName</queriedFields>
         <storeOutputAutomatically>false</storeOutputAutomatically>
     </recordLookups>
-
-    <!-- 3. Create the Direct Buy Advertiser account -->
     <recordCreates>
         <name>Create_AdvertiserAccount</name>
         <label>Create Advertiser Account</label>
@@ -138,7 +92,7 @@
         <inputAssignments>
             <field>Primary_Agency__c</field>
             <value>
-                <elementReference>var_primaryAgencyId</elementReference>
+                <elementReference>Screen_AdvertiserDetails.fi_PrimaryAgency</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -155,10 +109,6 @@
         </inputAssignments>
         <object>Account</object>
     </recordCreates>
-
-
-
-    <!-- 2. Screen: collect advertiser details -->
     <screens>
         <name>Screen_AdvertiserDetails</name>
         <label>Advertiser Details</label>
@@ -195,37 +145,11 @@
         </fields>
         <fields>
             <name>fi_PrimaryAgency</name>
-            <extensionName>flowruntime:lookupField</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>fieldApiName</name>
-                <value>
-                    <stringValue>Primary_Agency__c</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Primary Agency (optional)</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>objectApiName</name>
-                <value>
-                    <stringValue>Account</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>required</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
+            <dataType>String</dataType>
+            <fieldText>Primary Agency (optional)</fieldText>
+            <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
-            <outputParameters>
-                <assignToReference>var_primaryAgencyId</assignToReference>
-                <name>value</name>
-            </outputParameters>
+            <objectFieldReference>Account.Primary_Agency__c</objectFieldReference>
         </fields>
         <fields>
             <name>fi_Website</name>
@@ -244,9 +168,6 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
-
-
-    <!-- 4. Success screen -->
     <screens>
         <name>Screen_Success</name>
         <label>Account Created</label>
@@ -263,5 +184,27 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
-
+    <start>
+        <locationX>176</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Get_DirectBuy_RT</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>var_newAccountId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>var_directBuyRT</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>RecordType</objectType>
+    </variables>
 </Flow>

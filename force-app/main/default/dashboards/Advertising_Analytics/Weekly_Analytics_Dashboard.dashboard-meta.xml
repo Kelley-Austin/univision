@@ -8,7 +8,7 @@
     <leftSection>
         <columnSize>WIDE</columnSize>
         <components>
-            <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
+            <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
             <chartAxisRange>Auto</chartAxisRange>
             <componentType>Bar</componentType>
             <displayUnits>Thousands</displayUnits>
@@ -29,7 +29,7 @@
     <middleSection>
         <columnSize>WIDE</columnSize>
         <components>
-            <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
+            <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
             <chartAxisRange>Auto</chartAxisRange>
             <componentType>Bar</componentType>
             <displayUnits>Thousands</displayUnits>
@@ -67,7 +67,7 @@
     <rightSection>
         <columnSize>WIDE</columnSize>
         <components>
-            <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
+            <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
             <chartAxisRange>Auto</chartAxisRange>
             <componentType>Bar</componentType>
             <displayUnits>Thousands</displayUnits>

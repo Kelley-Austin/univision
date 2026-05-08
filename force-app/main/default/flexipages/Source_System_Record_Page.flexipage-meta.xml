@@ -2,35 +2,48 @@
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Lightning Record Page for Source System. Provides a single-screen ingest operations view: file upload, batch history dashboard, and mapping rule editor so data operations staff can manage the full ingest lifecycle without navigating away.</description>
     <flexiPageRegions>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>variant</name>
-                <value>base</value>
-            </componentInstanceProperties>
-            <componentName>force:highlightsPanel</componentName>
-        </componentInstances>
-        <mode>AppDefault</mode>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>variant</name>
+                    <value>base</value>
+                </componentInstanceProperties>
+                <componentName>force:highlightsPanel</componentName>
+            </componentInstance>
+        </itemInstances>
+        <mode>Replace</mode>
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
-            <componentName>c:sourceFileUpload</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentName>c:loadBatchDashboard</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentName>c:mappingRuleEditor</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentName>force:recordDetail</componentName>
-        </componentInstances>
-        <mode>AppDefault</mode>
+        <itemInstances>
+            <componentInstance>
+                <componentName>c:sourceFileUpload</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>c:loadBatchDashboard</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>c:mappingRuleEditor</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>force:recordDetail</componentName>
+            </componentInstance>
+        </itemInstances>
+        <mode>Replace</mode>
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
     <masterLabel>Source System Record Page</masterLabel>
     <sobjectType>Source_System__c</sobjectType>
+    <template>
+        <name>flexipage:recordHomeSimpleViewTemplate</name>
+    </template>
     <type>RecordPage</type>
 </FlexiPage>

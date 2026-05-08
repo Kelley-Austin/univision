@@ -162,7 +162,7 @@
                     Date: <strong><apex:outputText value="{0,date,MMMM d, yyyy}">
                         <apex:param value="{!opp.CreatedDate}"/>
                     </apex:outputText></strong><br/>
-                    Status: <strong><apex:outputText value="{!opp.Status__c}"/></strong>
+                    Status: <strong><apex:outputText value="{!opp.StageName}"/></strong>
                 </div>
             </div>
         </div>

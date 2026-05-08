@@ -86,7 +86,7 @@ public with sharing class CreateOpportunityWithBudgetLines {
 
                         for (Object raw : rawLines) {
                             Map<String, Object> lineMap = (Map<String, Object>) raw;
-                            Decimal amt = lineMap.get('plannedAmount') != null
+                            Decimal amt = (Decimal) lineMap.get('plannedAmount') != null
                                 ? Decimal.valueOf(String.valueOf(lineMap.get('plannedAmount')))
                                 : 0;
                             totalPlanned += amt;
@@ -96,7 +96,7 @@ public with sharing class CreateOpportunityWithBudgetLines {
                                 Account__c        = req.accountId,
                                 Channel__c        = (Id) lineMap.get('channelId'),
                                 Month__c          = (String) lineMap.get('month'),
-                                Fiscal_Year__c    = (String) lineMap.get('fiscalYear'),
+                                Fiscal_Year__c    = lineMap.get('fiscalYear') != null ? Decimal.valueOf(String.valueOf(lineMap.get('fiscalYear'))) : null,
                                 Planned_Amount__c = amt,
                                 Notes__c          = (String) lineMap.get('notes'),
                                 Status__c         = 'Draft'

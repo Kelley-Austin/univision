@@ -4,7 +4,6 @@
     <description>Record-Triggered Flow on Opportunity. When StageName changes to "Closed Won" for the first time, automatically creates a Draft Advertising_Contract__c pre-populated from the opportunity. The filterFormula guards against firing on subsequent edits while already Closed Won. The lookup guard prevents a second contract if the deal was re-won after being lost.</description>
     <label>Create Contract on Close Won</label>
     <processType>AutoLaunchedFlow</processType>
-    <status>Active</status>
     <triggerOrder>1</triggerOrder>
 
     <!-- ═══════════════════════════════════════════
@@ -140,6 +139,7 @@
         </inputAssignments>
         <object>Advertising_Contract__c</object>
     </recordCreates>
+    <status>Active</status>
 
     <!-- ═══════════════════════════════════════════
          VARIABLES

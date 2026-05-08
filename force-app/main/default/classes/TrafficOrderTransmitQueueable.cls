@@ -1,6 +1,7 @@
 public without sharing class TrafficOrderTransmitQueueable implements Queueable, Database.AllowsCallouts {
 
     private List<Id> budgetLineIds;
+    private Id contractId;
 
     // Configure via Setup → Named Credentials → Traffic_System
     @TestVisible
@@ -10,10 +11,67 @@ public without sharing class TrafficOrderTransmitQueueable implements Queueable,
         this.budgetLineIds = budgetLineIds;
     }
 
+    public TrafficOrderTransmitQueueable(Id contractId) {
+        this.contractId = contractId;
+    }
+
     public void execute(QueueableContext ctx) {
-        // Per-job correlationId threads every Log__c entry from this Queueable
-        // run together. callout() reads it from a static so we don't need to
-        // pass it through the private method's signature.
+        if (contractId != null) {
+            executeForContract();
+            return;
+        }
+        executeForBudgetLines();
+    }
+
+    private void executeForContract() {
+        String correlationId = LogX.getGuid();
+        currentCorrelationId = correlationId;
+
+        Advertising_Contract__c contractUpdate = new Advertising_Contract__c(
+            Id = contractId,
+            Last_Traffic_Transmission__c = Datetime.now()
+        );
+
+        try {
+            Map<String, Object> payload = new Map<String, Object>{
+                'contractId' => contractId
+            };
+
+            HttpRequest req = new HttpRequest();
+            req.setEndpoint(TRAFFIC_ENDPOINT);
+            req.setMethod('POST');
+            req.setHeader('Content-Type', 'application/json');
+            req.setBody(JSON.serialize(payload));
+            req.setTimeout(10000);
+
+            HttpResponse res = new Http().send(req);
+
+            if (res.getStatusCode() >= 200 && res.getStatusCode() < 300) {
+                Map<String, Object> body =
+                    (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
+                contractUpdate.Traffic_Status__c = 'Transmitted';
+                contractUpdate.Traffic_Order_ID__c = (String) body.get('orderId');
+                contractUpdate.Traffic_Error_Message__c = null;
+            } else {
+                contractUpdate.Traffic_Status__c = 'Rejected';
+                contractUpdate.Traffic_Error_Message__c =
+                    'Traffic system returned HTTP ' + res.getStatusCode() + ': ' + res.getBody();
+            }
+        } catch (Exception ex) {
+            LogX.logException(
+                ex,
+                'TrafficOrderTransmitQueueable.executeForContract failed (contractId=' + contractId + ')',
+                correlationId,
+                /* doEmit */ true
+            );
+            contractUpdate.Traffic_Status__c = 'Rejected';
+            contractUpdate.Traffic_Error_Message__c = 'Callout failed: ' + ex.getMessage();
+        }
+
+        update contractUpdate;
+    }
+
+    private void executeForBudgetLines() {
         String correlationId = LogX.getGuid();
         currentCorrelationId = correlationId;
 
@@ -30,7 +88,6 @@ public without sharing class TrafficOrderTransmitQueueable implements Queueable,
                 return;
             }
 
-            // Collect opportunity IDs for a single contract lookup after all callouts
             Set<Id> oppIds = new Set<Id>();
             for (Budget_Line__c line : lines) {
                 if (line.Opportunity__c != null) {
@@ -40,7 +97,6 @@ public without sharing class TrafficOrderTransmitQueueable implements Queueable,
 
             Map<Id, Advertising_Contract__c> contractByOpp = queryContractsByOpp(oppIds);
 
-            // Perform all callouts first, collect results, then do DML
             List<Budget_Line__c> lineUpdates = new List<Budget_Line__c>();
             Map<Id, Advertising_Contract__c> contractUpdates = new Map<Id, Advertising_Contract__c>();
 
@@ -78,13 +134,9 @@ public without sharing class TrafficOrderTransmitQueueable implements Queueable,
                 update contractUpdates.values();
             }
         } catch (Exception ex) {
-            // Top-level: log + rethrow so Salesforce's Apex Job table still sees
-            // the failure (and any configured retry / batch-size policy applies).
-            // doEmit=true uses LogEvent__e platform event path so the Log__c
-            // entry survives the rollback caused by the rethrow.
             LogX.logException(
                 ex,
-                'TrafficOrderTransmitQueueable.execute failed (budgetLineIds=' +
+                'TrafficOrderTransmitQueueable.executeForBudgetLines failed (budgetLineIds=' +
                     (budgetLineIds == null ? 0 : budgetLineIds.size()) + ')',
                 correlationId,
                 /* doEmit */ true

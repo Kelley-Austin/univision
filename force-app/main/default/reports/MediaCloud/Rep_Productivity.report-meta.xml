@@ -4,11 +4,6 @@
         <backgroundColor1>#FFFFFF</backgroundColor1>
         <backgroundColor2>#FFFFFF</backgroundColor2>
         <backgroundFadeDir>Diagonal</backgroundFadeDir>
-        <chartSummaries>
-            <aggregate>Sum</aggregate>
-            <axisBinding>y</axisBinding>
-            <column>Total_Budget__c</column>
-        </chartSummaries>
         <chartType>HorizontalBar</chartType>
         <enableHoverLabels>true</enableHoverLabels>
         <groupingColumn>OWNER.NAME</groupingColumn>
@@ -28,10 +23,6 @@
     </chart>
     <columns>
         <field>OWNER.NAME</field>
-    </columns>
-    <columns>
-        <aggregateTypes>SUM</aggregateTypes>
-        <field>Total_Budget__c</field>
     </columns>
     <columns>
         <aggregateTypes>SUM</aggregateTypes>

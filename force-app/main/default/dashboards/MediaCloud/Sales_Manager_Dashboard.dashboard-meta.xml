@@ -8,7 +8,7 @@
     <leftSection>
         <columnSize>WIDE</columnSize>
         <components>
-            <autoselectColumnsFromReport>false</autoselectColumnsFromReport>
+            <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
             <chartAxisRange>Auto</chartAxisRange>
             <componentType>Bar</componentType>
             <displayUnits>Thousands</displayUnits>

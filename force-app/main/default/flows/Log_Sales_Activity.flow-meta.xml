@@ -4,7 +4,6 @@
     <description>Quick-action Screen Flow to log a sales activity (call, meeting, email, presentation) against an Advertising Opportunity. Creates a completed Task record linked to the opportunity and account.</description>
     <label>Log Sales Activity</label>
     <processType>Flow</processType>
-    <status>Active</status>
 
     <!-- ═══════════════════════════════════════════
          VARIABLES
@@ -187,16 +186,16 @@
             <choiceReferences>choice_Other</choiceReferences>
             <dataType>String</dataType>
             <defaultSelectedChoiceReference>choice_Call</defaultSelectedChoiceReference>
+            <fieldText>Activity Type</fieldText>
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
-            <label>Activity Type</label>
         </fields>
         <fields>
             <name>input_ActivityDate</name>
             <dataType>Date</dataType>
+            <fieldText>Activity Date</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
-            <label>Activity Date</label>
         </fields>
         <fields>
             <name>input_ContactId</name>
@@ -241,21 +240,21 @@
             <defaultSelectedChoiceReference>choice_Neutral</defaultSelectedChoiceReference>
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
-            <label>Outcome</label>
+            <fieldText>Outcome</fieldText>
         </fields>
         <fields>
             <name>input_Notes</name>
             <dataType>String</dataType>
             <fieldType>LargeTextArea</fieldType>
             <isRequired>true</isRequired>
-            <label>Activity Notes</label>
+            <fieldText>Activity Notes</fieldText>
         </fields>
         <fields>
             <name>input_NextStep</name>
             <dataType>String</dataType>
             <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
-            <label>Next Step</label>
+            <fieldText>Next Step</fieldText>
         </fields>
     </screens>
 
@@ -389,6 +388,7 @@
             <fieldType>DisplayText</fieldType>
         </fields>
     </screens>
+    <status>Active</status>
 
     <!-- ═══════════════════════════════════════════
          ADDITIONAL VARIABLES

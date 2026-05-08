@@ -27,6 +27,9 @@
             <title>Sales Outlook — Current FY</title>
         </components>
     </leftSection>
+    <rightSection>
+        <columnSize>WIDE</columnSize>
+    </rightSection>
     <textColor>#000000</textColor>
     <title>Sales Outlook</title>
     <titleColor>#003366</titleColor>

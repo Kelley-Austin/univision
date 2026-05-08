@@ -4,11 +4,6 @@
         <backgroundColor1>#FFFFFF</backgroundColor1>
         <backgroundColor2>#FFFFFF</backgroundColor2>
         <backgroundFadeDir>Diagonal</backgroundFadeDir>
-        <chartSummaries>
-            <aggregate>Sum</aggregate>
-            <axisBinding>y</axisBinding>
-            <column>Total_Budget__c</column>
-        </chartSummaries>
         <chartType>HorizontalBar</chartType>
         <enableHoverLabels>true</enableHoverLabels>
         <groupingColumn>STAGE_NAME</groupingColumn>
@@ -36,17 +31,10 @@
         <field>OWNER.NAME</field>
     </columns>
     <columns>
-        <field>Market__c</field>
-    </columns>
-    <columns>
         <field>STAGE_NAME</field>
     </columns>
     <columns>
         <field>End_Date__c</field>
-    </columns>
-    <columns>
-        <aggregateTypes>SUM</aggregateTypes>
-        <field>Total_Budget__c</field>
     </columns>
     <description>Opportunities closing within the next 90 days, grouped by status. Sales managers use this to prioritize deals and forecast near-term revenue.</description>
     <filter>

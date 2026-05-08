@@ -28,6 +28,9 @@
             <title>Last Imported Date</title>
         </components>
     </leftSection>
+    <rightSection>
+        <columnSize>WIDE</columnSize>
+    </rightSection>
     <textColor>#000000</textColor>
     <title>Source System Health</title>
     <titleColor>#003366</titleColor>

@@ -80,6 +80,6 @@
     <showDetails>true</showDetails>
     <timeFrameFilter>
         <dateColumn>Calendar_Date__c</dateColumn>
-        <interval>INTERVAL_CURMONTH</interval>
+        <interval>INTERVAL_THIS_MONTH</interval>
     </timeFrameFilter>
 </Report>

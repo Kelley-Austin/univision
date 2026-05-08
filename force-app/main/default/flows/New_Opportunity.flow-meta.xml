@@ -5,7 +5,6 @@
     <interviewLabel>New Opportunity {!$Flow.CurrentDateTime}</interviewLabel>
     <label>New Opportunity</label>
     <processType>Flow</processType>
-    <status>Active</status>
 
     <!-- ═══════════════════════════════════════════
          VARIABLES
@@ -164,9 +163,9 @@
             <choiceReferences>choice_AgencyBuy</choiceReferences>
             <dataType>String</dataType>
             <defaultSelectedChoiceReference>choice_DirectBuy</defaultSelectedChoiceReference>
+            <fieldText>Buy Type</fieldText>
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
-            <label>Buy Type</label>
         </fields>
         <fields>
             <name>input_AgencyAccountId</name>
@@ -232,7 +231,7 @@
             <dataType>String</dataType>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
-            <label>Opportunity Name</label>
+            <fieldText>Opportunity Name</fieldText>
         </fields>
         <fields>
             <name>input_MediaType</name>
@@ -240,14 +239,14 @@
             <dataType>String</dataType>
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
-            <label>Media Type</label>
+            <fieldText>Media Type</fieldText>
         </fields>
         <fields>
             <name>input_Market</name>
             <dataType>String</dataType>
             <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
-            <label>Market / DMA</label>
+            <fieldText>Market / DMA</fieldText>
         </fields>
         <fields>
             <name>input_PrimaryContactId</name>
@@ -282,7 +281,7 @@
             <dataType>Currency</dataType>
             <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
-            <label>Estimated Revenue</label>
+            <fieldText>Estimated Revenue</fieldText>
         </fields>
         <fields>
             <name>input_LeadSource</name>
@@ -290,14 +289,14 @@
             <dataType>String</dataType>
             <fieldType>DropdownBox</fieldType>
             <isRequired>false</isRequired>
-            <label>Lead Source</label>
+            <fieldText>Lead Source</fieldText>
         </fields>
         <fields>
             <name>input_Description</name>
             <dataType>String</dataType>
             <fieldType>LargeTextArea</fieldType>
             <isRequired>false</isRequired>
-            <label>Description / Notes</label>
+            <fieldText>Description / Notes</fieldText>
         </fields>
     </screens>
 
@@ -325,35 +324,35 @@
             <dataType>Date</dataType>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
-            <label>Expected Close Date</label>
+            <fieldText>Expected Close Date</fieldText>
         </fields>
         <fields>
             <name>input_StartDate</name>
             <dataType>Date</dataType>
             <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
-            <label>Campaign Start Date</label>
+            <fieldText>Campaign Start Date</fieldText>
         </fields>
         <fields>
             <name>input_EndDate</name>
             <dataType>Date</dataType>
             <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
-            <label>Campaign End Date</label>
+            <fieldText>Campaign End Date</fieldText>
         </fields>
         <fields>
             <name>input_Competition</name>
             <dataType>String</dataType>
             <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
-            <label>Competition (competing stations or media)</label>
+            <fieldText>Competition (competing stations or media)</fieldText>
         </fields>
         <fields>
             <name>input_NextStep</name>
             <dataType>String</dataType>
             <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
-            <label>Next Step</label>
+            <fieldText>Next Step</fieldText>
         </fields>
     </screens>
 
@@ -485,6 +484,7 @@
             <fieldType>DisplayText</fieldType>
         </fields>
     </screens>
+    <status>Active</status>
 
     <!-- ═══════════════════════════════════════════
          ADDITIONAL VARIABLES (used in input assignments)

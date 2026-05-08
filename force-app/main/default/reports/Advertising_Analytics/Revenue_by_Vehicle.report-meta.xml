@@ -41,12 +41,11 @@
     </aggregates>
     <description>Budget vs. actuals by vehicle and month — drives the vehicle pacing tile in Weekly Analytics Dashboard.</description>
     <filter>
-        <criterias>
+        <criteriaItems>
             <column>Status__c</column>
-            <isFilteringDisabled>false</isFilteringDisabled>
-            <operator>excludes</operator>
+            <operator>notEqual</operator>
             <value>Cancelled</value>
-        </criterias>
+        </criteriaItems>
     </filter>
     <format>Summary</format>
     <groupingsDown>
@@ -58,6 +57,7 @@
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Revenue by Vehicle</name>
+    <masterLabel>Revenue by Vehicle</masterLabel>
     <reportType>Budget_Line__c</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>

@@ -14,10 +14,6 @@
     </columns>
     <columns>
         <aggregateTypes>SUM</aggregateTypes>
-        <field>Total_Budget__c</field>
-    </columns>
-    <columns>
-        <aggregateTypes>SUM</aggregateTypes>
         <field>Total_Actual_Amount__c</field>
     </columns>
     <columns>
@@ -39,9 +35,9 @@
         <scale>2</scale>
     </aggregates>
     <aggregates>
-        <calculatedFormula>EXPECTED_REVENUE:SUM - Total_Budget__c:SUM</calculatedFormula>
+        <calculatedFormula>EXPECTED_REVENUE:SUM</calculatedFormula>
         <datatype>currency</datatype>
-        <description>Forecast (weighted by stage probability via ExpectedRevenue) minus Budget. Matrix "FC to Budget" column.</description>
+        <description>Forecast weighted by stage probability via ExpectedRevenue. Matrix "FC to Budget" column (Budget field removed pending field availability).</description>
         <developerName>FORMULA2</developerName>
         <isActive>true</isActive>
         <isCrossBlock>false</isCrossBlock>

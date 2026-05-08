@@ -187,7 +187,7 @@ private class TrafficOrderServiceTest {
     @IsTest
     static void queueable_networkExceptionSetsRejected() {
         Advertising_Contract__c contract = prepareActiveContract();
-        Test.setMock(HttpCalloutMock.class, new TrafficMockException());
+        Test.setMock(HttpCalloutMock.class, new TrafficNetworkFailureMock());
 
         Test.startTest();
         new TrafficOrderTransmitQueueable(contract.Id).execute(null);
@@ -291,7 +291,7 @@ private class TrafficOrderServiceTest {
         }
     }
 
-    private class TrafficMockException implements HttpCalloutMock {
+    private class TrafficNetworkFailureMock implements HttpCalloutMock {
         public HttpResponse respond(HttpRequest req) {
             throw new CalloutException('Simulated network failure');
         }

@@ -11,16 +11,15 @@
                 <componentName>force:highlightsPanel</componentName>
             </componentInstance>
         </itemInstances>
-        <mode>Replace</mode>
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <itemInstances>
+        <!-- <itemInstances>
             <componentInstance>
                 <componentName>force:recordDetail</componentName>
             </componentInstance>
-        </itemInstances>
+        </itemInstances> -->
         <itemInstances>
             <componentInstance>
                 <componentName>force:relatedListContainer</componentName>
@@ -32,5 +31,8 @@
     </flexiPageRegions>
     <masterLabel>Advertising Contract Record Page</masterLabel>
     <sobjectType>Advertising_Contract__c</sobjectType>
+    <template>
+        <name>flexipage:recordHomeSimpleViewTemplate</name>
+    </template>
     <type>RecordPage</type>
 </FlexiPage>

@@ -36,6 +36,6 @@
     <showDetails>false</showDetails>
     <timeFrameFilter>
         <dateColumn>CREATED_DATE</dateColumn>
-        <interval>CUSTOM</interval>
+        <interval>INTERVAL_CURFY</interval>
     </timeFrameFilter>
 </Report>

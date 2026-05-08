@@ -33,7 +33,7 @@
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Last Imported Date</name>
-    <reportType>Log__c</reportType>
+    <reportType>Opportunity</reportType>
     <scope>organization</scope>
     <showDetails>false</showDetails>
     <sortColumn>ComposedDateTime__c</sortColumn>

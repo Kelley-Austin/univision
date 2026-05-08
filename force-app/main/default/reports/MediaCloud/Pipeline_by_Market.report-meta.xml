@@ -4,14 +4,9 @@
         <backgroundColor1>#FFFFFF</backgroundColor1>
         <backgroundColor2>#FFFFFF</backgroundColor2>
         <backgroundFadeDir>Diagonal</backgroundFadeDir>
-        <chartSummaries>
-            <aggregate>Sum</aggregate>
-            <axisBinding>y</axisBinding>
-            <column>Total_Budget__c</column>
-        </chartSummaries>
         <chartType>HorizontalBar</chartType>
         <enableHoverLabels>true</enableHoverLabels>
-        <groupingColumn>Market__c</groupingColumn>
+        <groupingColumn>STAGE_NAME</groupingColumn>
         <legendPosition>Bottom</legendPosition>
         <location>CHART_BOTTOM</location>
         <showAxisLabels>true</showAxisLabels>
@@ -33,9 +28,6 @@
         <field>ACCOUNT_NAME</field>
     </columns>
     <columns>
-        <field>Market__c</field>
-    </columns>
-    <columns>
         <field>STAGE_NAME</field>
     </columns>
     <columns>
@@ -43,10 +35,6 @@
     </columns>
     <columns>
         <field>End_Date__c</field>
-    </columns>
-    <columns>
-        <aggregateTypes>SUM</aggregateTypes>
-        <field>Total_Budget__c</field>
     </columns>
     <columns>
         <aggregateTypes>SUM</aggregateTypes>
@@ -61,10 +49,6 @@
         </criteriaItems>
     </filter>
     <format>Summary</format>
-    <groupingsDown>
-        <field>Market__c</field>
-        <sortOrder>Asc</sortOrder>
-    </groupingsDown>
     <groupingsDown>
         <field>STAGE_NAME</field>
         <sortOrder>Asc</sortOrder>

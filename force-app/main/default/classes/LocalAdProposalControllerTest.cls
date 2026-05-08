@@ -48,7 +48,7 @@ private class LocalAdProposalControllerTest {
             Vehicle__c   = v.Id,
             Channel__c   = ch.Id,
             Month__c     = 'January',
-            Fiscal_Year__c = '2026',
+            Fiscal_Year__c = 2026,
             Planned_Amount__c = 10000,
             Status__c    = 'Draft'
         );
@@ -115,7 +115,7 @@ private class LocalAdProposalControllerTest {
             Vehicle__c   = v.Id,
             Channel__c   = ch.Id,
             Month__c     = 'February',
-            Fiscal_Year__c = '2026',
+            Fiscal_Year__c = 2026,
             Planned_Amount__c = 5000,
             Status__c    = 'Draft'
         );

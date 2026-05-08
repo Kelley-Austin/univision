@@ -4,11 +4,6 @@
         <backgroundColor1>#FFFFFF</backgroundColor1>
         <backgroundColor2>#FFFFFF</backgroundColor2>
         <backgroundFadeDir>Diagonal</backgroundFadeDir>
-        <chartSummaries>
-            <aggregate>Sum</aggregate>
-            <axisBinding>y</axisBinding>
-            <column>Total_Budget__c</column>
-        </chartSummaries>
         <chartType>HorizontalBar</chartType>
         <enableHoverLabels>true</enableHoverLabels>
         <groupingColumn>OWNER.NAME</groupingColumn>
@@ -39,9 +34,6 @@
         <field>STAGE_NAME</field>
     </columns>
     <columns>
-        <field>Market__c</field>
-    </columns>
-    <columns>
         <field>CreatedDate</field>
     </columns>
     <columns>
@@ -49,10 +41,6 @@
     </columns>
     <columns>
         <field>End_Date__c</field>
-    </columns>
-    <columns>
-        <aggregateTypes>SUM</aggregateTypes>
-        <field>Total_Budget__c</field>
     </columns>
     <description>Open opportunities sorted by creation date (oldest first) to surface stalled deals. Grouped by rep and status so managers can see where deals are getting stuck.</description>
     <filter>

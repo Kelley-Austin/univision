@@ -107,8 +107,8 @@ public with sharing class CreateLocalAdProposal {
                                                  ? (Id) line.get('channelId')
                                                  : null,
                             Month__c       = (String) line.get('month'),
-                            Fiscal_Year__c = (String) line.get('fiscalYear'),
-                            Planned_Amount__c = amount,
+                            Fiscal_Year__c = line.get('fiscalYear') != null ? Decimal.valueOf(String.valueOf(line.get('fiscalYear'))) : null,
+                            Planned_Amount__c = (Decimal) amount,
                             Notes__c       = (String) line.get('notes'),
                             Status__c      = 'Draft'
                         );

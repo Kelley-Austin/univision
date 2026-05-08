@@ -44,12 +44,11 @@
     </aggregates>
     <description>Budget vs. actuals pacing by channel and vehicle — drives the Weekly Analytics Dashboard pacing tiles.</description>
     <filter>
-        <criterias>
+        <criteriaItems>
             <column>Status__c</column>
-            <isFilteringDisabled>false</isFilteringDisabled>
-            <operator>excludes</operator>
+            <operator>notEqual</operator>
             <value>Cancelled</value>
-        </criterias>
+        </criteriaItems>
     </filter>
     <format>Summary</format>
     <groupingsDown>
@@ -61,6 +60,7 @@
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Current Month Pacing</name>
+    <masterLabel>Current Month Pacing</masterLabel>
     <reportType>Budget_Line__c</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>

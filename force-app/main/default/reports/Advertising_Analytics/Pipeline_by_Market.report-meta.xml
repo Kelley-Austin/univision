@@ -7,20 +7,8 @@
         <field>STAGE_NAME</field>
     </columns>
     <columns>
-        <field>Total_Budget__c</field>
-    </columns>
-    <columns>
         <field>Total_Planned_Amount__c</field>
     </columns>
-    <aggregates>
-        <calculatedFormula>Total_Budget__c:SUM</calculatedFormula>
-        <datatype>currency</datatype>
-        <developerName>TOTAL_BUDGET_SUM</developerName>
-        <isActive>true</isActive>
-        <isCrossBlock>false</isCrossBlock>
-        <reportType>Opportunity</reportType>
-        <scale>2</scale>
-    </aggregates>
     <aggregates>
         <calculatedFormula>Total_Planned_Amount__c:SUM</calculatedFormula>
         <datatype>currency</datatype>
@@ -41,12 +29,11 @@
     </aggregates>
     <description>Active pipeline value by market and sales rep — primary input for the Sales Manager Dashboard pipeline tile.</description>
     <filter>
-        <criterias>
+        <criteriaItems>
             <column>STAGE_NAME</column>
-            <isFilteringDisabled>false</isFilteringDisabled>
-            <operator>excludes</operator>
-            <value>Cancelled;Closed</value>
-        </criterias>
+            <operator>notEqual</operator>
+            <value>Cancelled,Closed</value>
+        </criteriaItems>
     </filter>
     <format>Summary</format>
     <groupingsDown>
@@ -58,11 +45,12 @@
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Pipeline by Market</name>
+    <masterLabel>Pipeline by Market</masterLabel>
     <reportType>Opportunity</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <timeFrameFilter>
         <dateColumn>End_Date__c</dateColumn>
-        <interval>INTERVAL_CURRENT_FY</interval>
+        <interval>INTERVAL_CURFY</interval>
     </timeFrameFilter>
 </Report>

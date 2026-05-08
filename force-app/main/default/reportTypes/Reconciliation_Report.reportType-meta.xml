@@ -46,22 +46,19 @@
     </sections>
     <sections>
         <columns>
-            <field>NAME</field>
-            <table>Opportunity__r</table>
+            <field>Reconciliation_Line__c.Opportunity__r.Name</field>
         </columns>
         <masterLabel>Advertising Opportunity</masterLabel>
     </sections>
     <sections>
         <columns>
-            <field>NAME</field>
-            <table>Channel__r</table>
+            <field>Reconciliation_Line__c.Channel__r.NAME</field>
         </columns>
         <masterLabel>Channel</masterLabel>
     </sections>
     <sections>
         <columns>
-            <field>NAME</field>
-            <table>Vehicle__r</table>
+            <field>Reconciliation_Line__c.Vehicle__r.NAME</field>
         </columns>
         <masterLabel>Vehicle</masterLabel>
     </sections>

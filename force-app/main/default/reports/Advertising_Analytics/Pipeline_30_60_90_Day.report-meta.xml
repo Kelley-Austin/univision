@@ -9,18 +9,6 @@
     <columns>
         <field>STAGE_NAME</field>
     </columns>
-    <columns>
-        <field>Total_Budget__c</field>
-    </columns>
-    <aggregates>
-        <calculatedFormula>Total_Budget__c:SUM</calculatedFormula>
-        <datatype>currency</datatype>
-        <developerName>TOTAL_BUDGET_SUM</developerName>
-        <isActive>true</isActive>
-        <isCrossBlock>false</isCrossBlock>
-        <reportType>Opportunity</reportType>
-        <scale>2</scale>
-    </aggregates>
     <aggregates>
         <calculatedFormula>RowCount</calculatedFormula>
         <datatype>number</datatype>
@@ -32,12 +20,11 @@
     </aggregates>
     <description>Open pipeline grouped by close month — use groupings to read 30/60/90-day buckets at a glance.</description>
     <filter>
-        <criterias>
+        <criteriaItems>
             <column>STAGE_NAME</column>
-            <isFilteringDisabled>false</isFilteringDisabled>
-            <operator>excludes</operator>
-            <value>Cancelled;Closed</value>
-        </criterias>
+            <operator>notEqual</operator>
+            <value>Cancelled,Closed</value>
+        </criteriaItems>
     </filter>
     <format>Summary</format>
     <groupingsDown>
@@ -50,11 +37,12 @@
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Pipeline 30-60-90 Day</name>
+    <masterLabel>Pipeline 30-60-90 Day</masterLabel>
     <reportType>Opportunity</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <timeFrameFilter>
         <dateColumn>End_Date__c</dateColumn>
-        <interval>INTERVAL_CURRENT_FY</interval>
+        <interval>INTERVAL_CURFY</interval>
     </timeFrameFilter>
 </Report>

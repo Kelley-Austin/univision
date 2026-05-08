@@ -2,40 +2,51 @@
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Lightning Record Page for Agency accounts. Includes a Managed Advertisers related list showing all Direct Buy and Advertiser accounts whose Primary_Agency__c points to this agency.</description>
     <flexiPageRegions>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>variant</name>
-                <value>base</value>
-            </componentInstanceProperties>
-            <componentName>force:highlightsPanel</componentName>
-        </componentInstances>
-        <mode>AppDefault</mode>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>variant</name>
+                    <value>base</value>
+                </componentInstanceProperties>
+                <componentName>force:highlightsPanel</componentName>
+            </componentInstance>
+        </itemInstances>
+        <mode>Replace</mode>
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <componentInstances>
-            <componentName>force:recordDetail</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentInstanceProperties>
-                <name>heading</name>
-                <value>Managed Advertisers</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>relatedList</name>
-                <value>Managed_Advertisers</value>
-            </componentInstanceProperties>
-            <componentName>force:relatedListSingleContainer</componentName>
-        </componentInstances>
-        <componentInstances>
-            <componentName>force:relatedListContainer</componentName>
-        </componentInstances>
-        <mode>AppDefault</mode>
+        <itemInstances>
+            <componentInstance>
+                <componentName>force:recordDetail</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>heading</name>
+                    <value>Managed Advertisers</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedList</name>
+                    <value>Managed_Advertisers</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>force:relatedListContainer</componentName>
+            </componentInstance>
+        </itemInstances>
+        <mode>Replace</mode>
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
     <masterLabel>Agency Account Record Page</masterLabel>
     <sobjectType>Account</sobjectType>
+    <template>
+        <name>flexipage:recordHomeSimpleViewTemplate</name>
+    </template>
     <type>RecordPage</type>
 </FlexiPage>

@@ -12,7 +12,6 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <runInMode>DefaultMode</runInMode>
-    <status>Active</status>
 
     <!-- ═══════════════════════════ VARIABLES ═══════════════════════════════ -->
 
@@ -333,5 +332,6 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
+    <status>Active</status>
 
 </Flow>

@@ -12,53 +12,6 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <runInMode>DefaultMode</runInMode>
-    <status>Active</status>
-
-    <!-- ═══════════════════════════ VARIABLES ═══════════════════════════════ -->
-
-    <variables>
-        <name>recordId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-
-    <variables>
-        <name>var_advertiserName</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-
-    <variables>
-        <name>var_currentAgencyId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-
-    <variables>
-        <name>var_selectedAgencyId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-
-    <!-- ═══════════════════════════ FLOW ELEMENTS ════════════════════════════ -->
-
-    <start>
-        <locationX>176</locationX>
-        <locationY>48</locationY>
-        <connector>
-            <targetReference>Get_Advertiser</targetReference>
-        </connector>
-    </start>
-
-    <!-- 1. Get the current advertiser account to read Name and Primary_Agency__c -->
     <recordLookups>
         <name>Get_Advertiser</name>
         <label>Get Advertiser Account</label>
@@ -90,8 +43,6 @@
         <queriedFields>Primary_Agency__c</queriedFields>
         <storeOutputAutomatically>false</storeOutputAutomatically>
     </recordLookups>
-
-    <!-- 3. Update the advertiser account with the selected agency -->
     <recordUpdates>
         <name>Update_AdvertiserAccount</name>
         <label>Update Advertiser Account</label>
@@ -111,15 +62,11 @@
         <inputAssignments>
             <field>Primary_Agency__c</field>
             <value>
-                <elementReference>var_selectedAgencyId</elementReference>
+                <elementReference>Screen_SelectAgency.fi_Agency</elementReference>
             </value>
         </inputAssignments>
         <object>Account</object>
     </recordUpdates>
-
-
-
-    <!-- 2. Screen: select or update the primary agency -->
     <screens>
         <name>Screen_SelectAgency</name>
         <label>Set Primary Agency</label>
@@ -138,50 +85,18 @@
         </fields>
         <fields>
             <name>fi_Agency</name>
-            <extensionName>flowruntime:lookupField</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>fieldApiName</name>
-                <value>
-                    <stringValue>Primary_Agency__c</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Primary Agency</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>objectApiName</name>
-                <value>
-                    <stringValue>Account</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>required</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>value</name>
-                <value>
-                    <elementReference>var_currentAgencyId</elementReference>
-                </value>
-            </inputParameters>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>var_currentAgencyId</elementReference>
+            </defaultValue>
+            <fieldText>Primary Agency</fieldText>
+            <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>var_selectedAgencyId</assignToReference>
-                <name>value</name>
-            </outputParameters>
+            <objectFieldReference>Account.Primary_Agency__c</objectFieldReference>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
-
-
-    <!-- 4. Success screen -->
     <screens>
         <name>Screen_Success</name>
         <label>Agency Linked</label>
@@ -198,5 +113,33 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
-
+    <start>
+        <locationX>176</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Get_Advertiser</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>var_advertiserName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>var_currentAgencyId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>

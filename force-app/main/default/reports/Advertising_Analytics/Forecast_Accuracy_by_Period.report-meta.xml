@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Report xmlns="http://soap.sforce.com/2006/04/metadata">
     <name>Forecast Accuracy by Period</name>
+    <masterLabel>Forecast Accuracy by Period</masterLabel>
     <description>Summary of Projected vs Actual revenue per period close. Variance_Pct__c = (Actual_At_Close − Projected_At_Close) / Projected_At_Close. Grouped by Period Year then Period Month.</description>
     <reportType>Period_Snapshot_Forecast_Accuracy</reportType>
     <format>Summary</format>

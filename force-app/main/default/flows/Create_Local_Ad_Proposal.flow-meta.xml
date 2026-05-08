@@ -12,119 +12,11 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <runInMode>DefaultMode</runInMode>
-    <start>
-        <locationX>176</locationX>
-        <locationY>50</locationY>
-        <connector>
-            <targetReference>getAccount</targetReference>
-        </connector>
-    </start>
-    <status>Active</status>
 
     <!-- ═══════════════════════════════════════════
          VARIABLES
     ═══════════════════════════════════════════ -->
 
-    <variables>
-        <name>recordId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-        <description>Account record ID passed automatically when launched via Quick Action from an Account record page.</description>
-    </variables>
-    <variables>
-        <name>varMarket</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varStartDate</name>
-        <dataType>Date</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varEndDate</name>
-        <dataType>Date</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varTotalBudget</name>
-        <dataType>Currency</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <scale>2</scale>
-    </variables>
-    <variables>
-        <name>varPrimaryDemo</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varSecondaryDemo</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varProposalNotes</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varVehicleId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varBudgetLinesJson</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varOpportunityId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
-    </variables>
-    <variables>
-        <name>varOpportunityName</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varSuccess</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>varErrorMessage</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
 
     <!-- ═══════════════════════════════════════════
          PICKLIST CHOICES — Primary Demo
@@ -390,7 +282,37 @@
     </screens>
 
     <!-- ═══════════════════════════════════════════
-         ELEMENT 4 — Apex Action: Create Local Ad Proposal
+         ELEMENT 4 — Decision: Did the Apex action succeed?
+    ═══════════════════════════════════════════ -->
+
+    <decisions>
+        <name>decisionSuccess</name>
+        <label>Proposal Created Successfully?</label>
+        <locationX>176</locationX>
+        <locationY>650</locationY>
+        <defaultConnector>
+            <targetReference>screenErrorApex</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No — Show Error</defaultConnectorLabel>
+        <rules>
+            <name>outcomeSuccess</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varSuccess</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>screenProposalReady</targetReference>
+            </connector>
+            <label>Yes — Proposal Created</label>
+        </rules>
+    </decisions>
+
+    <!-- ═══════════════════════════════════════════
+         ELEMENT 5 — Apex Action: Create Local Ad Proposal
     ═══════════════════════════════════════════ -->
 
     <actionCalls>
@@ -486,36 +408,6 @@
     </actionCalls>
 
     <!-- ═══════════════════════════════════════════
-         ELEMENT 5 — Decision: Did the Apex action succeed?
-    ═══════════════════════════════════════════ -->
-
-    <decisions>
-        <name>decisionSuccess</name>
-        <label>Proposal Created Successfully?</label>
-        <locationX>176</locationX>
-        <locationY>650</locationY>
-        <defaultConnector>
-            <targetReference>screenErrorApex</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No — Show Error</defaultConnectorLabel>
-        <rules>
-            <name>outcomeSuccess</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>varSuccess</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>screenProposalReady</targetReference>
-            </connector>
-            <label>Yes — Proposal Created</label>
-        </rules>
-    </decisions>
-
-    <!-- ═══════════════════════════════════════════
          ELEMENT 6 — Screen: Proposal Ready (Success)
          Shows proposal summary and link to printable PDF
     ═══════════════════════════════════════════ -->
@@ -575,4 +467,112 @@
         <showHeader>true</showHeader>
     </screens>
 
+    <start>
+        <locationX>176</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>getAccount</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <description>Account record ID passed automatically when launched via Quick Action from an Account record page.</description>
+    </variables>
+    <variables>
+        <name>varMarket</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varStartDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varEndDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varTotalBudget</name>
+        <dataType>Currency</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+    </variables>
+    <variables>
+        <name>varPrimaryDemo</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varSecondaryDemo</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varProposalNotes</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varVehicleId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varBudgetLinesJson</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varOpportunityId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>varOpportunityName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varSuccess</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varErrorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>

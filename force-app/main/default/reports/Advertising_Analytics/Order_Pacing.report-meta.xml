@@ -32,12 +32,11 @@
     </aggregates>
     <description>Active contracts grouped by traffic status and market — surfaces orders awaiting confirmation or blocked on traffic copy.</description>
     <filter>
-        <criterias>
+        <criteriaItems>
             <column>Contract_Status__c</column>
-            <isFilteringDisabled>false</isFilteringDisabled>
-            <operator>excludes</operator>
-            <value>Cancelled;Completed</value>
-        </criterias>
+            <operator>notEqual</operator>
+            <value>Cancelled,Completed</value>
+        </criteriaItems>
     </filter>
     <format>Summary</format>
     <groupingsDown>
@@ -49,11 +48,12 @@
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Order Pacing</name>
+    <masterLabel>Order Pacing</masterLabel>
     <reportType>Advertising_Contract__c</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <timeFrameFilter>
         <dateColumn>Start_Date__c</dateColumn>
-        <interval>INTERVAL_CURRENT_FY</interval>
+        <interval>INTERVAL_CURFY</interval>
     </timeFrameFilter>
 </Report>

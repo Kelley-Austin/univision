@@ -7,114 +7,6 @@
     <label>Matrix Inventory Admin Sync</label>
     <processType>Flow</processType>
     <runInMode>SystemModeWithSharing</runInMode>
-    <status>Active</status>
-
-    <variables>
-        <name>lastSyncLog</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Matrix_Sync_Log__c</objectType>
-    </variables>
-
-    <variables>
-        <name>isScheduled</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <booleanValue>false</booleanValue>
-        </value>
-    </variables>
-
-    <variables>
-        <name>nextFireTimeText</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-
-    <variables>
-        <name>rescheduleSuccess</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-
-    <variables>
-        <name>rescheduleMessage</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-
-    <choices>
-        <name>Choice_TriggerNow</name>
-        <choiceText>Trigger Sync Now</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>TriggerNow</stringValue>
-        </value>
-    </choices>
-
-    <choices>
-        <name>Choice_ChangeSchedule</name>
-        <choiceText>Change Schedule Time</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>ChangeSchedule</stringValue>
-        </value>
-    </choices>
-
-    <formulas>
-        <name>fmtSyncTime</name>
-        <dataType>String</dataType>
-        <expression>IF(ISNULL({!lastSyncLog.CreatedDate}), "—", TEXT({!lastSyncLog.CreatedDate}))</expression>
-    </formulas>
-
-    <formulas>
-        <name>fmtScheduleStatus</name>
-        <dataType>String</dataType>
-        <expression>IF({!isScheduled}, "Scheduled — next run: " &amp; {!nextFireTimeText}, "Not scheduled")</expression>
-    </formulas>
-
-    <start>
-        <locationX>50</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Get_Last_Sync_Log</targetReference>
-        </connector>
-    </start>
-
-    <recordLookups>
-        <name>Get_Last_Sync_Log</name>
-        <label>Get Last Sync Log</label>
-        <locationX>176</locationX>
-        <locationY>134</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Get_Schedule_Info</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Matrix_Sync_Log__c</object>
-        <outputReference>lastSyncLog</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Status__c</queriedFields>
-        <queriedFields>Records_Processed__c</queriedFields>
-        <queriedFields>Records_Failed__c</queriedFields>
-        <queriedFields>Error_Detail__c</queriedFields>
-        <queriedFields>Sync_Type__c</queriedFields>
-        <queriedFields>CreatedDate</queriedFields>
-        <sortField>CreatedDate</sortField>
-        <sortOrder>Desc</sortOrder>
-    </recordLookups>
-
     <actionCalls>
         <name>Get_Schedule_Info</name>
         <label>Get Schedule Info</label>
@@ -135,7 +27,6 @@
         </outputParameters>
         <storeOutputAutomatically>false</storeOutputAutomatically>
     </actionCalls>
-
     <actionCalls>
         <name>Trigger_Sync_Action</name>
         <label>Trigger Manual Sync</label>
@@ -148,7 +39,6 @@
         </connector>
         <storeOutputAutomatically>false</storeOutputAutomatically>
     </actionCalls>
-
     <actionCalls>
         <name>Reschedule_Action</name>
         <label>Reschedule Nightly Sync</label>
@@ -162,7 +52,7 @@
         <inputParameters>
             <name>scheduleHour</name>
             <value>
-                <elementReference>syncHour</elementReference>
+                <elementReference>Schedule_Input_Screen.inputHour</elementReference>
             </value>
         </inputParameters>
         <outputParameters>
@@ -175,7 +65,22 @@
         </outputParameters>
         <storeOutputAutomatically>false</storeOutputAutomatically>
     </actionCalls>
-
+    <choices>
+        <name>Choice_TriggerNow</name>
+        <choiceText>Trigger Sync Now</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>TriggerNow</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Choice_ChangeSchedule</name>
+        <choiceText>Change Schedule Time</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ChangeSchedule</stringValue>
+        </value>
+    </choices>
     <decisions>
         <name>User_Choice_Decision</name>
         <label>User Action</label>
@@ -201,7 +106,39 @@
             <label>Trigger Now</label>
         </rules>
     </decisions>
-
+    <formulas>
+        <name>fmtSyncTime</name>
+        <dataType>String</dataType>
+        <expression>IF(ISNULL({!lastSyncLog.CreatedDate}), "—", TEXT({!lastSyncLog.CreatedDate}))</expression>
+    </formulas>
+    <formulas>
+        <name>fmtScheduleStatus</name>
+        <dataType>String</dataType>
+        <expression>IF({!isScheduled}, "Scheduled — next run: " &amp; {!nextFireTimeText}, "Not scheduled")</expression>
+    </formulas>
+    <recordLookups>
+        <name>Get_Last_Sync_Log</name>
+        <label>Get Last Sync Log</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Schedule_Info</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Matrix_Sync_Log__c</object>
+        <outputReference>lastSyncLog</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Status__c</queriedFields>
+        <queriedFields>Records_Processed__c</queriedFields>
+        <queriedFields>Records_Failed__c</queriedFields>
+        <queriedFields>Error_Detail__c</queriedFields>
+        <queriedFields>Sync_Type__c</queriedFields>
+        <queriedFields>CreatedDate</queriedFields>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Desc</sortOrder>
+    </recordLookups>
     <screens>
         <name>Status_Dashboard</name>
         <label>Matrix Sync Status</label>
@@ -232,14 +169,13 @@
             <choiceReferences>Choice_TriggerNow</choiceReferences>
             <choiceReferences>Choice_ChangeSchedule</choiceReferences>
             <dataType>String</dataType>
+            <fieldText>What would you like to do?</fieldText>
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
-            <fieldText>What would you like to do?</fieldText>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
-
     <screens>
         <name>Sync_Queued_Screen</name>
         <label>Sync Queued</label>
@@ -257,7 +193,6 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
-
     <screens>
         <name>Schedule_Input_Screen</name>
         <label>Change Schedule Time</label>
@@ -279,15 +214,14 @@
         <fields>
             <name>inputHour</name>
             <dataType>Number</dataType>
+            <fieldText>Run at hour (UTC, 0–23)</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
-            <fieldText>Run at hour (UTC, 0–23)</fieldText>
             <scale>0</scale>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
-
     <screens>
         <name>Reschedule_Result_Screen</name>
         <label>Schedule Updated</label>
@@ -304,5 +238,51 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
-
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Last_Sync_Log</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>lastSyncLog</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Matrix_Sync_Log__c</objectType>
+    </variables>
+    <variables>
+        <name>isScheduled</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>nextFireTimeText</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>rescheduleSuccess</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>rescheduleMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>

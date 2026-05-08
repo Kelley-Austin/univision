@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Lightning Record Page for Period Close. Shows the period close dashboard with progress indicators per source, close/reopen action buttons, and late actuals worklist. The Close / Reopen Period quick action is accessible from the action bar in the highlights panel.</description>
+    <description>Lightning Record Page for Period Close. Shows the period close dashboard with progress indicators per source, close/reopen action buttons, and late actuals worklist.</description>
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
@@ -11,16 +11,15 @@
                 <componentName>force:highlightsPanel</componentName>
             </componentInstance>
         </itemInstances>
-        <mode>Replace</mode>
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <itemInstances>
+        <!-- <itemInstances>
             <componentInstance>
                 <componentName>force:recordDetail</componentName>
             </componentInstance>
-        </itemInstances>
+        </itemInstances> -->
         <itemInstances>
             <componentInstance>
                 <componentName>c:periodCloseDashboard</componentName>
@@ -47,5 +46,8 @@
     </flexiPageRegions>
     <masterLabel>Period Close Record Page</masterLabel>
     <sobjectType>Period_Close__c</sobjectType>
+    <template>
+        <name>flexipage:recordHomeSimpleViewTemplate</name>
+    </template>
     <type>RecordPage</type>
 </FlexiPage>
