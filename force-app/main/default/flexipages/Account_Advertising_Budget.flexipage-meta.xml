@@ -61,7 +61,7 @@
                 <componentName>force:relatedListContainer</componentName>
             </componentInstance>
         </itemInstances>
-        <mode>Replace</mode>
+        <mode>Append</mode>
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>

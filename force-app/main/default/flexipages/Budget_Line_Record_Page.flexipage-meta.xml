@@ -11,7 +11,7 @@
                 <componentName>force:highlightsPanel</componentName>
             </componentInstance>
         </itemInstances>
-        <mode>Replace</mode>
+        <mode>Append</mode>
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
@@ -26,7 +26,7 @@
                 <componentName>force:relatedListContainer</componentName>
             </componentInstance>
         </itemInstances>
-        <mode>Replace</mode>
+        <mode>Append</mode>
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
