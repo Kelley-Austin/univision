@@ -34,6 +34,9 @@
             <drillToDetailEnabled>false</drillToDetailEnabled>
             <enableHover>false</enableHover>
             <header>Stalled Deals</header>
+            <indicatorHighColor>#54C254</indicatorHighColor>
+            <indicatorLowColor>#C41E3A</indicatorLowColor>
+            <indicatorMiddleColor>#FFC200</indicatorMiddleColor>
             <maxValuesDisplayed>10</maxValuesDisplayed>
             <report>Advertising_Analytics/Deal_Aging</report>
             <showPercentage>false</showPercentage>

@@ -55,6 +55,9 @@
             <drillToDetailEnabled>false</drillToDetailEnabled>
             <enableHover>false</enableHover>
             <header>Traffic Order Status</header>
+            <indicatorHighColor>#54C254</indicatorHighColor>
+            <indicatorLowColor>#C41E3A</indicatorLowColor>
+            <indicatorMiddleColor>#FFC200</indicatorMiddleColor>
             <maxValuesDisplayed>10</maxValuesDisplayed>
             <report>Advertising_Analytics/Order_Pacing</report>
             <showPercentage>false</showPercentage>
