@@ -4,14 +4,10 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentInstanceProperties>
-                    <name>variant</name>
-                    <value>base</value>
-                </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
+                <identifier>highlights_panel</identifier>
             </componentInstance>
         </itemInstances>
-        <mode>Replace</mode>
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
@@ -19,24 +15,21 @@
         <itemInstances>
             <componentInstance>
                 <componentName>c:sourceFileUpload</componentName>
+                <identifier>sourceFileUpload</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>c:loadBatchDashboard</componentName>
+                <identifier>loadBatchDashboard</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>c:mappingRuleEditor</componentName>
+                <identifier>mappingRuleEditor</identifier>
             </componentInstance>
         </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>force:recordDetail</componentName>
-            </componentInstance>
-        </itemInstances>
-        <mode>Replace</mode>
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>

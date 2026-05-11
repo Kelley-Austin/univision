@@ -38,9 +38,6 @@
             <assignToReference>var_currentAgencyId</assignToReference>
             <field>Primary_Agency__c</field>
         </outputAssignments>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Name</queriedFields>
-        <queriedFields>Primary_Agency__c</queriedFields>
         <storeOutputAutomatically>false</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
@@ -62,7 +59,7 @@
         <inputAssignments>
             <field>Primary_Agency__c</field>
             <value>
-                <elementReference>Screen_SelectAgency.fi_Agency</elementReference>
+                <elementReference>fi_Agency</elementReference>
             </value>
         </inputAssignments>
         <object>Account</object>
@@ -89,10 +86,9 @@
             <defaultValue>
                 <elementReference>var_currentAgencyId</elementReference>
             </defaultValue>
-            <fieldText>Primary Agency</fieldText>
+            <fieldText>Primary Agency (Account ID)</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
-            <objectFieldReference>Account.Primary_Agency__c</objectFieldReference>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>

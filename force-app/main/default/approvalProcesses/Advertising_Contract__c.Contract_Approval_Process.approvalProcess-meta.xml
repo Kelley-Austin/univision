@@ -24,7 +24,7 @@
         <field>Cancellation_Policy__c</field>
     </approvalPageFields>
 
-    <!-- Step 1: Route to Contract Approvers queue -->
+    <!-- Step 1: Route to the owner of the parent Opportunity -->
     <approvalStep>
         <allowDelegate>true</allowDelegate>
         <approvalActions>
@@ -39,12 +39,12 @@
         </approvalActions>
         <assignedApprover>
             <approver>
-                <name>Contract_Approvers</name>
-                <type>queue</type>
+                <name>Opportunity__c</name>
+                <type>relatedUserField</type>
             </approver>
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
-        <description>Route the contract to the Contract Approvers queue. Any member of the queue may approve or reject.</description>
+        <description>Route the contract to the owner of the parent Opportunity for review and approval.</description>
         <label>Contract Review</label>
         <name>Contract_Review</name>
         <rejectBehavior>
@@ -58,7 +58,7 @@
         </rejectionActions>
     </approvalStep>
 
-    <description>Routes an Advertising Contract to the Contract Approvers queue. On approval: sets status to Approved and stamps the date. On rejection or recall: returns to Draft.</description>
+    <description>Routes an Advertising Contract to the owner of the parent Opportunity. On approval: sets status to Approved and stamps the date. On rejection or recall: returns to Draft.</description>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
 
     <!-- Entry criteria: only contracts in Pending Approval status enter this process -->

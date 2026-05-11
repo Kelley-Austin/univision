@@ -4,33 +4,26 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentInstanceProperties>
-                    <name>variant</name>
-                    <value>base</value>
-                </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
+                <identifier>highlights_panel</identifier>
             </componentInstance>
         </itemInstances>
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <!-- <itemInstances>
-            <componentInstance>
-                <componentName>force:recordDetail</componentName>
-            </componentInstance>
-        </itemInstances> -->
         <itemInstances>
             <componentInstance>
                 <componentName>c:pitchProjectPacing</componentName>
+                <identifier>pitchProjectPacing</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>force:relatedListContainer</componentName>
+                <identifier>force_relatedListContainer</identifier>
             </componentInstance>
         </itemInstances>
-        <mode>Append</mode>
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>

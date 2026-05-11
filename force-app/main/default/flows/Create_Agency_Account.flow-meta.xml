@@ -66,7 +66,7 @@
         <inputAssignments>
             <field>ParentId</field>
             <value>
-                <elementReference>Screen_AgencyDetails.fi_ParentHoldCo</elementReference>
+                <elementReference>fi_ParentHoldCo</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -109,10 +109,9 @@
         <fields>
             <name>fi_ParentHoldCo</name>
             <dataType>String</dataType>
-            <fieldText>Parent HoldCo</fieldText>
+            <fieldText>Parent HoldCo (Account ID)</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
-            <objectFieldReference>Account.ParentId</objectFieldReference>
         </fields>
         <fields>
             <name>fi_Website</name>

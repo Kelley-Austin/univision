@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+<CustomReportType xmlns="http://soap.sforce.com/2006/04/metadata">
     <label>Period Snapshot – Forecast Accuracy</label>
     <baseObject>Period_Snapshot__c</baseObject>
     <category>other</category>
@@ -8,59 +8,74 @@
     <sections>
         <columns>
             <checkedByDefault>true</checkedByDefault>
-            <field>NAME</field>
+            <field>Name</field>
+            <table>Period_Snapshot__c</table>
         </columns>
         <columns>
             <checkedByDefault>true</checkedByDefault>
             <field>Period_Close__c</field>
+            <table>Period_Snapshot__c</table>
         </columns>
         <columns>
             <checkedByDefault>true</checkedByDefault>
             <field>Projection__c</field>
+            <table>Period_Snapshot__c</table>
         </columns>
         <columns>
             <checkedByDefault>true</checkedByDefault>
             <field>Account__c</field>
+            <table>Period_Snapshot__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Category__c</field>
+            <table>Period_Snapshot__c</table>
         </columns>
         <columns>
             <checkedByDefault>true</checkedByDefault>
             <field>Revenue_Type__c</field>
+            <table>Period_Snapshot__c</table>
         </columns>
         <columns>
             <checkedByDefault>true</checkedByDefault>
             <field>Period_Year__c</field>
+            <table>Period_Snapshot__c</table>
         </columns>
         <columns>
             <checkedByDefault>true</checkedByDefault>
             <field>Period_Month__c</field>
+            <table>Period_Snapshot__c</table>
         </columns>
         <columns>
             <checkedByDefault>true</checkedByDefault>
             <field>Projected_At_Close__c</field>
+            <table>Period_Snapshot__c</table>
         </columns>
         <columns>
             <checkedByDefault>true</checkedByDefault>
             <field>Actual_At_Close__c</field>
+            <table>Period_Snapshot__c</table>
         </columns>
         <columns>
             <checkedByDefault>true</checkedByDefault>
             <field>Variance_Amount__c</field>
+            <table>Period_Snapshot__c</table>
         </columns>
         <columns>
             <checkedByDefault>true</checkedByDefault>
             <field>Variance_Pct__c</field>
+            <table>Period_Snapshot__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Snapshot_Composite_Key__c</field>
+            <table>Period_Snapshot__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CREATED_DATE</field>
+            <field>CreatedDate</field>
+            <table>Period_Snapshot__c</table>
         </columns>
+        <masterLabel>Period Snapshot Fields</masterLabel>
     </sections>
-</ReportType>
+</CustomReportType>

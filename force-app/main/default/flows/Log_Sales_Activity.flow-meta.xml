@@ -1,127 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>62.0</apiVersion>
-    <description>Quick-action Screen Flow to log a sales activity (call, meeting, email, presentation) against an Advertising Opportunity. Creates a completed Task record linked to the opportunity and account.</description>
+    <description>Quick-action Screen Flow to log a sales activity against an Advertising Opportunity. Creates a completed Task record linked to the opportunity.</description>
     <label>Log Sales Activity</label>
     <processType>Flow</processType>
 
-    <!-- ═══════════════════════════════════════════
-         VARIABLES
-    ═══════════════════════════════════════════ -->
-    <variables>
-        <name>recordId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-        <description>ID of the Opportunity this activity is logged against.</description>
-    </variables>
-    <variables>
-        <name>varOpportunity</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Opportunity</objectType>
-    </variables>
-
-    <!-- ═══════════════════════════════════════════
-         CHOICES — Activity Type
-    ═══════════════════════════════════════════ -->
     <choices>
         <name>choice_Call</name>
         <choiceText>Phone Call</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Call</stringValue>
-        </value>
+        <value><stringValue>Call</stringValue></value>
     </choices>
     <choices>
         <name>choice_Meeting</name>
         <choiceText>In-Person Meeting</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Meeting</stringValue>
-        </value>
+        <value><stringValue>Meeting</stringValue></value>
     </choices>
     <choices>
         <name>choice_Email</name>
         <choiceText>Email</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Email</stringValue>
-        </value>
+        <value><stringValue>Email</stringValue></value>
     </choices>
     <choices>
         <name>choice_Presentation</name>
         <choiceText>Presentation / Demo</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Presentation</stringValue>
-        </value>
+        <value><stringValue>Presentation</stringValue></value>
     </choices>
     <choices>
         <name>choice_Proposal</name>
         <choiceText>Proposal Delivery</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Proposal</stringValue>
-        </value>
+        <value><stringValue>Proposal</stringValue></value>
     </choices>
     <choices>
         <name>choice_Other</name>
         <choiceText>Other</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Other</stringValue>
-        </value>
+        <value><stringValue>Other</stringValue></value>
     </choices>
-
-    <!-- ═══════════════════════════════════════════
-         CHOICES — Outcome
-    ═══════════════════════════════════════════ -->
     <choices>
         <name>choice_Positive</name>
-        <choiceText>Positive — advancing</choiceText>
+        <choiceText>Positive - advancing</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Positive</stringValue>
-        </value>
+        <value><stringValue>Positive</stringValue></value>
     </choices>
     <choices>
         <name>choice_Neutral</name>
-        <choiceText>Neutral — follow-up needed</choiceText>
+        <choiceText>Neutral - follow-up needed</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Neutral</stringValue>
-        </value>
+        <value><stringValue>Neutral</stringValue></value>
     </choices>
     <choices>
         <name>choice_Negative</name>
-        <choiceText>Negative — at risk</choiceText>
+        <choiceText>Negative - at risk</choiceText>
         <dataType>String</dataType>
-        <value>
-            <stringValue>Negative</stringValue>
-        </value>
+        <value><stringValue>Negative</stringValue></value>
     </choices>
 
-    <!-- ═══════════════════════════════════════════
-         FORMULAS
-    ═══════════════════════════════════════════ -->
     <formulas>
         <name>formula_TaskSubject</name>
         <dataType>String</dataType>
-        <expression>{!screen_LogActivity.input_ActivityType} + ": " + {!varOpportunity.Name}</expression>
+        <expression>{!input_ActivityType} + ": " + {!varOpportunity.Name}</expression>
     </formulas>
+
     <formulas>
         <name>formula_TaskDescription</name>
         <dataType>String</dataType>
-        <expression>"Outcome: " + {!screen_LogActivity.input_Outcome} + "\n\n" + {!screen_LogActivity.input_Notes} + IF(NOT(ISBLANK({!screen_LogActivity.input_NextStep})), "\n\nNext Step: " + {!screen_LogActivity.input_NextStep}, "")</expression>
+        <expression>"Outcome: " + {!input_Outcome} + "\n\n" + {!input_Notes}</expression>
     </formulas>
 
-    <!-- ═══════════════════════════════════════════
-         START → LOAD OPPORTUNITY
-    ═══════════════════════════════════════════ -->
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
@@ -152,20 +102,15 @@
         <outputReference>varOpportunity</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>Name</queriedFields>
-        <queriedFields>AccountId</queriedFields>
         <queriedFields>Primary_Contact__c</queriedFields>
-        <queriedFields>StageName</queriedFields>
     </recordLookups>
 
-    <!-- ═══════════════════════════════════════════
-         SCREEN — Log Activity
-    ═══════════════════════════════════════════ -->
     <screens>
         <name>screen_LogActivity</name>
         <label>Log Sales Activity</label>
         <locationX>264</locationX>
         <locationY>398</locationY>
-        <allowBack>false</allowBack>
+        <allowBack>true</allowBack>
         <allowFinish>false</allowFinish>
         <allowPause>false</allowPause>
         <connector>
@@ -198,76 +143,47 @@
             <isRequired>true</isRequired>
         </fields>
         <fields>
-            <name>input_ContactId</name>
-            <extensionName>flowruntime:lookupField</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>fieldApiName</name>
-                <value>
-                    <stringValue>Task.WhoId</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Contact</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>required</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>value</name>
-                <value>
-                    <elementReference>varOpportunity.Primary_Contact__c</elementReference>
-                </value>
-            </inputParameters>
-            <isRequired>false</isRequired>
-            <outputParameters>
-                <assignToReference>varContactId</assignToReference>
-                <name>value</name>
-            </outputParameters>
-        </fields>
-        <fields>
             <name>input_Outcome</name>
             <choiceReferences>choice_Positive</choiceReferences>
             <choiceReferences>choice_Neutral</choiceReferences>
             <choiceReferences>choice_Negative</choiceReferences>
             <dataType>String</dataType>
             <defaultSelectedChoiceReference>choice_Neutral</defaultSelectedChoiceReference>
+            <fieldText>Outcome</fieldText>
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
-            <fieldText>Outcome</fieldText>
         </fields>
         <fields>
             <name>input_Notes</name>
             <dataType>String</dataType>
+            <fieldText>Activity Notes</fieldText>
             <fieldType>LargeTextArea</fieldType>
             <isRequired>true</isRequired>
-            <fieldText>Activity Notes</fieldText>
-        </fields>
-        <fields>
-            <name>input_NextStep</name>
-            <dataType>String</dataType>
-            <fieldType>InputField</fieldType>
-            <isRequired>false</isRequired>
-            <fieldText>Next Step</fieldText>
         </fields>
     </screens>
 
-    <!-- ═══════════════════════════════════════════
-         RECORD CREATE — Task
-    ═══════════════════════════════════════════ -->
+    <screens>
+        <name>screen_ActivityLogged</name>
+        <label>Activity Logged</label>
+        <locationX>264</locationX>
+        <locationY>798</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>display_ActivityLoggedMsg</name>
+            <fieldText>&lt;p&gt;Activity logged successfully. The activity has been recorded.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+    </screens>
+
     <recordCreates>
         <name>create_Task</name>
         <label>Create Task</label>
         <locationX>264</locationX>
         <locationY>638</locationY>
         <connector>
-            <targetReference>decision_HasNextStep</targetReference>
+            <targetReference>screen_ActivityLogged</targetReference>
         </connector>
         <inputAssignments>
             <field>Subject</field>
@@ -290,7 +206,7 @@
         <inputAssignments>
             <field>ActivityDate</field>
             <value>
-                <elementReference>screen_LogActivity.input_ActivityDate</elementReference>
+                <elementReference>input_ActivityDate</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -302,102 +218,34 @@
         <inputAssignments>
             <field>WhoId</field>
             <value>
-                <elementReference>varContactId</elementReference>
+                <elementReference>varOpportunity.Primary_Contact__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Type</field>
             <value>
-                <elementReference>screen_LogActivity.input_ActivityType</elementReference>
+                <elementReference>input_ActivityType</elementReference>
             </value>
         </inputAssignments>
         <object>Task</object>
     </recordCreates>
 
-    <!-- ═══════════════════════════════════════════
-         DECISION — Update Next Step on opportunity?
-    ═══════════════════════════════════════════ -->
-    <decisions>
-        <name>decision_HasNextStep</name>
-        <label>Has Next Step?</label>
-        <locationX>264</locationX>
-        <locationY>798</locationY>
-        <defaultConnector>
-            <targetReference>screen_ActivityLogged</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No Next Step</defaultConnectorLabel>
-        <rules>
-            <name>outcome_HasNextStep</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>screen_LogActivity.input_NextStep</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>update_OpportunityNextStep</targetReference>
-            </connector>
-            <label>Has Next Step</label>
-        </rules>
-    </decisions>
-
-    <!-- ═══════════════════════════════════════════
-         RECORD UPDATE — Write next step to opportunity
-    ═══════════════════════════════════════════ -->
-    <recordUpdates>
-        <name>update_OpportunityNextStep</name>
-        <label>Update Opportunity Next Step</label>
-        <locationX>264</locationX>
-        <locationY>958</locationY>
-        <connector>
-            <targetReference>screen_ActivityLogged</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>NextStep</field>
-            <value>
-                <elementReference>screen_LogActivity.input_NextStep</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Opportunity</object>
-    </recordUpdates>
-
-    <!-- ═══════════════════════════════════════════
-         CONFIRMATION SCREEN
-    ═══════════════════════════════════════════ -->
-    <screens>
-        <name>screen_ActivityLogged</name>
-        <label>Activity Logged</label>
-        <locationX>264</locationX>
-        <locationY>1118</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>display_ActivityLoggedMsg</name>
-            <fieldText>&lt;p&gt;Activity logged successfully. The {!screen_LogActivity.input_ActivityType} on {!screen_LogActivity.input_ActivityDate} has been recorded.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-    </screens>
     <status>Active</status>
 
-    <!-- ═══════════════════════════════════════════
-         ADDITIONAL VARIABLES
-    ═══════════════════════════════════════════ -->
     <variables>
-        <name>varContactId</name>
+        <name>recordId</name>
         <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+
+    <variables>
+        <name>varOpportunity</name>
+        <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+        <objectType>Opportunity</objectType>
     </variables>
 </Flow>

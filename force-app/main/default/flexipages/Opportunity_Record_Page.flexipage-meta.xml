@@ -7,70 +7,36 @@
         <name>flexipage:recordHomeTemplateDesktop</name>
     </template>
     <type>RecordPage</type>
-
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentInstanceProperties>
-                    <name>variant</name>
-                    <value>base</value>
-                </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
+                <identifier>highlights_panel</identifier>
             </componentInstance>
         </itemInstances>
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <!-- <itemInstances>
-            <componentInstance>
-                <componentName>force:recordDetail</componentName>
-            </componentInstance>
-        </itemInstances> -->
         <itemInstances>
             <componentInstance>
                 <componentName>c:aeProjectionGrid</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>heading</name>
-                    <value>Budget Lines</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedList</name>
-                    <value>Budget_Lines</value>
-                </componentInstanceProperties>
-                <componentName>force:relatedListSingleContainer</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>heading</name>
-                    <value>Advertising Contracts</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedList</name>
-                    <value>Advertising_Contracts</value>
-                </componentInstanceProperties>
-                <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>aeProjectionGrid</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>c:sourceFileUpload</componentName>
+                <identifier>sourceFileUpload</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>force:relatedListContainer</componentName>
+                <identifier>force_relatedListContainer</identifier>
             </componentInstance>
         </itemInstances>
-        <mode>Append</mode>
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
-
 </FlexiPage>

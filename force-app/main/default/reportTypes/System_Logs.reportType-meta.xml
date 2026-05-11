@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject>Log__c</baseObject>
+    <category>other</category>
+    <deployed>true</deployed>
+    <description>Standard single-object report type for System Logs. Used by Source System Health and Last Imported Date reports.</description>
+    <label>System Logs</label>
+    <sections>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Name</field>
+            <table>Log__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>EventKey__c</field>
+            <table>Log__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>LogEventName__c</field>
+            <table>Log__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Type__c</field>
+            <table>Log__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Message__c</field>
+            <table>Log__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>ComposedDateTime__c</field>
+            <table>Log__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>CorrelationId__c</field>
+            <table>Log__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Severity__c</field>
+            <table>Log__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Source_Class__c</field>
+            <table>Log__c</table>
+        </columns>
+        <masterLabel>Log Fields</masterLabel>
+    </sections>
+</CustomReportType>

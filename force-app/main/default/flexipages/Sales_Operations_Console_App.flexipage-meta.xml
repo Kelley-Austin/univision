@@ -4,8 +4,8 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentInstanceId>sales_ops_console_main</componentInstanceId>
                 <componentName>c:salesOpsConsole</componentName>
+                <identifier>sales_ops_console</identifier>
             </componentInstance>
         </itemInstances>
         <name>main</name>

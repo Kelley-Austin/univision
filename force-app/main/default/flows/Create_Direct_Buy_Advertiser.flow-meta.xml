@@ -15,14 +15,12 @@
     <dynamicChoiceSets>
         <name>dcs_Market</name>
         <dataType>Picklist</dataType>
-        <object>Account</object>
         <picklistField>Market__c</picklistField>
         <picklistObject>Account</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
         <name>dcs_MediaType</name>
         <dataType>Picklist</dataType>
-        <object>Account</object>
         <picklistField>Media_Type__c</picklistField>
         <picklistObject>Account</picklistObject>
     </dynamicChoiceSets>
@@ -92,7 +90,7 @@
         <inputAssignments>
             <field>Primary_Agency__c</field>
             <value>
-                <elementReference>Screen_AdvertiserDetails.fi_PrimaryAgency</elementReference>
+                <elementReference>fi_PrimaryAgency</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -146,10 +144,9 @@
         <fields>
             <name>fi_PrimaryAgency</name>
             <dataType>String</dataType>
-            <fieldText>Primary Agency (optional)</fieldText>
+            <fieldText>Primary Agency ID (optional)</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
-            <objectFieldReference>Account.Primary_Agency__c</objectFieldReference>
         </fields>
         <fields>
             <name>fi_Website</name>

@@ -2,7 +2,7 @@ public with sharing class MatrixRescheduleInvocable {
 
     public class RescheduleRequest {
         @InvocableVariable(label='Schedule Hour (0-23 UTC)' required=true)
-        public Integer scheduleHour;
+        public Decimal scheduleHour;
     }
 
     public class RescheduleResult {
@@ -22,7 +22,7 @@ public with sharing class MatrixRescheduleInvocable {
         for (RescheduleRequest req : requests) {
             RescheduleResult res = new RescheduleResult();
             try {
-                MatrixInventoryScheduler.scheduleAt(req.scheduleHour);
+                MatrixInventoryScheduler.scheduleAt(req.scheduleHour.intValue());
                 res.success = true;
                 res.message = 'Sync rescheduled to run daily at ' + req.scheduleHour + ':00 UTC.';
             } catch (Exception e) {

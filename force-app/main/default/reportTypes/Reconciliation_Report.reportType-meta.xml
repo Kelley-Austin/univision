@@ -7,54 +7,41 @@
     <label>Ad Reconciliation</label>
     <sections>
         <columns>
-            <field>NAME</field>
+            <field>Name</field>
+            <table>Reconciliation_Line__c</table>
         </columns>
         <columns>
-            <field>RECONCILIATION_STATUS__C</field>
+            <field>Reconciliation_Status__c</field>
+            <table>Reconciliation_Line__c</table>
         </columns>
         <columns>
-            <field>MONTH__C</field>
+            <field>Month__c</field>
+            <table>Reconciliation_Line__c</table>
         </columns>
         <columns>
-            <field>FISCAL_YEAR__C</field>
+            <field>Fiscal_Year__c</field>
+            <table>Reconciliation_Line__c</table>
         </columns>
         <columns>
-            <field>PLANNED_AMOUNT__C</field>
+            <field>Planned_Amount__c</field>
+            <table>Reconciliation_Line__c</table>
         </columns>
         <columns>
-            <field>ACTUAL_AMOUNT__C</field>
+            <field>Actual_Amount__c</field>
+            <table>Reconciliation_Line__c</table>
         </columns>
         <columns>
-            <field>VARIANCE_AMOUNT__C</field>
+            <field>Variance_Amount__c</field>
+            <table>Reconciliation_Line__c</table>
         </columns>
         <columns>
-            <field>PLANNED_WEEKLY_SPOTS__C</field>
+            <field>Planned_Weekly_Spots__c</field>
+            <table>Reconciliation_Line__c</table>
         </columns>
         <columns>
-            <field>ACTUAL_SPOT_COUNT__C</field>
+            <field>Actual_Spot_Count__c</field>
+            <table>Reconciliation_Line__c</table>
         </columns>
         <masterLabel>Reconciliation Lines</masterLabel>
-        <table>Reconciliation_Line__c</table>
-    </sections>
-    <sections>
-        <columns>
-            <field>Reconciliation_Line__c.Opportunity__r.Name</field>
-        </columns>
-        <masterLabel>Advertising Opportunity</masterLabel>
-        <table>Reconciliation_Line__c</table>
-    </sections>
-    <sections>
-        <columns>
-            <field>Reconciliation_Line__c.Channel__r.NAME</field>
-        </columns>
-        <masterLabel>Channel</masterLabel>
-        <table>Reconciliation_Line__c</table>
-    </sections>
-    <sections>
-        <columns>
-            <field>Reconciliation_Line__c.Vehicle__r.NAME</field>
-        </columns>
-        <masterLabel>Vehicle</masterLabel>
-        <table>Reconciliation_Line__c</table>
     </sections>
 </CustomReportType>

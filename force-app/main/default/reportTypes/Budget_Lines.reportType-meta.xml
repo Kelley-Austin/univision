@@ -3,8 +3,8 @@
     <baseObject>Budget_Line__c</baseObject>
     <category>other</category>
     <deployed>true</deployed>
-    <description>Budget Lines with related Opportunity (for market, stage, and opportunity-level amounts) and Vehicle (for vehicle type and day part). Used for all media analytics reports.</description>
-    <label>Budget Lines with Opportunity and Vehicle</label>
+    <description>Standard single-object report type for Budget Lines. Exposes all Budget_Line__c fields including lookup IDs for Channel, Vehicle, and Opportunity.</description>
+    <label>Budget Lines</label>
     <sections>
         <columns>
             <checkedByDefault>true</checkedByDefault>
@@ -37,7 +37,7 @@
             <table>Budget_Line__c</table>
         </columns>
         <columns>
-            <checkedByDefault>true</checkedByDefault>
+            <checkedByDefault>false</checkedByDefault>
             <field>Fiscal_Year__c</field>
             <table>Budget_Line__c</table>
         </columns>
@@ -57,28 +57,23 @@
             <table>Budget_Line__c</table>
         </columns>
         <columns>
-            <checkedByDefault>true</checkedByDefault>
+            <checkedByDefault>false</checkedByDefault>
             <field>Variance_Status__c</field>
             <table>Budget_Line__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Spot_Rate__c</field>
+            <field>Channel__c</field>
             <table>Budget_Line__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Weekly_Spots__c</field>
+            <field>Vehicle__c</field>
             <table>Budget_Line__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Spot_Length__c</field>
-            <table>Budget_Line__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Notes__c</field>
+            <field>Opportunity__c</field>
             <table>Budget_Line__c</table>
         </columns>
         <masterLabel>Budget Line Fields</masterLabel>

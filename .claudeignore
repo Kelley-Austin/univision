@@ -1,0 +1,26 @@
+# build artifacts
+dist/
+build/
+.next/
+out/
+
+# dependencies
+node_modules/
+vendor/
+
+# generated files
+*.min.js
+*.bundle.js
+coverage/
+.turbo/
+
+# secrets — NEVER let Claude read these
+.env
+.env.*
+*.key
+*.pem
+
+# large data
+*.csv
+*.sqlite
+public/assets/

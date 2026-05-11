@@ -24,7 +24,7 @@
             <extensionName>c:pitchProjectCreator</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>false</isRequired>
+            <isRequired>true</isRequired>
             <storeOutputAutomatically>false</storeOutputAutomatically>
         </fields>
         <showFooter>false</showFooter>

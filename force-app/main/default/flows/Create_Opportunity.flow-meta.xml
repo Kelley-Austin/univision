@@ -12,28 +12,68 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <runInMode>DefaultMode</runInMode>
-    <recordLookups>
-        <name>GetAccount</name>
-        <label>Get Account</label>
+
+    <actionCalls>
+        <name>CreateOpportunityAction</name>
+        <label>Create Opportunity with Budget Lines</label>
         <locationX>50</locationX>
-        <locationY>120</locationY>
+        <locationY>360</locationY>
+        <actionName>CreateOpportunityWithBudgetLines</actionName>
+        <actionType>apex</actionType>
         <connector>
-            <targetReference>OpportunityDetailsScreen</targetReference>
+            <targetReference>CheckSuccess</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
+        <inputParameters>
+            <name>accountId</name>
             <value>
                 <elementReference>recordId</elementReference>
             </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Account</object>
-        <outputReference>accountRecord</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>Name</queriedFields>
-    </recordLookups>
+        </inputParameters>
+        <inputParameters>
+            <name>startDate</name>
+            <value>
+                <elementReference>inputStartDate</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>endDate</name>
+            <value>
+                <elementReference>inputEndDate</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>market</name>
+            <value>
+                <elementReference>inputMarket</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>totalBudget</name>
+            <value>
+                <elementReference>inputTotalBudget</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>budgetLinesJson</name>
+            <value>
+                <elementReference>budgetLinesJson</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>opportunityId</assignToReference>
+            <name>opportunityId</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>isSuccess</assignToReference>
+            <name>isSuccess</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>errorMessage</assignToReference>
+            <name>errorMessage</name>
+        </outputParameters>
+        <storeOutputAutomatically>false</storeOutputAutomatically>
+    </actionCalls>
+
     <decisions>
         <name>CheckSuccess</name>
         <label>Check Success</label>
@@ -59,66 +99,30 @@
             <label>Success</label>
         </rules>
     </decisions>
-    <actionCalls>
-        <name>CreateOpportunityAction</name>
-        <label>Create Opportunity with Budget Lines</label>
+
+    <recordLookups>
+        <name>GetAccount</name>
+        <label>Get Account</label>
         <locationX>50</locationX>
-        <locationY>360</locationY>
-        <actionName>CreateOpportunityWithBudgetLines</actionName>
-        <actionType>apex</actionType>
+        <locationY>120</locationY>
         <connector>
-            <targetReference>CheckSuccess</targetReference>
+            <targetReference>OpportunityDetailsScreen</targetReference>
         </connector>
-        <inputParameters>
-            <name>accountId</name>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
             <value>
                 <elementReference>recordId</elementReference>
             </value>
-        </inputParameters>
-        <inputParameters>
-            <name>startDate</name>
-            <value>
-                <elementReference>OpportunityDetailsScreen.inputStartDate</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>endDate</name>
-            <value>
-                <elementReference>OpportunityDetailsScreen.inputEndDate</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>market</name>
-            <value>
-                <elementReference>OpportunityDetailsScreen.inputMarket</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>totalBudget</name>
-            <value>
-                <elementReference>OpportunityDetailsScreen.inputTotalBudget</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>budgetLinesJson</name>
-            <value>
-                <elementReference>budgetLinesJson</elementReference>
-            </value>
-        </inputParameters>
-        <outputParameters>
-            <assignToReference>opportunityId</assignToReference>
-            <name>opportunityId</name>
-        </outputParameters>
-        <outputParameters>
-            <assignToReference>isSuccess</assignToReference>
-            <name>isSuccess</name>
-        </outputParameters>
-        <outputParameters>
-            <assignToReference>errorMessage</assignToReference>
-            <name>errorMessage</name>
-        </outputParameters>
-        <storeOutputAutomatically>false</storeOutputAutomatically>
-    </actionCalls>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <outputReference>accountRecord</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+    </recordLookups>
+
     <screens>
         <name>OpportunityDetailsScreen</name>
         <label>Opportunity Details &amp; Budget Lines</label>
@@ -184,6 +188,7 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
+
     <screens>
         <name>SuccessScreen</name>
         <label>Opportunity Created</label>
@@ -200,10 +205,11 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
+
     <screens>
         <name>ErrorScreen</name>
         <label>Error Creating Opportunity</label>
-        <locationX>-120</locationX>
+        <locationX>120</locationX>
         <locationY>600</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -216,6 +222,7 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
+
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
@@ -223,7 +230,9 @@
             <targetReference>GetAccount</targetReference>
         </connector>
     </start>
+
     <status>Active</status>
+
     <variables>
         <name>recordId</name>
         <dataType>String</dataType>

@@ -1,93 +1,24 @@
-# # .forceignore v2 — last cleaned 2026-05-06
-# # See CLAUDE.md "Scope notes" for which items are deliberately excluded vs deferred.
-# # When you fix an entry below, delete its line; don't comment it out.
+# .forceignore v2 — last cleaned 2026-05-06
+# See CLAUDE.md "Scope notes" for which items are deliberately excluded vs deferred.
+# When you fix an entry below, delete its line; don't comment it out.
 
-# # === Standard dev artifacts (always ignore) ===
-# .forceignore
-# **/jsconfig.json
-# **/.eslintrc.json
-# **/lwc/**/__tests__/**
+# === Standard dev artifacts (always ignore) ===
+.forceignore
+**/jsconfig.json
+**/.eslintrc.json
+**/lwc/**/__tests__/**
 
-# # === KEEP IGNORED — out of SOW Phase 1 (Change Order required to include) ===
+#=== KEEP IGNORED — out of SOW Phase 1 (Change Order required to include) ===
 
-# # Story 3-009 (Forecast Stage Snapshots) — not started; gates Advertising_Analytics reports
-# # Reports in this folder have multiple parse issues (criterias, INTERVAL_CURRENT_FY enum,
-# # masterLabel missing, sortIndex placement) — defer until story 3-009 picks them up.
-# **/reports/Advertising_Analytics/*.report-meta.xml
-# **/reportTypes/Period_Snapshot_Forecast_Accuracy.reportType-meta.xml
-# **/reportTypes/Forecast_Stage_Snapshots.reportType-meta.xml
-# **/reportTypes/Pacing_Snapshots.reportType-meta.xml
-# **/reportTypes/Period_Snapshots_Detail.reportType-meta.xml
+# Story 3-009 (Forecast Stage Snapshots) — not started; gates Advertising_Analytics reports
+# Reports in this folder have multiple parse issues (criterias, INTERVAL_CURRENT_FY enum,
+# masterLabel missing, sortIndex placement) — defer until story 3-009 picks them up.
+**/reports/Advertising_Analytics/*.report-meta.xml
+**/reports/Media/*.report-meta.xml
+**/dashboards
 
-# # Dashboards that depend on Advertising_Analytics reports (deploy fails when child reports excluded)
-# **/dashboards/Advertising_Analytics/Weekly_Analytics_Dashboard.dashboard-meta.xml
-# **/dashboards/MediaCloud/Sales_Manager_Dashboard.dashboard-meta.xml
 
-# # Traffic outbound callout (Salesforce → WideOrbit) — out of SOW Phase 1
-# **/classes/TrafficOrderService.cls
-# **/classes/TrafficOrderService.cls-meta.xml
-# **/classes/TrafficOrderServiceTest.cls
-# **/classes/TrafficOrderServiceTest.cls-meta.xml
+# Dashboards that depend on Advertising_Analytics reports (deploy fails when child reports excluded)
+**/dashboards/Advertising_Analytics/Weekly_Analytics_Dashboard.dashboard-meta.xml
+**/dashboards/MediaCloud/Sales_Manager_Dashboard.dashboard-meta.xml
 
-# # Local Ad Sales Proposal Flow — out of SOW
-# **/classes/CreateLocalAdProposal.cls
-# **/classes/CreateLocalAdProposal.cls-meta.xml
-# **/classes/CreateLocalAdProposalTest.cls
-# **/classes/CreateLocalAdProposalTest.cls-meta.xml
-# **/classes/CreateOpportunityWithBudgetLines.cls
-# **/classes/CreateOpportunityWithBudgetLines.cls-meta.xml
-# **/classes/CreateOpportunityWithBudgetLinesTest.cls
-# **/classes/CreateOpportunityWithBudgetLinesTest.cls-meta.xml
-# **/classes/LocalAdProposalController.cls
-# **/classes/LocalAdProposalController.cls-meta.xml
-# **/classes/LocalAdProposalControllerTest.cls
-# **/classes/LocalAdProposalControllerTest.cls-meta.xml
-# **/lwc/proposalBudgetLines
-# **/lwc/budgetLineEditor
-# **/pages/LocalAdProposal.page
-# **/pages/LocalAdProposal.page-meta.xml
-
-# # Apex tests that try to set autonumber Name field — defer behind test rewrites
-# **/classes/MatrixOrderSyncServiceTest.cls
-# **/classes/MatrixOrderSyncServiceTest.cls-meta.xml
-# **/classes/RunReconciliationActionTest.cls
-# **/classes/RunReconciliationActionTest.cls-meta.xml
-
-# # === MANUAL STEP — re-include after one-time org config (track in Cutover.csv) ===
-
-# # Approval process needs the Contract_Approvers queue created in Setup → Queues first
-# **/approvalProcesses/Advertising_Contract__c.Contract_Approval_Process.approvalProcess-meta.xml
-
-# # === FIX BACKLOG — flows with parsing/contiguity issues; need deploy-error-driven repair ===
-# # Each of these flows needs targeted XML edits based on actual deploy errors. Source kept
-# # in tree so the work is visible; un-ignore one at a time, attempt deploy, fix the surfaced
-# # error, repeat.
-
-# **/flows/Link_Agency_To_Advertiser.flow-meta.xml
-# **/flows/Retire_Category_With_Successor.flow-meta.xml
-# **/flows/Create_Agency_Account.flow-meta.xml
-# **/flows/Create_Direct_Buy_Advertiser.flow-meta.xml
-# **/flows/Makegood_Or_Cancellation.flow-meta.xml
-# **/flows/Traffic_Copy_Entry.flow-meta.xml
-# **/flows/Pitch_Project_Creator.flow-meta.xml
-# **/flows/Period_Close_Actions.flow-meta.xml
-# **/flows/Log_Sales_Activity.flow-meta.xml
-# **/flows/Matrix_Inventory_Admin_Sync.flow-meta.xml
-# **/flows/Run_Reconciliation.flow-meta.xml
-# **/flows/Transmit_Traffic_Order_on_Contract_Activation.flow-meta.xml
-# **/flows/Create_Opportunity.flow-meta.xml
-# **/flows/New_Opportunity.flow-meta.xml
-
-# # Flow-type quick actions — pair-locked with their parent flows above
-# **/quickActions/Account.Link_Agency_To_Advertiser.quickAction-meta.xml
-# **/quickActions/Account.Create_Local_Ad_Proposal.quickAction-meta.xml
-# **/quickActions/Account.Create_Opportunity.quickAction-meta.xml
-# **/quickActions/Advertising_Contract__c.Makegood_Or_Cancellation.quickAction-meta.xml
-# **/quickActions/Budget_Line__c.Traffic_Copy_Entry.quickAction-meta.xml
-# **/quickActions/Opportunity.Log_Activity.quickAction-meta.xml
-# **/quickActions/Opportunity.New_Opportunity.quickAction-meta.xml
-# **/quickActions/Opportunity.Promote_to_Contract.quickAction-meta.xml
-# **/quickActions/Opportunity.Run_Reconciliation.quickAction-meta.xml
-# **/quickActions/Opportunity.Update_Stage.quickAction-meta.xml
-# **/quickActions/Period_Close__c.Close_Period.quickAction-meta.xml
-# **/quickActions/Pitch_Project__c.Create_Pitch_Project.quickAction-meta.xml

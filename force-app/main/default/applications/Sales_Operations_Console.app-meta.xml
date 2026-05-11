@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <formFactors>Small</formFactors>
+    <formFactors>Large</formFactors>
     <defaultLandingTab>Sales_Ops_Console</defaultLandingTab>
     <description>TelevisaUnivision Sales Operations Console — pacing oversight, reconciliation, MDM queue, late actuals, period close, and exclusion log in one workspace.</description>
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>

@@ -6,57 +6,22 @@
     <label>New Opportunity</label>
     <processType>Flow</processType>
 
-    <!-- ═══════════════════════════════════════════
-         VARIABLES
-    ═══════════════════════════════════════════ -->
-    <variables>
-        <name>varAccountId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-        <description>Optional: pre-populated when launched from an Account record.</description>
-    </variables>
-    <variables>
-        <name>varCreatedOpportunityId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
-    </variables>
-
-    <!-- ═══════════════════════════════════════════
-         DYNAMIC CHOICE SETS
-    ═══════════════════════════════════════════ -->
-    <dynamicChoiceSets>
-        <name>dcs_Status</name>
-        <dataType>Picklist</dataType>
-        <displayField>label</displayField>
-        <object>Opportunity</object>
-        <picklistField>StageName</picklistField>
-    </dynamicChoiceSets>
     <dynamicChoiceSets>
         <name>dcs_MediaType</name>
         <dataType>Picklist</dataType>
         <displayField>label</displayField>
-        <object>Opportunity</object>
+        <picklistObject>Opportunity</picklistObject>
         <picklistField>Media_Type__c</picklistField>
     </dynamicChoiceSets>
+
     <dynamicChoiceSets>
         <name>dcs_LeadSource</name>
         <dataType>Picklist</dataType>
         <displayField>label</displayField>
-        <object>Opportunity</object>
+        <picklistObject>Opportunity</picklistObject>
         <picklistField>LeadSource</picklistField>
     </dynamicChoiceSets>
 
-    <!-- ═══════════════════════════════════════════
-         CHOICES — repurposed from Direct/Agency to channel buckets (2026-05-05).
-         NOTE: Full 7-RT picker rewrite deferred; Direct/Agency choices repurposed
-         to TV-Linear and Digital as a temporary 2-option mapping. Flow remains
-         in .forceignore due to other deploy-blocking issues; standard "New"
-         button on the Opportunity tab is the live entry point for now.
-    ═══════════════════════════════════════════ -->
     <choices>
         <name>choice_DirectBuy</name>
         <choiceText>TV - Linear (owned-and-operated)</choiceText>
@@ -65,6 +30,7 @@
             <stringValue>TV Linear</stringValue>
         </value>
     </choices>
+
     <choices>
         <name>choice_AgencyBuy</name>
         <choiceText>Digital (Operative-sourced)</choiceText>
@@ -74,28 +40,6 @@
         </value>
     </choices>
 
-    <!-- ═══════════════════════════════════════════
-         FORMULAS
-    ═══════════════════════════════════════════ -->
-    <formulas>
-        <name>formula_DirectBuyRecordTypeId</name>
-        <dataType>String</dataType>
-        <expression>$ObjectType.Opportunity.RecordTypeInfos.TV_Linear.RecordTypeId</expression>
-    </formulas>
-    <formulas>
-        <name>formula_AgencyBuyRecordTypeId</name>
-        <dataType>String</dataType>
-        <expression>$ObjectType.Opportunity.RecordTypeInfos.Digital.RecordTypeId</expression>
-    </formulas>
-    <formulas>
-        <name>formula_RecordTypeId</name>
-        <dataType>String</dataType>
-        <expression>IF({!screen_AccountType.input_BuyType} = "TV Linear", {!formula_DirectBuyRecordTypeId}, {!formula_AgencyBuyRecordTypeId})</expression>
-    </formulas>
-
-    <!-- ═══════════════════════════════════════════
-         START
-    ═══════════════════════════════════════════ -->
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
@@ -104,59 +48,35 @@
         </connector>
     </start>
 
-    <!-- ═══════════════════════════════════════════
-         SCREEN 1 — Account & Buy Type
-    ═══════════════════════════════════════════ -->
     <screens>
         <name>screen_AccountType</name>
         <label>Account &amp; Buy Type</label>
         <locationX>264</locationX>
         <locationY>158</locationY>
-        <allowBack>false</allowBack>
+        <allowBack>true</allowBack>
         <allowFinish>false</allowFinish>
         <allowPause>false</allowPause>
         <connector>
             <targetReference>screen_OpportunityDetails</targetReference>
         </connector>
+
         <fields>
             <name>display_Step1Header</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Step 1 of 3 — Account &amp;amp; Buy Type&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Select the advertiser account and how this buy is placed.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Step 1 of 3 - Account &amp;amp; Buy Type&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Select the advertiser account and how this buy is placed.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+
         <fields>
             <name>input_AccountId</name>
-            <extensionName>flowruntime:lookupField</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>fieldApiName</name>
-                <value>
-                    <stringValue>Opportunity.AccountId</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Advertiser Account</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>required</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>value</name>
-                <value>
-                    <elementReference>varAccountId</elementReference>
-                </value>
-            </inputParameters>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>varAccountId</elementReference>
+            </defaultValue>
+            <fieldText>Advertiser Account ID</fieldText>
+            <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>varAccountId</assignToReference>
-                <name>value</name>
-            </outputParameters>
         </fields>
+
         <fields>
             <name>input_BuyType</name>
             <choiceReferences>choice_DirectBuy</choiceReferences>
@@ -167,49 +87,26 @@
             <fieldType>RadioButtons</fieldType>
             <isRequired>true</isRequired>
         </fields>
+
         <fields>
             <name>input_AgencyAccountId</name>
-            <extensionName>flowruntime:lookupField</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>fieldApiName</name>
-                <value>
-                    <stringValue>Opportunity.Agency_Account__c</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Agency Account</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>required</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
+            <dataType>String</dataType>
+            <fieldText>Agency Account ID</fieldText>
+            <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>screen_AccountType.input_BuyType</leftValueReference>
+                    <leftValueReference>input_BuyType</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Digital</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
-            <outputParameters>
-                <assignToReference>varAgencyAccountId</assignToReference>
-                <name>value</name>
-            </outputParameters>
         </fields>
     </screens>
 
-    <!-- ═══════════════════════════════════════════
-         SCREEN 2 — Opportunity Details
-    ═══════════════════════════════════════════ -->
     <screens>
         <name>screen_OpportunityDetails</name>
         <label>Opportunity Details</label>
@@ -221,88 +118,73 @@
         <connector>
             <targetReference>screen_Timeline</targetReference>
         </connector>
+
         <fields>
             <name>display_Step2Header</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Step 2 of 3 — Opportunity Details&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Describe what you&apos;re selling and how this opportunity was identified.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Step 2 of 3 - Opportunity Details&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Describe what you&apos;re selling and how this opportunity was identified.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+
         <fields>
             <name>input_OpportunityName</name>
             <dataType>String</dataType>
+            <fieldText>Opportunity Name</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
-            <fieldText>Opportunity Name</fieldText>
         </fields>
+
         <fields>
             <name>input_MediaType</name>
             <choiceReferences>dcs_MediaType</choiceReferences>
             <dataType>String</dataType>
+            <fieldText>Media Type</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
-            <fieldText>Media Type</fieldText>
         </fields>
+
         <fields>
             <name>input_Market</name>
             <dataType>String</dataType>
+            <fieldText>Market / DMA</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
-            <fieldText>Market / DMA</fieldText>
         </fields>
+
         <fields>
             <name>input_PrimaryContactId</name>
-            <extensionName>flowruntime:lookupField</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>fieldApiName</name>
-                <value>
-                    <stringValue>Opportunity.Primary_Contact__c</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Primary Contact</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>required</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
+            <dataType>String</dataType>
+            <fieldText>Primary Contact ID</fieldText>
+            <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
-            <outputParameters>
-                <assignToReference>varPrimaryContactId</assignToReference>
-                <name>value</name>
-            </outputParameters>
         </fields>
+
         <fields>
             <name>input_EstimatedRevenue</name>
             <dataType>Currency</dataType>
+            <fieldText>Estimated Revenue</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
-            <fieldText>Estimated Revenue</fieldText>
+            <scale>2</scale>
         </fields>
+
         <fields>
             <name>input_LeadSource</name>
             <choiceReferences>dcs_LeadSource</choiceReferences>
             <dataType>String</dataType>
+            <fieldText>Lead Source</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>false</isRequired>
-            <fieldText>Lead Source</fieldText>
         </fields>
+
         <fields>
             <name>input_Description</name>
             <dataType>String</dataType>
+            <fieldText>Description / Notes</fieldText>
             <fieldType>LargeTextArea</fieldType>
             <isRequired>false</isRequired>
-            <fieldText>Description / Notes</fieldText>
         </fields>
     </screens>
 
-    <!-- ═══════════════════════════════════════════
-         SCREEN 3 — Campaign Timeline
-    ═══════════════════════════════════════════ -->
     <screens>
         <name>screen_Timeline</name>
         <label>Campaign Timeline</label>
@@ -314,51 +196,69 @@
         <connector>
             <targetReference>create_Opportunity</targetReference>
         </connector>
+
         <fields>
             <name>display_Step3Header</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Step 3 of 3 — Campaign Timeline&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Set the expected close date and campaign flight dates.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Step 3 of 3 - Campaign Timeline&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Set the expected close date and campaign flight dates.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
+
         <fields>
             <name>input_CloseDate</name>
             <dataType>Date</dataType>
+            <fieldText>Expected Close Date</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
-            <fieldText>Expected Close Date</fieldText>
         </fields>
+
         <fields>
             <name>input_StartDate</name>
             <dataType>Date</dataType>
+            <fieldText>Campaign Start Date</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
-            <fieldText>Campaign Start Date</fieldText>
         </fields>
+
         <fields>
             <name>input_EndDate</name>
             <dataType>Date</dataType>
+            <fieldText>Campaign End Date</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
-            <fieldText>Campaign End Date</fieldText>
         </fields>
+
         <fields>
             <name>input_Competition</name>
             <dataType>String</dataType>
+            <fieldText>Competition</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
-            <fieldText>Competition (competing stations or media)</fieldText>
         </fields>
+
         <fields>
             <name>input_NextStep</name>
             <dataType>String</dataType>
+            <fieldText>Next Step</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
-            <fieldText>Next Step</fieldText>
         </fields>
     </screens>
 
-    <!-- ═══════════════════════════════════════════
-         RECORD CREATE
-    ═══════════════════════════════════════════ -->
+    <screens>
+        <name>screen_Confirmation</name>
+        <label>Opportunity Created</label>
+        <locationX>264</locationX>
+        <locationY>1118</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>display_ConfirmationMsg</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Opportunity created successfully.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Your opportunity has been created with a stage of &lt;em&gt;Prospecting&lt;/em&gt;.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+    </screens>
+
     <recordCreates>
         <name>create_Opportunity</name>
         <label>Create Opportunity</label>
@@ -368,34 +268,29 @@
         <connector>
             <targetReference>screen_Confirmation</targetReference>
         </connector>
+
         <inputAssignments>
             <field>Name</field>
             <value>
-                <elementReference>screen_OpportunityDetails.input_OpportunityName</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>RecordTypeId</field>
-            <value>
-                <elementReference>formula_RecordTypeId</elementReference>
+                <elementReference>input_OpportunityName</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>AccountId</field>
             <value>
-                <elementReference>varAccountId</elementReference>
+                <elementReference>input_AccountId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Agency_Account__c</field>
             <value>
-                <elementReference>varAgencyAccountId</elementReference>
+                <elementReference>input_AgencyAccountId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Primary_Contact__c</field>
             <value>
-                <elementReference>varPrimaryContactId</elementReference>
+                <elementReference>input_PrimaryContactId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -407,100 +302,82 @@
         <inputAssignments>
             <field>Media_Type__c</field>
             <value>
-                <elementReference>screen_OpportunityDetails.input_MediaType</elementReference>
+                <elementReference>input_MediaType</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Market__c</field>
             <value>
-                <elementReference>screen_OpportunityDetails.input_Market</elementReference>
+                <elementReference>input_Market</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Amount</field>
             <value>
-                <elementReference>screen_OpportunityDetails.input_EstimatedRevenue</elementReference>
+                <elementReference>input_EstimatedRevenue</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>LeadSource</field>
             <value>
-                <elementReference>screen_OpportunityDetails.input_LeadSource</elementReference>
+                <elementReference>input_LeadSource</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Description</field>
             <value>
-                <elementReference>screen_OpportunityDetails.input_Description</elementReference>
+                <elementReference>input_Description</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>CloseDate</field>
             <value>
-                <elementReference>screen_Timeline.input_CloseDate</elementReference>
+                <elementReference>input_CloseDate</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Start_Date__c</field>
             <value>
-                <elementReference>screen_Timeline.input_StartDate</elementReference>
+                <elementReference>input_StartDate</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>End_Date__c</field>
             <value>
-                <elementReference>screen_Timeline.input_EndDate</elementReference>
+                <elementReference>input_EndDate</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Competition__c</field>
             <value>
-                <elementReference>screen_Timeline.input_Competition</elementReference>
+                <elementReference>input_Competition</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>NextStep</field>
             <value>
-                <elementReference>screen_Timeline.input_NextStep</elementReference>
+                <elementReference>input_NextStep</elementReference>
             </value>
         </inputAssignments>
+
         <object>Opportunity</object>
     </recordCreates>
 
-    <!-- ═══════════════════════════════════════════
-         CONFIRMATION SCREEN
-    ═══════════════════════════════════════════ -->
-    <screens>
-        <name>screen_Confirmation</name>
-        <label>Opportunity Created</label>
-        <locationX>264</locationX>
-        <locationY>1118</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <fields>
-            <name>display_ConfirmationMsg</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Opportunity created successfully.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Your opportunity &lt;strong&gt;{!screen_OpportunityDetails.input_OpportunityName}&lt;/strong&gt; has been created with a stage of &lt;em&gt;Prospecting&lt;/em&gt;. You can now add budget lines, log activities, and advance the stage from the opportunity record.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-    </screens>
     <status>Active</status>
 
-    <!-- ═══════════════════════════════════════════
-         ADDITIONAL VARIABLES (used in input assignments)
-    ═══════════════════════════════════════════ -->
     <variables>
-        <name>varAgencyAccountId</name>
+        <name>varAccountId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
-        <isInput>false</isInput>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
+
     <variables>
-        <name>varPrimaryContactId</name>
+        <name>varCreatedOpportunityId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>false</isOutput>
+        <isOutput>true</isOutput>
     </variables>
 </Flow>

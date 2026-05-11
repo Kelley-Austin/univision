@@ -4,64 +4,26 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentInstanceProperties>
-                    <name>variant</name>
-                    <value>base</value>
-                </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
+                <identifier>highlights_panel</identifier>
             </componentInstance>
         </itemInstances>
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
     <flexiPageRegions>
-        <!-- <itemInstances>
-            <componentInstance>
-                <componentName>force:recordDetail</componentName>
-            </componentInstance>
-        </itemInstances> -->
         <itemInstances>
             <componentInstance>
                 <componentName>c:accountBudgetGrid</componentName>
+                <identifier>accountBudgetGrid</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>c:aeReconciliationWorklist</componentName>
+                <identifier>aeReconciliationWorklist</identifier>
             </componentInstance>
         </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>heading</name>
-                    <value>Budget Lines</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedList</name>
-                    <value>Budget_Lines</value>
-                </componentInstanceProperties>
-                <componentName>force:relatedListSingleContainer</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentInstanceProperties>
-                    <name>heading</name>
-                    <value>Actual Revenues</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>relatedList</name>
-                    <value>Actual_Revenues</value>
-                </componentInstanceProperties>
-                <componentName>force:relatedListSingleContainer</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>force:relatedListContainer</componentName>
-            </componentInstance>
-        </itemInstances>
-        <mode>Append</mode>
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>

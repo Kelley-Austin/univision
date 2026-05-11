@@ -52,7 +52,7 @@
         <inputParameters>
             <name>scheduleHour</name>
             <value>
-                <elementReference>Schedule_Input_Screen.inputHour</elementReference>
+                <elementReference>inputHour</elementReference>
             </value>
         </inputParameters>
         <outputParameters>

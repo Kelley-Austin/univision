@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <formFactors>Small</formFactors>
+    <formFactors>Large</formFactors>
     <defaultLandingTab>standard-home</defaultLandingTab>
     <description>TelevisaUnivision Matrix — advertising sales, forecasting, reconciliation, and period close.</description>
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
@@ -36,5 +38,4 @@
     <tabs>Category__c</tabs>
 
     <uiType>Lightning</uiType>
-    <formFactors>Large</formFactors>
 </CustomApplication>
