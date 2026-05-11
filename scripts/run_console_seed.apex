@@ -1,0 +1,1 @@
+ConsoleSeedData.run();

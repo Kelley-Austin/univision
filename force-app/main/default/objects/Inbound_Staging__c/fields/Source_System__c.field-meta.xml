@@ -7,5 +7,6 @@
     <relationshipLabel>Inbound Staging Records</relationshipLabel>
     <relationshipName>Inbound_Staging_Records</relationshipName>
     <required>true</required>
+    <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

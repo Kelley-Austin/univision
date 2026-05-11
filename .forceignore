@@ -13,9 +13,9 @@
 # Story 3-009 (Forecast Stage Snapshots) — not started; gates Advertising_Analytics reports
 # Reports in this folder have multiple parse issues (criterias, INTERVAL_CURRENT_FY enum,
 # masterLabel missing, sortIndex placement) — defer until story 3-009 picks them up.
-**/reports/Advertising_Analytics/*.report-meta.xml
-**/reports/Media/*.report-meta.xml
-**/dashboards
+# **/reports/Advertising_Analytics/*.report-meta.xml
+# **/reports/Media/*.report-meta.xml
+# **/dashboards
 
 
 # Dashboards that depend on Advertising_Analytics reports (deploy fails when child reports excluded)

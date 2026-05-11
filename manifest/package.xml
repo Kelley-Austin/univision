@@ -16,5 +16,9 @@
         <members>MediaCloud</members>
         <name>Dashboard</name>
     </types>
+    <types>
+        <members>Budget_Line__c.Date_Type_Active_Date_Required</members>
+        <name>ValidationRule</name>
+    </types>
     <version>61.0</version>
 </Package>
